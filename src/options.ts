@@ -104,7 +104,7 @@ const fillOutDefaultFix = (fixes: RawFixOptions, comment: keyof RawFixOptions): 
 
 /**
  * Converts raw options to filled-out options.
- * 
+ *
  * @param rawOptions   Raw options from a config file.
  * @param fileNames   File names to use, if not everything from the TypeScript project.
  */
@@ -125,7 +125,7 @@ export const convertRawTypeUpOptions = (rawOptions: RawTypeUpOptions, fileNames:
 
 /**
  * Reads TypeUp options using Cosmiconfig or a config path.
- * 
+ *
  * @param configPath   Manual path to a config file to use intsead of a Cosmiconfig lookup.
  * @returns Promise for filled-out TypeUp options.
  */

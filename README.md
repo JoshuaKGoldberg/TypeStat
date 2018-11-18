@@ -142,8 +142,6 @@ class Abc {
 
 #### `return-strictness`
 
-> ❌ Coming soon! ❌
-
 Function return types should include `null` and/or `undefined` as necessary.
 If a function can return a def allowing `null` or `undefined`, those should be included in its type definition.
 This will work for all function-like constructs in TypeScript, including traditional `function`s, `() => {}` arrow lambdas, and `get`ters.

@@ -23,6 +23,7 @@
         "no-unbound-method": false,
         "no-unused-variable": false,
         "no-use-before-declare": false,
+        "prefer-conditional-expression": false,
         "prefer-method-signature": false,
         "prefer-switch": false,
         "prefer-template": false,
