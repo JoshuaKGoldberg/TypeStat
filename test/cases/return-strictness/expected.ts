@@ -15,7 +15,7 @@ function functionGivenUndefinedReturnsNull(): string | undefined | null /* retur
 }
 
 function functionIgnoresInnerMethods(): string {
-    (function (): string | undefined {
+    (function(): string | undefined {
         return undefined;
     })();
 
@@ -41,7 +41,7 @@ const lambdaGivenUndefinedReturnsNull = (): string | undefined | null /* return-
 };
 
 const lambdaIgnoresInnerMethods = (): string => {
-    (function (): string | undefined {
+    (function(): string | undefined {
         return undefined;
     })();
 

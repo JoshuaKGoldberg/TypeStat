@@ -24,7 +24,6 @@ const createFileNamesUsingProgram = (
             const backingFileName = backingFileNames.get(normalizeAndSlashify(inputFileName));
 
             if (backingFileName === undefined) {
-                console.log({ backingFileNames });
                 throw new Error(`Could not find backing TypeScript file path for '${inputFileName}'.`);
             }
 
@@ -36,7 +35,7 @@ const createFileNamesUsingProgram = (
 export const createTypeUpMutationsProvider = (options: TypeUpOptions): IMutationsProvider => ({
     provide: async (): Promise<IMutationsWave> => {
         const fileMutations: IFileMutations = {};
-        const services = await createLanguageServices(options.projectPath);
+        const services = await createLanguageServices(options);
         const fileNames = createFileNamesUsingProgram(services.parsedConfiguration.fileNames, options.fileNames);
 
         for (const fileName of fileNames) {

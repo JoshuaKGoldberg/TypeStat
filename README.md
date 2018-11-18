@@ -124,8 +124,6 @@ def(undefined);
 
 #### `property-strictness`
 
-> ❌ Coming soon! ❌
-
 Class property types should include `null` and/or `undefined` as necessary.
 If a property is ever assigned a value allowing `null` or `undefined`, those should be included in its type definition.
 

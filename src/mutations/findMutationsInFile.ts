@@ -3,6 +3,7 @@ import * as ts from "typescript";
 
 import { LanguageServices } from "../language";
 import { TypeUpOptions } from "../options";
+import { findPropertyStrictnessMutations } from "./finders/findPropertyStrictnessMutations";
 import { findReturnStrictnessMutations } from "./finders/findReturnStrictnessMutations";
 import { findVariableStrictnessMutations } from "./finders/findVariableStrictnessMutations";
 
@@ -28,6 +29,15 @@ export interface FileFixerMutationsRequest extends FileMutationsRequest {
 export const findMutationsInFile = async (request: FileMutationsRequest): Promise<ReadonlyArray<IMutation>> => {
     const { fixes } = request.options;
     const mutations: IMutation[] = [];
+
+    if (fixes.propertyStrictness !== false) {
+        mutations.push(
+            ...findPropertyStrictnessMutations({
+                ...request,
+                comment: fixes.propertyStrictness.comment,
+            }),
+        );
+    }
 
     if (fixes.returnStrictness !== false) {
         mutations.push(

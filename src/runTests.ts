@@ -12,11 +12,14 @@ describeMutationTestCases(
             throw new Error(`Could not find typeup.json for ${fileName}.`);
         }
 
-        const rawOptions = {
-            ...(JSON.parse(fs.readFileSync(projectPath).toString()) as Partial<RawTypeUpOptions>),
-            projectPath,
-        };
-        const options = convertRawTypeUpOptions(rawOptions, [fileName]);
+        const rawOptions = JSON.parse(fs.readFileSync(projectPath).toString()) as RawTypeUpOptions;
+        const options = convertRawTypeUpOptions(
+            {
+                ...rawOptions,
+                projectPath: path.join(path.dirname(projectPath), "tsconfig.json"),
+            },
+            [fileName],
+        );
 
         return createTypeUpMutationsProvider(options);
     },
