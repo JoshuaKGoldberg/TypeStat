@@ -1,0 +1,8 @@
+{
+    "default": true,
+    "line-length": {
+        "line_length": 175
+    },
+    "no-inline-html": false,
+    "no-trailing-punctuation": false
+}

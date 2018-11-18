@@ -1,0 +1,23 @@
+after_script: greenkeeper-lockfile-upload
+
+before_install: npm i -g greenkeeper-lockfile npm@latest
+
+before_script: greenkeeper-lockfile-update
+
+install: npm i
+
+language:
+  - csharp
+  - node_js
+
+node_js:
+  - "8"
+  - "10"
+  - "11"
+
+os:
+  - linux
+  - windows
+
+script:
+  npm run verify

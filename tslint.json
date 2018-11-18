@@ -1,0 +1,42 @@
+{
+    "extends": ["tslint:all", "tslint-config-prettier", "tslint-immutable"],
+    "rules": {
+        "array-type": [true, "array"],
+        "arrow-return-shorthand": false,
+        "completed-docs": false,
+        "comment-format": false,
+        "file-name-casing": false,
+        "linebreak-style": false,
+        "interface-name": [true, "never-prefix"],
+        "member-ordering": false,
+        "newline-before-return": false,
+        "no-any": false,
+        "no-bitwise": false,
+        "no-console": false,
+        "no-magic-numbers": false,
+        "no-import-side-effect": false,
+        "no-implicit-dependencies": [true, "dev"],
+        "no-null-keyword": false,
+        "no-parameter-reassignment": false,
+        "no-parameter-properties": false,
+        "no-submodule-imports": false,
+        "no-unbound-method": false,
+        "no-unused-variable": false,
+        "no-use-before-declare": false,
+        "prefer-method-signature": false,
+        "prefer-switch": false,
+        "prefer-template": false,
+        "strict-boolean-expressions": [true, "allow-number"],
+        "typedef": false,
+
+        // Immutability rules from tslint-immutable
+        "readonly-keyword": true,
+        "no-delete": true,
+        "no-method-signature": true,
+
+        // Functional style rules from tslint-immutable
+        "no-this": true,
+        "no-class": true,
+        "no-mixed-interface": true
+    }
+}
