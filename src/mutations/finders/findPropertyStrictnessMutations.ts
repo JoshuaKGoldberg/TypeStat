@@ -8,7 +8,7 @@ import { addMissingAssigningNodeType, CollectedType, collectStrictTypesFromTypeN
 import { FileFixerMutationsRequest } from "../findMutationsInFile";
 
 /**
- * Finds variable-strictness mutations for the file.
+ * Finds property-strictness mutations for a file.
  *
  * @param request   Request options for this fixer on the file.
  * @returns Mutations for the file.
@@ -88,6 +88,11 @@ const findTypesAssignedTo = (
             missingTypes,
             request.services.program.getTypeChecker().getTypeAtLocation(property.initializer),
         );
+
+        // Readonly properties are never assigned to later, so we can stop early
+        if (tsutils.isModifierFlagSet(property, ts.ModifierFlags.Readonly)) {
+            return missingTypes;
+        }
     }
 
     // Find everything else referencing the property, since non-private properties can be assigned to in other files
@@ -144,7 +149,6 @@ const updateMissingTypesForReference = (
     // ...contained as a name inside a property access...
     const propertyAccess = identifier.parent;
     if (!ts.isPropertyAccessExpression(propertyAccess) || propertyAccess.name !== identifier) {
-        console.log("darn", propertyAccess);
         return missingTypes;
     }
 
