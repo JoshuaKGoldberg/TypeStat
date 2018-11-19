@@ -1,4 +1,5 @@
 import { IMutation } from "automutate";
+import chalk from "chalk";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
@@ -7,7 +8,7 @@ import { addMissingAssigningNodeType, CollectedType, collectStrictTypesFromTypeN
 import { FileFixerMutationsRequest } from "../findMutationsInFile";
 
 /**
- * Finds variable-strictness mutations for the file.
+ * Finds variable-strictness mutations for a file.
  *
  * @param request   Request options for this fixer on the file.
  * @returns Mutations for the file.
@@ -94,6 +95,11 @@ const findMissingTypesAssignedToVariable = (
             missingTypes,
             request.services.program.getTypeChecker().getTypeAtLocation(variableDeclaration.initializer),
         );
+
+        // Const properties are never assigned to later, so we can stop early
+        if (variableDeclaration.parent !== undefined && ts.isVariableDeclarationList(variableDeclaration.parent) && tsutils.isNodeFlagSet(variableDeclaration.parent, ts.NodeFlags.Const)) {
+            return missingTypes;
+        }
     }
 
     // Each subsequent use of the variable might assign a type to it
