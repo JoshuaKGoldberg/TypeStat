@@ -1,4 +1,5 @@
 import { IMutation } from "automutate";
+import chalk from "chalk";
 import * as ts from "typescript";
 
 import { LanguageServices } from "../language";
@@ -27,6 +28,7 @@ export interface FileFixerMutationsRequest extends FileMutationsRequest {
  * Collects all mutations that should apply to a file.
  */
 export const findMutationsInFile = async (request: FileMutationsRequest): Promise<ReadonlyArray<IMutation>> => {
+    process.stdout.write(chalk.grey(`Checking ${chalk.bold(request.sourceFile.fileName)}...`));
     const { fixes } = request.options;
     const mutations: IMutation[] = [];
 
@@ -55,6 +57,12 @@ export const findMutationsInFile = async (request: FileMutationsRequest): Promis
                 comment: fixes.variableStrictness.comment,
             }),
         );
+    }
+
+    if (mutations.length === 0) {
+        process.stdout.write(chalk.grey(" nothing going.\n"));
+    } else {
+        process.stdout.write(` ${chalk.green(`${mutations.length}`)} found.\n`);
     }
 
     return mutations;

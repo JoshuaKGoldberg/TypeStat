@@ -29,6 +29,8 @@ export const typeUp = async ({ configPath }: TypeUpOptions): Promise<TypeUpResul
 
         await automutator.run();
     } catch (error) {
+        console.error(error);
+
         return {
             error: error as Error,
             succeeded: false,

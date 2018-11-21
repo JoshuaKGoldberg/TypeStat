@@ -7,7 +7,7 @@ import { addMissingAssigningNodeType, addMissingCollectedType, CollectedType, co
 import { FileFixerMutationsRequest } from "../findMutationsInFile";
 
 /**
- * Finds variable-strictness mutations for the file.
+ * Finds return-strictness mutations for a file.
  *
  * @param request   Request options for this fixer on the file.
  * @returns Mutations for the file.

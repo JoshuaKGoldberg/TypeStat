@@ -9,7 +9,16 @@ export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: num
     }
 
     const visitNode = (node: ts.Node): ts.Node | undefined => {
-        return node.getStart(sourceFile) === start ? node : ts.forEachChild(node, visitNode);
+        const nodeStart = node.getStart(sourceFile);
+        if (nodeStart === start) {
+            return node;
+        }
+
+        if (nodeStart > start || node.end < start) {
+            return undefined;
+        }
+
+        return ts.forEachChild(node, visitNode);
     };
 
     // tslint:disable-next-line:no-non-null-assertion
