@@ -179,8 +179,8 @@ Useful to only change some files at a time.
 After installing [Node >=8](https://nodejs.org/en/download), clone and install packages locally with:
 
 ```shell
-git clone https://github.com/joshuakgoldberg/tslint-strict-null-checks
-cd tslint-strict-null-checks
+git clone https://github.com/joshuakgoldberg/typeup
+cd typeup
 npm i
 ```
 
