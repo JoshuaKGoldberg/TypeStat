@@ -134,7 +134,11 @@ export const loadOptions = async (configPath?: string): Promise<TypeUpOptions> =
     const result = configPath === undefined ? await explorer.search() : await explorer.load(configPath);
 
     if (result === null) {
-        throw new Error("Could not find TypeUp configuration.");
+        return convertRawTypeUpOptions(
+            {
+                "projectPath": "tsconfig.json",
+            },
+            undefined);
     }
 
     const rawOptions = result.config as RawTypeUpOptions;
