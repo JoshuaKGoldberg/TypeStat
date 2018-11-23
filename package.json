@@ -31,7 +31,6 @@
     "lint": "run-p lint:*",
     "lint:markdownlint": "markdownlint --config .markdownlint.json --rules ./node_modules/sentences-per-line/index.js README.md",
     "lint:tslint": "tslint -p tsconfig.json -t stylish",
-    "prepublishOnly": "npm run docs",
     "prettier:write": "prettier --config .prettierrc.json --write",
     "prettier:write:all": "npm run prettier:write ./{src,test,util}/**/*.{json,ts}",
     "test": "mocha src/tests/runTests.js --timeout 5000",
