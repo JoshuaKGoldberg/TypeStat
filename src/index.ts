@@ -1,6 +1,8 @@
 import { AutoMutator } from "automutate";
-import { createTypeUpMutationsProvider } from "./mutations/createTypeUpMutationsProvider";
-import { loadOptions } from "./options";
+import { loadOptions } from "./options/parsing";
+import { createTypeUpMutationsProvider } from "./runtime/createTypeUpMutationsProvider";
+
+// tslint:disable:no-console
 
 export interface TypeUpOptions {
     /**

@@ -1,16 +1,19 @@
-export const createLazyValue = <T>(getter: () => Promise<T>) => {
-    let value: Promise<T> | undefined;
+export class LazyValue<T>{
+    private value: Promise<T> | undefined;
+    
+    public constructor(
+        private readonly getter: () => Promise<T>,
+    ) { }
 
-    return {
-        get() {
-            if (value === undefined) {
-                value = getter();
-            }
-
-            return value;
-        },
-        reset() {
-            value = undefined;
+    public get() {
+        if (this.value === undefined) {
+            this.value = this.getter();
         }
-    };
+
+        return this.value;
+    }
+
+    public reset() {
+        this.value = undefined;
+    }
 };

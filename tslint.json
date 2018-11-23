@@ -1,5 +1,5 @@
 {
-    "extends": ["tslint:all", "tslint-config-prettier", "tslint-immutable"],
+    "extends": ["tslint:all", "tslint-config-prettier"],
     "rules": {
         "array-type": [true, "array"],
         "arrow-return-shorthand": false,
@@ -12,7 +12,7 @@
         "newline-before-return": false,
         "no-any": false,
         "no-bitwise": false,
-        "no-console": false,
+        "no-empty": false,
         "no-magic-numbers": false,
         "no-import-side-effect": false,
         "no-implicit-dependencies": [true, "dev"],
@@ -27,17 +27,8 @@
         "prefer-method-signature": false,
         "prefer-switch": false,
         "prefer-template": false,
+        "promise-function-async": false,
         "strict-boolean-expressions": [true, "allow-number"],
-        "typedef": false,
-
-        // Immutability rules from tslint-immutable
-        "readonly-keyword": true,
-        "no-delete": true,
-        "no-method-signature": true,
-
-        // Functional style rules from tslint-immutable
-        "no-this": true,
-        "no-class": true,
-        "no-mixed-interface": true
+        "typedef": false
     }
 }

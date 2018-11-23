@@ -1,17 +1,26 @@
-let givenUndefined: string = "";
-givenUndefined = undefined;
+let givenUndefined = "";
+givenUndefined = undefined
+
+let givenUndefinedAsString: string = "";
+givenUndefinedAsString = undefined;
 
 let givenUndefinedHasNull: string | null = "";
 givenUndefinedHasNull = undefined;
 
-let givenNull: string = "";
+let givenNull = "";
 givenNull = null;
+
+let givenNullAsString: string = "";
+givenNullAsString = null;
 
 let givenNullHasUndefined: string | undefined = "";
 givenNullHasUndefined = null;
 
-let givenString: string = "";
+let givenString;
 givenString = "";
+
+let givenStringAsString: string = "";
+givenStringAsString = "";
 
 let givenStringHasNull: string | null = "";
 givenStringHasNull = "";
@@ -25,9 +34,13 @@ let setToUndefinedHasNull: string | null = undefined;
 
 let setToNull: string = null;
 
+let setToNullAsNull = null;
+
 let setToNullHasUndefined: string | undefined = null;
 
-let setToString: string = "";
+let setToString = "";
+
+let setToStringAsString: string = "";
 
 let setToStringHasUndefined: string | undefined = "";
 

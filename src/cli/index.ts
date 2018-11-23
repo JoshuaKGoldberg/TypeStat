@@ -1,7 +1,9 @@
 import * as commander from "commander";
 
-import { typeUp } from "./index";
+import { typeUp } from "../index";
 import { getPackageVersion } from "./version";
+
+// tslint:disable:no-console
 
 interface ParsedArgv {
     readonly config?: string;
