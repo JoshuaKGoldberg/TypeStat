@@ -2,7 +2,7 @@ import * as fs from "mz/fs";
 import * as path from "path";
 import * as ts from "typescript";
 
-import { TypeUpOptions } from "../options/types";
+import { TypeStatOptions } from "../options/types";
 
 /**
  * Language service and type information with their backing TypeScript configuration.
@@ -17,7 +17,7 @@ export interface LanguageServices {
  * @param projectPath   Path to a tsconfig.json project file.
  * @returns Associated language service and type information based on the config file.
  */
-export const createLanguageServices = async (options: TypeUpOptions): Promise<LanguageServices> => {
+export const createLanguageServices = async (options: TypeStatOptions): Promise<LanguageServices> => {
     // Read the raw configuration data from disk and attempt to parse it as JSON
     const configRaw = (await fs.readFile(options.projectPath)).toString();
     const compilerOptions = ts.parseConfigFileTextToJson(options.projectPath, configRaw);

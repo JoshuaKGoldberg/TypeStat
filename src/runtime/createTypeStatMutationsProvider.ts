@@ -1,6 +1,6 @@
 import { IMutation, IMutationsProvider, IMutationsWave } from "automutate";
 
-import { TypeUpOptions } from "../options/types";
+import { TypeStatOptions } from "../options/types";
 import { createLazyFileNamesAndServices } from "../services/lazyFileNamesAndServices";
 import { convertMapToObject, Dictionary } from "../shared/maps";
 import { FileInfoCache } from "./FileInfoCache";
@@ -9,7 +9,7 @@ import { findMutationsInFile } from "./findMutationsInFile";
 /**
  * Mutations to be applied to files, keyed by file name.
  */
-export const createTypeUpMutationsProvider = (options: TypeUpOptions): IMutationsProvider => {
+export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMutationsProvider => {
     const lazyFileNamesAndServices = createLazyFileNamesAndServices(options);
     let lastFileIndex = -1;
 

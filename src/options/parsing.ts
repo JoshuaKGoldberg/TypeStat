@@ -3,20 +3,20 @@ import cosmiconfig = require("cosmiconfig");
 
 import { globAllAsync } from "../shared/glob";
 import { convertObjectToMap } from "../shared/maps";
-import { RawTypeUpOptions, TypeUpOptions } from "./types";
+import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
-const findRawOptions = async (configPath?: string): Promise<RawTypeUpOptions> => {
-    const explorer = cosmiconfig("typeup");
+const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> => {
+    const explorer = cosmiconfig("typestat");
     const cosmiconfigResult = configPath === undefined ? await explorer.search() : await explorer.load(configPath);
 
     return cosmiconfigResult === null
         ? {
-            projectPath: "typeup.json",
+            projectPath: "typestat.json",
         }
-        : cosmiconfigResult.config as RawTypeUpOptions;
+        : cosmiconfigResult.config as RawTypeStatOptions;
 };
 
-export const fillOutRawOptions = (rawOptions: RawTypeUpOptions, fileNames?: ReadonlyArray<string>): TypeUpOptions => {
+export const fillOutRawOptions = (rawOptions: RawTypeStatOptions, fileNames?: ReadonlyArray<string>): TypeStatOptions => {
     return {
         fileNames,
         projectPath: rawOptions.projectPath === undefined
@@ -29,12 +29,12 @@ export const fillOutRawOptions = (rawOptions: RawTypeUpOptions, fileNames?: Read
 };
 
 /**
- * Reads TypeUp options using Cosmiconfig or a config path.
+ * Reads TypeStat options using Cosmiconfig or a config path.
  *
  * @param configPath   Manual path to a config file to use intsead of a Cosmiconfig lookup.
- * @returns Promise for filled-out TypeUp options.
+ * @returns Promise for filled-out TypeStat options.
  */
-export const loadOptions = async (configPath?: string): Promise<TypeUpOptions> => {
+export const loadOptions = async (configPath?: string): Promise<TypeStatOptions> => {
     const rawOptions = await findRawOptions(configPath);
     const fileNames = rawOptions.include === undefined ? undefined : await globAllAsync(rawOptions.include);
 

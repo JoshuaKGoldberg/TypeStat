@@ -1,11 +1,11 @@
 import { Dictionary } from "../shared/maps";
 
 /**
- * Options listed as JSON in a typeup configuration file.
+ * Options listed as JSON in a typestat configuration file.
  *
- * @remarks These are read by Cosmiconfig and parsed into {@link TypeUpOptions}.
+ * @remarks These are read by Cosmiconfig and parsed into {@link TypeStatOptions}.
  */
-export interface RawTypeUpOptions {
+export interface RawTypeStatOptions {
     /**
      * Globs of files to run on, if not everything in the TypeScript project.
      */
@@ -23,9 +23,9 @@ export interface RawTypeUpOptions {
 }
 
 /**
- * Parsed runtime options to run TypeUp.
+ * Parsed runtime options to run TypeStat.
  */
-export interface TypeUpOptions {
+export interface TypeStatOptions {
     /**
      * File names to run, if not everything in the TypeScript project.
      */

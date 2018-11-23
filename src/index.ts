@@ -1,32 +1,32 @@
 import { AutoMutator } from "automutate";
 import { loadOptions } from "./options/parsing";
-import { createTypeUpMutationsProvider } from "./runtime/createTypeUpMutationsProvider";
+import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutationsProvider";
 
 // tslint:disable:no-console
 
-export interface TypeUpOptions {
+export interface TypeStatOptions {
     /**
      * Path to load configuration options from, if not via a cosmiconfig lookup.
      */
     readonly configPath?: string;
 }
 
-export type TypeUpResult = FailedTypeUpResult | SucceededTypeUpResult;
+export type TypeStatResult = FailedTypeStatResult | SucceededTypeStatResult;
 
-export interface FailedTypeUpResult {
+export interface FailedTypeStatResult {
     readonly error: Error;
     readonly succeeded: false;
 }
 
-export interface SucceededTypeUpResult {
+export interface SucceededTypeStatResult {
     readonly succeeded: true;
 }
 
-export const typeUp = async ({ configPath }: TypeUpOptions): Promise<TypeUpResult> => {
+export const typeStat = async ({ configPath }: TypeStatOptions): Promise<TypeStatResult> => {
     try {
         const options = await loadOptions(configPath);
         const automutator = new AutoMutator({
-            mutationsProvider: createTypeUpMutationsProvider(options),
+            mutationsProvider: createTypeStatMutationsProvider(options),
         });
 
         await automutator.run();

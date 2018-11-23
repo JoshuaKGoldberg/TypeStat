@@ -1,7 +1,7 @@
 {
   "author": "josh Goldberg",
   "bin": {
-    "typeup": "bin/typeup"
+    "typestat": "bin/typestat"
   },
   "description": "Adds missing type annotations to TypeScript code using static analysis.",
   "devDependencies": {
@@ -26,7 +26,7 @@
   },
   "license": "MIT",
   "main": "src/index.js",
-  "name": "typeup",
+  "name": "typestat",
   "scripts": {
     "lint": "run-p lint:*",
     "lint:markdownlint": "markdownlint --config .markdownlint.json --rules ./node_modules/sentences-per-line/index.js README.md",

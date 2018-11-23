@@ -4,7 +4,7 @@ import * as ts from "typescript";
 
 import { allMutators } from "../mutators/allMutators";
 import { MutatorMatcher } from "../mutators/mutatorMatcher";
-import { TypeUpOptions } from "../options/types";
+import { TypeStatOptions } from "../options/types";
 import { LanguageServices } from "../services/language";
 import { FileInfoCache } from "./FileInfoCache";
 
@@ -13,7 +13,7 @@ import { FileInfoCache } from "./FileInfoCache";
  */
 export interface FileMutationsRequest {
     readonly fileInfoCache: FileInfoCache;
-    readonly options: TypeUpOptions;
+    readonly options: TypeStatOptions;
     readonly services: LanguageServices;
     readonly sourceFile: ts.SourceFile;
 }

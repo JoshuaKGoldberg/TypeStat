@@ -1,6 +1,6 @@
 # Mutations
 
-TypeUp will apply the following mutations to files as it finds them.
+TypeStat will apply the following mutations to files as it finds them.
 These mutations are all purely additive and limited to the type system, meaning they will _not_ change your JavaScript output.
 
 ## Parameters

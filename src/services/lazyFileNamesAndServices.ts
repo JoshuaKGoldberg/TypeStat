@@ -1,6 +1,6 @@
 import * as path from "path";
 
-import { TypeUpOptions } from "../options/types";
+import { TypeStatOptions } from "../options/types";
 import { LazyValue } from "../shared/lazy";
 import { createLanguageServices, LanguageServices } from "./language";
 
@@ -9,7 +9,7 @@ export interface FileNamesAndServices {
     readonly services: LanguageServices;
 }
 
-export const createLazyFileNamesAndServices = (options: TypeUpOptions): LazyValue<FileNamesAndServices> => {
+export const createLazyFileNamesAndServices = (options: TypeStatOptions): LazyValue<FileNamesAndServices> => {
     return new LazyValue(async (): Promise<FileNamesAndServices> => {
         const services = await createLanguageServices(options);
         const fileNames = Array.from(createFileNamesUsingProgram(services.parsedConfiguration.fileNames, options.fileNames))

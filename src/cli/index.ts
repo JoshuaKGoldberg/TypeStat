@@ -1,6 +1,6 @@
 import * as commander from "commander";
 
-import { typeUp } from "../index";
+import { typeStat } from "../index";
 import { getPackageVersion } from "./version";
 
 // tslint:disable:no-console
@@ -26,7 +26,7 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
         return;
     }
 
-    await typeUp({
+    await typeStat({
         configPath: command.config,
     });
 };

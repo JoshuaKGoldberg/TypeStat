@@ -1,8 +1,8 @@
-# TypeUp
+# TypeStat
 
-[![Build Status](https://travis-ci.org/joshuakgoldberg/TypeUp.svg?)](https://travis-ci.org/joshuakgoldberg/TypeUp)
+[![Build Status](https://travis-ci.org/joshuakgoldberg/TypeStat.svg?)](https://travis-ci.org/joshuakgoldberg/TypeStat)
 [![NPM version](https://badge.fury.io/js/joshuakgoldberg.svg)](http://badge.fury.io/js/joshuakgoldberg)
-[![Greenkeeper badge](https://badges.greenkeeper.io/joshuakgoldberg/TypeUp.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/joshuakgoldberg/TypeStat.svg)](https://greenkeeper.io/)
 
 Adds missing type annotations to TypeScript code using static analysis.
 
@@ -18,14 +18,14 @@ Adding the new type annotations through hundreds or thousands of legacy files is
 This package automagically adds those missing type annotations for you with configurable comment markers.
 That can allow you to enable these stricter compiler flags for all code without changing the runtime of existing code.
 
-For documentation on the types of mutations TypeUp applies, see [Mutations](./docs/Mutations.md).
+For documentation on the types of mutations TypeStat applies, see [Mutations](./docs/Mutations.md).
 
 > Protip: also take a look at [TypeWiz](https://github.com/urish/typewiz)!
 
 ## Usage
 
 ```shell
-npm i -g typeup
+npm i -g typestat
 ```
 
 You'll need to have the `"strictNullChecks"` option enabled via a `tsconfig.json`, either directly or with the superset `"strict"`.
@@ -41,17 +41,18 @@ You'll need to have the `"strictNullChecks"` option enabled via a `tsconfig.json
 ### CLI
 
 ```shell
-typeup
+typestat
 ```
 
-The `typeup` command uses [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig) to search for a `package.json` property or configuration file such as `typeup.json` for settings.
+The `typestat` command uses [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig)
+to search for a `package.json` property or configuration file such as `typestat.json` for settings.
 
 #### `-c`/`--config`
 
 Path to a config file, if you'd like a custom path.
 
 ```shell
-typeup --config typeup.custom.json
+typestat --config typestat.custom.json
 ```
 
 #### `-V`/`--version`
@@ -59,37 +60,37 @@ typeup --config typeup.custom.json
 Run with `-V` or `--version` to print the package version.
 
 ```shell
-typeup --version
+typestat --version
 ```
 
 ### Node
 
 ```javascript
-import { typeUp } from "typeup";
+import { typeStat } from "typestat";
 
-typeUp()
+typeStat()
     .then(result => {
         if (result.succeeded) {
-            console.log(`Successfully ran TypeUp.`);
+            console.log(`Successfully ran TypeStat.`);
         } else {
-            console.error(`Failed running TypeUp: ${result.error}`);
+            console.error(`Failed running TypeStat: ${result.error}`);
         }
     });
 ```
 
-`typeUp` can optionally take in a `{ config: string }` as an explicit configuration file path.
+`typeStat` can optionally take in a `{ config: string }` as an explicit configuration file path.
 
 ```javascript
-await typeUp({
-    config: "./typeup.custom.json",
+await typeStat({
+    config: "./typestat.custom.json",
 });
 ```
 
 ## Options
 
-All runtime options, such as for fixes or a `tsconfig.json` path, are expected to be in a `typeup.json` or [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig) equivalent.
+All runtime options, such as for fixes or a `tsconfig.json` path, are expected to be in a `typestat.json` or [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig) equivalent.
 
-See `RawTypeUpOptions` in [`src/options/types.ts`](./src/options/types.ts).
+See `RawTypeStatOptions` in [`src/options/types.ts`](./src/options/types.ts).
 
 ### `include`
 
@@ -119,12 +120,12 @@ Defaults to `"tsconfig.json"`.
 
 Object mapping names of added types to strings to replace them with.
 
-For example, to replace `null` with `null /* TODO: check auto-generated types (thanks TypeUp!) */`:
+For example, to replace `null` with `null /* TODO: check auto-generated types (thanks TypeStat!) */`:
 
 ```json
 {
     "typeAliases": {
-        "null": "null /* TODO: check auto-added types (thanks TypeUp!) */"
+        "null": "null /* TODO: check auto-added types (thanks TypeStat!) */"
     }
 }
 ```
@@ -134,8 +135,8 @@ For example, to replace `null` with `null /* TODO: check auto-generated types (t
 After installing [Node >=8](https://nodejs.org/en/download), clone and install packages locally with:
 
 ```shell
-git clone https://github.com/joshuakgoldberg/typeup
-cd typeup
+git clone https://github.com/joshuakgoldberg/typestat
+cd typestat
 npm i
 ```
 
@@ -149,7 +150,7 @@ Or: why isn't this implemented as a set of [TSLint](https://github.com/palantir/
 Great question!
 TSLint rules, even with [type checking](https://palantir.github.io/tslint/usage/type-checking), don't have access to the full [TypeScript language service](https://github.com/Microsoft/TypeScript/wiki/Using-the-Language-Service-API).
 This is by design for performance and reliability reasons.
-TypeUp needs that service.
+TypeStat needs that service.
 
 TSLint also has a [relatively unstable `--fix`](https://github.com/palantir/tslint/issues/2556) that can't handle multiple rounds of mutations.
-TypeUp is built on [Automutate](https://github.com/automutate/automutate), which is more stable and allows multiple rounds.
+TypeStat is built on [Automutate](https://github.com/automutate/automutate), which is more stable and allows multiple rounds.
