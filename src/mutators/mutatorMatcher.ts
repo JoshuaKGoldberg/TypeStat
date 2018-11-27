@@ -1,15 +1,15 @@
 import * as ts from "typescript";
 
-import { Mutator, MutatorSelector } from "../runtime/mutator";
+import { MutatorSelector, NodeMutator } from "../runtime/mutator";
 
 export class MutatorMatcher {
-    private readonly cache = new Map<ts.SyntaxKind, ReadonlyArray<Mutator>>();
+    private readonly cache = new Map<ts.SyntaxKind, ReadonlyArray<NodeMutator>>();
 
     public constructor(
-        private readonly allMutators: ReadonlyArray<Mutator>,
+        private readonly allMutators: ReadonlyArray<NodeMutator>,
     ) { }
 
-    public getMutators(node: ts.Node): ReadonlyArray<Mutator> {
+    public getMutators(node: ts.Node): ReadonlyArray<NodeMutator> {
         let cached = this.cache.get(node.kind);
 
         if (cached === undefined) {
@@ -20,8 +20,8 @@ export class MutatorMatcher {
         return cached;
     }
 
-    private createMutatorsCache(node: ts.Node): ReadonlyArray<Mutator> {
-        const mutators: Mutator[] = [];
+    private createMutatorsCache(node: ts.Node): ReadonlyArray<NodeMutator> {
+        const mutators: NodeMutator[] = [];
 
         for (const mutator of this.allMutators) {
             // tslint:disable-next-line:no-unsafe-any

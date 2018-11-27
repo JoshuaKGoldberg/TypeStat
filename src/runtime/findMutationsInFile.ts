@@ -2,9 +2,10 @@ import { IMutation } from "automutate";
 import chalk from "chalk";
 import * as ts from "typescript";
 
-import { allMutators } from "../mutators/allMutators";
+import { allNodeMutators } from "../mutators/allNodeMutators";
 import { MutatorMatcher } from "../mutators/mutatorMatcher";
 import { TypeStatOptions } from "../options/types";
+import { MutationPrinter } from "../printing/MutationsPrinter";
 import { LanguageServices } from "../services/language";
 import { FileInfoCache } from "./FileInfoCache";
 
@@ -21,14 +22,18 @@ export interface FileMutationsRequest {
 /**
  * Collects all mutations that should apply to a file.
  */
-export const findMutationsInFile = async (request: FileMutationsRequest): Promise<ReadonlyArray<IMutation>> => {
-    process.stdout.write(chalk.grey(`Checking ${chalk.bold(request.sourceFile.fileName)}...`));
+export const findMutationsInFile = async (fileRequest: FileMutationsRequest): Promise<ReadonlyArray<IMutation>> => {
+    process.stdout.write(chalk.grey(`Checking ${chalk.bold(fileRequest.sourceFile.fileName)}...`));
     const mutations: IMutation[] = [];
-    const matcher = new MutatorMatcher(allMutators);
+    const matcher = new MutatorMatcher(allNodeMutators);
+    const nodeRequest = {
+        ...fileRequest,
+        printer: new MutationPrinter(fileRequest),
+    };
 
     const visitNode = (node: ts.Node) => {
         for (const mutator of matcher.getMutators(node)) {
-            const mutation = mutator.run(node, request);
+            const mutation = mutator.run(node, nodeRequest);
 
             if (mutation !== undefined) {
                 mutations.push(mutation);
@@ -38,7 +43,7 @@ export const findMutationsInFile = async (request: FileMutationsRequest): Promis
         ts.forEachChild(node, visitNode);
     };
 
-    ts.forEachChild(request.sourceFile, visitNode);
+    ts.forEachChild(fileRequest.sourceFile, visitNode);
 
     if (mutations.length === 0) {
         process.stdout.write(chalk.grey(" nothing going.\n"));

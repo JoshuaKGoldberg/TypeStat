@@ -19,6 +19,7 @@ const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> 
 export const fillOutRawOptions = (rawOptions: RawTypeStatOptions, fileNames?: ReadonlyArray<string>): TypeStatOptions => {
     return {
         fileNames,
+        onlyStrictNullTypes: rawOptions.onlyStrictNullTypes,
         projectPath: rawOptions.projectPath === undefined
             ? "tsconfig.json"
             : rawOptions.projectPath,

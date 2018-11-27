@@ -1,6 +1,7 @@
 import { IMutation } from "automutate";
 import * as ts from "typescript";
 
+import { MutationPrinter } from "../printing/MutationsPrinter";
 import { FileMutationsRequest } from "./findMutationsInFile";
 
 export type MutatorSelector<TNode extends ts.Node = ts.Node> = 
@@ -8,15 +9,19 @@ export type MutatorSelector<TNode extends ts.Node = ts.Node> =
     | ((node: ts.Node) => node is TNode)
 ;
 
+export interface NodeMutationsRequest extends FileMutationsRequest {
+    readonly printer: MutationPrinter;
+}
+
 export interface MutatorMetadata<TNode extends ts.Node> {
     selector: MutatorSelector<TNode>;
 }
 
-export interface Mutator<TNode extends ts.Node = any> {
+export interface NodeMutator<TNode extends ts.Node = any> {
     readonly metadata: MutatorMetadata<TNode>;
 
     readonly run: (
         node: TNode,
-        request: FileMutationsRequest,
+        fileRequest: NodeMutationsRequest,
     ) => IMutation | undefined;
 }

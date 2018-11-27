@@ -2,15 +2,13 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { FileMutationsRequest } from "../runtime/findMutationsInFile";
-import { Mutator } from "../runtime/mutator";
-import { createTypeAdditionMutation } from "../shared/mutations";
+import { NodeMutationsRequest, NodeMutator } from "../runtime/mutator";
 
-export const returnMutator: Mutator<ts.SignatureDeclaration> = {
+export const returnMutator: NodeMutator<ts.SignatureDeclaration> = {
     metadata: {
         selector: tsutils.isFunctionWithBody,
     },
-    run: (node: ts.SignatureDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+    run: (node: ts.SignatureDeclaration, request: NodeMutationsRequest): IMutation | undefined => {
         // If the node has an implicit return type, don't change anything
         if (node.type === undefined) {
             return undefined;
@@ -23,7 +21,7 @@ export const returnMutator: Mutator<ts.SignatureDeclaration> = {
         const returnedTypes = collectFunctionReturnedTypes(node, request);
 
         // Add later-returned types to the node's type declaration if necessary
-        return createTypeAdditionMutation(node.type, declaredType, returnedTypes, request.options.typeAliases);
+        return request.printer.createTypeAdditionMutation(node.type, declaredType, returnedTypes);
     },
 };
 
@@ -34,7 +32,7 @@ export const returnMutator: Mutator<ts.SignatureDeclaration> = {
  * @param request   Request options for this fixer on the file.
  * @returns Strict types missing from the declared type.
  */
-const collectFunctionReturnedTypes = (signatureDeclaration: ts.SignatureDeclaration, request: FileMutationsRequest): ReadonlyArray<ts.Type> => {
+const collectFunctionReturnedTypes = (signatureDeclaration: ts.SignatureDeclaration, request: NodeMutationsRequest): ReadonlyArray<ts.Type> => {
     const returnedTypes: ts.Type[] = [];
 
     // Search through nodes within the function-like to find all its return statements

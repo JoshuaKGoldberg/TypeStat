@@ -105,6 +105,18 @@ Useful to only change some files at a time.
 }
 ```
 
+### `onlyStrictNullTypes`
+
+Whether to skip adding types that aren't `null` or `undefined`.
+Useful if your project is already fully onboarded onto `--noImplicitAny` but not `--strictNullChecks`.
+This will speed up performance slightly.
+
+```json
+{
+    "onlyStrictNullTypes": true
+}
+```
+
 ### `projectPath`
 
 Relative path to a TypeScript project.

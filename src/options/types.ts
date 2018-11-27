@@ -12,6 +12,11 @@ export interface RawTypeStatOptions {
     readonly include?: ReadonlyArray<string>;
 
     /**
+     * Whether to skip adding types that aren't `null` or `undefined`.
+     */
+    readonly onlyStrictNullTypes?: boolean;
+
+    /**
      * Names of added types mapped to strings to replace them with.
      */
     readonly typeAliases?: Readonly<Dictionary<string>>;
@@ -30,6 +35,11 @@ export interface TypeStatOptions {
      * File names to run, if not everything in the TypeScript project.
      */
     readonly fileNames?: ReadonlyArray<string>;
+
+    /**
+     * Whether to skip adding types that aren't `null` or `undefined`.
+     */
+    readonly onlyStrictNullTypes?: boolean;
 
     /**
      * Names of added types mapped to strings to replace them with.

@@ -1,8 +1,7 @@
 import { ITextInsertMutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
-
-import { setSubtract } from "./sets";
+import { setSubtract } from "./shared/sets";
 
 /**
  * Type flags we're willing to print into types, keyed to their type aliases.

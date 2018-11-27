@@ -2,17 +2,15 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { FileMutationsRequest } from "../runtime/findMutationsInFile";
-import { Mutator } from "../runtime/mutator";
-import { createTypeAdditionMutation, createTypeCreationMutation } from "../shared/mutations";
+import { NodeMutationsRequest, NodeMutator } from "../runtime/mutator";
 import { findNodeByStartingPosition } from "../shared/nodes";
 import { nodeContainsType } from "../shared/nodeTypes";
 
-export const propertyMutator: Mutator<ts.PropertyDeclaration> = {
+export const propertyMutator: NodeMutator<ts.PropertyDeclaration> = {
     metadata: {
         selector: ts.SyntaxKind.PropertyDeclaration,
     },
-    run: (node: ts.PropertyDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+    run: (node: ts.PropertyDeclaration, request: NodeMutationsRequest): IMutation | undefined => {
         // Collect the type initially declared by or inferred on the property
         const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
 
@@ -21,15 +19,15 @@ export const propertyMutator: Mutator<ts.PropertyDeclaration> = {
 
         // If the property already has a declared type, add assigned types to it if necessary
         if (nodeContainsType(node)) {
-            return createTypeAdditionMutation(node.type, declaredType, assignedTypes, request.options.typeAliases);
+            return request.printer.createTypeAdditionMutation(node.type, declaredType, assignedTypes);
         }
 
         // Since the node doesn't have its own type, give it one if necessary
-        return createTypeCreationMutation(node.name.end, declaredType, assignedTypes, request.options.typeAliases);
+        return request.printer.createTypeCreationMutation(node.name.end, declaredType, assignedTypes);
     },
 };
 
-const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: FileMutationsRequest): ReadonlyArray<ts.Type> => {
+const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: NodeMutationsRequest): ReadonlyArray<ts.Type> => {
     const assignedTypes: ts.Type[] = [];
 
     // If the property has an initial value, consider that an assignment
@@ -71,7 +69,7 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
 const updateAssignedTypesForReference = (
     reference: ts.ReferenceEntry,
     assignedTypes: ts.Type[],
-    request: FileMutationsRequest,
+    request: NodeMutationsRequest,
 ): void => {
     // Make sure the reference is in a non-definition file and doesn't just (re-)define the property
     if (!reference.isWriteAccess || reference.isDefinition) {

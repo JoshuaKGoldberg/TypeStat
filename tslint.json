@@ -28,7 +28,7 @@
         "prefer-switch": false,
         "prefer-template": false,
         "promise-function-async": false,
-        "strict-boolean-expressions": [true, "allow-number"],
+        "strict-boolean-expressions": [true, "allow-boolean-or-undefined", "allow-number"],
         "typedef": false
     }
 }
