@@ -1,3 +1,4 @@
+import { Logger } from "../logging/logger";
 import { Dictionary } from "../shared/maps";
 
 /**
@@ -35,6 +36,11 @@ export interface TypeStatOptions {
      * File names to run, if not everything in the TypeScript project.
      */
     readonly fileNames?: ReadonlyArray<string>;
+
+    /**
+     * Wraps process.stdout.write.
+     */
+    readonly logger: Logger;
 
     /**
      * Whether to skip adding types that aren't `null` or `undefined`.

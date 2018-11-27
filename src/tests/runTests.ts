@@ -14,10 +14,15 @@ describeMutationTestCases(
         }
 
         const rawOptions = JSON.parse(fs.readFileSync(projectPath).toString()) as RawTypeStatOptions;
-        const options = fillOutRawOptions({
-            ...rawOptions,
-            projectPath: path.join(path.dirname(projectPath), "tsconfig.json"),
-        });
+        const options = {
+            ...fillOutRawOptions({
+                ...rawOptions,
+                projectPath: path.join(path.dirname(projectPath), "tsconfig.json"),
+            }),
+            logger: {
+                write: () => {},
+            },
+        };
 
         return createTypeStatMutationsProvider(options);
     },

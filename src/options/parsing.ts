@@ -1,6 +1,7 @@
 // tslint:disable-next-line:no-require-imports
 import cosmiconfig = require("cosmiconfig");
 
+import { processLogger } from "../logging/logger";
 import { globAllAsync } from "../shared/glob";
 import { convertObjectToMap } from "../shared/maps";
 import { RawTypeStatOptions, TypeStatOptions } from "./types";
@@ -19,6 +20,7 @@ const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> 
 export const fillOutRawOptions = (rawOptions: RawTypeStatOptions, fileNames?: ReadonlyArray<string>): TypeStatOptions => {
     return {
         fileNames,
+        logger: processLogger,
         onlyStrictNullTypes: rawOptions.onlyStrictNullTypes,
         projectPath: rawOptions.projectPath === undefined
             ? "tsconfig.json"

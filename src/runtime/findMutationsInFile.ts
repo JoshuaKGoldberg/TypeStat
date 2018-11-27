@@ -23,7 +23,7 @@ export interface FileMutationsRequest {
  * Collects all mutations that should apply to a file.
  */
 export const findMutationsInFile = async (fileRequest: FileMutationsRequest): Promise<ReadonlyArray<IMutation>> => {
-    process.stdout.write(chalk.grey(`Checking ${chalk.bold(fileRequest.sourceFile.fileName)}...`));
+    fileRequest.options.logger.write(chalk.grey(`Checking ${chalk.bold(fileRequest.sourceFile.fileName)}...`));
     const mutations: IMutation[] = [];
     const matcher = new MutatorMatcher(allNodeMutators);
     const nodeRequest = {
@@ -46,9 +46,9 @@ export const findMutationsInFile = async (fileRequest: FileMutationsRequest): Pr
     ts.forEachChild(fileRequest.sourceFile, visitNode);
 
     if (mutations.length === 0) {
-        process.stdout.write(chalk.grey(" nothing going.\n"));
+        fileRequest.options.logger.write(chalk.grey(" nothing going.\n"));
     } else {
-        process.stdout.write(` ${chalk.green(`${mutations.length}`)} found.\n`);
+        fileRequest.options.logger.write(` ${chalk.green(`${mutations.length}`)} found.\n`);
     }
 
     return mutations;
