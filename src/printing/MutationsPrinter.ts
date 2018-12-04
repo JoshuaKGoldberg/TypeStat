@@ -1,7 +1,7 @@
 import { ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../runtime/findMutationsInFile";
+import { TypeStatOptions } from "../options/types";
 import { setSubtract } from "../shared/sets";
 import { isTypeFlagSetRecursively, joinIntoType } from "./types";
 
@@ -27,14 +27,14 @@ export class MutationPrinter {
     private readonly knownTypeFlagsWithAliases: ReadonlyMap<ts.TypeFlags, string>;
 
     public constructor(
-        private readonly fileRequest: FileMutationsRequest,
+        private readonly options: TypeStatOptions,
     ) {
         const knownTypeFlagsWithAliases = new Map([
             [ts.TypeFlags.Null, "null"],
             [ts.TypeFlags.Undefined, "undefined"],
         ]);
 
-        if (!fileRequest.options.onlyStrictNullTypes) {
+        if (!options.onlyStrictNullTypes) {
             for (const [typeFlag, alias] of (nonStrictTypeFlagAliases)) {
                 knownTypeFlagsWithAliases.set(typeFlag, alias);
             }
@@ -65,7 +65,7 @@ export class MutationPrinter {
 
         // Create a mutation insertion that adds the missing types in
         return {
-            insertion: ` | ${joinIntoType(missingFlags, missingSymbols, this.fileRequest.options.typeAliases)}`,
+            insertion: ` | ${joinIntoType(missingFlags, missingSymbols, this.options.typeAliases)}`,
             range: {
                 begin: typeNode.end,
             },
@@ -95,7 +95,7 @@ export class MutationPrinter {
 
         // Create a mutation insertion that adds the assigned types in
         return {
-            insertion: `: ${joinIntoType(assignedFlags, assignedSymbols, this.fileRequest.options.typeAliases)}`,
+            insertion: `: ${joinIntoType(assignedFlags, assignedSymbols, this.options.typeAliases)}`,
             range: {
                 begin,
             },
@@ -137,7 +137,7 @@ export class MutationPrinter {
     }
 
     private findMissingSymbols(assignedSymbols: ReadonlySet<ts.Symbol>, declaredSymbols: ReadonlySet<ts.Symbol>): ReadonlySet<ts.Symbol> {
-        if (this.fileRequest.options.onlyStrictNullTypes) {
+        if (this.options.onlyStrictNullTypes) {
             return new Set<ts.Symbol>();
         }
 

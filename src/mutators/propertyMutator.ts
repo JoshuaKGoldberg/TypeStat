@@ -2,32 +2,47 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { NodeMutationsRequest, NodeMutator } from "../runtime/mutator";
+import { FileMutationsRequest, FileMutator } from "../runtime/mutator";
 import { findNodeByStartingPosition } from "../shared/nodes";
 import { nodeContainsType } from "../shared/nodeTypes";
 
-export const propertyMutator: NodeMutator<ts.PropertyDeclaration> = {
-    metadata: {
-        selector: ts.SyntaxKind.PropertyDeclaration,
-    },
-    run: (node: ts.PropertyDeclaration, request: NodeMutationsRequest): IMutation | undefined => {
-        // Collect the type initially declared by or inferred on the property
-        const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+export const propertyMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+    const mutations: IMutation[] = [];
 
-        // Collect types later assigned to the property
-        const assignedTypes = collectPropertyAssignedTypes(node, request);
+    const visitNode = (node: ts.Node) => {
+        if (ts.isPropertyDeclaration(node)) {
+            const mutation = visitPropertyDeclaration(node, request);
 
-        // If the property already has a declared type, add assigned types to it if necessary
-        if (nodeContainsType(node)) {
-            return request.printer.createTypeAdditionMutation(node.type, declaredType, assignedTypes);
+            if (mutation !== undefined) {
+                mutations.push(mutation);
+            }
         }
 
-        // Since the node doesn't have its own type, give it one if necessary
-        return request.printer.createTypeCreationMutation(node.name.end, declaredType, assignedTypes);
-    },
+        ts.forEachChild(node, visitNode);
+    };
+
+    ts.forEachChild(request.sourceFile, visitNode);
+
+    return mutations;
 };
 
-const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: NodeMutationsRequest): ReadonlyArray<ts.Type> => {
+const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+    // Collect the type initially declared by or inferred on the property
+    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+
+    // Collect types later assigned to the property
+    const assignedTypes = collectPropertyAssignedTypes(node, request);
+
+    // If the property already has a declared type, add assigned types to it if necessary
+    if (nodeContainsType(node)) {
+        return request.printer.createTypeAdditionMutation(node.type, declaredType, assignedTypes);
+    }
+
+    // Since the node doesn't have its own type, give it one if necessary
+    return request.printer.createTypeCreationMutation(node.name.end, declaredType, assignedTypes);
+};
+
+const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: FileMutationsRequest): ReadonlyArray<ts.Type> => {
     const assignedTypes: ts.Type[] = [];
 
     // If the property has an initial value, consider that an assignment
@@ -69,7 +84,7 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Nod
 const updateAssignedTypesForReference = (
     reference: ts.ReferenceEntry,
     assignedTypes: ts.Type[],
-    request: NodeMutationsRequest,
+    request: FileMutationsRequest,
 ): void => {
     // Make sure the reference is in a non-definition file and doesn't just (re-)define the property
     if (!reference.isWriteAccess || reference.isDefinition) {

@@ -4,38 +4,37 @@
 [![NPM version](https://badge.fury.io/js/joshuakgoldberg.svg)](http://badge.fury.io/js/joshuakgoldberg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/joshuakgoldberg/TypeStat.svg)](https://greenkeeper.io/)
 
-Adds missing type annotations to TypeScript code using static analysis.
+Adds JSDoc and/or TypeScript type annotations using static analysis.
 
 > ⚡💀 **Danger**: new and experimental; use at your own risk! 💀⚡
 
 ## Why?
 
-Stringent type safety from [`--noImplicitAny`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitAny.html)
-and [`--strictNullChecks``](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html) in TypeScript
-are wonderful but can be difficult to add to large pre-existing projects.
-Adding the new type annotations through hundreds or thousands of legacy files is tedious and time-consuming.
+Stringent type safety with TypeScript, especially when adding [`--noImplicitAny`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitAny.html)
+or [`--strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html),
+is wonderful but can be difficult to add to large pre-existing projects.
+Even proper JSDoc coverage is difficult to achieve on more than a few dozen files.
+Adding type annotations through hundreds or thousands of legacy files is tedious and time-consuming.
 
 This package automagically adds those missing type annotations for you with configurable comment markers.
-That can allow you to enable these stricter compiler flags for all code without changing the runtime of existing code.
+It can add...
 
-For documentation on the types of mutations TypeStat applies, see [Mutations](./docs/Mutations.md).
+✨ JSDoc on vanilla JavaScript files!
 
-> Protip: also take a look at [TypeWiz](https://github.com/urish/typewiz)!
+✨ TypeScript types on files freshly converted from JavaScript to TypeScript!
+
+✨ Missing types to touch up your existing TypeScript files!
+
+Doing so can allow you to enable these stricter compiler flags for all code without changing the runtime of existing code.
+
+For documentation on the types of fixes TypeStat applies, see [Fixes.md](./docs/Fixes.md).
+
+> 👉 Protip: also take a look at [TypeWiz](https://github.com/urish/typewiz)! 👈
 
 ## Usage
 
 ```shell
 npm i -g typestat
-```
-
-You'll need to have the `"strictNullChecks"` option enabled via a `tsconfig.json`, either directly or with the superset `"strict"`.
-
-```json
-{
-    "compilerOptions": {
-        "strictNullChecks": true
-    }
-}
 ```
 
 ### CLI
@@ -63,34 +62,35 @@ Run with `-V` or `--version` to print the package version.
 typestat --version
 ```
 
-### Node
-
-```javascript
-import { typeStat } from "typestat";
-
-typeStat()
-    .then(result => {
-        if (result.succeeded) {
-            console.log(`Successfully ran TypeStat.`);
-        } else {
-            console.error(`Failed running TypeStat: ${result.error}`);
-        }
-    });
-```
-
-`typeStat` can optionally take in a `{ config: string }` as an explicit configuration file path.
-
-```javascript
-await typeStat({
-    config: "./typestat.custom.json",
-});
-```
-
 ## Options
 
-All runtime options, such as for fixes or a `tsconfig.json` path, are expected to be in a `typestat.json` or [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig) equivalent.
+All runtime options, such as `fixes` or a `tsconfig.json` path, are expected to be in a `typestat.json` or [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig) equivalent.
 
 See `RawTypeStatOptions` in [`src/options/types.ts`](./src/options/types.ts).
+
+### `fixes`
+
+An optional object containing which fixes (type additions) are enabled.
+Any type fixes not mentioned **default to `true`**.
+
+#### `noImplicitAny`
+
+Whether to add type annotations to types that don't yet have them.
+
+TODO: mention TS 3.2?
+
+#### `strictNullChecks`
+
+Whether to add `| null` and `| undefined` types when constructs can be assigned them but aren't.
+Useful if your project is already fully onboarded onto `--noImplicitAny` but not `--strictNullChecks`.
+
+```json
+{
+    "fixes": {
+        "strictNullChecks": true
+    }
+}
+```
 
 ### `include`
 
@@ -102,18 +102,6 @@ Useful to only change some files at a time.
     "include": [
         "src/experimental/**/*.ts"
     ]
-}
-```
-
-### `onlyStrictNullTypes`
-
-Whether to skip adding types that aren't `null` or `undefined`.
-Useful if your project is already fully onboarded onto `--noImplicitAny` but not `--strictNullChecks`.
-This will speed up performance slightly.
-
-```json
-{
-    "onlyStrictNullTypes": true
 }
 ```
 
@@ -140,6 +128,31 @@ For example, to replace `null` with `null /* TODO: check auto-generated types (t
         "null": "null /* TODO: check auto-added types (thanks TypeStat!) */"
     }
 }
+```
+
+## Node
+
+You can also run TypeStat via its JavaScript API:
+
+```javascript
+import { typeStat } from "typestat";
+
+typeStat()
+    .then(result => {
+        if (result.succeeded) {
+            console.log(`Successfully ran TypeStat.`);
+        } else {
+            console.error(`Failed running TypeStat: ${result.error}`);
+        }
+    });
+```
+
+`typeStat` can optionally take in a `{ config: string }` as an explicit configuration file path.
+
+```javascript
+await typeStat({
+    config: "./typestat.custom.json",
+});
 ```
 
 ## Development

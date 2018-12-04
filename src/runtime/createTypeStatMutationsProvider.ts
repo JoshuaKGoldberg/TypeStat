@@ -1,6 +1,7 @@
 import { IMutation, IMutationsProvider, IMutationsWave } from "automutate";
 
 import { TypeStatOptions } from "../options/types";
+import { MutationPrinter } from "../printing/MutationsPrinter";
 import { createLazyFileNamesAndServices } from "../services/lazyFileNamesAndServices";
 import { convertMapToObject, Dictionary } from "../shared/maps";
 import { FileInfoCache } from "./FileInfoCache";
@@ -11,6 +12,7 @@ import { findMutationsInFile } from "./findMutationsInFile";
  */
 export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMutationsProvider => {
     const lazyFileNamesAndServices = createLazyFileNamesAndServices(options);
+    const printer = new MutationPrinter(options);
     let lastFileIndex = -1;
 
     return {
@@ -31,6 +33,7 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
                 const foundMutations = await findMutationsInFile({
                     fileInfoCache: new FileInfoCache(sourceFile),
                     options,
+                    printer,
                     services,
                     sourceFile,
                 });

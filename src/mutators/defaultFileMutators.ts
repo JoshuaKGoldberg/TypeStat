@@ -1,9 +1,9 @@
-import { NodeMutator } from "../runtime/mutator";
+import { FileMutator } from "../runtime/mutator";
 import { propertyMutator } from "./propertyMutator";
 import { returnMutator } from "./returnMutator";
 import { variableMutator } from "./variableMutator";
 
-export const allNodeMutators: ReadonlyArray<NodeMutator> = [
+export const defaultFileMutators: ReadonlyArray<FileMutator> = [
     propertyMutator,
     returnMutator,
     variableMutator,

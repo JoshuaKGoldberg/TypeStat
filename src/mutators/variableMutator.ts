@@ -2,28 +2,42 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { NodeMutationsRequest, NodeMutator } from "../runtime/mutator";
+import { FileMutationsRequest, FileMutator } from "../runtime/mutator";
 import { nodeContainsType } from "../shared/nodeTypes";
 
-export const variableMutator: NodeMutator<ts.VariableDeclaration> = {
-    metadata: {
-        selector: ts.SyntaxKind.VariableDeclaration,
-    },
-    run: (node: ts.VariableDeclaration, request: NodeMutationsRequest): IMutation | undefined => {
-        // Collect the type initially declared by or inferred on the variable
-        const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+export const variableMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+    const mutations: IMutation[] = [];
 
-        // Collect types later assigned to the variable
-        const assignedTypes = collectVariableAssignedTypes(node, request);
-
-        // If the variable already has a declared type, add assigned types to it if necessary
-        if (nodeContainsType(node)) {
-            return request.printer.createTypeAdditionMutation(node.type, declaredType, assignedTypes);
+    const visitNode = (node: ts.Node) => {
+        if (ts.isVariableDeclaration(node)) {
+            const mutation = visitVariableDeclaration(node, request);
+            if (mutation !== undefined) {
+                mutations.push(mutation);
+            }
         }
 
-        // Since the node doesn't have its own type, give it one if necessary
-        return request.printer.createTypeCreationMutation(node.name.end, declaredType, assignedTypes);
-    },
+        ts.forEachChild(node, visitNode);
+    };
+
+    ts.forEachChild(request.sourceFile, visitNode);
+
+    return mutations;
+};
+
+const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+    // Collect the type initially declared by or inferred on the variable
+    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+
+    // Collect types later assigned to the variable
+    const assignedTypes = collectVariableAssignedTypes(node, request);
+
+    // If the variable already has a declared type, add assigned types to it if necessary
+    if (nodeContainsType(node)) {
+        return request.printer.createTypeAdditionMutation(node.type, declaredType, assignedTypes);
+    }
+
+    // Since the node doesn't have its own type, give it one if necessary
+    return request.printer.createTypeCreationMutation(node.name.end, declaredType, assignedTypes);
 };
 
 /**
@@ -33,7 +47,7 @@ export const variableMutator: NodeMutator<ts.VariableDeclaration> = {
  * @param request   Metadata and settings to collect mutations in a file.
  * @returns Types assigned to the node in the file.
  */
-const collectVariableAssignedTypes = (node: ts.VariableDeclaration, request: NodeMutationsRequest): ReadonlyArray<ts.Type> => {
+const collectVariableAssignedTypes = (node: ts.VariableDeclaration, request: FileMutationsRequest): ReadonlyArray<ts.Type> => {
     const assignedTypes: ts.Type[] = [];
 
     // If the variable has an initial value, consider that an assignment

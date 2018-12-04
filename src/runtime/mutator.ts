@@ -1,27 +1,26 @@
 import { IMutation } from "automutate";
 import * as ts from "typescript";
 
+import { TypeStatOptions } from "../options/types";
 import { MutationPrinter } from "../printing/MutationsPrinter";
-import { FileMutationsRequest } from "./findMutationsInFile";
+import { LanguageServices } from "../services/language";
+import { FileInfoCache } from "./FileInfoCache";
 
-export type MutatorSelector<TNode extends ts.Node = ts.Node> = 
-    | TNode["kind"]
-    | ((node: ts.Node) => node is TNode)
-;
-
-export interface NodeMutationsRequest extends FileMutationsRequest {
+/**
+ * Source file, metadata, and settings to collect mutations in the file.
+ */
+export interface FileMutationsRequest {
+    readonly fileInfoCache: FileInfoCache;
+    readonly options: TypeStatOptions;
     readonly printer: MutationPrinter;
+    readonly services: LanguageServices;
+    readonly sourceFile: ts.SourceFile;
 }
 
-export interface MutatorMetadata<TNode extends ts.Node> {
-    selector: MutatorSelector<TNode>;
-}
-
-export interface NodeMutator<TNode extends ts.Node = any> {
-    readonly metadata: MutatorMetadata<TNode>;
-
-    readonly run: (
-        node: TNode,
-        fileRequest: NodeMutationsRequest,
-    ) => IMutation | undefined;
-}
+/**
+ * Finds mutations of a certain type to run on a file.
+ * 
+ * @param request   Source file, metadata, and settings to collect mutations in the file.
+ * @returns Any mutations found to apply to the file.
+ */
+export type FileMutator = (request: FileMutationsRequest) => ReadonlyArray<IMutation>;
