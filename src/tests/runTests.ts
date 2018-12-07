@@ -27,6 +27,7 @@ describeMutationTestCases(
         return createTypeStatMutationsProvider(options);
     },
     {
+        accept: process.argv.indexOf("--accept") !== -1,
         actual: "actual.ts",
         expected: "expected.ts",
         original: "original.ts",

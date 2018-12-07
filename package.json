@@ -19,7 +19,7 @@
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.17.0",
     "tsutils": "^3.5.2",
-    "typescript": "^3.2.1"
+    "typescript": "^3.2.2"
   },
   "engines": {
     "node": "^8"
@@ -41,7 +41,7 @@
   "dependencies": {
     "@types/mz": "0.0.32",
     "automutate": "^0.6.0",
-    "automutate-tests": "^0.2.0",
+    "automutate-tests": "^0.2.1",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "cosmiconfig": "^5.0.7",
