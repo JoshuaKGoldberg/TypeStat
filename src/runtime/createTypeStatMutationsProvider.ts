@@ -12,13 +12,13 @@ import { findMutationsInFile } from "./findMutationsInFile";
  */
 export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMutationsProvider => {
     const lazyFileNamesAndServices = createLazyFileNamesAndServices(options);
-    const printer = new MutationPrinter(options);
     let lastFileIndex = -1;
 
     return {
         provide: async (): Promise<IMutationsWave> => {
-            const { fileNames, services } = await lazyFileNamesAndServices.get();
             const startTime = Date.now();
+            const { fileNames, services } = await lazyFileNamesAndServices.get();
+            const printer = new MutationPrinter(options, services);
             const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
             let addedMutations = 0;
 

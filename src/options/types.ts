@@ -8,6 +8,11 @@ import { Dictionary } from "../shared/maps";
  */
 export interface RawTypeStatOptions {
     /**
+     * Which fixes (type mutations) are enabled, with fields defaulting to `true`.
+     */
+    readonly fixes?: Partial<Fixes>;
+
+    /**
      * Globs of files to run on, if not everything in the TypeScript project.
      */
     readonly include?: ReadonlyArray<string>;
@@ -38,14 +43,14 @@ export interface TypeStatOptions {
     readonly fileNames?: ReadonlyArray<string>;
 
     /**
+     * Whether each fix (type mutation) is enabled.
+     */
+    readonly fixes: Readonly<Fixes>;
+
+    /**
      * Wraps process.stdout.write.
      */
     readonly logger: Logger;
-
-    /**
-     * Whether to skip adding types that aren't `null` or `undefined`.
-     */
-    readonly onlyStrictNullTypes?: boolean;
 
     /**
      * Names of added types mapped to strings to replace them with.
@@ -56,4 +61,16 @@ export interface TypeStatOptions {
      * Path to a tsconfig.json file.
      */
     readonly projectPath: string;
+}
+
+export interface Fixes {
+    /**
+     * Whether to add type annotations to types that don't yet have them per TypeScript's --noImplicitAny.
+     */
+    noImplicitAny: boolean;
+
+    /**
+     * Whether to add `null` and `undefined` as per TypeScript's --strictNullChecks.
+     */
+    strictNullChecks: boolean;
 }

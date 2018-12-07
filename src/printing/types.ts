@@ -24,13 +24,18 @@ export const isTypeFlagSetRecursively = (parentType: ts.Type, typeFlag: ts.TypeF
     return false;
 };
 
+/**
+ * Joins assigning types into a union to be used as a type reference.
+ * 
+ * @todo #12   Ignore type additions assignable to each other
+ */
 export const joinIntoType = (
     assignedFlags: ReadonlySet<string>,
-    assignedSymbols: ReadonlySet<ts.Symbol>,
+    assignedTypes: ReadonlySet<ts.Type>,
     typeAliases: ReadonlyMap<string, string>,
 ) => {
     const typeNames = [
-        ...Array.from(assignedSymbols).map(missingSymbol => missingSymbol.name),
+        ...Array.from(assignedTypes).map(assignedType => assignedType.symbol.name),
         ...assignedFlags,
     ];
 
