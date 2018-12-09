@@ -26,7 +26,22 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
         return;
     }
 
-    await typeStat({
-        configPath: command.config,
-    });
+    let runtimeError: Error | undefined;
+
+    try {
+        const result = await typeStat({
+            configPath: command.config,
+        });
+
+        if (!result.succeeded) {
+            runtimeError = result.error;
+        }
+    } catch (error) {
+        runtimeError = error;
+    }
+
+    if (runtimeError !== undefined) {
+        console.error(runtimeError);
+        process.exit(1);
+    }
 };

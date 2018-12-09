@@ -2,7 +2,8 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { FileMutationsRequest, FileMutator } from "../runtime/mutator";
+import { createTypeAdditionMutation } from "../mutations/creators";
+import { FileMutationsRequest, FileMutator } from "./fileMutator";
 
 export const returnMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
     const mutations: IMutation[] = [];
@@ -37,7 +38,7 @@ const visitFunctionWithBody = (node: ts.FunctionLikeDeclaration, request: FileMu
     const returnedTypes = collectFunctionReturnedTypes(node, request);
 
     // Add later-returned types to the node's type declaration if necessary
-    return request.printer.createTypeAdditionMutation(node.type, declaredType, returnedTypes);
+    return createTypeAdditionMutation(request, node.type, declaredType, returnedTypes);
 };
 
 /**

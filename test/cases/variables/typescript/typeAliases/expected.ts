@@ -34,11 +34,11 @@ let setToUndefinedHasNull: string | null | undefined = undefined;
 
 let setToNull: string | null = null;
 
-let setToNullAsNull = null;
+let setToNullAsNull: null = null;
 
 let setToNullHasUndefined: string | undefined | null = null;
 
-let setToString = "";
+let setToString: string = "";
 
 let setToStringAsString: string = "";
 

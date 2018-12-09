@@ -2,9 +2,10 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { FileMutationsRequest, FileMutator } from "../runtime/mutator";
+import { createTypeAdditionMutation, createTypeCreationMutation } from "../mutations/creators";
 import { findNodeByStartingPosition } from "../shared/nodes";
-import { nodeContainsType } from "../shared/nodeTypes";
+import { isNodeWithType } from "../shared/nodeTypes";
+import { FileMutationsRequest, FileMutator } from "./fileMutator";
 
 export const propertyMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
     const mutations: IMutation[] = [];
@@ -34,12 +35,12 @@ const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMut
     const assignedTypes = collectPropertyAssignedTypes(node, request);
 
     // If the property already has a declared type, add assigned types to it if necessary
-    if (nodeContainsType(node)) {
-        return request.printer.createTypeAdditionMutation(node.type, declaredType, assignedTypes);
+    if (isNodeWithType(node)) {
+        return createTypeAdditionMutation(request, node.type, declaredType, assignedTypes);
     }
 
     // Since the node doesn't have its own type, give it one if necessary
-    return request.printer.createTypeCreationMutation(node.name.end, declaredType, assignedTypes);
+    return createTypeCreationMutation(request, node.name.end, declaredType, assignedTypes);
 };
 
 const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: FileMutationsRequest): ReadonlyArray<ts.Type> => {

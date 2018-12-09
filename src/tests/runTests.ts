@@ -2,7 +2,7 @@ import { describeMutationTestCases } from "automutate-tests";
 import * as fs from "fs";
 import * as path from "path";
 
-import { fillOutRawOptions } from "../options/parsing";
+import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions } from "../options/types";
 import { createTypeStatMutationsProvider } from "../runtime/createTypeStatMutationsProvider";
 
@@ -20,7 +20,8 @@ describeMutationTestCases(
                 projectPath: path.join(path.dirname(projectPath), "tsconfig.json"),
             }),
             logger: {
-                write: () => {},
+                stderr: () => {},
+                stdout: () => {},
             },
         };
 
@@ -30,6 +31,9 @@ describeMutationTestCases(
         accept: process.argv.indexOf("--accept") !== -1,
         actual: "actual.ts",
         expected: "expected.ts",
+        // includes: [
+        //     /(.*)parameters(.*)/gi,
+        // ],
         original: "original.ts",
         settings: "typestat.json",
     },

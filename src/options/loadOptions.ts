@@ -1,38 +1,26 @@
 // tslint:disable-next-line:no-require-imports
 import cosmiconfig = require("cosmiconfig");
 
-import { processLogger } from "../logging/logger";
 import { globAllAsync } from "../shared/glob";
-import { convertObjectToMap } from "../shared/maps";
+import { fillOutRawOptions } from "./fillOutRawOptions";
 import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
+/**
+ * Parses raw options from a configuration file, using Cosmiconfig to find it if necessary.
+ * 
+ * @param configPath   Suggested path to load from, instead of searching.
+ * @returns Promise for parsed raw options from a configuration file.
+ * @remarks This defaults to 
+ */
 const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> => {
     const explorer = cosmiconfig("typestat");
     const cosmiconfigResult = configPath === undefined ? await explorer.search() : await explorer.load(configPath);
 
     return cosmiconfigResult === null
         ? {
-            projectPath: "typestat.json",
+            projectPath: "tsconfig.json",
         }
         : cosmiconfigResult.config as RawTypeStatOptions;
-};
-
-export const fillOutRawOptions = (rawOptions: RawTypeStatOptions, fileNames?: ReadonlyArray<string>): TypeStatOptions => {
-    return {
-        fileNames,
-        fixes: {
-            noImplicitAny: true,
-            strictNullChecks: true,
-            ...rawOptions.fixes,
-        },
-        logger: processLogger,
-        projectPath: rawOptions.projectPath === undefined
-            ? "tsconfig.json"
-            : rawOptions.projectPath,
-        typeAliases: rawOptions.typeAliases === undefined
-            ? new Map()
-            : convertObjectToMap(rawOptions.typeAliases),
-    };
 };
 
 /**

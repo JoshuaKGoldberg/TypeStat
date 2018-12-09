@@ -73,24 +73,7 @@ See `RawTypeStatOptions` in [`src/options/types.ts`](./src/options/types.ts).
 An optional object containing which fixes (type additions) are enabled.
 Any type fixes not mentioned **default to `true`**.
 
-#### `noImplicitAny`
-
-Whether to add type annotations to types that don't yet have them.
-
-TODO: mention TS 3.2?
-
-#### `strictNullChecks`
-
-Whether to add `| null` and `| undefined` types when constructs can be assigned them but aren't.
-Useful if your project is already fully onboarded onto `--noImplicitAny` but not `--strictNullChecks`.
-
-```json
-{
-    "fixes": {
-        "strictNullChecks": true
-    }
-}
-```
+See [Fixes.md](./docs/Fixes.md) for configuring these fixes.
 
 ### `include`
 

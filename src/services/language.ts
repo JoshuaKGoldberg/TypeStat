@@ -25,10 +25,11 @@ export const createLanguageServices = async (options: TypeStatOptions): Promise<
         throw new Error(`Could not parse compiler options from '${options.projectPath}': ${compilerOptions.error}`);
     }
 
-    // Parse the JSON into raw TypeScript options, overriding strictNullChecks to always be true
+    // Parse the JSON into raw TypeScript options, overriding compiler options to always be our options' equivalent
     const compilerConfigOptions: ts.CompilerOptions = {
         ...(compilerOptions.config as ts.CompilerOptions),
-        strictNullChecks: true,
+        noImplicitAny: options.fixes.noImplicitAny,
+        strictNullChecks: options.fixes.strictNullChecks,
     };
 
     // Create a TypeScript configuration using the raw options

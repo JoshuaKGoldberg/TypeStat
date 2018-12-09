@@ -1,11 +1,11 @@
 class Container {
-    givenUndefined: string | undefined = "";
+    givenUndefined: string = "";
 
-    givenUndefinedHasNull: string | null | undefined = "";
+    givenUndefinedHasNull: string | null = "";
 
-    givenNull: string | null = "";
+    givenNull: string = "";
 
-    givenNullHasUndefined: string | undefined | null = "";
+    givenNullHasUndefined: string | undefined = "";
 
     givenString: string = "";
 

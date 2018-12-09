@@ -1,5 +1,5 @@
 import { AutoMutator } from "automutate";
-import { loadOptions } from "./options/parsing";
+import { loadOptions } from "./options/loadOptions";
 import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutationsProvider";
 
 // tslint:disable:no-console
@@ -31,8 +31,6 @@ export const typeStat = async ({ configPath }: TypeStatOptions): Promise<TypeSta
 
         await automutator.run();
     } catch (error) {
-        console.error(error);
-
         return {
             error: error as Error,
             succeeded: false,

@@ -2,8 +2,10 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { FileMutationsRequest, FileMutator } from "../runtime/mutator";
-import { nodeContainsType } from "../shared/nodeTypes";
+import { createCodeFixAdditionMutation, getNoImplicitAnyCodeFixes } from "../mutations/codeFixes";
+import { createTypeAdditionMutation, createTypeCreationMutation } from "../mutations/creators";
+import { isNodeWithType } from "../shared/nodeTypes";
+import { FileMutationsRequest, FileMutator } from "./fileMutator";
 
 export const variableMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
     const mutations: IMutation[] = [];
@@ -25,19 +27,25 @@ export const variableMutator: FileMutator = (request: FileMutationsRequest): Rea
 };
 
 const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
-    // Collect the type initially declared by or inferred on the variable
-    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
-
-    // Collect types later assigned to the variable
-    const assignedTypes = collectVariableAssignedTypes(node, request);
-
-    // If the variable already has a declared type, add assigned types to it if necessary
-    if (nodeContainsType(node)) {
-        return request.printer.createTypeAdditionMutation(node.type, declaredType, assignedTypes);
+    // If the variable violates --noImplicitAny and we fix for that, apply a suggested code fix if we get one
+    if (!isNodeWithType(node) && request.options.fixes.noImplicitAny) {
+        const codeFixes = getNoImplicitAnyCodeFixes(node, request);
+        if (codeFixes.length !== 0) {
+            return createCodeFixAdditionMutation(codeFixes);
+        }
     }
 
-    // Since the node doesn't have its own type, give it one if necessary
-    return request.printer.createTypeCreationMutation(node.name.end, declaredType, assignedTypes);
+    // Collect types later assigned to the variable, and types initially declared by or inferred on the variable
+    const assignedTypes = collectVariableAssignedTypes(node, request);
+    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+
+    // If the variable already has a declared type, add assigned types to it if necessary
+    if (isNodeWithType(node)) {
+        return createTypeAdditionMutation(request, node.type, declaredType, assignedTypes);
+    }
+
+    // Since the node's missing type isn't inferrable, try our best to give it one
+    return createTypeCreationMutation(request, node.name.end, declaredType, assignedTypes);
 };
 
 /**

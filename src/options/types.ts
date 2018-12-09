@@ -34,7 +34,7 @@ export interface RawTypeStatOptions {
 }
 
 /**
- * Parsed runtime options to run TypeStat.
+ * Parsed runtime options for TypeStat.
  */
 export interface TypeStatOptions {
     /**
@@ -63,7 +63,15 @@ export interface TypeStatOptions {
     readonly projectPath: string;
 }
 
+/**
+ * Cross-file settings for forms of fixes.
+ */
 export interface Fixes {
+    /**
+     * Whether to augment existing type annotations that cause errors when different types are used.
+     */
+    incompleteTypes: boolean;
+
     /**
      * Whether to add type annotations to types that don't yet have them per TypeScript's --noImplicitAny.
      */

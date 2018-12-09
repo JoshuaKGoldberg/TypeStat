@@ -36,11 +36,11 @@ let setToUndefinedHasNull: string | null | undefined = undefined;
 
 let setToNull: string | null = null;
 
-let setToNullAsNull = null;
+let setToNullAsNull: null = null;
 
 let setToNullHasUndefined: string | undefined | null = null;
 
-let setToString = "";
+let setToString: string = "";
 
 let setToStringAsString: string = "";
 
@@ -64,10 +64,10 @@ class SampleClassTwo implements SampleInterface {
     readonly required = 1;
 }
 
-let onlyInterfaceImplicit: __object = { required: 1 };
-let onlyInterfaceExplicit: SampleInterface | __object = { required: 1 };
+let onlyInterfaceImplicit: { required: number; } = { required: 1 };
+let onlyInterfaceExplicit: SampleInterface = { required: 1 };
 
-let onlyClassOneImplicit = new SampleClassOne();
+let onlyClassOneImplicit: SampleClassOne = new SampleClassOne();
 let onlyClassOneExplicitClass: SampleClassOne = new SampleClassOne();
 let onlyClassOneExplicitInterface: SampleInterface | SampleClassOne = new SampleClassOne();
 

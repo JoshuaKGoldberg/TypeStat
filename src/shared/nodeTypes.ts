@@ -14,5 +14,5 @@ export type NodeWithType = ts.Node & {
     type: ts.TypeNode;
 };
 
-export const nodeContainsType = (node: NodeWithOptionalType): node is NodeWithType =>
+export const isNodeWithType = (node: NodeWithOptionalType): node is NodeWithType =>
     node.type !== undefined;
