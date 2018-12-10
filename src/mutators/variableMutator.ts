@@ -2,7 +2,7 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { createCodeFixAdditionMutation, getNoImplicitAnyCodeFixes } from "../mutations/codeFixes";
+import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../mutations/codeFixes";
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../mutations/creators";
 import { isNodeWithType } from "../shared/nodeTypes";
 import { FileMutationsRequest, FileMutator } from "./fileMutator";
@@ -27,12 +27,9 @@ export const variableMutator: FileMutator = (request: FileMutationsRequest): Rea
 };
 
 const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
-    // If the variable violates --noImplicitAny and we fix for that, apply a suggested code fix if we get one
-    if (!isNodeWithType(node) && request.options.fixes.noImplicitAny) {
-        const codeFixes = getNoImplicitAnyCodeFixes(node, request);
-        if (codeFixes.length !== 0) {
-            return createCodeFixAdditionMutation(codeFixes);
-        }
+    // If the variable violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
+    if (canNodeBeFixedForNoImplicitAny(node)) {
+        return getNoImplicitAnyMutations(node, request);
     }
 
     // Collect types later assigned to the variable, and types initially declared by or inferred on the variable

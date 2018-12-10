@@ -1,7 +1,7 @@
 import { IMutation } from "automutate";
 import * as ts from "typescript";
 
-import { createCodeFixAdditionMutation, getNoImplicitAnyCodeFixes } from "../mutations/codeFixes";
+import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../mutations/codeFixes";
 import { FileMutationsRequest, FileMutator } from "./fileMutator";
 
 export const parameterMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
@@ -24,12 +24,9 @@ export const parameterMutator: FileMutator = (request: FileMutationsRequest): Re
 };
 
 const visitParameterDeclaration = (node: ts.ParameterDeclaration, request: FileMutationsRequest): IMutation | undefined => {
-    // If the parameter violates --noImplicitAny and we fix for that, apply a suggested code fix if we get one
-    if (request.options.fixes.noImplicitAny) {
-        const codeFixes = getNoImplicitAnyCodeFixes(node, request);
-        if (codeFixes.length !== 0) {
-            return createCodeFixAdditionMutation(codeFixes);
-        }
+    // If the property violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
+    if (canNodeBeFixedForNoImplicitAny(node)) {
+        return getNoImplicitAnyMutations(node, request);
     }
 
     // Nothing else is implemented yet for parameters :)

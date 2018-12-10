@@ -38,7 +38,7 @@ let setToNullAsNull: null = null;
 
 let setToNullHasUndefined: string | undefined | null = null;
 
-let setToString: string = "";
+let setToString = "";
 
 let setToStringAsString: string = "";
 

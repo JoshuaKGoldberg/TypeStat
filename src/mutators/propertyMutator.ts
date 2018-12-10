@@ -2,6 +2,7 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
+import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../mutations/codeFixes";
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../mutations/creators";
 import { findNodeByStartingPosition } from "../shared/nodes";
 import { isNodeWithType } from "../shared/nodeTypes";
@@ -28,11 +29,14 @@ export const propertyMutator: FileMutator = (request: FileMutationsRequest): Rea
 };
 
 const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMutationsRequest): IMutation | undefined => {
-    // Collect the type initially declared by or inferred on the property
-    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+    // If the property violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
+    if (canNodeBeFixedForNoImplicitAny(node)) {
+        return getNoImplicitAnyMutations(node, request);
+    }
 
-    // Collect types later assigned to the property
+    // Collect types later assigned to the property, and types initially declared by or inferred on the property
     const assignedTypes = collectPropertyAssignedTypes(node, request);
+    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
 
     // If the property already has a declared type, add assigned types to it if necessary
     if (isNodeWithType(node)) {

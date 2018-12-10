@@ -40,7 +40,7 @@ let setToNullAsNull: null = null;
 
 let setToNullHasUndefined: string | undefined | null = null;
 
-let setToString: string = "";
+let setToString = "";
 
 let setToStringAsString: string = "";
 
@@ -64,10 +64,10 @@ class SampleClassTwo implements SampleInterface {
     readonly required = 1;
 }
 
-let onlyInterfaceImplicit: { required: number; } = { required: 1 };
+let onlyInterfaceImplicit = { required: 1 };
 let onlyInterfaceExplicit: SampleInterface = { required: 1 };
 
-let onlyClassOneImplicit: SampleClassOne = new SampleClassOne();
+let onlyClassOneImplicit = new SampleClassOne();
 let onlyClassOneExplicitClass: SampleClassOne = new SampleClassOne();
 let onlyClassOneExplicitInterface: SampleInterface | SampleClassOne = new SampleClassOne();
 
