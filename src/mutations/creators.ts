@@ -2,22 +2,25 @@ import { ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
+import { NodeWithAddableType, NodeWithCreatableType } from "../shared/nodeTypes";
 import { joinIntoType } from "./aliasing";
 import { collectUsageFlagsAndSymbols } from "./collecting";
-import { createTypescriptTypeAdditionMutation, createTypescriptTypeCreationMutation } from "./typescript";
+import { createJavaScriptTypeAdditionMutation } from "./modes/javascript/addition";
+import { createTypescriptTypeAdditionMutation } from "./modes/typescript/addition";
+import { createTypescriptTypeCreationMutation } from "./modes/typescript/creation";
 
 /**
  * Creates a mutation to add types to an existing type, if any are new.
  * 
- * @param request   Metadata and settings to collect mutations in a file.
- * @param typeNode   Original type declaration node.
+ * @param request   Source file, metadata, and settings to collect mutations in the file.
+ * @param node   Original node with a type declaration to add to.
  * @param declaredType   Declared type from the node.
  * @param allAssignedTypes   Types now assigned to the node.
  * @returns Mutation to add any new assigned types, if any are missing from the declared type.
  */
 export const createTypeAdditionMutation = (
     request: FileMutationsRequest,
-    typeNode: ts.TypeNode,
+    node: NodeWithAddableType,
     declaredType: ts.Type,
     allAssignedTypes: ReadonlyArray<ts.Type>,
 ): ITextInsertMutation | undefined => {
@@ -36,7 +39,9 @@ export const createTypeAdditionMutation = (
     }
 
     // Create a mutation insertion that adds the missing types in
-    return createTypescriptTypeAdditionMutation(typeNode, newTypeAlias);
+    return isJavaScriptFileName(request.sourceFile.fileName)
+        ? createJavaScriptTypeAdditionMutation(node, newTypeAlias)
+        : createTypescriptTypeAdditionMutation(node, newTypeAlias);
 };
 
 /**
@@ -50,7 +55,7 @@ export const createTypeAdditionMutation = (
  */
 export const createTypeCreationMutation = (
     request: FileMutationsRequest,
-    begin: number,
+    node: NodeWithCreatableType,
     declaredType: ts.Type,
     allAssignedTypes: ReadonlyArray<ts.Type>,
 ): ITextInsertMutation | undefined => {
@@ -69,6 +74,7 @@ export const createTypeCreationMutation = (
     }
 
     // Create a mutation insertion that adds the assigned types in
-    return createTypescriptTypeCreationMutation(begin, newTypeAlias);
+    return createTypescriptTypeCreationMutation(node, newTypeAlias);
 };
 
+const isJavaScriptFileName = (fileName: string): boolean => fileName.endsWith(".js") || fileName.endsWith(".jsx");

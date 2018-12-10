@@ -31,10 +31,7 @@ describeMutationTestCases(
         accept: process.argv.indexOf("--accept") !== -1,
         actual: "actual.ts",
         expected: "expected.ts",
-        // includes: [
-        //     /(.*)parameters(.*)/gi,
-        // ],
-        original: "../original.ts",
+        original: "../original.?s",
         settings: "typestat.json",
     },
 );

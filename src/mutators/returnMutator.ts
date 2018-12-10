@@ -1,8 +1,9 @@
+import { IMutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { IMutation } from "automutate";
 import { createTypeAdditionMutation } from "../mutations/creators";
+import { isNodeWithType } from "../shared/nodeTypes";
 import { FileMutationsRequest, FileMutator } from "./fileMutator";
 
 export const returnMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
@@ -27,7 +28,7 @@ export const returnMutator: FileMutator = (request: FileMutationsRequest): Reado
 
 const visitFunctionWithBody = (node: ts.FunctionLikeDeclaration, request: FileMutationsRequest): IMutation | undefined => {
     // If the node has an implicit return type, don't change anything
-    if (node.type === undefined) {
+    if (!isNodeWithType(node)) {
         return undefined;
     }
 
@@ -38,7 +39,7 @@ const visitFunctionWithBody = (node: ts.FunctionLikeDeclaration, request: FileMu
     const returnedTypes = collectFunctionReturnedTypes(node, request);
 
     // Add later-returned types to the node's type declaration if necessary
-    return createTypeAdditionMutation(request, node.type, declaredType, returnedTypes);
+    return createTypeAdditionMutation(request, node, declaredType, returnedTypes);
 };
 
 /**

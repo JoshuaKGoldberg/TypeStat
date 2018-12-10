@@ -10,11 +10,17 @@ function givenStringOrNullTypeLater(abc: string | null): void {
 
 givenStringOrNullTypeLater("" as string | null);
 
-function givenStringOrUndefinedTypeLater(abc: string | undefined): void {
+function givenStringOrNullOnStringTypeLater(abc: string | null /* todo: null */): void {
     console.log(abc);
 }
 
-givenStringOrUndefinedTypeLater("" as string | undefined);
+givenStringOrNullOnStringTypeLater("" as string | null);
+
+function givenStringOrUndefinedOnStringTypeLater(abc: string | undefined): void {
+    console.log(abc);
+}
+
+givenStringOrUndefinedOnStringTypeLater("" as string | undefined);
 
 function givenNullTypeLater(abc: undefined): void {
     console.log(abc);

@@ -38,11 +38,11 @@ const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMut
 
     // If the variable already has a declared type, add assigned types to it if necessary
     if (isNodeWithType(node)) {
-        return createTypeAdditionMutation(request, node.type, declaredType, assignedTypes);
+        return createTypeAdditionMutation(request, node, declaredType, assignedTypes);
     }
 
     // Since the node's missing type isn't inferrable, try our best to give it one
-    return createTypeCreationMutation(request, node.name.end, declaredType, assignedTypes);
+    return createTypeCreationMutation(request, node, declaredType, assignedTypes);
 };
 
 /**

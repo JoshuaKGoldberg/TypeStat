@@ -2,7 +2,6 @@ import { IMutation, ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
-import { createTypescriptTypeCreationMutation } from "./typescript";
 
 export type NoImplicitAnyNode = ts.ParameterDeclaration | ts.PropertyDeclaration | ts.VariableDeclaration;
 
@@ -79,5 +78,11 @@ const createCodeFixAdditionMutation = (fixes: ReadonlyArray<ts.CodeFixAction>): 
         return undefined;
     }
 
-    return createTypescriptTypeCreationMutation(textChanges[0].span.start, textChanges[0].newText.substring(": ".length));
+    return {
+        insertion: `: ${textChanges[0].newText.substring(": ".length)}`,
+        range: {
+            begin: textChanges[0].span.start,
+        },
+        type: "text-insert",
+    };
 };

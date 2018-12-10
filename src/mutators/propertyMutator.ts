@@ -40,11 +40,11 @@ const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMut
 
     // If the property already has a declared type, add assigned types to it if necessary
     if (isNodeWithType(node)) {
-        return createTypeAdditionMutation(request, node.type, declaredType, assignedTypes);
+        return createTypeAdditionMutation(request, node, declaredType, assignedTypes);
     }
 
-    // Since the node doesn't have its own type, give it one if necessary
-    return createTypeCreationMutation(request, node.name.end, declaredType, assignedTypes);
+    // Since the parameter doesn't have its own type, give it one if necessary
+    return createTypeCreationMutation(request, node, declaredType, assignedTypes);
 };
 
 const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: FileMutationsRequest): ReadonlyArray<ts.Type> => {
