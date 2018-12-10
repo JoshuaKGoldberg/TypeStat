@@ -41,37 +41,6 @@ won't have them added.
 Whether to add `| null` and `| undefined` types when constructs can be assigned them but aren't.
 Useful if your project is already fully onboarded onto `--noImplicitAny` but not `--strictNullChecks`.
 
-## Language Modes
-
-TypeStat will add the appropriate type annotations for the format of files it receives.
-For example, given the following file:
-
-```javascript
-function double(x) {
-    return x * 2;
-}
-```
-
-If the file has a `.js` or `.jsx` extension, it will have JSDoc types added:
-
-```javascript
-/**
- * @param {number} x
- * @returns {number}
- */
-function double(x) {
-    return x * 2;
-}
-```
-
-...whereas if the file has a `.ts` or `.tsx` extension, it will have TypeScript types added:
-
-```typescript
-function double(x: number): number {
-    return x * 2;
-}
-```
-
 ## Fixers
 
 ### Parameters

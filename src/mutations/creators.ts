@@ -5,7 +5,6 @@ import { FileMutationsRequest } from "../mutators/fileMutator";
 import { NodeWithAddableType, NodeWithCreatableType } from "../shared/nodeTypes";
 import { joinIntoType } from "./aliasing";
 import { collectUsageFlagsAndSymbols } from "./collecting";
-import { createJavaScriptTypeAdditionMutation } from "./modes/javascript/addition";
 import { createTypescriptTypeAdditionMutation } from "./modes/typescript/addition";
 import { createTypescriptTypeCreationMutation } from "./modes/typescript/creation";
 
@@ -39,9 +38,7 @@ export const createTypeAdditionMutation = (
     }
 
     // Create a mutation insertion that adds the missing types in
-    return isJavaScriptFileName(request.sourceFile.fileName)
-        ? createJavaScriptTypeAdditionMutation(node, newTypeAlias)
-        : createTypescriptTypeAdditionMutation(node, newTypeAlias);
+    return createTypescriptTypeAdditionMutation(node, newTypeAlias);
 };
 
 /**
@@ -76,5 +73,3 @@ export const createTypeCreationMutation = (
     // Create a mutation insertion that adds the assigned types in
     return createTypescriptTypeCreationMutation(node, newTypeAlias);
 };
-
-const isJavaScriptFileName = (fileName: string): boolean => fileName.endsWith(".js") || fileName.endsWith(".jsx");

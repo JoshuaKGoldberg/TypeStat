@@ -19,11 +19,11 @@ Adding type annotations through hundreds or thousands of legacy files is tedious
 This package automagically adds those missing type annotations for you with configurable comment markers.
 It can add...
 
-✨ JSDoc on vanilla JavaScript files!
-
 ✨ TypeScript types on files freshly converted from JavaScript to TypeScript!
 
-✨ Missing types to touch up your existing TypeScript files!
+✨ Fixes for `--noImplicitAny` across all your files with one command!
+
+✨ Missing `null`s and `undefined`s to get you started with `--strictNullChecks`!
 
 Doing so can allow you to enable these stricter compiler flags for all code without changing the runtime of existing code.
 
