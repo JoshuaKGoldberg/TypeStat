@@ -82,14 +82,14 @@ function double(x: number): number {
 
 Properties later assigned a type not represented by their initial type will have that type added onto them.
 
-For example, if a property has no type, `noImplicitAny`
+For example, if a property has no type declared and no initial value but is later assigned to a `string`, `noImplicitAny` would add a type of `string`:
 
 ```diff
 class Abc {
--   private def: string;
-+   private def: string | undefined;
+-   private def;
++   private def: string;
 
-    public ghi(def: string | undefined) {
+    public ghi(def: string) {
         this.def = def;
     }
 }

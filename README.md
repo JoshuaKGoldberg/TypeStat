@@ -33,9 +33,23 @@ For documentation on the types of fixes TypeStat applies, see [Fixes.md](./docs/
 
 ## Usage
 
+Install TypeStat globally:
+
 ```shell
 npm i -g typestat
 ```
+
+...then create a `typestat.json` file in your project directory:
+
+```json
+{
+    "fixes": {
+        "noImplicitAny": true
+    }
+}
+```
+
+See [Fixes.md](./docs/Fixes.md) for configuring these fixes.
 
 ### CLI
 

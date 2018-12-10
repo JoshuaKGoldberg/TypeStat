@@ -11,7 +11,7 @@ export const returnMutator: FileMutator = (request: FileMutationsRequest): Reado
     const visitNode = (node: ts.Node): void => {
         if (tsutils.isFunctionWithBody(node)) {
             const mutation = visitFunctionWithBody(node, request);
-            
+
             if (mutation !== undefined) {
                 mutations.push(mutation);
             }
@@ -42,10 +42,10 @@ const visitFunctionWithBody = (node: ts.FunctionLikeDeclaration, request: FileMu
 };
 
 /**
- * Finds any types returned that aren't also in the function-like's declared return type.
+ * Finds any types returned by a function-like.
  *
  * @param functionLikeDeclaration   Returning function-like declaration.
- * @param request   Request options for this fixer on the file.
+ * @param request   Source file, metadata, and settings to collect mutations in the file.
  * @returns Strict types missing from the declared type.
  */
 const collectFunctionReturnedTypes = (functionLikeDeclaration: ts.FunctionLikeDeclaration, request: FileMutationsRequest): ReadonlyArray<ts.Type> => {
