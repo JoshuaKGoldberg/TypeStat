@@ -71,7 +71,6 @@ See `RawTypeStatOptions` in [`src/options/types.ts`](./src/options/types.ts).
 ### `fixes`
 
 An optional object containing which fixes (type additions) are enabled.
-Any type fixes not mentioned **default to `true`**.
 
 See [Fixes.md](./docs/Fixes.md) for configuring these fixes.
 

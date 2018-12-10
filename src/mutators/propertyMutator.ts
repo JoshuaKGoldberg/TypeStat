@@ -61,6 +61,7 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
     }
 
     // Find everything else referencing the property, since non-private properties can be assigned to in other files
+    // https://github.com/JoshuaKGoldberg/TypeStat/issues/4 tracks shortcutting this for private properties
     const referencedSymbols = request.services.languageService.findReferences(
         request.sourceFile.fileName,
         node.getStart(request.sourceFile),

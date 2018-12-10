@@ -10,16 +10,16 @@
     let givenUndefinedHasNull: string | null | undefined = "";
     givenUndefinedHasNull = undefined;
 
-    let givenNull: string | null = "";
+    let givenNull: string | null /* todo: null */ = "";
     givenNull = null;
 
-    let givenNullAsString: string | null = "";
+    let givenNullAsString: string | null /* todo: null */ = "";
     givenNullAsString = null;
 
-    let givenNullHasUndefined: string | undefined | null = "";
+    let givenNullHasUndefined: string | undefined | null /* todo: null */ = "";
     givenNullHasUndefined = null;
 
-    let givenString;
+    let givenString: string;
     givenString = "";
 
     let givenStringAsString: string = "";
@@ -35,11 +35,11 @@
 
     let setToUndefinedHasNull: string | null | undefined = undefined;
 
-    let setToNull: string | null = null;
+    let setToNull: string | null /* todo: null */ = null;
 
-    let setToNullAsNull = null;
+    let setToNullAsNull: null /* todo: null */ = null;
 
-    let setToNullHasUndefined: string | undefined | null = null;
+    let setToNullHasUndefined: string | undefined | null /* todo: null */ = null;
 
     let setToString = "";
 
@@ -87,7 +87,7 @@
     let eitherClassNeedsUnionExplicitInterface: SampleInterface | SampleClassOne = new SampleClassOne();
     eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
-    let eitherClassNeedsNullImplicit: SampleClassOne | SampleClassTwo | null = new SampleClassOne();
+    let eitherClassNeedsNullImplicit: SampleClassOne | SampleClassTwo | null /* todo: null */ = new SampleClassOne();
     eitherClassNeedsNullImplicit = new SampleClassTwo();
     eitherClassNeedsNullImplicit = null;
 
@@ -109,7 +109,7 @@
 
     // Arrays
 
-    let numberEmptyImplicit = [];
+    let numberEmptyImplicit: Array = [];
     numberImplicit.push(1);
 
     let numberEmptyExplicit: number[] | Array = [];
@@ -122,7 +122,7 @@
     numberFilledExplicit.push(1);
     numberFilledExplicit.push("");
 
-    let numberOrStringEmptyImplicit = [];
+    let numberOrStringEmptyImplicit: Array = [];
     numberOrStringImplicit.push(1);
     numberOrStringImplicit.push("");
     

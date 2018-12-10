@@ -34,7 +34,7 @@ describeMutationTestCases(
         // includes: [
         //     /(.*)parameters(.*)/gi,
         // ],
-        original: "original.ts",
+        original: "../original.ts",
         settings: "typestat.json",
     },
 );

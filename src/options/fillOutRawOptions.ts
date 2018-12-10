@@ -6,9 +6,9 @@ export const fillOutRawOptions = (rawOptions: RawTypeStatOptions, fileNames?: Re
     return {
         fileNames,
         fixes: {
-            incompleteTypes: true,
-            noImplicitAny: true,
-            strictNullChecks: true,
+            incompleteTypes: false,
+            noImplicitAny: false,
+            strictNullChecks: false,
             ...rawOptions.fixes,
         },
         logger: processLogger,

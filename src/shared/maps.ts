@@ -16,7 +16,7 @@ export const convertMapToObject = <TValue>(map: ReadonlyMap<string, TValue>): Di
 export const convertObjectToMap = <TValue>(object: Readonly<Dictionary<TValue>>): ReadonlyMap<string, TValue> => {
     const map = new Map<string, TValue>();
 
-    for (const key of Object.keys(map)) {
+    for (const key of Object.keys(object)) {
         map.set(key, object[key]);
     }
 

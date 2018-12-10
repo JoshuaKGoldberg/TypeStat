@@ -52,7 +52,7 @@ export const createTypeCreationMutation = (
     request: FileMutationsRequest,
     begin: number,
     declaredType: ts.Type,
-    allAssignedTypes: ReadonlyArray <ts.Type>,
+    allAssignedTypes: ReadonlyArray<ts.Type>,
 ): ITextInsertMutation | undefined => {
     // Find the already assigned flags and symbols, as well as any missing ones
     const { assignedFlags, assignedTypes, missingFlags, missingTypes } = collectUsageFlagsAndSymbols(request, declaredType, allAssignedTypes);

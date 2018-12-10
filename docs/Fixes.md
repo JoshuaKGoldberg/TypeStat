@@ -6,14 +6,14 @@ These mutations are all purely additive and limited to the type system, meaning 
 ## Configuring
 
 Each fixer can be configured to suggest no, some, or all forms of type modifications.
-These all default to `true` but can be disabled by setting them to false.
+These all default to `false` but can be enabled by setting them to `true`.
 
 ```json
 {
     "fixes": {
-        "incompleteTypes": false,
-        "noImplicitAny": false,
-        "strictNullChecks": false
+        "incompleteTypes": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true
     }
 }
 ```
