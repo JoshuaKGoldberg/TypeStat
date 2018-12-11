@@ -78,6 +78,11 @@ export interface Fixes {
     noImplicitAny: boolean;
 
     /**
+     * Whether to add `this` type annotations to functions that don't yet have them per TypeScript's --noImplicitThis.
+     */
+    noImplicitThis: boolean;
+
+    /**
      * Whether to add `null` and `undefined` as per TypeScript's --strictNullChecks.
      */
     strictNullChecks: boolean;

@@ -1,4 +1,5 @@
 import { FileMutator } from "./fileMutator";
+import { functionThisMutator } from "./functionThisMutator";
 import { parameterMutator } from "./parameterMutator";
 import { propertyMutator } from "./propertyMutator";
 import { returnMutator } from "./returnMutator";
@@ -9,4 +10,5 @@ export const defaultFileMutators: ReadonlyArray<[string, FileMutator]> = [
     ["returnMutator", returnMutator],
     ["variableMutator", variableMutator],
     ["parameterMutator", parameterMutator],
+    ["functionThisMutator", functionThisMutator],
 ];

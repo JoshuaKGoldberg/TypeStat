@@ -27,8 +27,8 @@ export const returnMutator: FileMutator = (request: FileMutationsRequest): Reado
 };
 
 const visitFunctionWithBody = (node: ts.FunctionLikeDeclaration, request: FileMutationsRequest): IMutation | undefined => {
-    // If the node has an implicit return type, don't change anything
-    if (!isNodeWithType(node)) {
+    // If the node has an implicit return type or we don't need to add missing types, don't change anything
+    if (!isNodeWithType(node) || !request.options.fixes.incompleteTypes) {
         return undefined;
     }
 

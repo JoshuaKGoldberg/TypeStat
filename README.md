@@ -26,46 +26,58 @@ It can add...
 ✨ Missing `null`s and `undefined`s to get you started with `--strictNullChecks`!
 
 Doing so can allow you to enable these stricter compiler flags for all code without changing the runtime of existing code.
+Hooray!
+💪
 
 For documentation on the types of fixes TypeStat applies, see [Fixes.md](./docs/Fixes.md).
 
 > 👉 Protip: also take a look at [TypeWiz](https://github.com/urish/typewiz)! 👈
 
-## Usage
-
-Install TypeStat globally:
+## Installation
 
 ```shell
 npm i -g typestat
 ```
 
-...then create a `typestat.json` file in your project directory:
+TypeStat can be installed globally or as a project dependency via npm/yarn.
 
-```json
-{
-    "fixes": {
-        "noImplicitAny": true
-    }
-}
-```
-
-See [Fixes.md](./docs/Fixes.md) for configuring these fixes.
-
-### CLI
+## CLI
 
 ```shell
 typestat
 ```
 
-The `typestat` command uses [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig)
-to search for a `package.json` property or configuration file such as `typestat.json` for settings.
+This will use [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig)
+to search for a `package.json` `"typestat"` property or configuration file such as `typestat.json` to use settings from.
+
+You can run on only a subset of files by passing globs to the command:
+
+```shell
+typestat src/demo/*.ts src/utils/**/*.ts
+```
+
+### Flags
 
 #### `-c`/`--config`
 
-Path to a config file, if you'd like a custom path.
+Path to a TypeStat configuration file, if you'd like a custom path.
 
 ```shell
 typestat --config typestat.custom.json
+```
+
+#### `-p`/`--project`
+
+Path to a TypeScript project file, if you'd like a path other than `./tsconfig.json`.
+
+```shell
+typestat --project tsconfig.strict.json
+```
+
+```json
+{
+    "project": "tsconfig.strict.json"
+}
 ```
 
 #### `-V`/`--version`
@@ -76,41 +88,101 @@ Run with `-V` or `--version` to print the package version.
 typestat --version
 ```
 
-## Options
+### Fixes
 
-All runtime options, such as `fixes` or a `tsconfig.json` path, are expected to be in a `typestat.json` or [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig) equivalent.
+An optional set of CLI flags or configuration object containing which fixes (type additions) are enabled.
 
-See `RawTypeStatOptions` in [`src/options/types.ts`](./src/options/types.ts).
-
-### `fixes`
-
-An optional object containing which fixes (type additions) are enabled.
-
-See [Fixes.md](./docs/Fixes.md) for configuring these fixes.
-
-### `include`
-
-Globs of files to run on, if not everything in the TypeScript project.
-Useful to only change some files at a time.
+Each fixer can be configured to suggest no, some, or all forms of type modifications.
+These all default to `false` but can be enabled by being set to `true`.
 
 ```json
 {
-    "include": [
-        "src/experimental/**/*.ts"
-    ]
+    "fixes": {
+        "incompleteTypes": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true
+    }
 }
 ```
 
-### `projectPath`
+See [Fixes.md](./docs/Fixes.md) for more details on these fixes.
 
-Relative path to a TypeScript project.
-Defaults to `"tsconfig.json"`.
+### `--fixNoImplicitAny`/`noImplicitAny`
+
+```shell
+typestat --fixNoImplicitAny
+```
 
 ```json
 {
-    "projectPath": "./tsconfig.custom.json"
+    "fixes": {
+        "noImplicitAny": true
+    }
 }
 ```
+
+Whether to add type annotations to types that don't yet have them.
+This entirely relies on TypeScript's suggested fixes to infer types from usage.
+
+Places that don't need added types (i.e. would violate [`no-unnecessary-type-annotation`](https://github.com/ajafff/tslint-consistent-codestyle/blob/master/docs/no-unnecessary-type-annotation.md))
+won't have them added.
+
+<!--
+### `--fixNoImplicitThis`/`noImplicitThis`
+
+```shell
+typestat --fixNoImplicitThis
+```
+
+```json
+{
+    "fixes": {
+        "noImplicitThis": true
+    }
+}
+```
+
+> ❌ Coming soon! ❌
+>
+> Blocked on https://github.com/Microsoft/TypeScript/issues/28964.
+-->
+
+### `--fixStrictNullChecks`/`strictNullChecks`
+
+```shell
+typestat --fixStrictNullChecks
+```
+
+```json
+{
+    "fixes": {
+        "strictNullChecks": true
+    }
+}
+```
+
+Whether to add `| null` and `| undefined` types when constructs can be assigned them but aren't.
+Useful if your project is already fully onboarded onto `--noImplicitAny` but not `--strictNullChecks`.
+
+#### `--fixIncompleteTypes`/`incompleteTypes`
+
+```shell
+typestat --fixIncompleteTypes
+```
+
+```json
+{
+    "fixes": {
+        "incompleteTypes": true
+    }
+}
+```
+
+Whether to augment type annotations that don't capture all values constructs can be set to.
+
+This typically isn't useful on its own _(unless you have many incorrect types)_,
+but is powerful along with `noImplicitAny` and/or `strictNullChecks` to fix existing codebases for the stricter compiler flags.
 
 ### `typeAliases`
 
@@ -121,7 +193,7 @@ For example, to replace `null` with `null /* TODO: check auto-generated types (t
 ```json
 {
     "typeAliases": {
-        "null": "null /* TODO: check auto-added types (thanks TypeStat!) */"
+        "null": "null /* TODO: check added types (thanks TypeStat!) */"
     }
 }
 ```
@@ -166,28 +238,3 @@ await typeStat({
     config: "./typestat.custom.json",
 });
 ```
-
-## Development
-
-After installing [Node >=8](https://nodejs.org/en/download), clone and install packages locally with:
-
-```shell
-git clone https://github.com/joshuakgoldberg/typestat
-cd typestat
-npm i
-```
-
-Compile with `npm run tsc`, lint with `npm run lint`, and run tests with `npm run test`.
-Do all three with `npm run verify`.
-
-### Why Not TSLint?
-
-Or: why isn't this implemented as a set of [TSLint](https://github.com/palantir/tslint) rules?
-
-Great question!
-TSLint rules, even with [type checking](https://palantir.github.io/tslint/usage/type-checking), don't have access to the full [TypeScript language service](https://github.com/Microsoft/TypeScript/wiki/Using-the-Language-Service-API).
-This is by design for performance and reliability reasons.
-TypeStat needs that service.
-
-TSLint also has a [relatively unstable `--fix`](https://github.com/palantir/tslint/issues/2556) that can't handle multiple rounds of mutations.
-TypeStat is built on [Automutate](https://github.com/automutate/automutate), which is more stable and allows multiple rounds.

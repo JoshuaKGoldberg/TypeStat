@@ -1,7 +1,8 @@
-import { IMutation, ITextInsertMutation } from "automutate";
+import { IMutation } from "automutate";
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { createCodeFixAdditionMutation } from "./additions";
 
 export type NoImplicitAnyNode = ts.ParameterDeclaration | ts.PropertyDeclaration | ts.VariableDeclaration;
 
@@ -56,33 +57,3 @@ const getNoImplicitAnyCodeFixes = (node: NoImplicitAnyNode, request: FileMutatio
         },
         {}
     );
-
-/**
- * Attempts to convert a language service code fix into a usable mutation.
- * 
- * @param fixes   Code fix actions from a language service.
- * @returns Equivalent mutation, if possible.
- */
-const createCodeFixAdditionMutation = (fixes: ReadonlyArray<ts.CodeFixAction>): ITextInsertMutation | undefined => {
-    if (fixes.length === 0) {
-        return undefined;
-    }
-
-    const { changes } = fixes[0];
-    if (changes.length === 0) {
-        return undefined;
-    }
-
-    const { textChanges } = changes[0];
-    if (textChanges.length === 0) {
-        return undefined;
-    }
-
-    return {
-        insertion: `: ${textChanges[0].newText.substring(": ".length)}`,
-        range: {
-            begin: textChanges[0].span.start,
-        },
-        type: "text-insert",
-    };
-};

@@ -1,15 +1,17 @@
+
+
 /**
  * Wraps process.stdout.write.
  */
 export interface Logger {
-    readonly stderr: (text: string) => void;
-    readonly stdout: (text: string) => void;
+    readonly stderr: NodeJS.WritableStream;
+    readonly stdout: NodeJS.WritableStream;
 }
 
 /**
  * Wraps process.stdout.write.
  */
 export const processLogger: Logger = {
-    stderr: process.stderr.write.bind(process.stderr),
-    stdout: process.stdout.write.bind(process.stdout),
+    stderr: process.stderr,
+    stdout: process.stdout,
 };

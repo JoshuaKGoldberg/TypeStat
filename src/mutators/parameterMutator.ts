@@ -1,7 +1,7 @@
 import { IMutation } from "automutate";
 import * as ts from "typescript";
 
-import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../mutations/codeFixes";
+import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../mutations/codeFixes/noImplicitAny";
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../mutations/creators";
 import { findNodeByStartingPosition } from "../shared/nodes";
 import { isNodeWithType } from "../shared/nodeTypes";
@@ -30,6 +30,11 @@ const visitParameterDeclaration = (node: ts.ParameterDeclaration, request: FileM
     // If the property violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
     if (canNodeBeFixedForNoImplicitAny(node)) {
         return getNoImplicitAnyMutations(node, request);
+    }
+
+    // If we don't add missing types, there's nothing else to do
+    if (!request.options.fixes.incompleteTypes) {
+        return undefined;
     }
 
     // Collect types initially assigned or later called with as the parameter

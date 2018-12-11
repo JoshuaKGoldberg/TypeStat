@@ -1,14 +1,16 @@
 import { IMutation } from "automutate";
 import chalk from "chalk";
 
+import { readline } from "mz";
 import { defaultFileMutators } from "../mutators/defaultFileMutators";
 import { FileMutationsRequest } from "../mutators/fileMutator";
 
 /**
  * Collects all mutations that should apply to a file.
  */
-export const findMutationsInFile = async (request: FileMutationsRequest): Promise<ReadonlyArray<IMutation>> => {
-    request.options.logger.stdout(chalk.grey(`Checking ${chalk.bold(request.sourceFile.fileName)}...`));
+export const findMutationsInFile = async (request: FileMutationsRequest): Promise<ReadonlyArray<IMutation> | undefined> => {
+    const checkMessage = chalk.grey(`Checking ${chalk.bold(request.sourceFile.fileName)}...`)
+    request.options.logger.stdout.write(checkMessage);
     let mutations: ReadonlyArray<IMutation> | undefined;
 
     for (const [mutatorName, mutator] of defaultFileMutators) {
@@ -20,15 +22,11 @@ export const findMutationsInFile = async (request: FileMutationsRequest): Promis
                 break;
             }
         } catch (error) {
-            request.options.logger.stderr(`\nError in ${request.sourceFile.fileName} with ${mutatorName}: ${(error as Error).stack}\n`);
+            request.options.logger.stderr.write(`\nError in ${request.sourceFile.fileName} with ${mutatorName}: ${(error as Error).stack}\n`);
         }
     }
 
-    if (mutations === undefined) {
-        request.options.logger.stdout(chalk.grey(" nothing going.\n"));
-        return [];
-    }
-
-    request.options.logger.stdout(` ${chalk.green(`${mutations.length}`)} found.\n`);
+    readline.moveCursor(request.options.logger.stdout, -checkMessage.length, 0);
+    readline.clearLine(request.options.logger.stdout, 1);
     return mutations;
 };

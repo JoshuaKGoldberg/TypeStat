@@ -1,6 +1,7 @@
 import { describeMutationTestCases } from "automutate-tests";
 import * as fs from "fs";
 import * as path from "path";
+import { Writable } from "stream";
 
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions } from "../options/types";
@@ -14,18 +15,19 @@ describeMutationTestCases(
         }
 
         const rawOptions = JSON.parse(fs.readFileSync(projectPath).toString()) as RawTypeStatOptions;
-        const options = {
-            ...fillOutRawOptions({
-                ...rawOptions,
-                projectPath: path.join(path.dirname(projectPath), "tsconfig.json"),
-            }),
-            logger: {
-                stderr: () => {},
-                stdout: () => {},
-            },
-        };
 
-        return createTypeStatMutationsProvider(options);
+        return createTypeStatMutationsProvider({
+            ...fillOutRawOptions(
+                {},
+                {
+                    ...rawOptions,
+                    projectPath: path.join(path.dirname(projectPath), "tsconfig.json"),
+                }),
+            logger: {
+                stderr: new Writable(),
+                stdout: new Writable(),
+            },
+        });
     },
     {
         accept: process.argv.indexOf("--accept") !== -1,

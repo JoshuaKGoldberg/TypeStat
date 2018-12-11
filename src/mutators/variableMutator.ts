@@ -2,7 +2,7 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../mutations/codeFixes";
+import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../mutations/codeFixes/noImplicitAny";
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../mutations/creators";
 import { isNodeWithType } from "../shared/nodeTypes";
 import { FileMutationsRequest, FileMutator } from "./fileMutator";
@@ -27,9 +27,19 @@ export const variableMutator: FileMutator = (request: FileMutationsRequest): Rea
 };
 
 const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+    // For-of loop varibles cannot have types, so don't bother trying to add them
+    if (ts.isForOfStatement(node.parent.parent)) {
+        return undefined;
+    }
+
     // If the variable violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
     if (canNodeBeFixedForNoImplicitAny(node)) {
         return getNoImplicitAnyMutations(node, request);
+    }
+
+    // If we don't add missing types, there's nothing else to do
+    if (!request.options.fixes.incompleteTypes) {
+        return undefined;
     }
 
     // Collect types later assigned to the variable, and types initially declared by or inferred on the variable

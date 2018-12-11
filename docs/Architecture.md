@@ -13,7 +13,8 @@ When the `typestat` command is entered into the CLI, roughly the following happe
 
 1. [bin/typestat](../bin/typestat) calls to the [CLI](../src/cli/index.ts)
 2. [Commander.js](https://github.com/tj/commander.js) parses the CLI's arguments
-3. An Automutator provider is created for TypeStat with [`createTypeStatMutationsProvider`](../src/runtime/createTypeStatMutationsProvider.ts).
+3. Settings are filled from settings found with [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig), if any are found
+4. An Automutator provider is created for TypeStat with [`createTypeStatMutationsProvider`](../src/runtime/createTypeStatMutationsProvider.ts).
 
 ### Mutation Providing
 
@@ -22,8 +23,8 @@ Each round of mutation providing roughly:
 1. Records the starting time
 2. Creates a set of TypeScript language services
 3. For each file to be visited:
-    1. Retrieve file mutations for that file
-    2. If more than 100 mutations have been collected, or mutations have been collected and it's been more than 10 seconds since the round started, stop the round
+    1. Retrieves file mutations for that file
+    2. If more than 100 mutations have been collected, or mutations have been collected and it's been more than 10 seconds since the round started, stops the round
 
 Subsequent rounds will pick up where the previous round left off.
 For example, given files `a.ts`, `b.ts`, and `c.ts` in order,
@@ -37,10 +38,11 @@ TypeStat crashing before a round is complete shouldn't lose all accumulated muta
 For each file it visits, [`findMutationsInFile`](../src/runtime/findMutationsInFile.ts) will attempt to apply the following mutations in order
 _(ordered by which is likely to complete the fastest)_:
 
-1. Variables
-2. Returns
-3. Properties
-4. Parameters
+1. Variable types
+2. Function-like return types
+3. Property types
+4. Parameter types
+5. Function `this` types
 
 Within each round of applying mutations, TypeStat will stop after each step if any mutations are found.
 Adding mutations from one from can improve mutations from other forms, so reloading the file between rounds could reduce the number of later rounds.
@@ -96,3 +98,15 @@ They're recreated each mutations wave, as the underlying TypeScript source files
 ### `shared`
 
 Miscellaneous utilities used by other sections.
+
+## Why Not TSLint?
+
+Or: why isn't this implemented as a set of [TSLint](https://github.com/palantir/tslint) rules?
+
+Great question!
+TSLint rules, even with [type checking](https://palantir.github.io/tslint/usage/type-checking), don't have access to the full [TypeScript language service](https://github.com/Microsoft/TypeScript/wiki/Using-the-Language-Service-API).
+This is by design for performance and reliability reasons.
+TypeStat needs that service.
+
+TSLint also has a [relatively unstable `--fix`](https://github.com/palantir/tslint/issues/2556) that can't handle multiple rounds of mutations.
+TypeStat is built on [Automutate](https://github.com/automutate/automutate), which is more stable and allows multiple rounds.

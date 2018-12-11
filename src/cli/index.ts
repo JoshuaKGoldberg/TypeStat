@@ -1,12 +1,18 @@
 import * as commander from "commander";
 
-import { typeStat } from "../index";
+import { ResultStatus, typeStat, TypeStatResult } from "../index";
 import { getPackageVersion } from "./version";
 
 // tslint:disable:no-console
 
-interface ParsedArgv {
+export interface ParsedCliArgv {
+    readonly args?: ReadonlyArray<string>;
     readonly config?: string;
+    readonly fixIncompleteTypes?: boolean;
+    readonly fixNoImplicitAny?: boolean;
+    readonly fixNoImplicitThis?: boolean;
+    readonly fixStrictNullChecks?: boolean;
+    readonly project?: string;
 }
 
 /**
@@ -17,31 +23,41 @@ interface ParsedArgv {
  */
 export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
     const command = new commander.Command()
-        .option("-c, --config [config]", "path to a config file")
-        .option("-V, --version", "output the package version")
-        .parse(argv as string[]) as ParsedArgv;
+        .option("-c, --config [config]", "path to a TypeStat config file")
+        .option("-p, --project [project]", "path to a TypeScript project file")
+        .option("--fixIncompleteTypes [fixIncompleteTypes]", "add missing types to existing, incomplete types")
+        .option("--fixNoImplicitAny [fixNoImplicitAny]", "fix TypeScript's --noImplicitAny complaints")
+        .option("--fixNoImplicitThis [fixNoImplicitThis]", "fix TypeScript's --strictNullChecks complaints")
+        .option("--fixStrictNullChecks [fixStrictNullChecks]", "override TypeScript's --strictNullChecks setting for added types")
+        .option("-V, --version", "output the package version");
+    const parsed = command.parse(argv as string[]) as ParsedCliArgv;
 
-    if ({}.hasOwnProperty.call(command, "version")) {
+    if ({}.hasOwnProperty.call(parsed, "version")) {
         console.log(await getPackageVersion());
         return;
     }
 
-    let runtimeError: Error | undefined;
+    let result: TypeStatResult;
 
     try {
-        const result = await typeStat({
-            configPath: command.config,
-        });
-
-        if (!result.succeeded) {
-            runtimeError = result.error;
-        }
+        result = await typeStat(parsed);
     } catch (error) {
-        runtimeError = error;
+        result = {
+            error,
+            status: ResultStatus.Failed,
+        };
     }
 
-    if (runtimeError !== undefined) {
-        console.error(runtimeError);
-        process.exit(1);
+    if (result.status === ResultStatus.Succeeded) {
+        return;
     }
+
+    if (result.status === ResultStatus.ConfigurationError) {
+        command.outputHelp();
+        console.log("");
+    }
+
+    console.error(result.error);
+
+    process.exit(1);
 };

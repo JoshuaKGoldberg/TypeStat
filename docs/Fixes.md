@@ -3,51 +3,11 @@
 TypeStat will apply mutations ("fixes") to files as it finds them.
 These mutations are all purely additive and limited to the type system, meaning they will _not_ change your JavaScript output.
 
-## Configuring
-
-Each fixer can be configured to suggest no, some, or all forms of type modifications.
-These all default to `false` but can be enabled by setting them to `true`.
-
-```json
-{
-    "fixes": {
-        "incompleteTypes": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true
-    }
-}
-```
-
-### `incompleteTypes`
-
-Whether to augment type annotations that don't capture all values constructs can be set to.
-
-This typically isn't useful on its own, but is powerful along with `noImplicitAny` and/or `strictNullChecks` to fix existing codebases for the stricter compiler flags.
-
-### `noImplicitAny`
-
-Whether to add type annotations to types that don't yet have them.
-This entirely relies on TypeScript's suggested fixes to infer types from usage.
-
-Places that don't need added types (i.e. would violate [`no-unnecessary-type-annotation`](https://github.com/ajafff/tslint-consistent-codestyle/blob/master/docs/no-unnecessary-type-annotation.md))
-won't have them added.
-
-### `noImplicitThis`
+## Parameters
 
 > ❌ Coming soon! ❌
 
-### `strictNullChecks`
-
-Whether to add `| null` and `| undefined` types when constructs can be assigned them but aren't.
-Useful if your project is already fully onboarded onto `--noImplicitAny` but not `--strictNullChecks`.
-
-## Fixers
-
-### Parameters
-
-> ❌ Coming soon! ❌
-
-### Properties
+## Properties
 
 Properties later assigned a type not represented by their initial type will have that type added onto them.
 
@@ -66,7 +26,7 @@ class Abc {
 
 If a property's type doesn't change, it won't have any modifications.
 
-### Returns
+## Returns
 
 Functions that have an explicit return type but can return a different type will have that type added onto their return type.
 

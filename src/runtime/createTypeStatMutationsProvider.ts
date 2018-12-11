@@ -1,5 +1,6 @@
 import { IMutation, IMutationsProvider, IMutationsWave } from "automutate";
 
+import { readline } from "mz";
 import { TypeStatOptions } from "../options/types";
 import { createLazyFileNamesAndServices } from "../services/lazyFileNamesAndServices";
 import { FileInfoCache } from "../shared/FileInfoCache";
@@ -12,10 +13,10 @@ import { findMutationsInFile } from "./findMutationsInFile";
 export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMutationsProvider => {
     const lazyFileNamesAndServices = createLazyFileNamesAndServices(options);
     let lastFileIndex = -1;
+    let hasPassedFirstFile = false;
 
     return {
         provide: async (): Promise<IMutationsWave> => {
-            options.logger.stdout(`Starting wave of TypeStat file mutations.\n`);
             const startTime = Date.now();
             const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
             const fileNames = options.fileNames === undefined
@@ -29,7 +30,7 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
 
                 const sourceFile = services.program.getSourceFile(fileName);
                 if (sourceFile === undefined) {
-                    options.logger.stderr(`Could not find TypeScript source file for '${fileName}'.\n`);
+                    options.logger.stderr.write(`Could not find TypeScript source file for '${fileName}'.\n`);
                     continue;
                 }
 
@@ -40,7 +41,7 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
                     sourceFile,
                 });
 
-                if (foundMutations.length !== 0) {
+                if (foundMutations !== undefined && foundMutations.length !== 0) {
                     addedMutations += foundMutations.length;
                     fileMutations.set(fileName, foundMutations);
                 }
@@ -55,6 +56,12 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
                 lazyFileNamesAndServices.reset();
             }
 
+            if (!hasPassedFirstFile) {
+                hasPassedFirstFile = true;
+            } else {
+                readline.clearLine(options.logger.stdout, 0);
+                readline.moveCursor(options.logger.stdout, 0, -1);
+            }
             return {
                 fileMutations: fileMutations.size === 0 ? undefined : convertMapToObject(fileMutations) as Dictionary<IMutation[]>,
             };

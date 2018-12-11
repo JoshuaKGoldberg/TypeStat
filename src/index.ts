@@ -1,30 +1,49 @@
 import { AutoMutator } from "automutate";
+import { ParsedCliArgv } from "./cli";
 import { loadOptions } from "./options/loadOptions";
+import { TypeStatOptions } from "./options/types";
 import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutationsProvider";
 
 // tslint:disable:no-console
 
-export interface TypeStatOptions {
-    /**
-     * Path to load configuration options from, if not via a cosmiconfig lookup.
-     */
-    readonly configPath?: string;
+export enum ResultStatus {
+    ConfigurationError,
+    Failed,
+    Succeeded,
 }
 
-export type TypeStatResult = FailedTypeStatResult | SucceededTypeStatResult;
+export type TypeStatResult = (
+    | ConfigurationErrorResult
+    | FailedResult
+    | SucceededResult
+);
 
-export interface FailedTypeStatResult {
-    readonly error: Error;
-    readonly succeeded: false;
+export interface ConfigurationErrorResult {
+    readonly error: Error | string;
+    readonly status: ResultStatus.ConfigurationError;
 }
 
-export interface SucceededTypeStatResult {
-    readonly succeeded: true;
+export interface FailedResult {
+    readonly error: Error | string;
+    readonly status: ResultStatus.Failed;
 }
 
-export const typeStat = async ({ configPath }: TypeStatOptions): Promise<TypeStatResult> => {
+export interface SucceededResult {
+    readonly status: ResultStatus.Succeeded;
+}
+
+export const typeStat = async (argv: ParsedCliArgv): Promise<TypeStatResult> => {
+    const options = await tryLoadingOptions(argv);
+    if (options === undefined || options instanceof Error) {
+        return {
+            error: options === undefined
+                ? "No fixes specified. Consider enabling --fixNoImplicitAny (see http://github.com/joshuakgoldberg/typestat#cli)."
+                : options,
+            status: ResultStatus.ConfigurationError,
+        };
+    }
+
     try {
-        const options = await loadOptions(configPath);
         const automutator = new AutoMutator({
             mutationsProvider: createTypeStatMutationsProvider(options),
         });
@@ -33,11 +52,19 @@ export const typeStat = async ({ configPath }: TypeStatOptions): Promise<TypeSta
     } catch (error) {
         return {
             error: error as Error,
-            succeeded: false,
+            status: ResultStatus.Failed,
         };
     }
 
     return {
-        succeeded: true,
+        status: ResultStatus.Succeeded,
     };
+};
+
+const tryLoadingOptions = async (argv: ParsedCliArgv): Promise<TypeStatOptions | Error | undefined> => {
+    try {
+        return loadOptions(argv);
+    } catch (error) {
+        return error;
+    }
 };
