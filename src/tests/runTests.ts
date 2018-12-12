@@ -1,11 +1,23 @@
 import { describeMutationTestCases } from "automutate-tests";
+import { Command } from "commander";
 import * as fs from "fs";
 import * as path from "path";
 
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions } from "../options/types";
 import { createTypeStatMutationsProvider } from "../runtime/createTypeStatMutationsProvider";
+import { arrayify } from "./arrayify";
 import { FakeWritableStream } from "./FakeWritableStream";
+
+interface ParsedTestArgv {
+    accept?: boolean;
+    include?: string;
+}
+
+const parsed = new Command()
+    .option("-i, --include [include]", "path to a TypeScript project file")
+    .option("-a, --accept", "override existing expected results instead of asserting")
+    .parse(process.argv) as ParsedTestArgv;
 
 describeMutationTestCases(
     path.join(__dirname, "../../test"),
@@ -30,9 +42,11 @@ describeMutationTestCases(
         });
     },
     {
-        accept: process.argv.indexOf("--accept") !== -1,
+        accept: parsed.accept,
         actual: "actual.ts",
         expected: "expected.ts",
+        includes: arrayify(parsed.include)
+            .map((include) => new RegExp(`(.*)${include}(.*)`)),
         original: "../original.?s",
         settings: "typestat.json",
     },

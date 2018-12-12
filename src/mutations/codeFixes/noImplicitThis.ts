@@ -2,7 +2,7 @@ import { IMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
-import { createCodeFixAdditionMutation } from "./additions";
+import { createCodeFixCreationMutation } from "./creation";
 
 /**
  * Error code for the TypeScript language service to get --noImplicitThis code fixes.
@@ -23,7 +23,7 @@ export const getNoImplicitThisMutations = (node: ts.FunctionDeclaration, request
 
     return codeFixes.length === 0
         ? undefined
-        : createCodeFixAdditionMutation(codeFixes);
+        : createCodeFixCreationMutation(codeFixes);
 };
 
 /**

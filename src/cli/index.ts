@@ -1,4 +1,4 @@
-import * as commander from "commander";
+import { Command } from "commander";
 
 import { ResultStatus, typeStat, TypeStatResult } from "../index";
 import { getPackageVersion } from "./version";
@@ -22,7 +22,7 @@ export interface ParsedCliArgv {
  * @returns Promise for the result of the main method.
  */
 export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
-    const command = new commander.Command()
+    const command = new Command()
         .option("-c, --config [config]", "path to a TypeStat config file")
         .option("-p, --project [project]", "path to a TypeScript project file")
         .option("--fixIncompleteTypes", "add missing types to existing, incomplete types")
@@ -58,6 +58,5 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
     }
 
     console.error(result.error);
-
     process.exit(1);
 };

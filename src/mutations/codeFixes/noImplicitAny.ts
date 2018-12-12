@@ -2,7 +2,7 @@ import { IMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
-import { createCodeFixAdditionMutation } from "./additions";
+import { createCodeFixCreationMutation } from "./creation";
 
 export type NoImplicitAnyNode = ts.ParameterDeclaration | ts.PropertyDeclaration | ts.VariableDeclaration;
 
@@ -26,8 +26,9 @@ export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, reque
     // If we fix for --noImplicitAny compiler complaints, try to get a fix for it and mutate using it
     if (request.options.fixes.noImplicitAny) {
         const codeFixes = getNoImplicitAnyCodeFixes(node, request);
+
         if (codeFixes.length !== 0) {
-            return createCodeFixAdditionMutation(codeFixes);
+            return createCodeFixCreationMutation(codeFixes);
         }
     }
 

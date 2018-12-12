@@ -4,7 +4,7 @@
 [![NPM version](https://badge.fury.io/js/joshuakgoldberg.svg)](http://badge.fury.io/js/joshuakgoldberg)
 [![Greenkeeper badge](https://badges.greenkeeper.io/joshuakgoldberg/TypeStat.svg)](https://greenkeeper.io/)
 
-Adds JSDoc and/or TypeScript type annotations using static analysis.
+Adds TypeScript type annotations using static analysis.
 
 > ⚡💀 **Danger**: new and experimental; use at your own risk! 💀⚡
 
@@ -13,7 +13,6 @@ Adds JSDoc and/or TypeScript type annotations using static analysis.
 Stringent type safety with TypeScript, especially when adding [`--noImplicitAny`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitAny.html)
 or [`--strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html),
 is wonderful but can be difficult to add to large pre-existing projects.
-Even proper JSDoc coverage is difficult to achieve on more than a few dozen files.
 Adding type annotations through hundreds or thousands of legacy files is tedious and time-consuming.
 
 This package automagically adds those missing type annotations for you with configurable comment markers.

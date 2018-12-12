@@ -16,7 +16,7 @@ export const findMutationsInFile = async (request: FileMutationsRequest): Promis
     for (const [mutatorName, mutator] of [...defaultFileMutators, ...request.options.addedFixes]) {
         try {
             const addedMutations = mutator(request);
-            
+
             if (addedMutations.length !== 0) {
                 mutations = addedMutations;
                 break;
