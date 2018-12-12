@@ -4,10 +4,12 @@ import { ParsedCliArgv } from "../cli";
 import { processLogger } from "../logging/logger";
 import { convertObjectToMap } from "../shared/maps";
 import { normalizeAndSlashify } from "../shared/paths";
+import { collectAddedMutators } from "./addedFixes";
 import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
 export const fillOutRawOptions = (argv: ParsedCliArgv, rawOptions: RawTypeStatOptions, fileNames?: ReadonlyArray<string>): TypeStatOptions => {
     const options = {
+        addedFixes: collectAddedMutators(rawOptions, processLogger),
         fileNames,
         fixes: {
             incompleteTypes: false,

@@ -1,7 +1,6 @@
 import * as path from "path";
 
 import { TypeStatOptions } from "../options/types";
-import { LazyValue } from "../shared/lazy";
 import { normalizeAndSlashify } from "../shared/paths";
 import { createLanguageServices, LanguageServices } from "./language";
 
@@ -10,14 +9,14 @@ export interface FileNamesAndServices {
     readonly services: LanguageServices;
 }
 
-export const createLazyFileNamesAndServices = (options: TypeStatOptions): LazyValue<FileNamesAndServices> => {
-    return new LazyValue(async (): Promise<FileNamesAndServices> => {
-        const services = await createLanguageServices(options);
-        const fileNames = Array.from(createFileNamesUsingProgram(services.parsedConfiguration.fileNames, options))
-            .filter((fileName) => !fileName.endsWith(".d.ts"));
+export const createFileNamesAndServices = async (options: TypeStatOptions): Promise<FileNamesAndServices> => {
+    const services = await createLanguageServices(options);
+    const fileNames = options.fileNames === undefined
+        ? Array.from(createFileNamesUsingProgram(services.parsedConfiguration.fileNames, options))
+            .filter((fileName) => !fileName.endsWith(".d.ts"))
+        : options.fileNames;
 
-        return { fileNames, services };
-    });
+    return { fileNames, services };
 };
 
 const createFileNamesUsingProgram = (

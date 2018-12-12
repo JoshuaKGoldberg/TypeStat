@@ -2,7 +2,7 @@ import { IMutation, IMutationsProvider, IMutationsWave } from "automutate";
 
 import { readline } from "mz";
 import { TypeStatOptions } from "../options/types";
-import { createLazyFileNamesAndServices } from "../services/lazyFileNamesAndServices";
+import { createFileNamesAndServices } from "../services/lazyFileNamesAndServices";
 import { FileInfoCache } from "../shared/FileInfoCache";
 import { convertMapToObject, Dictionary } from "../shared/maps";
 import { findMutationsInFile } from "./findMutationsInFile";
@@ -11,7 +11,6 @@ import { findMutationsInFile } from "./findMutationsInFile";
  * Mutations to be applied to files, keyed by file name.
  */
 export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMutationsProvider => {
-    const lazyFileNamesAndServices = createLazyFileNamesAndServices(options);
     let lastFileIndex = -1;
     let hasPassedFirstFile = false;
 
@@ -19,13 +18,10 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
         provide: async (): Promise<IMutationsWave> => {
             const startTime = Date.now();
             const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
-            const fileNames = options.fileNames === undefined
-                ? (await lazyFileNamesAndServices.get()).fileNames
-                : options.fileNames;
+            const { fileNames, services } = await createFileNamesAndServices(options);
             let addedMutations = 0;
 
             for (lastFileIndex = lastFileIndex + 1; lastFileIndex < fileNames.length; lastFileIndex += 1) {
-                const { services } = await lazyFileNamesAndServices.get();
                 const fileName = fileNames[lastFileIndex];
 
                 const sourceFile = services.program.getSourceFile(fileName);
@@ -53,7 +49,6 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
 
             if (lastFileIndex === fileNames.length) {
                 lastFileIndex = 0;
-                lazyFileNamesAndServices.reset();
             }
 
             if (!hasPassedFirstFile) {
@@ -62,6 +57,7 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
                 readline.clearLine(options.logger.stdout, 0);
                 readline.moveCursor(options.logger.stdout, 0, -1);
             }
+
             return {
                 fileMutations: fileMutations.size === 0 ? undefined : convertMapToObject(fileMutations) as Dictionary<IMutation[]>,
             };

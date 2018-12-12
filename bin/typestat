@@ -3,6 +3,6 @@
 var cli = require("../src/cli").cli;
 
 cli(process.argv).catch(function (error) {
-    console.error("Error in gls-cli: " + error);
+    console.error("Error in TypeStat: " + error);
     process.exitCode = 1;
 });

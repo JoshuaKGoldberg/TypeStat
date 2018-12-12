@@ -36,7 +36,7 @@ const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> 
 export const loadOptions = async (argv: ParsedCliArgv): Promise<TypeStatOptions | undefined> => {
     const rawOptions = await findRawOptions(argv.config);
     const fileNames = await collectFileNames(argv, rawOptions); 
-    const options = fillOutRawOptions(argv, rawOptions, fileNames);
+    const options = await fillOutRawOptions(argv, rawOptions, fileNames);
 
     return noFixesSpecified(options)
         ? undefined

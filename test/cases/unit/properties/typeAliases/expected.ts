@@ -1,11 +1,11 @@
 class Container {
-    givenUndefined: string | undefined = "";
+    givenUndefined: string = "";
 
-    givenUndefinedHasNull: string | null | undefined = "";
+    givenUndefinedHasNull: string | null = "";
 
-    givenNull: string | null = "";
+    givenNull: string = "";
 
-    givenNullHasUndefined: string | undefined | null = "";
+    givenNullHasUndefined: string | undefined = "";
 
     givenString: string = "";
 
@@ -13,13 +13,13 @@ class Container {
 
     givenStringHasUndefined: string | undefined = "";
 
-    setToUndefined: string | undefined = undefined;
+    setToUndefined: string = undefined;
 
-    setToUndefinedHasNull: string | null | undefined = undefined;
+    setToUndefinedHasNull: string | null = undefined;
 
-    setToNull: string | null = null;
+    setToNull: string = null;
 
-    setToNullHasUndefined: string | undefined | null = null;
+    setToNullHasUndefined: string | undefined = null;
 
     setToString: string = "";
 

@@ -1,16 +1,16 @@
-function functionReturnsUndefined(): string | undefined {
+function functionReturnsUndefined(): string {
     return undefined;
 }
 
-function functionReturnsNull(): string | null {
+function functionReturnsNull(): string {
     return null;
 }
 
-function functionGivenNullReturnsUndefined(): string | null | undefined {
+function functionGivenNullReturnsUndefined(): string | null {
     return undefined;
 }
 
-function functionGivenUndefinedReturnsNull(): string | undefined | null {
+function functionGivenUndefinedReturnsNull(): string | undefined {
     return null;
 }
 
@@ -24,19 +24,19 @@ function functionIgnoresInnerMethods(): string {
     return "";
 }
 
-const lambdaReturnsUndefined = (): string | undefined => {
+const lambdaReturnsUndefined = (): string => {
     return undefined;
 };
 
-const lambdaReturnsNull = (): string | null => {
+const lambdaReturnsNull = (): string => {
     return null;
 };
 
-const lambdaGivenNullReturnsUndefined = (): string | null | undefined => {
+const lambdaGivenNullReturnsUndefined = (): string | null => {
     return undefined;
 };
 
-const lambdaGivenUndefinedReturnsNull = (): string | undefined | null => {
+const lambdaGivenUndefinedReturnsNull = (): string | undefined => {
     return null;
 };
 

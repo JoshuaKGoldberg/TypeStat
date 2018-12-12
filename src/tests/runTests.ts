@@ -1,11 +1,11 @@
 import { describeMutationTestCases } from "automutate-tests";
 import * as fs from "fs";
 import * as path from "path";
-import { Writable } from "stream";
 
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions } from "../options/types";
 import { createTypeStatMutationsProvider } from "../runtime/createTypeStatMutationsProvider";
+import { FakeWritableStream } from "./FakeWritableStream";
 
 describeMutationTestCases(
     path.join(__dirname, "../../test"),
@@ -24,8 +24,8 @@ describeMutationTestCases(
                     projectPath: path.join(path.dirname(projectPath), "tsconfig.json"),
                 }),
             logger: {
-                stderr: new Writable(),
-                stdout: new Writable(),
+                stderr: new FakeWritableStream(),
+                stdout: new FakeWritableStream(),
             },
         });
     },

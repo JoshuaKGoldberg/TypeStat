@@ -10,13 +10,13 @@ function givenStringOrNullTypeLater(abc): void {
 
 givenStringOrNullTypeLater("" as string | null);
 
-function givenStringOrNullOnStringTypeLater(abc: string | null): void {
+function givenStringOrNullOnStringTypeLater(abc: string): void {
     console.log(abc);
 }
 
 givenStringOrNullOnStringTypeLater("" as string | null);
 
-function givenStringOrUndefinedOnStringTypeLater(abc: string | undefined): void {
+function givenStringOrUndefinedOnStringTypeLater(abc: string): void {
     console.log(abc);
 }
 

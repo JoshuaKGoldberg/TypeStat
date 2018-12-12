@@ -27,8 +27,8 @@ export const variableMutator: FileMutator = (request: FileMutationsRequest): Rea
 };
 
 const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
-    // For-of loop varibles cannot have types, so don't bother trying to add them
-    if (ts.isForOfStatement(node.parent.parent)) {
+    // For-in and for-of loop varibles cannot have types, so don't bother trying to add them
+    if (parentStatementCannotDeclareVariableType(node)) {
         return undefined;
     }
 
@@ -54,6 +54,15 @@ const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMut
     // Since the node's missing type isn't inferrable, try our best to give it one
     return createTypeCreationMutation(request, node, declaredType, assignedTypes);
 };
+
+/**
+ * Checks whether a variable is in a syntax location that can have a type added.
+ * 
+ * @param node   Node that might be blocked from having types.
+ * @returns Whether the variable is allowed to have types.
+ */
+const parentStatementCannotDeclareVariableType = (node: ts.VariableDeclaration): boolean =>
+    ts.isForInStatement(node.parent.parent) || ts.isForOfStatement(node.parent.parent);
 
 /**
  * Finds types later assigned to a variable declaration.
@@ -86,7 +95,11 @@ const collectVariableAssignedTypes = (node: ts.VariableDeclaration, request: Fil
         const useExpression = useIdentifier.parent;
 
         // We care about binary expressions that assign a type to the variable
-        if (ts.isBinaryExpression(useExpression) && useExpression.left === useIdentifier) {
+        if (
+            ts.isBinaryExpression(useExpression)
+            && useExpression.operatorToken.getText(request.sourceFile) === "="
+            && useExpression.left === useIdentifier
+        ) {
             // Grab the new type being assigned to the node
             assignedTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(useExpression.right));
         }

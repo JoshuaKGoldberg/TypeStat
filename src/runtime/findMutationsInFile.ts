@@ -9,14 +9,14 @@ import { FileMutationsRequest } from "../mutators/fileMutator";
  * Collects all mutations that should apply to a file.
  */
 export const findMutationsInFile = async (request: FileMutationsRequest): Promise<ReadonlyArray<IMutation> | undefined> => {
-    const checkMessage = chalk.grey(`Checking ${chalk.bold(request.sourceFile.fileName)}...`)
-    request.options.logger.stdout.write(checkMessage);
+    const checkMessage = chalk.grey(`Checking ${chalk.bold(request.sourceFile.fileName)}...`);
+    request.options.logger.stdout.write(`${checkMessage}\n`);
     let mutations: ReadonlyArray<IMutation> | undefined;
 
-    for (const [mutatorName, mutator] of defaultFileMutators) {
+    for (const [mutatorName, mutator] of [...defaultFileMutators, ...request.options.addedFixes]) {
         try {
             const addedMutations = mutator(request);
-
+            
             if (addedMutations.length !== 0) {
                 mutations = addedMutations;
                 break;
@@ -26,7 +26,7 @@ export const findMutationsInFile = async (request: FileMutationsRequest): Promis
         }
     }
 
-    readline.moveCursor(request.options.logger.stdout, -checkMessage.length, 0);
+    readline.moveCursor(request.options.logger.stdout, -checkMessage.length, -1);
     readline.clearLine(request.options.logger.stdout, 1);
     return mutations;
 };

@@ -1,4 +1,5 @@
 import { Logger } from "../logging/logger";
+import { FileMutator } from "../mutators/fileMutator";
 import { Dictionary } from "../shared/maps";
 
 /**
@@ -7,6 +8,11 @@ import { Dictionary } from "../shared/maps";
  * @remarks These are read by Cosmiconfig and parsed into {@link TypeStatOptions}.
  */
 export interface RawTypeStatOptions {
+    /**
+     * Any directories of user-defined fixers to apply after the built-in fixers.
+     */
+    readonly addedMutators?: ReadonlyArray<string>;
+
     /**
      * Which fixes (type mutations) are enabled, with fields defaulting to `true`.
      */
@@ -37,6 +43,11 @@ export interface RawTypeStatOptions {
  * Parsed runtime options for TypeStat.
  */
 export interface TypeStatOptions {
+    /**
+     * Added fixers specified by the user.
+     */
+    readonly addedFixes: ReadonlyArray<[string, FileMutator]>;
+
     /**
      * File names to run, if not everything in the TypeScript project.
      */

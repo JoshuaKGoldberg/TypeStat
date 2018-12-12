@@ -25,10 +25,10 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
     const command = new commander.Command()
         .option("-c, --config [config]", "path to a TypeStat config file")
         .option("-p, --project [project]", "path to a TypeScript project file")
-        .option("--fixIncompleteTypes [fixIncompleteTypes]", "add missing types to existing, incomplete types")
-        .option("--fixNoImplicitAny [fixNoImplicitAny]", "fix TypeScript's --noImplicitAny complaints")
-        .option("--fixNoImplicitThis [fixNoImplicitThis]", "fix TypeScript's --strictNullChecks complaints")
-        .option("--fixStrictNullChecks [fixStrictNullChecks]", "override TypeScript's --strictNullChecks setting for added types")
+        .option("--fixIncompleteTypes", "add missing types to existing, incomplete types")
+        .option("--fixNoImplicitAny", "fix TypeScript's --noImplicitAny complaints")
+        .option("--fixNoImplicitThis", "fix TypeScript's --strictNullChecks complaints")
+        .option("--fixStrictNullChecks", "override TypeScript's --strictNullChecks setting for added types")
         .option("-V, --version", "output the package version");
     const parsed = command.parse(argv as string[]) as ParsedCliArgv;
 
