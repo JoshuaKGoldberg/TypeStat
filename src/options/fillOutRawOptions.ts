@@ -1,15 +1,15 @@
 import * as path from "path";
 
-import { ParsedCliArgv } from "../cli";
+import { TypeStatArgv } from "../index";
 import { processLogger } from "../logging/logger";
 import { convertObjectToMap } from "../shared/maps";
 import { normalizeAndSlashify } from "../shared/paths";
-import { collectAddedMutators } from "./addedFixes";
+import { collectAddedMutators } from "./addedMutators";
 import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
-export const fillOutRawOptions = (argv: ParsedCliArgv, rawOptions: RawTypeStatOptions, fileNames?: ReadonlyArray<string>): TypeStatOptions => {
+export const fillOutRawOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOptions, fileNames?: ReadonlyArray<string>): TypeStatOptions => {
     const options = {
-        addedFixes: collectAddedMutators(rawOptions, processLogger),
+        addedMutators: collectAddedMutators(argv, rawOptions, processLogger),
         fileNames,
         fixes: {
             incompleteTypes: false,

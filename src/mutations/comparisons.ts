@@ -42,10 +42,8 @@ export const typeIsChildOf = (
 };
 
 /**
- * 
- * @param a 
- * @param b 
- * @remarks
+ * Checks whether two rich types seem to be roughly the same.
+ *
  * This will crash if either type doesn't have a .symbol.
  * Only use it for types known to be interfaces or classes, not primitives!
  */

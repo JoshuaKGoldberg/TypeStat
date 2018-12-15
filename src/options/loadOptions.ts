@@ -3,7 +3,7 @@ import * as path from "path";
 // tslint:disable-next-line:no-require-imports
 import cosmiconfig = require("cosmiconfig");
 
-import { ParsedCliArgv } from "../cli";
+import { TypeStatArgv } from "../index";
 import { globAllAsync } from "../shared/glob";
 import { normalizeAndSlashify } from "../shared/paths";
 import { fillOutRawOptions } from "./fillOutRawOptions";
@@ -33,17 +33,17 @@ const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> 
  * @param configPath   Manual path to a config file to use intsead of a Cosmiconfig lookup.
  * @returns Promise for filled-out TypeStat options.
  */
-export const loadOptions = async (argv: ParsedCliArgv): Promise<TypeStatOptions | undefined> => {
+export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | undefined> => {
     const rawOptions = await findRawOptions(argv.config);
     const fileNames = await collectFileNames(argv, rawOptions); 
-    const options = await fillOutRawOptions(argv, rawOptions, fileNames);
+    const options = fillOutRawOptions(argv, rawOptions, fileNames);
 
     return noFixesSpecified(options)
         ? undefined
         : options;
 };
 
-const collectFileNames = async (argv: ParsedCliArgv, rawOptions: RawTypeStatOptions): Promise<ReadonlyArray<string> | undefined> => {
+const collectFileNames = async (argv: TypeStatArgv, rawOptions: RawTypeStatOptions): Promise<ReadonlyArray<string> | undefined> => {
     if (argv.args !== undefined && argv.args.length !== 0) {
         return globAllAsync(argv.args);
     }
@@ -56,6 +56,7 @@ const collectFileNames = async (argv: ParsedCliArgv, rawOptions: RawTypeStatOpti
 };
 
 const noFixesSpecified = (options: TypeStatOptions): boolean =>
-    !options.fixes.incompleteTypes 
+    options.addedMutators.length === 0
+    && !options.fixes.incompleteTypes 
     && !options.fixes.noImplicitAny 
     && !options.fixes.noImplicitThis;

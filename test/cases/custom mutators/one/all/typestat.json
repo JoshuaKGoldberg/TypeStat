@@ -1,0 +1,10 @@
+{
+    "addedMutators": [
+        "../sampleMutator.js"
+    ],
+    "fixes": {
+        "incompleteTypes": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true
+    }
+}

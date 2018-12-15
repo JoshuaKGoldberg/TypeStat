@@ -13,7 +13,7 @@ export const findMutationsInFile = async (request: FileMutationsRequest): Promis
     request.options.logger.stdout.write(`${checkMessage}\n`);
     let mutations: ReadonlyArray<IMutation> | undefined;
 
-    for (const [mutatorName, mutator] of [...defaultFileMutators, ...request.options.addedFixes]) {
+    for (const [mutatorName, mutator] of [...defaultFileMutators, ...request.options.addedMutators]) {
         try {
             const addedMutations = mutator(request);
 

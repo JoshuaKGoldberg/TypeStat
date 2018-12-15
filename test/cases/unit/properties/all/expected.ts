@@ -1,39 +1,41 @@
-class Container {
-    givenUndefined: string | undefined = "";
+{
+    class Container {
+        givenUndefined: string | undefined = "";
 
-    givenUndefinedHasNull: string | null | undefined = "";
+        givenUndefinedHasNull: string | null | undefined = "";
 
-    givenNull: string | null /* todo: null */ = "";
+        givenNull: string | null /* todo: null */ = "";
 
-    givenNullHasUndefined: string | undefined | null /* todo: null */ = "";
+        givenNullHasUndefined: string | undefined | null /* todo: null */ = "";
 
-    givenString: string = "";
+        givenString: string = "";
 
-    givenStringHasNull: string | null = "";
+        givenStringHasNull: string | null = "";
 
-    givenStringHasUndefined: string | undefined = "";
+        givenStringHasUndefined: string | undefined = "";
 
-    setToUndefined: string | undefined = undefined;
+        setToUndefined: string | undefined = undefined;
 
-    setToUndefinedHasNull: string | null | undefined = undefined;
+        setToUndefinedHasNull: string | null | undefined = undefined;
 
-    setToNull: string | null /* todo: null */ = null;
+        setToNull: string | null /* todo: null */ = null;
 
-    setToNullHasUndefined: string | undefined | null /* todo: null */ = null;
+        setToNullHasUndefined: string | undefined | null /* todo: null */ = null;
 
-    setToString: string = "";
+        setToString: string = "";
 
-    setToStringHasUndefined: string | undefined = "";
+        setToStringHasUndefined: string | undefined = "";
 
-    setToStringHasNull: string | null = "";
+        setToStringHasNull: string | null = "";
+    }
+
+    const container = new Container();
+
+    container.givenUndefined = undefined;
+    container.givenUndefinedHasNull = undefined;
+    container.givenNull = null;
+    container.givenNullHasUndefined = null;
+    container.givenString = "";
+    container.givenStringHasNull = "";
+    container.givenStringHasNull = "";
 }
-
-const container = new Container();
-
-container.givenUndefined = undefined;
-container.givenUndefinedHasNull = undefined;
-container.givenNull = null;
-container.givenNullHasUndefined = null;
-container.givenString = "";
-container.givenStringHasNull = "";
-container.givenStringHasNull = "";

@@ -1,10 +1,24 @@
-import { AutoMutator } from "automutate";
-import { ParsedCliArgv } from "./cli";
+import { runMutations } from "automutate";
+
 import { loadOptions } from "./options/loadOptions";
 import { TypeStatOptions } from "./options/types";
 import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutationsProvider";
 
 // tslint:disable:no-console
+
+/**
+ * Node arguments to pass to TypeStat.
+ */
+export interface TypeStatArgv {
+    readonly add?: string | ReadonlyArray<string>;
+    readonly args?: ReadonlyArray<string>;
+    readonly config?: string;
+    readonly fixIncompleteTypes?: boolean;
+    readonly fixNoImplicitAny?: boolean;
+    readonly fixNoImplicitThis?: boolean;
+    readonly fixStrictNullChecks?: boolean;
+    readonly project?: string;
+}
 
 export enum ResultStatus {
     ConfigurationError,
@@ -32,23 +46,21 @@ export interface SucceededResult {
     readonly status: ResultStatus.Succeeded;
 }
 
-export const typeStat = async (argv: ParsedCliArgv): Promise<TypeStatResult> => {
+export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
     const options = await tryLoadingOptions(argv);
     if (options === undefined || options instanceof Error) {
         return {
             error: options === undefined
-                ? "No fixes specified. Consider enabling --fixNoImplicitAny (see http://github.com/joshuakgoldberg/typestat#cli)."
+                ? "No fixes or custom mutators specified. Consider enabling --fixNoImplicitAny (see http://github.com/joshuakgoldberg/typestat#cli)."
                 : options,
             status: ResultStatus.ConfigurationError,
         };
     }
 
     try {
-        const automutator = new AutoMutator({
+        await runMutations({
             mutationsProvider: createTypeStatMutationsProvider(options),
         });
-
-        await automutator.run();
     } catch (error) {
         return {
             error: error as Error,
@@ -61,10 +73,12 @@ export const typeStat = async (argv: ParsedCliArgv): Promise<TypeStatResult> => 
     };
 };
 
-const tryLoadingOptions = async (argv: ParsedCliArgv): Promise<TypeStatOptions | Error | undefined> => {
+const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | Error | undefined> => {
     try {
         return loadOptions(argv);
     } catch (error) {
-        return error;
+        return error instanceof Error
+            ? error
+            : new Error(error as string);
     }
 };

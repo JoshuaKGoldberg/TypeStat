@@ -28,8 +28,6 @@ Doing so can allow you to enable these stricter compiler flags for all code with
 Hooray!
 💪
 
-For documentation on the types of fixes TypeStat applies, see [Fixes.md](./docs/Fixes.md).
-
 > 👉 Protip: also take a look at [TypeWiz](https://github.com/urish/typewiz)! 👈
 
 ## Installation
@@ -55,7 +53,28 @@ You can run on only a subset of files by passing globs to the command:
 typestat src/demo/*.ts src/utils/**/*.ts
 ```
 
-### Flags
+For instructions on the types of changes you can run with Typestat, see:
+
+* [Fixes.md](./docs/Fixes.md) for the type of fixes TypeStat will generate mutations for
+* [Types.md](./docs/Types.md) for configuring how to rename types or add comments in mutations
+
+### Basic Flags
+
+#### `-a`/`--add`/`addedMutators`
+
+Any number of user-provided mutators to run after the built-in mutators.
+
+```shell
+typestat --add my-fixer-module
+```
+
+```json
+{
+    "addedMutators": ["my-fixer-module"]
+}
+```
+
+See [Custom Mutators.md](./docs/Custom%20Mutators.md).
 
 #### `-c`/`--config`
 
@@ -87,132 +106,6 @@ Run with `-V` or `--version` to print the package version.
 typestat --version
 ```
 
-### Fixes
-
-An optional set of CLI flags or configuration object containing which fixes (type additions) are enabled.
-
-Each fixer can be configured to suggest no, some, or all forms of type modifications.
-These all default to `false` but can be enabled by being set to `true`.
-
-```json
-{
-    "fixes": {
-        "incompleteTypes": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "strictNullChecks": true
-    }
-}
-```
-
-See [Fixes.md](./docs/Fixes.md) for more details on these fixes.
-
-### `--fixNoImplicitAny`/`noImplicitAny`
-
-```shell
-typestat --fixNoImplicitAny
-```
-
-```json
-{
-    "fixes": {
-        "noImplicitAny": true
-    }
-}
-```
-
-Whether to add type annotations to types that don't yet have them.
-This entirely relies on TypeScript's suggested fixes to infer types from usage.
-
-Places that don't need added types (i.e. would violate [`no-unnecessary-type-annotation`](https://github.com/ajafff/tslint-consistent-codestyle/blob/master/docs/no-unnecessary-type-annotation.md))
-won't have them added.
-
-<!--
-### `--fixNoImplicitThis`/`noImplicitThis`
-
-```shell
-typestat --fixNoImplicitThis
-```
-
-```json
-{
-    "fixes": {
-        "noImplicitThis": true
-    }
-}
-```
-
-> ❌ Coming soon! ❌
->
-> Blocked on https://github.com/Microsoft/TypeScript/issues/28964.
--->
-
-### `--fixStrictNullChecks`/`strictNullChecks`
-
-```shell
-typestat --fixStrictNullChecks
-```
-
-```json
-{
-    "fixes": {
-        "strictNullChecks": true
-    }
-}
-```
-
-Whether to add `| null` and `| undefined` types when constructs can be assigned them but aren't.
-Useful if your project is already fully onboarded onto `--noImplicitAny` but not `--strictNullChecks`.
-
-#### `--fixIncompleteTypes`/`incompleteTypes`
-
-```shell
-typestat --fixIncompleteTypes
-```
-
-```json
-{
-    "fixes": {
-        "incompleteTypes": true
-    }
-}
-```
-
-Whether to augment type annotations that don't capture all values constructs can be set to.
-
-This typically isn't useful on its own _(unless you have many incorrect types)_,
-but is powerful along with `noImplicitAny` and/or `strictNullChecks` to fix existing codebases for the stricter compiler flags.
-
-### `typeAliases`
-
-Object mapping names of added types to strings to replace them with.
-
-For example, to replace `null` with `null /* TODO: check auto-generated types (thanks TypeStat!) */`:
-
-```json
-{
-    "typeAliases": {
-        "null": "null /* TODO: check added types (thanks TypeStat!) */"
-    }
-}
-```
-
-One strategy is to create a global type alias in your code for each migration to make it _really_ clear these are temporary
-_(and easier to find-all in your IDE)_:
-
-```typescript
-// typings.d.ts
-type TodoAutoAddedUndefined = undefined;
-```
-
-```json
-{
-    "typeAliases": {
-        "undefined": "TodoAutoAddedUndefined"
-    }
-}
-```
-
 ## Node
 
 You can also run TypeStat via its JavaScript API:
@@ -230,10 +123,22 @@ typeStat()
     });
 ```
 
-`typeStat` can optionally take in a `{ config: string }` as an explicit configuration file path.
+`typeStat` can optionally take in an object with most CLI/configuration settings.
+See [TypeStatArgv](./src/index.ts):
 
 ```javascript
 await typeStat({
     config: "./typestat.custom.json",
+});
+```
+
+```javascript
+await typeStat({
+    add: ["my-custom-mutator"],
+    config: "./typestat.custom.json",
+    fixIncompleteTypes: true,
+    fixNoImplicitAny: true,
+    fixStrictNullChecks: true,
+    project: "./tsconfig.custom.json",
 });
 ```

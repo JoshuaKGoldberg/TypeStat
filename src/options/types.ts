@@ -9,7 +9,7 @@ import { Dictionary } from "../shared/maps";
  */
 export interface RawTypeStatOptions {
     /**
-     * Any directories of user-defined fixers to apply after the built-in fixers.
+     * Any directories of user-defined mutators to apply after the built-in mutators.
      */
     readonly addedMutators?: ReadonlyArray<string>;
 
@@ -44,9 +44,9 @@ export interface RawTypeStatOptions {
  */
 export interface TypeStatOptions {
     /**
-     * Added fixers specified by the user.
+     * Added mutators specified by the user.
      */
-    readonly addedFixes: ReadonlyArray<[string, FileMutator]>;
+    readonly addedMutators: ReadonlyArray<[string, FileMutator]>;
 
     /**
      * File names to run, if not everything in the TypeScript project.

@@ -1,19 +1,9 @@
 import { Command } from "commander";
 
-import { ResultStatus, typeStat, TypeStatResult } from "../index";
+import { ResultStatus, typeStat, TypeStatArgv, TypeStatResult } from "../index";
 import { getPackageVersion } from "./version";
 
 // tslint:disable:no-console
-
-export interface ParsedCliArgv {
-    readonly args?: ReadonlyArray<string>;
-    readonly config?: string;
-    readonly fixIncompleteTypes?: boolean;
-    readonly fixNoImplicitAny?: boolean;
-    readonly fixNoImplicitThis?: boolean;
-    readonly fixStrictNullChecks?: boolean;
-    readonly project?: string;
-}
 
 /**
  * Parses raw string arguments and, if they're valid, calls to a main method.
@@ -23,14 +13,15 @@ export interface ParsedCliArgv {
  */
 export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
     const command = new Command()
-        .option("-c, --config [config]", "path to a TypeStat config file")
-        .option("-p, --project [project]", "path to a TypeScript project file")
+        .option("-a --add [...add]", "require paths to any custom mutators to run")
+        .option("-c --config [config]", "path to a TypeStat config file")
+        .option("-p --project [project]", "path to a TypeScript project file")
         .option("--fixIncompleteTypes", "add missing types to existing, incomplete types")
         .option("--fixNoImplicitAny", "fix TypeScript's --noImplicitAny complaints")
         .option("--fixNoImplicitThis", "fix TypeScript's --strictNullChecks complaints")
         .option("--fixStrictNullChecks", "override TypeScript's --strictNullChecks setting for added types")
-        .option("-V, --version", "output the package version");
-    const parsed = command.parse(argv as string[]) as ParsedCliArgv;
+        .option("-V --version", "output the package version");
+    const parsed = command.parse(argv as string[]) as TypeStatArgv;
 
     if ({}.hasOwnProperty.call(parsed, "version")) {
         console.log(await getPackageVersion());
@@ -43,7 +34,9 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
         result = await typeStat(parsed);
     } catch (error) {
         result = {
-            error,
+            error: error instanceof Error
+                ? error
+                : new Error(error as string),
             status: ResultStatus.Failed,
         };
     }

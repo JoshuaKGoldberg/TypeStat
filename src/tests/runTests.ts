@@ -6,7 +6,7 @@ import * as path from "path";
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions } from "../options/types";
 import { createTypeStatMutationsProvider } from "../runtime/createTypeStatMutationsProvider";
-import { arrayify } from "./arrayify";
+import { arrayify } from "../shared/arrayify";
 import { FakeWritableStream } from "./FakeWritableStream";
 
 interface ParsedTestArgv {
