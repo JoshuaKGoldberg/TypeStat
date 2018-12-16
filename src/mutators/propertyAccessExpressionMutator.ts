@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { ITextInsertMutation } from "automutate";
-import { getTypeOfNodePreferringSymbol, isTypeFlagSetRecursively } from "../mutations/collecting";
+import { isTypeFlagSetRecursively } from "../mutations/collecting";
 import { FileMutationsRequest, FileMutator } from "./fileMutator";
 
 export const propertyAccessExpressionMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<ITextInsertMutation> => {
@@ -10,6 +10,7 @@ export const propertyAccessExpressionMutator: FileMutator = (request: FileMutati
     if (!request.options.fixes.strictNullChecks) {
         return [];
     }
+
 
     const mutations: ITextInsertMutation[] = [];
 
@@ -32,9 +33,7 @@ export const propertyAccessExpressionMutator: FileMutator = (request: FileMutati
 
 const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression, request: FileMutationsRequest): ITextInsertMutation | undefined => {
     // Grab the type of the property being accessed by name
-    // The type checker doesn't include null or undefined flags by default for references to types,
-    // so we check the type at the symbol's value declaration if possible
-    const expressionType = getTypeOfNodePreferringSymbol(node.expression, request);
+    const expressionType = request.services.program.getTypeChecker().getTypeAtLocation(node.expression);
 
     // If the property's type cannot be null or undefined, rejoice! Nothing to do.
     if (!isTypeFlagSetRecursively(expressionType, ts.TypeFlags.Null | ts.TypeFlags.Undefined)) {

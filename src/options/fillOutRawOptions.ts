@@ -19,9 +19,7 @@ export const fillOutRawOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOpt
             ...rawOptions.fixes,
         },
         logger: processLogger,
-        projectPath: rawOptions.projectPath === undefined
-            ? normalizeAndSlashify(path.join(process.cwd(), "tsconfig.json"))
-            : rawOptions.projectPath,
+        projectPath: getProjectPath(argv, rawOptions),
         typeAliases: rawOptions.typeAliases === undefined
             ? new Map()
             : convertObjectToMap(rawOptions.typeAliases),
@@ -44,4 +42,14 @@ export const fillOutRawOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOpt
     }
 
     return options;
+};
+
+const getProjectPath = (argv: TypeStatArgv, rawOptions: RawTypeStatOptions): string => {
+    if (argv.project !== undefined) {
+        return path.join(process.cwd(), argv.project);
+    }
+
+    return rawOptions.projectPath === undefined
+        ? normalizeAndSlashify(path.join(process.cwd(), "tsconfig.json"))
+        : rawOptions.projectPath;
 };

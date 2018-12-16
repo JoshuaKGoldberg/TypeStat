@@ -147,19 +147,3 @@ const findMissingTypes = (
 
     return setSubtract(rootLevelAssignedTypes, declaredTypes);
 };
-
-/**
- * Finds the type of a node, using its symbol's value declaration if possible.
- *
- * @remarks
- * The type checker doesn't include null or undefined flags by default for references to types,
- * so we check the type at the symbol's value declaration if possible.
- */
-export const getTypeOfNodePreferringSymbol = (node: ts.Node, request: FileMutationsRequest): ts.Type => {
-    const typeChecker = request.services.program.getTypeChecker();
-    const symbol = typeChecker.getSymbolAtLocation(node);
-
-    return symbol === undefined
-        ? typeChecker.getTypeAtLocation(node)
-        : typeChecker.getTypeAtLocation(symbol.valueDeclaration);
-};
