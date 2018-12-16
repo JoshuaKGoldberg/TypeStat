@@ -62,7 +62,7 @@ During tests, it'll be stubbed out.
 ### `mutators`
 
 A file for each of the forms of mutation run in a round.
-These are stored in the above fastest-first order in the exported [`defaultFileMutators`](../src/mutators/defaultFileMutators.ts) array.
+These are stored in the above fastest-first order in the exported [`builtInFileMutators`](../src/mutators/builtInFileMutators.ts) array.
 
 ### `mutations`
 

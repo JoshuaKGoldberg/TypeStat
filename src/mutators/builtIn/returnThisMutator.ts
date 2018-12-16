@@ -2,29 +2,13 @@ import { IMutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { createTypeAdditionMutation } from "../mutations/creators";
-import { isNodeWithType } from "../shared/nodeTypes";
-import { FileMutationsRequest, FileMutator } from "./fileMutator";
+import { createTypeAdditionMutation } from "../../mutations/creators";
+import { isNodeWithType } from "../../shared/nodeTypes";
+import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
+import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
-export const returnMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    const mutations: IMutation[] = [];
-
-    const visitNode = (node: ts.Node): void => {
-        if (tsutils.isFunctionWithBody(node)) {
-            const mutation = visitFunctionWithBody(node, request);
-
-            if (mutation !== undefined) {
-                mutations.push(mutation);
-            }
-        }
-
-        ts.forEachChild(node, visitNode);
-    };
-
-    ts.forEachChild(request.sourceFile, visitNode);
-
-    return mutations;
-};
+export const returnMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => 
+    collectMutationsFromNodes(request, tsutils.isFunctionWithBody, visitFunctionWithBody);
 
 const visitFunctionWithBody = (node: ts.FunctionLikeDeclaration, request: FileMutationsRequest): IMutation | undefined => {
     // If the node has an implicit return type or we don't need to add missing types, don't change anything

@@ -2,29 +2,14 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../mutations/codeFixes/noImplicitAny";
-import { createTypeAdditionMutation, createTypeCreationMutation } from "../mutations/creators";
-import { isNodeWithType } from "../shared/nodeTypes";
-import { FileMutationsRequest, FileMutator } from "./fileMutator";
+import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../mutations/codeFixes/noImplicitAny";
+import { createTypeAdditionMutation, createTypeCreationMutation } from "../../mutations/creators";
+import { isNodeWithType } from "../../shared/nodeTypes";
+import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
+import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
-export const variableMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    const mutations: IMutation[] = [];
-
-    const visitNode = (node: ts.Node) => {
-        if (ts.isVariableDeclaration(node)) {
-            const mutation = visitVariableDeclaration(node, request);
-            if (mutation !== undefined) {
-                mutations.push(mutation);
-            }
-        }
-
-        ts.forEachChild(node, visitNode);
-    };
-
-    ts.forEachChild(request.sourceFile, visitNode);
-
-    return mutations;
-};
+export const variableMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+    collectMutationsFromNodes(request, ts.isVariableDeclaration, visitVariableDeclaration);
 
 const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
     // For-in and for-of loop varibles cannot have types, so don't bother trying to add them

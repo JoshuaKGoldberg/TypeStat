@@ -1,34 +1,18 @@
 import * as ts from "typescript";
 
-import { ITextInsertMutation } from "automutate";
-import { isTypeFlagSetRecursively } from "../mutations/collecting";
-import { FileMutationsRequest, FileMutator } from "./fileMutator";
+import { IMutation, ITextInsertMutation } from "automutate";
+import { isTypeFlagSetRecursively } from "../../mutations/collecting";
+import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
+import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
-export const propertyAccessExpressionMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<ITextInsertMutation> => {
+export const propertyAccessExpressionMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
     // This fixer is only relevant right now if strict null checking is enabled
     // Later, it might be used to declare types: https://github.com/JoshuaKGoldberg/TypeStat/issues/17
     if (!request.options.fixes.strictNullChecks) {
         return [];
     }
 
-
-    const mutations: ITextInsertMutation[] = [];
-
-    const visitNode = (node: ts.Node) => {
-        if (ts.isPropertyAccessExpression(node)) {
-            const mutation = visitPropertyAccessExpression(node, request);
-
-            if (mutation !== undefined) {
-                mutations.push(mutation);
-            }
-        }
-
-        ts.forEachChild(node, visitNode);
-    };
-
-    ts.forEachChild(request.sourceFile, visitNode);
-
-    return mutations;
+    return collectMutationsFromNodes(request, ts.isPropertyAccessExpression, visitPropertyAccessExpression);
 };
 
 const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression, request: FileMutationsRequest): ITextInsertMutation | undefined => {

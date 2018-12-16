@@ -2,31 +2,15 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { IMutation } from "automutate";
-import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../mutations/codeFixes/noImplicitAny";
-import { createTypeAdditionMutation, createTypeCreationMutation } from "../mutations/creators";
-import { findNodeByStartingPosition } from "../shared/nodes";
-import { isNodeWithType } from "../shared/nodeTypes";
-import { FileMutationsRequest, FileMutator } from "./fileMutator";
+import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../mutations/codeFixes/noImplicitAny";
+import { createTypeAdditionMutation, createTypeCreationMutation } from "../../mutations/creators";
+import { findNodeByStartingPosition } from "../../shared/nodes";
+import { isNodeWithType } from "../../shared/nodeTypes";
+import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
+import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
-export const propertyDeclarationMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    const mutations: IMutation[] = [];
-
-    const visitNode = (node: ts.Node) => {
-        if (ts.isPropertyDeclaration(node)) {
-            const mutation = visitPropertyDeclaration(node, request);
-
-            if (mutation !== undefined) {
-                mutations.push(mutation);
-            }
-        }
-
-        ts.forEachChild(node, visitNode);
-    };
-
-    ts.forEachChild(request.sourceFile, visitNode);
-
-    return mutations;
-};
+export const propertyDeclarationMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+    collectMutationsFromNodes(request, ts.isPropertyDeclaration, visitPropertyDeclaration);
 
 const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMutationsRequest): IMutation | undefined => {
     // If the property violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
