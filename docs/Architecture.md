@@ -40,9 +40,9 @@ _(ordered by which is likely to complete the fastest)_:
 
 1. Variable types
 2. Function-like return types
-3. Property accessors
-4. Property declaration types
-5. Parameter types
+3. Property declaration types
+4. Parameter types
+5. Property accessors
 6. Function `this` types
 
 Within each round of applying mutations, TypeStat will stop after each step if any mutations are found.

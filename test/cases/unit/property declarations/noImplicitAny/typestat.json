@@ -1,0 +1,5 @@
+{
+    "fixes": {
+        "noImplicitAny": true
+    }
+}

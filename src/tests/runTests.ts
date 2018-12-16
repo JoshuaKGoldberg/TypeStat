@@ -15,6 +15,9 @@ interface ParsedTestArgv {
 }
 
 const parsed = new Command()
+    // Allow unknown options for the case of IDE debuggers who directly write to process.argv
+    // If this line is removed, VS Code debugging will break 😲
+    .allowUnknownOption(true)
     .option("-i, --include [include]", "path to a TypeScript project file")
     .option("-a, --accept", "override existing expected results instead of asserting")
     .parse(process.argv) as ParsedTestArgv;

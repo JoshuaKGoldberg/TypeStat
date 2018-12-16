@@ -1,0 +1,6 @@
+{
+    "addedMutators": [
+        "../mutator1.js",
+        "../mutator2.js"
+    ]
+}

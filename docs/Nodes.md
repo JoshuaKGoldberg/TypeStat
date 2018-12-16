@@ -6,9 +6,32 @@ These are the kinds of "nodes", or constructs in your code, that TypeStat will f
 
 ## Parameters
 
-> ❌ Coming soon! ❌
+Parameters not initially with a declared type or that are later passed a type theirs doesn't include will have that type created or added onto them.
 
-## Properties
+For example, if a parameter violates `--noImplicitAny`, a type will be added:
+
+```diff
+- function abc(def) { }
++ function abc(def: string) { }
+
+abc("");
+```
+
+## Property Accesses
+
+Member properties of objects whose types include `null` or `undefined` need a `!` in strict null checking mode.
+If `strictNullChecks` is enabled, a `!` will be added in.
+
+For example, if a variable can be `string | undefined`, a `!` will be added before accessing a property on it:
+
+```diff
+function abc(def: string | undefined) {
+-   abc.length;
++   abc!.length;
+}
+```
+
+## Property Declarations
 
 Properties later assigned a type not represented by their initial type will have that type added onto them.
 

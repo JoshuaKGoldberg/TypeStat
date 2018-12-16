@@ -8,7 +8,7 @@ import { findNodeByStartingPosition } from "../shared/nodes";
 import { isNodeWithType } from "../shared/nodeTypes";
 import { FileMutationsRequest, FileMutator } from "./fileMutator";
 
-export const propertyMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+export const propertyDeclarationMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
     const mutations: IMutation[] = [];
 
     const visitNode = (node: ts.Node) => {

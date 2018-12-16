@@ -26,10 +26,11 @@ export const createLanguageServices = async (options: TypeStatOptions): Promise<
     }
 
     // Parse the JSON into raw TypeScript options, overriding compiler options to always be our options' equivalent
+    const compilerConfigOptionsRaw = compilerOptions.config as ts.CompilerOptions;
     const compilerConfigOptions: ts.CompilerOptions = {
-        ...(compilerOptions.config as ts.CompilerOptions),
-        noImplicitAny: options.fixes.noImplicitAny,
-        strictNullChecks: options.fixes.strictNullChecks,
+        ...compilerConfigOptionsRaw,
+        noImplicitAny: compilerConfigOptionsRaw.noImplicitAny || options.fixes.noImplicitAny,
+        strictNullChecks: compilerConfigOptionsRaw.strict || compilerConfigOptionsRaw.strictNullChecks || options.fixes.strictNullChecks,
     };
 
     // Create a TypeScript configuration using the raw options
