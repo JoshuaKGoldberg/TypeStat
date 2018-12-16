@@ -29,14 +29,24 @@ export interface RawTypeStatOptions {
     readonly onlyStrictNullTypes?: boolean;
 
     /**
-     * Names of added types mapped to strings to replace them with.
+     * Options for which types to add under what aliases.
      */
-    readonly typeAliases?: Readonly<Dictionary<string>>;
+    readonly types?: RawTypeStatTypeOptions;
 
     /**
      * Path to a TypeScript configuration file, if not "tsconfig.json".
      */
     readonly projectPath?: string;
+}
+
+/**
+ * Options for which types to add under what aliases.
+ */
+export interface RawTypeStatTypeOptions {
+    /**
+     * Names of added types mapped to strings to replace them with.
+     */
+    aliases?: Readonly<Dictionary<string>>;
 }
 
 /**
@@ -64,9 +74,9 @@ export interface TypeStatOptions {
     readonly logger: Logger;
 
     /**
-     * Names of added types mapped to strings to replace them with.
+     * Options for which types to add under what aliases.
      */
-    readonly typeAliases: ReadonlyMap<string, string>;
+    readonly types: TypeStatTypeOptions;
 
     /**
      * Path to a tsconfig.json file.
@@ -97,4 +107,14 @@ export interface Fixes {
      * Whether to add `null` and `undefined` as per TypeScript's --strictNullChecks.
      */
     strictNullChecks: boolean;
+}
+
+/**
+ * Options for which types to add under what aliases.
+ */
+export interface TypeStatTypeOptions {
+    /**
+     * Names of added types mapped to strings to replace them with.
+     */
+    aliases: ReadonlyMap<string, string>;
 }

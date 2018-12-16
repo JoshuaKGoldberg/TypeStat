@@ -8,6 +8,10 @@ import { collectAddedMutators } from "./addedMutators";
 import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
 export const fillOutRawOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOptions, fileNames?: ReadonlyArray<string>): TypeStatOptions => {
+    const rawOptionTypes = rawOptions.types === undefined
+        ? {}
+        : rawOptions.types;
+
     const options = {
         addedMutators: collectAddedMutators(argv, rawOptions, processLogger),
         fileNames,
@@ -20,9 +24,11 @@ export const fillOutRawOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOpt
         },
         logger: processLogger,
         projectPath: getProjectPath(argv, rawOptions),
-        typeAliases: rawOptions.typeAliases === undefined
-            ? new Map()
-            : convertObjectToMap(rawOptions.typeAliases),
+        types: {
+            aliases: rawOptionTypes.aliases === undefined
+                ? new Map()
+                : convertObjectToMap(rawOptionTypes.aliases),
+        }
     };
 
     if (argv.fixIncompleteTypes !== undefined) {

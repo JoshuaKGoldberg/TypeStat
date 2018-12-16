@@ -2,7 +2,7 @@
 
 _to be filled out soon!_
 
-## `typeAliases`
+## `aliases`
 
 Object mapping names of added types to strings to replace them with.
 
@@ -10,8 +10,10 @@ For example, to replace `null` with `null /* TODO: check auto-generated types (t
 
 ```json
 {
-    "typeAliases": {
-        "null": "null /* TODO: check added types (thanks TypeStat!) */"
+    "types": {
+        "aliases": {
+            "null": "null /* TODO: check added types (thanks TypeStat!) */"
+        }
     }
 }
 ```
@@ -26,8 +28,10 @@ type TodoAutoAddedUndefined = undefined;
 
 ```json
 {
-    "typeAliases": {
-        "undefined": "TodoAutoAddedUndefined"
+    "types": {
+        "aliases": {
+            "undefined": "TodoAutoAddedUndefined"
+        }
     }
 }
 ```

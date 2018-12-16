@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { TypeStatOptions } from "../options/types";
+import { TypeStatOptions, TypeStatTypeOptions } from "../options/types";
 
 /**
  * Type flags and aliases to check when --strictNullChecks is not enabled.
@@ -32,14 +32,14 @@ export const getApplicableTypeAliases = (options: TypeStatOptions) =>
  * 
  * @param flags   Flags to include in the type union.
  * @param types   Types to include in the type union.
- * @param aliases   String aliases for flags and types.
+ * @param typeOptions   Options for which types to add under what aliases.
  * @returns Joined type union of the aliased flags and types.
  * @remarks Removes any rich types that resolve to anonymous object literals.
  */
 export const joinIntoType = (
     flags: ReadonlySet<string>,
     types: ReadonlySet<ts.Type>,
-    aliases: ReadonlyMap<string, string>,
+    typeOptions: TypeStatTypeOptions,
 ): string | undefined => {
     const unionNames = [
         ...Array.from(types)
@@ -54,7 +54,7 @@ export const joinIntoType = (
 
     return unionNames
         .map(type => {
-            const alias = aliases.get(type);
+            const alias = typeOptions.aliases.get(type);
 
             return alias === undefined
                 ? type
