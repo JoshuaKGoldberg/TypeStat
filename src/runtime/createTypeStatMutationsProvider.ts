@@ -19,6 +19,7 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
             const startTime = Date.now();
             const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
             const { fileNames, services } = await createFileNamesAndServices(options);
+            const waveStartedFromBeginning = lastFileIndex <= 0;
             let addedMutations = 0;
 
             for (lastFileIndex = lastFileIndex + 1; lastFileIndex < fileNames.length; lastFileIndex += 1) {
@@ -59,7 +60,9 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
             }
 
             return {
-                fileMutations: fileMutations.size === 0 ? undefined : convertMapToObject(fileMutations) as Dictionary<IMutation[]>,
+                fileMutations: waveStartedFromBeginning && fileMutations.size === 0
+                    ? undefined
+                    : convertMapToObject(fileMutations) as Dictionary<IMutation[]>,
             };
         },
     };
