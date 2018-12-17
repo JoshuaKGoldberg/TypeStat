@@ -5,6 +5,7 @@ import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../..
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../mutations/creators";
 import { findNodeByStartingPosition } from "../../shared/nodes";
 import { isNodeWithType } from "../../shared/nodeTypes";
+import { findRelevantNodeReferences } from "../../shared/references";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
@@ -49,21 +50,13 @@ const getCallingTypesFromReferencedSymbols = (
     }
 
     // Find all locations the containing method is called
-    const referencedSymbols = request.services.languageService.findReferences(
-        request.sourceFile.fileName,
-        node.parent.getStart(request.sourceFile),
-    );
-
-    // Find everything else calling the parent function, since non-private function-likes can be called to in other files
-    // https://github.com/JoshuaKGoldberg/TypeStat/issues/4 tracks shortcutting this for internal function-likes
-    if (referencedSymbols !== undefined) {
+    const references = findRelevantNodeReferences(request, node.parent);
+    if (references !== undefined) {
         const parameterIndex = node.parent.parameters.indexOf(node);
 
-        // Each reference symbol can have multiple references that update the calling types
-        for (const referenceSymbol of referencedSymbols) {
-            for (const reference of referenceSymbol.references) {
-                updateCallingTypesForReference(parameterIndex, reference, callingTypes, request);
-            }
+        // For each calling location, add any types it's called with there
+        for (const reference of references) {
+            updateCallingTypesForReference(parameterIndex, reference, callingTypes, request);
         }
     }
 

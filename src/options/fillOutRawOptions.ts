@@ -31,6 +31,9 @@ export const fillOutRawOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOpt
             aliases: rawOptionTypes.aliases === undefined
                 ? new Map()
                 : convertObjectToMap(rawOptionTypes.aliases),
+            matching: argv.typesMatching === undefined
+                ? rawOptionTypes.matching
+                : argv.typesMatching,
             onlyPrimitives: collectAsConfiguration(argv.typesOnlyPrimitives, rawOptionTypes.onlyPrimitives),
         }
     };

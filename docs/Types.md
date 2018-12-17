@@ -34,6 +34,27 @@ type TodoAutoAddedUndefined = undefined;
 }
 ```
 
+## `--typesMatching`/`matching`
+
+Regular expression matchers added types must match.
+If one or more of these are provided, any added type must match at least one of them.
+
+For example, either will only allow `null` or `undefined` as added types:
+
+```shell
+typestat --typesMatching "^null$" --typesMatching "^undefined$"
+```
+
+```json
+{
+    "types": {
+        "matching": [
+            "^(null|undefined)$"
+        ]
+    }
+}
+```
+
 ## `--typesOnlyPrimitives`/`onlyPrimitives`
 
 Whether to exclude type additions that contain complex object types, such as arrays and class instances.

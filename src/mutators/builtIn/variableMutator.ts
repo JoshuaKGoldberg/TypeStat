@@ -5,6 +5,7 @@ import { IMutation } from "automutate";
 import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../mutations/codeFixes/noImplicitAny";
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../mutations/creators";
 import { isNodeWithType } from "../../shared/nodeTypes";
+import { isNodeFilteredOut } from "../../shared/references";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
@@ -79,15 +80,22 @@ const collectVariableAssignedTypes = (node: ts.VariableDeclaration, request: Fil
         const useIdentifier = use.location;
         const useExpression = useIdentifier.parent;
 
-        // We care about binary expressions that assign a type to the variable
-        if (
-            ts.isBinaryExpression(useExpression)
-            && useExpression.operatorToken.getText(request.sourceFile) === "="
-            && useExpression.left === useIdentifier
-        ) {
-            // Grab the new type being assigned to the node
-            assignedTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(useExpression.right));
+        // Ignore the node usage if it's inside an ignored node
+        if (isNodeFilteredOut(request, use.location)) {
+            continue;
         }
+
+        // We only care about binary expressions that assign a type to the variable
+        if (
+            !ts.isBinaryExpression(useExpression)
+            || useExpression.operatorToken.getText(request.sourceFile) !== "="
+            || useExpression.left !== useIdentifier
+        ) {
+            continue;
+        }
+
+        // Grab the new type being assigned to the node
+        assignedTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(useExpression.right));
     }
 
     return assignedTypes;

@@ -1,0 +1,11 @@
+{
+    "fixes": {
+        "incompleteTypes": true,
+        "strictNullChecks": true
+    },
+    "types": {
+        "matching": [
+            "^boolean$"
+        ]
+    }
+}

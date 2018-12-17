@@ -1,7 +1,7 @@
 {
     "filters": [
-        "FunctionDeclaration[name.text=one]",
-        "FunctionDeclaration[name.text=two]"
+        "MethodDeclaration[name.text=dispose]",
+        "CallExpression[expression.text=teardown]"
     ],
     "fixes": {
         "incompleteTypes": true,

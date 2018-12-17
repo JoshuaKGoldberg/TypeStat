@@ -1,9 +1,21 @@
 {
-    function one(): string {
-        return undefined;
+    class Foo {
+        public value: number = 3;
+
+        dispose() {
+            this.value = null;
+        }
     }
 
-    function two(): string {
-        return undefined;
+    function teardown(action: () => void) {
+        action();
     }
+
+    let foo = new Foo();
+
+    foo.value = 1;
+
+    teardown(() => {
+        foo = null;
+    });
 }

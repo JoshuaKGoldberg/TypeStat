@@ -15,6 +15,7 @@ Todo: fill out!
         "strictNullChecks": true
     },
     "types": {
+        "matching": "^(null|undefined)$",
         "onlyPrimitives": true
     }
 }

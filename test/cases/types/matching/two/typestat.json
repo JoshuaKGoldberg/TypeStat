@@ -1,0 +1,12 @@
+{
+    "fixes": {
+        "incompleteTypes": true,
+        "strictNullChecks": true
+    },
+    "types": {
+        "matching": [
+            "^Foo$",
+            "^undefined$"
+        ]
+    }
+}

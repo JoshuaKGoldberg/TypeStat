@@ -6,6 +6,7 @@ import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../..
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../mutations/creators";
 import { findNodeByStartingPosition } from "../../shared/nodes";
 import { isNodeWithType } from "../../shared/nodeTypes";
+import { findRelevantNodeReferences } from "../../shared/references";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
@@ -49,19 +50,11 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
         return assignedTypes;
     }
 
-    // Find everything else referencing the property, since non-private properties can be assigned to in other files
-    // https://github.com/JoshuaKGoldberg/TypeStat/issues/4 tracks shortcutting this for private properties
-    const referencedSymbols = request.services.languageService.findReferences(
-        request.sourceFile.fileName,
-        node.getStart(request.sourceFile),
-    );
-    if (referencedSymbols === undefined) {
-        return assignedTypes;
-    }
-
-    // Each reference symbol can have multiple references that update the missing types
-    for (const referenceSymbol of referencedSymbols) {
-        for (const reference of referenceSymbol.references) {
+    // Find everything else referencing the property
+    const references = findRelevantNodeReferences(request, node);
+    if (references !== undefined) {
+        // For each referencing location, update types if the type is assigned to there
+        for (const reference of references) {
             updateAssignedTypesForReference(reference, assignedTypes, request);
         }
     }

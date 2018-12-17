@@ -46,12 +46,16 @@ export const joinIntoType = (
         return undefined;
     }
 
-    const unionNames = [
+    let unionNames = [
         ...Array.from(types)
             .filter(isTypeNamePrintable)
             .map(type => type.symbol.name),
         ...flags,
     ];
+
+    if (typeOptions.matching !== undefined) {
+        unionNames = filterMatchingTypeNames(unionNames, typeOptions.matching);
+    }
 
     if (unionNames.length === 0) {
         return undefined;
@@ -69,3 +73,6 @@ export const joinIntoType = (
 };
 
 const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);
+
+const filterMatchingTypeNames = (unionNames: ReadonlyArray<string>, matching: ReadonlyArray<string>): string[] =>
+    unionNames.filter(name => matching.some(matcher => name.match(matcher) !== null));
