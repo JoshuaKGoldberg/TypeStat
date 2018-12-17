@@ -19,6 +19,7 @@ export interface TypeStatArgv {
     readonly fixStrictNullChecks?: boolean;
     readonly mutators?: string | ReadonlyArray<string>;
     readonly project?: string;
+    readonly typesOnlyPrimitives?: boolean;
 }
 
 export enum ResultStatus {

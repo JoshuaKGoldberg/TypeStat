@@ -55,26 +55,13 @@ typestat src/demo/*.ts src/utils/**/*.ts
 
 For instructions on the types of changes you can run with Typestat, see:
 
-* [Fixes.md](./docs/Fixes.md) for the type of fixes TypeStat will generate mutations for
-* [Types.md](./docs/Types.md) for configuring how to rename types or add comments in mutations
+1. **[Usage.md](./docs/Usage.md) for recommended steps to get started**
+2. [Fixes.md](./docs/Fixes.md) for the type of fixes TypeStat will generate mutations for
+3. [Types.md](./docs/Types.md) for configuring how to rename types or add comments in mutations
+4. [Filters.md](./docs/Filters.md) for using [tsquery](https://github.com/phenomnomnominal/tsquery) to ignore sections of source files
+5. [Custom Mutators.md](./docs/Custom%20Mutators.md) for including or creating custom mutators
 
 ### Basic Flags
-
-#### `-a`/`--add`/`addedMutators`
-
-Any number of user-provided mutators to run after the built-in mutators.
-
-```shell
-typestat --add my-fixer-module
-```
-
-```json
-{
-    "addedMutators": ["my-fixer-module"]
-}
-```
-
-See [Custom Mutators.md](./docs/Custom%20Mutators.md).
 
 #### `-c`/`--config`
 
@@ -96,14 +83,6 @@ typestat --project tsconfig.strict.json
 {
     "project": "tsconfig.strict.json"
 }
-```
-
-#### `-V`/`--version`
-
-Run with `-V` or `--version` to print the package version.
-
-```shell
-typestat --version
 ```
 
 ## Node

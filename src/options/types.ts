@@ -56,7 +56,7 @@ export interface RawTypeStatTypeOptions {
     /**
      * Whether to exclude rich types from changes, such as arrays or interfaces.
      */
-    onlyPrimitives?: string;
+    onlyPrimitives?: boolean;
 }
 
 /**
@@ -136,5 +136,5 @@ export interface TypeStatTypeOptions {
     /**
      * Whether to exclude complex types from changes, such as arrays or interfaces.
      */
-    onlyPrimitives?: string;
+    onlyPrimitives?: boolean;
 }

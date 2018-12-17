@@ -3,6 +3,7 @@ import * as path from "path";
 import { TypeStatArgv } from "../index";
 import { processLogger } from "../logging/logger";
 import { collectOptionals } from "../shared/arrays";
+import { collectAsConfiguration } from "../shared/booleans";
 import { convertObjectToMap } from "../shared/maps";
 import { normalizeAndSlashify } from "../shared/paths";
 import { collectAddedMutators } from "./addedMutators";
@@ -30,6 +31,7 @@ export const fillOutRawOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOpt
             aliases: rawOptionTypes.aliases === undefined
                 ? new Map()
                 : convertObjectToMap(rawOptionTypes.aliases),
+            onlyPrimitives: collectAsConfiguration(argv.typesOnlyPrimitives, rawOptionTypes.onlyPrimitives),
         }
     };
 

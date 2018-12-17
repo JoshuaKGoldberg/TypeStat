@@ -21,6 +21,7 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
         .option("--fixNoImplicitAny", "fix TypeScript's --noImplicitAny complaints")
         .option("--fixNoImplicitThis", "fix TypeScript's --strictNullChecks complaints")
         .option("--fixStrictNullChecks", "override TypeScript's --strictNullChecks setting for added types")
+        .option("--typesOnlyPrimitives", "exclude complex types from changes, such as arrays or interfaces")
         .option("-V --version", "output the package version");
     const parsed = command.parse(argv as string[]) as TypeStatArgv;
 

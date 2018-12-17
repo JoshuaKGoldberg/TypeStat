@@ -1,7 +1,5 @@
 # Types
 
-_to be filled out soon!_
-
 ## `aliases`
 
 Object mapping names of added types to strings to replace them with.
@@ -32,6 +30,25 @@ type TodoAutoAddedUndefined = undefined;
         "aliases": {
             "undefined": "TodoAutoAddedUndefined"
         }
+    }
+}
+```
+
+## `--typesOnlyPrimitives`/`onlyPrimitives`
+
+Whether to exclude complex object types, such as arrays and class instances.
+This is particularly useful for `--fixStrictNullChecks`, where the only relevant types are `null` and `undefined`.
+
+`onlyPrimitives` is also a performance boost when applicable: TypeStat will skip checking complex types in calculating which types are missing, which can be time-consuming.
+
+```shell
+typestat --typesOnlyPrimitives
+```
+
+```json
+{
+    "types": {
+        "onlyPrimitives": true
     }
 }
 ```
