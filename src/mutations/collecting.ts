@@ -5,7 +5,7 @@ import { FileMutationsRequest } from "../mutators/fileMutator";
 import { TypeStatOptions } from "../options/types";
 import { setSubtract } from "../shared/sets";
 import { getApplicableTypeAliases } from "./aliasing";
-import { areTypesWithSymbolsRoughlyEqual, typeIsChildOf } from "./comparisons";
+import { areTypesRoughlyEqual, typeIsChildOf } from "./comparisons";
 
 /**
  * Collects assigned and missing flags and types, recursively accounting for type unions.
@@ -127,11 +127,11 @@ const findMissingTypes = (
 
     const shouldRemoveAssignedType = (assignedType: ts.Type) => {
         for (const potentialParentType of [...assignedTypes, ...declaredTypes]) {
-            if (areTypesWithSymbolsRoughlyEqual(assignedType, potentialParentType)) {
+            if (assignedType === potentialParentType) {
                 continue;
             }
 
-            if (typeIsChildOf(request, assignedType, potentialParentType)) {
+            if (areTypesRoughlyEqual(request, assignedType, potentialParentType) || typeIsChildOf(request, assignedType, potentialParentType)) {
                 return true;
             }
         }

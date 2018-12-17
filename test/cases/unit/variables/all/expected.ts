@@ -167,8 +167,17 @@
     // Object iteration
 
     const containsStrings = { a: "a", b: "b" };
-    for (const key of containsStrings) {}
+    for (const key in containsStrings) {}
 
     const containsStringOrUndefineds: { [i: string]: string | undefined } = {};
-    for (const key of containsStringOrUndefineds) {}
+    for (const key in containsStringOrUndefineds) {}
+
+    // Functions
+
+    let resolve: () => void;
+    resolve = () => {};
+
+    new Promise<void>((_resolve) => {
+        resolve = _resolve;
+    });
 }
