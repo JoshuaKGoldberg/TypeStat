@@ -36,10 +36,8 @@ type TodoAutoAddedUndefined = undefined;
 
 ## `--typesOnlyPrimitives`/`onlyPrimitives`
 
-Whether to exclude complex object types, such as arrays and class instances.
+Whether to exclude type additions that contain complex object types, such as arrays and class instances.
 This is particularly useful for `--fixStrictNullChecks`, where the only relevant types are `null` and `undefined`.
-
-`onlyPrimitives` is also a performance boost when applicable: TypeStat will skip checking complex types in calculating which types are missing, which can be time-consuming.
 
 ```shell
 typestat --typesOnlyPrimitives

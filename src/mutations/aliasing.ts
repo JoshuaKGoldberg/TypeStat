@@ -41,6 +41,11 @@ export const joinIntoType = (
     types: ReadonlySet<ts.Type>,
     typeOptions: TypeStatTypeOptions,
 ): string | undefined => {
+    // If we don't include rich types, ignore any new type that would add any
+    if (typeOptions.onlyPrimitives && types.size !== 0) {
+        return undefined;
+    }
+
     const unionNames = [
         ...Array.from(types)
             .filter(isTypeNamePrintable)

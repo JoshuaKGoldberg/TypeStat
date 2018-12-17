@@ -30,9 +30,7 @@ export const collectUsageFlagsAndSymbols = (
         assignedFlags,
         assignedTypes,
         missingFlags: setSubtract(assignedFlags, declaredFlags),
-        missingTypes: request.options.types.onlyPrimitives
-            ? new Set()
-            : findMissingTypes(request, assignedTypes, declaredTypes),
+        missingTypes: findMissingTypes(request, assignedTypes, declaredTypes),
     };
 };
 
@@ -59,12 +57,10 @@ const collectFlagsAndTypesFromTypes = (
             }
         }
 
-        // If the type is a rich type (has a symbol) and we don't ignore them, add it in directly
-        if (!options.types.onlyPrimitives) {
-            if (type.getSymbol() !== undefined) {
-                foundTypes.add(type);
-                continue;
-            }
+        // If the type is a rich type (has a symbol), add it in directly
+        if (type.getSymbol() !== undefined) {
+            foundTypes.add(type);
+            continue;
         }
 
         // If the type is a union, add any flags or types found within it
