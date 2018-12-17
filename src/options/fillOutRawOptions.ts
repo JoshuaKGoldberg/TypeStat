@@ -2,6 +2,7 @@ import * as path from "path";
 
 import { TypeStatArgv } from "../index";
 import { processLogger } from "../logging/logger";
+import { collectOptionals } from "../shared/arrays";
 import { convertObjectToMap } from "../shared/maps";
 import { normalizeAndSlashify } from "../shared/paths";
 import { collectAddedMutators } from "./addedMutators";
@@ -13,8 +14,8 @@ export const fillOutRawOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOpt
         : rawOptions.types;
 
     const options = {
-        addedMutators: collectAddedMutators(argv, rawOptions, processLogger),
         fileNames,
+        filters: collectOptionals(argv.filters, rawOptions.filters),
         fixes: {
             incompleteTypes: false,
             noImplicitAny: false,
@@ -23,6 +24,7 @@ export const fillOutRawOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOpt
             ...rawOptions.fixes,
         },
         logger: processLogger,
+        mutators: collectAddedMutators(argv, rawOptions, processLogger),
         projectPath: getProjectPath(argv, rawOptions),
         types: {
             aliases: rawOptionTypes.aliases === undefined

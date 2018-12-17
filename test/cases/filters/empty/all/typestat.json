@@ -1,0 +1,8 @@
+{
+    "filters": [],
+    "fixes": {
+        "incompleteTypes": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true
+    }
+}

@@ -11,6 +11,10 @@ export const collectMutationsFromNodes = <TNode extends ts.Node>(
     const mutations: IMutation[] = [];
 
     const visitNode = (node: ts.Node) => {
+        if (request.filteredNodes.has(node)) {
+            return;
+        }
+
         if (selector(node)) {
             const mutation = visitor(node, request);
 

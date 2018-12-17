@@ -4,7 +4,7 @@ TypeStat allows adding custom mutators after the built-in mutators, similar to [
 
 ## Usage
 
-Use the `-a`/`--add` CLI flag and/or `addedMutators` configuration setting to add `require`-style paths of mutators to add.
+Use the `-a`/`--add` CLI flag and/or `mutators` configuration setting to add `require`-style paths of mutators to add.
 
 ```shell
 typestat --add my-mutator-module
@@ -12,7 +12,7 @@ typestat --add my-mutator-module
 
 ```json
 {
-    "addedMutators": [
+    "mutators": [
         "my-mutator-module"
     ]
 }

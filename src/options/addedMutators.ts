@@ -3,7 +3,7 @@ import * as path from "path";
 import { TypeStatArgv } from "../index";
 import { Logger } from "../logging/logger";
 import { FileMutator } from "../mutators/fileMutator";
-import { arrayify } from "../shared/arrayify";
+import { arrayify } from "../shared/arrays";
 import { RawTypeStatOptions } from "./types";
 
 interface ImportedFileMutator {
@@ -19,10 +19,10 @@ interface ImportedFileMutator {
  * @returns Imported mutators with their friendly names.
  */
 export const collectAddedMutators = (argv: TypeStatArgv, rawOptions: RawTypeStatOptions, logger: Logger): ReadonlyArray<[string, FileMutator]> => {
-    const addedMutators = arrayify(argv.add);
+    const addedMutators = arrayify(argv.mutators);
 
-    if (rawOptions.addedMutators !== undefined) {
-        addedMutators.push(...rawOptions.addedMutators);
+    if (rawOptions.mutators !== undefined) {
+        addedMutators.push(...rawOptions.mutators);
     }
 
     if (addedMutators.length === 0) {

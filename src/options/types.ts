@@ -9,9 +9,9 @@ import { Dictionary } from "../shared/maps";
  */
 export interface RawTypeStatOptions {
     /**
-     * Any directories of user-defined mutators to apply after the built-in mutators.
+     * Any tsquery filters to exclude within files.
      */
-    readonly addedMutators?: ReadonlyArray<string>;
+    readonly filters?: ReadonlyArray<string>;
 
     /**
      * Which fixes (type mutations) are enabled, with fields defaulting to `true`.
@@ -22,6 +22,11 @@ export interface RawTypeStatOptions {
      * Globs of files to run on, if not everything in the TypeScript project.
      */
     readonly include?: ReadonlyArray<string>;
+
+    /**
+     * Any user-defined mutators to apply after the built-in mutators.
+     */
+    readonly mutators?: ReadonlyArray<string>;
 
     /**
      * Whether to skip adding types that aren't `null` or `undefined`.
@@ -47,6 +52,11 @@ export interface RawTypeStatTypeOptions {
      * Names of added types mapped to strings to replace them with.
      */
     aliases?: Readonly<Dictionary<string>>;
+
+    /**
+     * Whether to exclude rich types from changes, such as arrays or interfaces.
+     */
+    onlyPrimitives?: string;
 }
 
 /**
@@ -54,14 +64,14 @@ export interface RawTypeStatTypeOptions {
  */
 export interface TypeStatOptions {
     /**
-     * Added mutators specified by the user.
-     */
-    readonly addedMutators: ReadonlyArray<[string, FileMutator]>;
-
-    /**
      * File names to run, if not everything in the TypeScript project.
      */
     readonly fileNames?: ReadonlyArray<string>;
+
+    /**
+     * Any tsquery filters to exclude within files.
+     */
+    readonly filters?: ReadonlyArray<string>;
 
     /**
      * Whether each fix (type mutation) is enabled.
@@ -72,6 +82,11 @@ export interface TypeStatOptions {
      * Wraps process.stdout.write.
      */
     readonly logger: Logger;
+
+    /**
+     * Added mutators specified by the user.
+     */
+    readonly mutators: ReadonlyArray<[string, FileMutator]>;
 
     /**
      * Options for which types to add under what aliases.
@@ -117,4 +132,9 @@ export interface TypeStatTypeOptions {
      * Names of added types mapped to strings to replace them with.
      */
     aliases: ReadonlyMap<string, string>;
+
+    /**
+     * Whether to exclude complex types from changes, such as arrays or interfaces.
+     */
+    onlyPrimitives?: string;
 }

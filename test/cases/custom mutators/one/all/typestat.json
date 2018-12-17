@@ -1,5 +1,5 @@
 {
-    "addedMutators": [
+    "mutators": [
         "../sampleMutator.js"
     ]
 }

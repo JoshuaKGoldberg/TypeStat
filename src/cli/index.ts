@@ -13,8 +13,9 @@ import { getPackageVersion } from "./version";
  */
 export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
     const command = new Command()
-        .option("-a --add [...add]", "require paths to any custom mutators to run")
         .option("-c --config [config]", "path to a TypeStat config file")
+        .option("-f --filter [...filters]", "tsquery filters to exclude within files")
+        .option("-m --mutators [...mutators]", "require paths to any custom mutators to run")
         .option("-p --project [project]", "path to a TypeScript project file")
         .option("--fixIncompleteTypes", "add missing types to existing, incomplete types")
         .option("--fixNoImplicitAny", "fix TypeScript's --noImplicitAny complaints")

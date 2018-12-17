@@ -4,6 +4,7 @@
     "typestat": "bin/typestat"
   },
   "dependencies": {
+    "@phenomnomnominal/tsquery": "^3.0.0",
     "@types/mz": "0.0.32",
     "automutate": "^0.7.0",
     "automutate-tests": "^0.2.1",

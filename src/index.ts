@@ -10,13 +10,14 @@ import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutatio
  * Node arguments to pass to TypeStat.
  */
 export interface TypeStatArgv {
-    readonly add?: string | ReadonlyArray<string>;
     readonly args?: ReadonlyArray<string>;
     readonly config?: string;
+    readonly filters?: ReadonlyArray<string>;
     readonly fixIncompleteTypes?: boolean;
     readonly fixNoImplicitAny?: boolean;
     readonly fixNoImplicitThis?: boolean;
     readonly fixStrictNullChecks?: boolean;
+    readonly mutators?: string | ReadonlyArray<string>;
     readonly project?: string;
 }
 

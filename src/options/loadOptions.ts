@@ -56,7 +56,7 @@ const collectFileNames = async (argv: TypeStatArgv, rawOptions: RawTypeStatOptio
 };
 
 const noFixesSpecified = (options: TypeStatOptions): boolean =>
-    options.addedMutators.length === 0
+    options.mutators.length === 0
     && !options.fixes.incompleteTypes 
     && !options.fixes.noImplicitAny 
     && !options.fixes.noImplicitThis

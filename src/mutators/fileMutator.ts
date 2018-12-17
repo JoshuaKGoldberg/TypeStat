@@ -10,6 +10,7 @@ import { FileInfoCache } from "../shared/FileInfoCache";
  */
 export interface FileMutationsRequest {
     readonly fileInfoCache: FileInfoCache;
+    readonly filteredNodes: Set<ts.Node>;
     readonly options: TypeStatOptions;
     readonly services: LanguageServices;
     readonly sourceFile: ts.SourceFile;
