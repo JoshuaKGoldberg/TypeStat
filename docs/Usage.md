@@ -11,7 +11,11 @@ Todo: fill out!
         "CallExpression[expression.text=teardown]"
     ],
     "fixes": {
+        "fixIncompleteTypes": true,
         "strictNullChecks": true
+    },
+    "types": {
+        "onlyPrimitives": true
     }
 }
 ```

@@ -45,7 +45,7 @@ typestat
 ```
 
 This will use [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig)
-to search for a `package.json` `"typestat"` property or configuration file such as `typestat.json` to use settings from.
+to search for a `package.json` `"typestat"` property or configuration file such to read settings from.
 
 You can run on only a subset of files by passing globs to the command:
 

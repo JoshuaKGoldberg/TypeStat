@@ -3,6 +3,7 @@ import * as path from "path";
 import * as ts from "typescript";
 
 import { TypeStatOptions } from "../options/types";
+import { collectOptionals } from "../shared/arrays";
 
 /**
  * Language service and type information with their backing TypeScript configuration.
@@ -45,7 +46,11 @@ export const createLanguageServices = async (options: TypeStatOptions): Promise<
         path.resolve(path.dirname(options.projectPath)),
         { noEmit: true },
     );
-    const fileNames = options.fileNames === undefined ? parsedConfiguration.fileNames : options.fileNames;
+    
+    // Include all possible file names in our program, including ones we won't later visit
+    // TypeScript projects must include source files for all nodes we look at
+    // See https://github.com/Microsoft/TypeScript/issues/28413
+    const fileNames = collectOptionals(options.fileNames, parsedConfiguration.fileNames);
 
     // Create a basic TypeScript compiler host and program using the parsed compiler options
     const host = ts.createCompilerHost({}, true);
@@ -57,7 +62,7 @@ export const createLanguageServices = async (options: TypeStatOptions): Promise<
         getCompilationSettings: () => compilerConfigOptions,
         getCurrentDirectory: () => process.cwd(),
         getDefaultLibFileName: ts.getDefaultLibFilePath,
-        getScriptFileNames: () => parsedConfiguration.fileNames,
+        getScriptFileNames: () => fileNames,
         getScriptSnapshot: (fileName) =>
             fs.existsSync(fileName) ? ts.ScriptSnapshot.fromString(fs.readFileSync(fileName).toString()) : undefined,
         getScriptVersion: () => "0",

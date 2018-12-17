@@ -6,7 +6,7 @@ import * as path from "path";
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions } from "../options/types";
 import { createTypeStatMutationsProvider } from "../runtime/createTypeStatMutationsProvider";
-import { arrayify } from "../shared/arrayify";
+import { arrayify } from "../shared/arrays";
 import { FakeWritableStream } from "./FakeWritableStream";
 
 interface ParsedTestArgv {
@@ -39,7 +39,7 @@ describeMutationTestCases(
                     projectPath: path.join(path.dirname(projectPath), "tsconfig.json"),
                 }),
             logger: {
-                stderr: new FakeWritableStream(),
+                stderr: process.stderr,
                 stdout: new FakeWritableStream(),
             },
         });
