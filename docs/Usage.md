@@ -8,7 +8,8 @@ Todo: fill out!
 {
     "filters": [
         "MethodDeclaration[name.text=dispose]",
-        "CallExpression[expression.text=teardown]"
+        "CallExpression[expression.text=teardown]",
+        "CallExpression[expression.text=suiteTeardown]"
     ],
     "fixes": {
         "fixIncompleteTypes": true,

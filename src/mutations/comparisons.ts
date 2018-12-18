@@ -1,5 +1,6 @@
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
+
 import { FileMutationsRequest } from "../mutators/fileMutator";
 
 export const typeIsChildOf = (
@@ -7,6 +8,11 @@ export const typeIsChildOf = (
     child: ts.Type,
     potentialParent: ts.Type,
 ): boolean => {
+    // `any` is always a parent of everything
+    if (potentialParent.flags & ts.TypeFlags.Any) {
+        return true;
+    }
+
     if (areTypesRoughlyEqual(request, child, potentialParent)) {
         return true;
     }

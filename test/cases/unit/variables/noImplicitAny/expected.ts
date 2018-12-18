@@ -10,6 +10,10 @@
     let givenUndefinedHasNull: string | null = "";
     givenUndefinedHasNull = undefined;
 
+    let givenNullAndUndefinedHasNull: string | null = "";
+    givenNullAndUndefinedHasNull = null;
+    givenNullAndUndefinedHasNull = undefined;
+
     let givenNull = "";
     givenNull = null;
 
@@ -18,6 +22,10 @@
 
     let givenNullHasUndefined: string | undefined = "";
     givenNullHasUndefined = null;
+
+    let givenNullAndUndefinedHasUndefined: string | undefined = "";
+    givenNullAndUndefinedHasUndefined = null;
+    givenNullHasUndefined = undefined;
 
     let givenString: string;
     givenString = "";
@@ -48,6 +56,21 @@
     let setToStringHasUndefined: string | undefined = "";
 
     let setToStringHasNull: string | null = "";
+
+    // Any
+
+    let startsAnyWithString: any = "";
+
+    let startsAnyGivenString: any;
+    startsAnyGivenString = "";
+    
+    let startsAnyWithStringGivenString: any = "";
+    startsAnyWithStringGivenString = "";
+
+    let startsStringWithAny: string = {} as any;
+
+    let startsStringGivenAny: string;
+    startsStringGivenAny = {} as any;
 
     // Interfaces and classes
 

@@ -29,7 +29,7 @@ export const collectUsageFlagsAndSymbols = (
     return {
         assignedFlags,
         assignedTypes,
-        missingFlags: setSubtract(assignedFlags, declaredFlags),
+        missingFlags: findMissingFlags(declaredType, assignedFlags, declaredFlags),
         missingTypes: findMissingTypes(request, assignedTypes, declaredTypes),
     };
 };
@@ -118,11 +118,32 @@ export const isTypeFlagSetRecursively = (parentType: ts.Type, typeFlag: ts.TypeF
     return false;
 };
 
+const findMissingFlags = (
+    declaredType: ts.Type,
+    assignedFlags: ReadonlySet<string>,
+    declaredFlags: ReadonlySet<string>,
+) => {
+    // If the type is declared to allow `any`, it can't be missing anything
+    if (isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Any)) {
+        return new Set();
+    }
+
+    // Otherwise, it's all the flags assigned to it that weren't already declared
+    return setSubtract(assignedFlags, declaredFlags);
+};
+
 const findMissingTypes = (
     request: FileMutationsRequest,
     assignedTypes: ReadonlySet<ts.Type>,
     declaredTypes: ReadonlySet<ts.Type>,
 ): ReadonlySet<ts.Type> => {
+    // If anything is of type `any`, then bail out immediately: we have no idea what's missing
+    for (const type of [...assignedTypes, ...declaredTypes]) {
+        if (isTypeFlagSetRecursively(type, ts.TypeFlags.Any)) {
+            return new Set();
+        }
+    }
+
     const rootLevelAssignedTypes = new Set(assignedTypes);
 
     const shouldRemoveAssignedType = (assignedType: ts.Type) => {

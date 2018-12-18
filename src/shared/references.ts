@@ -18,7 +18,7 @@ export const findRelevantNodeReferences = (request: FileMutationsRequest, node: 
     // For each reference within the referencing symbols, add it if it's not the child of a filtered node
     for (const referenceSymbol of referencedSymbols) {
         for (const reference of referenceSymbol.references) {
-            if (referenceIsFilteredOut(request, reference)) {
+            if (!referenceIsFilteredOut(request, reference)) {
                 references.add(reference);
             }
         }
