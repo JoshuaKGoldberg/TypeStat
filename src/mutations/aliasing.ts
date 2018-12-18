@@ -1,5 +1,6 @@
 import * as ts from "typescript";
-import { TypeStatOptions, TypeStatTypeOptions } from "../options/types";
+
+import { TypeStatOptions } from "../options/types";
 
 /**
  * Type flags and aliases to check when --strictNullChecks is not enabled.
@@ -37,24 +38,26 @@ export const getApplicableTypeAliases = (options: TypeStatOptions) =>
  * @remarks Removes any rich types that resolve to anonymous object literals.
  */
 export const joinIntoType = (
-    flags: ReadonlySet<string>,
+    flags: ReadonlySet<ts.TypeFlags>,
     types: ReadonlySet<ts.Type>,
-    typeOptions: TypeStatTypeOptions,
+    options: TypeStatOptions,
 ): string | undefined => {
     // If we don't include rich types, ignore any new type that would add any
-    if (typeOptions.onlyPrimitives && types.size !== 0) {
+    if (options.types.onlyPrimitives && types.size !== 0) {
         return undefined;
     }
 
+    const typeAliases = getApplicableTypeAliases(options);
     let unionNames = [
         ...Array.from(types)
             .filter(isTypeNamePrintable)
             .map(type => type.symbol.name),
-        ...flags,
+        // tslint:disable-next-line:no-non-null-assertion
+        ...Array.from(flags).map(type => typeAliases.get(type)!),
     ];
 
-    if (typeOptions.matching !== undefined) {
-        unionNames = filterMatchingTypeNames(unionNames, typeOptions.matching);
+    if (options.types.matching !== undefined) {
+        unionNames = filterMatchingTypeNames(unionNames, options.types.matching);
     }
 
     if (unionNames.length === 0) {
@@ -63,7 +66,7 @@ export const joinIntoType = (
 
     return unionNames
         .map(type => {
-            const alias = typeOptions.aliases.get(type);
+            const alias = options.types.aliases.get(type);
 
             return alias === undefined
                 ? type

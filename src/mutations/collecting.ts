@@ -5,6 +5,7 @@ import { FileMutationsRequest } from "../mutators/fileMutator";
 import { TypeStatOptions } from "../options/types";
 import { setSubtract } from "../shared/sets";
 import { getApplicableTypeAliases } from "./aliasing";
+import { findMissingFlags, isTypeFlagSetRecursively } from "./collecting/flags";
 import { areTypesRoughlyEqual, typeIsChildOf } from "./comparisons";
 
 /**
@@ -44,16 +45,17 @@ export const collectUsageFlagsAndSymbols = (
 const collectFlagsAndTypesFromTypes = (
     options: TypeStatOptions,
     ...allTypes: ts.Type[]
-): [ReadonlySet<string>, ReadonlySet<ts.Type>] => {
-    const foundFlags = new Set<string>();
+): [ReadonlySet<ts.TypeFlags>, ReadonlySet<ts.Type>] => {
+    const foundFlags = new Set<ts.TypeFlags>();
     const foundTypes = new Set<ts.Type>();
+    const applicableTypeAliases = getApplicableTypeAliases(options);
 
     // Scan each type for undeclared type additions
     for (const type of allTypes) {
-        // For any simple type flag, add its alias if it's in the assigned type but not the declared type
-        for (const [typeFlag, alias] of getApplicableTypeAliases(options)) {
+        // For any simple type flag we later will care about for aliasing, add it if it's in the type
+        for (const [typeFlag] of applicableTypeAliases) {
             if (isTypeFlagSetRecursively(type, typeFlag)) {
-                foundFlags.add(alias);
+                foundFlags.add(typeFlag);
             }
         }
 
@@ -93,43 +95,6 @@ const recursivelyCollectSubTypes = (type: ts.UnionType): ts.Type[] => {
     }
 
     return subTypes;
-};
-
-/**
- * Checks if a type contains a type flag, accounting for deep nested type unions.
- * 
- * @param parentType   Parent type to check for the type flag.
- * @param typeFlag   Type flag to check within the parent type.
- * @returns Whether the parent type contains the type flag.
- */
-export const isTypeFlagSetRecursively = (parentType: ts.Type, typeFlag: ts.TypeFlags): boolean => {
-    if (tsutils.isTypeFlagSet(parentType, typeFlag)) {
-        return true;
-    }
-
-    if (tsutils.isUnionOrIntersectionType(parentType)) {
-        for (const childType of parentType.types) {
-            if (isTypeFlagSetRecursively(childType, typeFlag)) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-};
-
-const findMissingFlags = (
-    declaredType: ts.Type,
-    assignedFlags: ReadonlySet<string>,
-    declaredFlags: ReadonlySet<string>,
-) => {
-    // If the type is declared to allow `any`, it can't be missing anything
-    if (isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Any)) {
-        return new Set();
-    }
-
-    // Otherwise, it's all the flags assigned to it that weren't already declared
-    return setSubtract(assignedFlags, declaredFlags);
 };
 
 const findMissingTypes = (

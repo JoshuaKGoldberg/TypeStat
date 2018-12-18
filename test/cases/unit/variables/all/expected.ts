@@ -72,6 +72,23 @@
     let startsStringGivenAny: string;
     startsStringGivenAny = {} as any;
 
+    // Void and undefined
+
+    let startsUndefinedWithVoid: undefined = ((): void => {})();
+
+    let startsUndefinedGivenVoid: undefined;
+    startsUndefinedGivenVoid = ((): void => {})();
+
+    let startsVoidWithUndefined: void = undefined;
+
+    let startsVoidGivenUndefined: void;
+    startsVoidGivenUndefined = undefined;
+
+    let resolveDeclaredVoid: (v: void) => void;
+    new Promise<void>((_resolve) => {
+        resolve = _resolve;
+    });
+
     // Interfaces and classes
 
     interface SampleInterface {
@@ -160,8 +177,8 @@
     numberFilledExplicitAddedString.push("");
 
     let numberOrStringEmptyImplicit: Array = [];
-    numberOrStringImplicit.push(1);
-    numberOrStringImplicit.push("");
+    numberOrStringEmptyImplicit.push(1);
+    numberOrStringEmptyImplicit.push("");
     
     let numberOrStringEmptyExplicit: number[] | Array = [];
     numberOrStringEmptyExplicit.push(1);
