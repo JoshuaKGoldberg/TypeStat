@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { IMutation, ITextInsertMutation } from "automutate";
-import { isTypeFlagSetRecursively } from "../../mutations/collecting";
+import { isTypeFlagSetRecursively } from "../../mutations/collecting/flags";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
