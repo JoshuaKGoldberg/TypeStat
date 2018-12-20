@@ -5,7 +5,6 @@ import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../..
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../mutations/creators";
 import { findNodeByStartingPosition } from "../../shared/nodes";
 import { isNodeWithType } from "../../shared/nodeTypes";
-import { findRelevantNodeReferences } from "../../shared/references";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
 

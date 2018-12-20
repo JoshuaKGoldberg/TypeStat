@@ -12,7 +12,7 @@ export const findRelevantNodeReferences = (
     // Find all locations the containing method is referenced
     const referencedSymbols = services.languageService.findReferences(
         sourceFile.fileName,
-        node.parent.getStart(sourceFile),
+        node.getStart(sourceFile),
     );
     if (referencedSymbols === undefined) {
         return undefined;

@@ -50,7 +50,7 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
     }
 
     // Find everything else referencing the property
-    const references = request.fileInfoCache.getNodeReferences(node.name);
+    const references = request.fileInfoCache.getNodeReferences(node);
     if (references !== undefined) {
         // For each referencing location, update types if the type is assigned to there
         for (const reference of references) {
