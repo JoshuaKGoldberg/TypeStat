@@ -14,7 +14,7 @@ import { RawTypeStatOptions, TypeStatOptions } from "./types";
  *
  * @param configPath   Suggested path to load from, instead of searching.
  * @returns Promise for parsed raw options from a configuration file.
- * @remarks This defaults to
+ * @remarks This defaults to tsconfig.json in the local directory.
  */
 const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> => {
     const explorer = cosmiconfig("typestat");
