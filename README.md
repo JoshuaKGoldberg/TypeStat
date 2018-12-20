@@ -71,6 +71,20 @@ Path to a TypeStat configuration file, if you'd like a custom path.
 typestat --config typestat.custom.json
 ```
 
+#### `include`
+
+Glob patterns of file names to include.
+You can either specify these as arguments to the CLI and/or through your TypeStat configuration file.
+CLI icludes will replace any configuration file includes.
+
+```json
+{
+    "include": [
+        "./src/**/*.ts"
+    ]
+}
+```
+
 #### `-p`/`--project`
 
 Path to a TypeScript project file, if you'd like a path other than `./tsconfig.json`.
