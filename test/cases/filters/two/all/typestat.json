@@ -1,8 +1,5 @@
 {
-    "filters": [
-        "MethodDeclaration[name.text=dispose]",
-        "CallExpression[expression.text=teardown]"
-    ],
+    "filters": ["MethodDeclaration[name.text=dispose]", "CallExpression[expression.text=teardown]"],
     "fixes": {
         "incompleteTypes": true,
         "noImplicitAny": true,

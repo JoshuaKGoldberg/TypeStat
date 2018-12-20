@@ -7,7 +7,7 @@ import { isNodeWithType } from "../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
-export const returnMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => 
+export const returnMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
     collectMutationsFromNodes(request, tsutils.isFunctionWithBody, visitFunctionWithBody);
 
 const visitFunctionWithBody = (node: ts.FunctionLikeDeclaration, request: FileMutationsRequest): IMutation | undefined => {
@@ -33,7 +33,10 @@ const visitFunctionWithBody = (node: ts.FunctionLikeDeclaration, request: FileMu
  * @param request   Source file, metadata, and settings to collect mutations in the file.
  * @returns Strict types missing from the declared type.
  */
-const collectFunctionReturnedTypes = (functionLikeDeclaration: ts.FunctionLikeDeclaration, request: FileMutationsRequest): ReadonlyArray<ts.Type> => {
+const collectFunctionReturnedTypes = (
+    functionLikeDeclaration: ts.FunctionLikeDeclaration,
+    request: FileMutationsRequest,
+): ReadonlyArray<ts.Type> => {
     const returnedTypes: ts.Type[] = [];
 
     // Search through nodes within the function-like to find all its return statements
@@ -45,9 +48,7 @@ const collectFunctionReturnedTypes = (functionLikeDeclaration: ts.FunctionLikeDe
 
         // Add new returning types as needed when we find any 'return' statement with a value returned
         if (tsutils.isReturnStatement(node) && node.expression !== undefined) {
-            returnedTypes.push(
-                request.services.program.getTypeChecker().getTypeAtLocation(node.expression),
-            );
+            returnedTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(node.expression));
         }
 
         ts.forEachChild(node, visitNode);

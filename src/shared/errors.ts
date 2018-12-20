@@ -5,9 +5,7 @@ export const getQuickErrorSummary = (error: unknown, stackTraceLimit: number = I
 
     const lines = error.stack.split("\n");
 
-    let output = lines
-        .slice(0, stackTraceLimit)
-        .join("\n\t");
+    let output = lines.slice(0, stackTraceLimit).join("\n\t");
 
     if (lines.length > stackTraceLimit) {
         output += "\n\t    ...";

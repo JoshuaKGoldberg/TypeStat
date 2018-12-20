@@ -15,7 +15,10 @@ export const propertyAccessExpressionMutator: FileMutator = (request: FileMutati
     return collectMutationsFromNodes(request, ts.isPropertyAccessExpression, visitPropertyAccessExpression);
 };
 
-const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression, request: FileMutationsRequest): ITextInsertMutation | undefined => {
+const visitPropertyAccessExpression = (
+    node: ts.PropertyAccessExpression,
+    request: FileMutationsRequest,
+): ITextInsertMutation | undefined => {
     // Grab the type of the property being accessed by name
     const expressionType = request.services.program.getTypeChecker().getTypeAtLocation(node.expression);
 

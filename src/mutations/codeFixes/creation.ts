@@ -3,7 +3,7 @@ import * as ts from "typescript";
 
 /**
  * Attempts to convert a language service code fix into a usable mutation.
- * 
+ *
  * @param codeFixes   Code fixes  from a language service.
  * @returns Equivalent mutation, if possible.
  */
@@ -23,12 +23,14 @@ export const createCodeFixCreationMutation = (codeFixes: ReadonlyArray<ts.CodeFi
     }
 
     return combineMutations(
-        ...textChanges.map((textChange): ITextInsertMutation => ({
-            insertion: textChange.newText,
-            range: {
-                begin: textChange.span.start,
-            },
-            type: "text-insert",
-        }))
+        ...textChanges.map(
+            (textChange): ITextInsertMutation => ({
+                insertion: textChange.newText,
+                range: {
+                    begin: textChange.span.start,
+                },
+                type: "text-insert",
+            }),
+        ),
     );
 };

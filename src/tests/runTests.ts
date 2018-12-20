@@ -37,7 +37,8 @@ describeMutationTestCases(
                 {
                     ...rawOptions,
                     projectPath: path.join(path.dirname(projectPath), "tsconfig.json"),
-                }),
+                },
+            ),
             logger: {
                 stderr: process.stderr,
                 stdout: new FakeWritableStream(),
@@ -48,8 +49,7 @@ describeMutationTestCases(
         accept: parsed.accept,
         actual: "actual.ts",
         expected: "expected.ts",
-        includes: arrayify(parsed.include)
-            .map((include) => new RegExp(`(.*)${include}(.*)`)),
+        includes: arrayify(parsed.include).map((include) => new RegExp(`(.*)${include}(.*)`)),
         original: "../original.?s",
         settings: "typestat.json",
     },

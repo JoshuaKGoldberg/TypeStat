@@ -11,7 +11,7 @@ export class FileInfoCache {
         private readonly filteredNodes: ReadonlySet<ts.Node>,
         private readonly services: LanguageServices,
         private readonly sourceFile: ts.SourceFile,
-    ) { }
+    ) {}
 
     public getNodeReferences(node: ts.Node): ReadonlyArray<ts.ReferenceEntry> | undefined {
         let references = this.nodeReferences.get(node);
@@ -22,7 +22,7 @@ export class FileInfoCache {
 
         return references;
     }
-    
+
     public getVariableUsage(): ReadonlyMap<ts.Identifier, tsutils.VariableInfo> {
         if (this.variableUsage === undefined) {
             this.variableUsage = tsutils.collectVariableUsage(this.sourceFile);

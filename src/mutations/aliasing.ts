@@ -24,13 +24,11 @@ const strictTypeFlagsWithAliases = new Map([
 ]);
 
 export const getApplicableTypeAliases = (options: TypeStatOptions) =>
-    options.fixes.strictNullChecks
-        ? strictTypeFlagsWithAliases
-        : nonStrictTypeFlagAliases;
+    options.fixes.strictNullChecks ? strictTypeFlagsWithAliases : nonStrictTypeFlagAliases;
 
 /**
  * Joins assigning types into a union to be used as a type reference.
- * 
+ *
  * @param flags   Flags to include in the type union.
  * @param types   Types to include in the type union.
  * @param typeOptions   Options for which types to add under what aliases.
@@ -51,9 +49,9 @@ export const joinIntoType = (
     let unionNames = [
         ...Array.from(types)
             .filter(isTypeNamePrintable)
-            .map(type => type.symbol.name),
+            .map((type) => type.symbol.name),
         // tslint:disable-next-line:no-non-null-assertion
-        ...Array.from(flags).map(type => typeAliases.get(type)!),
+        ...Array.from(flags).map((type) => typeAliases.get(type)!),
     ];
 
     if (options.types.matching !== undefined) {
@@ -65,12 +63,10 @@ export const joinIntoType = (
     }
 
     return unionNames
-        .map(type => {
+        .map((type) => {
             const alias = options.types.aliases.get(type);
 
-            return alias === undefined
-                ? type
-                : alias;
+            return alias === undefined ? type : alias;
         })
         .join(" | ");
 };
@@ -78,4 +74,4 @@ export const joinIntoType = (
 const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);
 
 const filterMatchingTypeNames = (unionNames: ReadonlyArray<string>, matching: ReadonlyArray<string>): string[] =>
-    unionNames.filter(name => matching.some(matcher => name.match(matcher) !== null));
+    unionNames.filter((name) => matching.some((matcher) => name.match(matcher) !== null));

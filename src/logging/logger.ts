@@ -1,5 +1,3 @@
-
-
 /**
  * Wraps process.stderr and process.stdout.
  */

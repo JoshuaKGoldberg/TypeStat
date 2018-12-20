@@ -1,9 +1,7 @@
 export class LazyAsyncCache<T> {
     private value?: T;
 
-    public constructor(
-        private readonly getter: () => T,
-    ) { }
+    public constructor(private readonly getter: () => T) {}
 
     public async get(): Promise<T> {
         if (this.value === undefined) {

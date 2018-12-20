@@ -1,10 +1,10 @@
 {
-    class Foo { }
+    class Foo {}
 
     function stringOrBoolean(): string {
         return true;
     }
-    
+
     function stringOrUndefined(): string {
         return undefined;
     }

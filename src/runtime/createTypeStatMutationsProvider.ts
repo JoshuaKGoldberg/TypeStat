@@ -17,9 +17,7 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
     let lastFileIndex = -1;
     let hasPassedFirstFile = false;
 
-    const fileNamesAndServicesCache = new LazyAsyncCache(
-        async () => createFileNamesAndServices(options),
-    );
+    const fileNamesAndServicesCache = new LazyAsyncCache(async () => createFileNamesAndServices(options));
 
     return {
         provide: async (): Promise<IMutationsWave> => {
@@ -77,9 +75,10 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
             }
 
             return {
-                fileMutations: waveStartedFromBeginning && fileMutations.size === 0
-                    ? undefined
-                    : convertMapToObject(fileMutations) as Dictionary<IMutation[]>,
+                fileMutations:
+                    waveStartedFromBeginning && fileMutations.size === 0
+                        ? undefined
+                        : (convertMapToObject(fileMutations) as Dictionary<IMutation[]>),
             };
         },
     };

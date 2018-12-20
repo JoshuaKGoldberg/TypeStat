@@ -3,11 +3,7 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
 
-export const typeIsChildOf = (
-    request: FileMutationsRequest,
-    child: ts.Type,
-    potentialParent: ts.Type,
-): boolean => {
+export const typeIsChildOf = (request: FileMutationsRequest, child: ts.Type, potentialParent: ts.Type): boolean => {
     // `any` is always a parent of everything
     if (potentialParent.flags & ts.TypeFlags.Any) {
         return true;
@@ -49,7 +45,7 @@ export const typeIsChildOf = (
 
 /**
  * Checks whether two types seem to be roughly the same.
- * 
+ *
  * @remarks
  * This is a rough equivalent of the equivalent internal TypeScript APIs
  * They actually check whether types are assignable; this just checks whether they're 'equal'
@@ -75,8 +71,8 @@ export const areTypesRoughlyEqual = (request: FileMutationsRequest, a: ts.Type, 
     const callSignaturesA = a.getCallSignatures();
     const callSignaturesB = b.getCallSignatures();
     if (
-        (callSignaturesA !== undefined && callSignaturesA.length !== 0)
-        || (callSignaturesB !== undefined && callSignaturesB.length !== 0)
+        (callSignaturesA !== undefined && callSignaturesA.length !== 0) ||
+        (callSignaturesB !== undefined && callSignaturesB.length !== 0)
     ) {
         // If one has call signatures but the other doesn't, they can't be the same.
         if (callSignaturesA === undefined || callSignaturesB === undefined) {
@@ -100,7 +96,11 @@ export const areTypesRoughlyEqual = (request: FileMutationsRequest, a: ts.Type, 
     return true;
 };
 
-const areAllCallSignaturesRoughlyEqual = (request: FileMutationsRequest, callSignaturesA: ReadonlyArray<ts.Signature>, callSignaturesB: ReadonlyArray<ts.Signature>) => {
+const areAllCallSignaturesRoughlyEqual = (
+    request: FileMutationsRequest,
+    callSignaturesA: ReadonlyArray<ts.Signature>,
+    callSignaturesB: ReadonlyArray<ts.Signature>,
+) => {
     if (callSignaturesA.length !== callSignaturesB.length) {
         return false;
     }
@@ -120,11 +120,13 @@ const areCallSignaturesRoughlyEqual = (request: FileMutationsRequest, callSignat
     }
 
     for (let i = 0; i < callSignatureA.parameters.length; i += 1) {
-        if (!areTypesRoughlyEqual(
-            request,
-            request.services.program.getTypeChecker().getDeclaredTypeOfSymbol(callSignatureA.parameters[i]),
-            request.services.program.getTypeChecker().getDeclaredTypeOfSymbol(callSignatureB.parameters[i])
-        )) {
+        if (
+            !areTypesRoughlyEqual(
+                request,
+                request.services.program.getTypeChecker().getDeclaredTypeOfSymbol(callSignatureA.parameters[i]),
+                request.services.program.getTypeChecker().getDeclaredTypeOfSymbol(callSignatureB.parameters[i]),
+            )
+        ) {
             return false;
         }
     }

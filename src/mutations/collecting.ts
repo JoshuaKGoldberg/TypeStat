@@ -37,7 +37,7 @@ export const collectUsageFlagsAndSymbols = (
 
 /**
  * Separates raw type nodes into their contained flags and types.
- * 
+ *
  * @param options   Parsed runtime options for TypeStat.
  * @param allTypes   Any number of raw type nodes.
  * @returns Flags and types found within the raw type nodes.
@@ -117,7 +117,10 @@ const findMissingTypes = (
                 continue;
             }
 
-            if (areTypesRoughlyEqual(request, assignedType, potentialParentType) || typeIsChildOf(request, assignedType, potentialParentType)) {
+            if (
+                areTypesRoughlyEqual(request, assignedType, potentialParentType) ||
+                typeIsChildOf(request, assignedType, potentialParentType)
+            ) {
                 return true;
             }
         }

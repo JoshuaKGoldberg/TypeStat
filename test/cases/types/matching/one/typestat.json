@@ -4,8 +4,6 @@
         "strictNullChecks": true
     },
     "types": {
-        "matching": [
-            "^boolean$"
-        ]
+        "matching": ["^boolean$"]
     }
 }

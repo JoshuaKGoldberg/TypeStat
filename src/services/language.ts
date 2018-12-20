@@ -46,7 +46,7 @@ export const createLanguageServices = async (options: TypeStatOptions): Promise<
         path.resolve(path.dirname(options.projectPath)),
         { noEmit: true },
     );
-    
+
     // Include all possible file names in our program, including ones we won't later visit
     // TypeScript projects must include source files for all nodes we look at
     // See https://github.com/Microsoft/TypeScript/issues/28413

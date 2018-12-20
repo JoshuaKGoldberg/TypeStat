@@ -10,10 +10,7 @@ export const findRelevantNodeReferences = (
     node: ts.Node,
 ): ts.ReferenceEntry[] | undefined => {
     // Find all locations the containing method is referenced
-    const referencedSymbols = services.languageService.findReferences(
-        sourceFile.fileName,
-        node.getStart(sourceFile),
-    );
+    const referencedSymbols = services.languageService.findReferences(sourceFile.fileName, node.getStart(sourceFile));
     if (referencedSymbols === undefined) {
         return undefined;
     }

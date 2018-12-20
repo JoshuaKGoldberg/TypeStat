@@ -36,9 +36,7 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
         result = await typeStat(parsed);
     } catch (error) {
         result = {
-            error: error instanceof Error
-                ? error
-                : new Error(error as string),
+            error: error instanceof Error ? error : new Error(error as string),
             status: ResultStatus.Failed,
         };
     }

@@ -4,9 +4,6 @@
         "strictNullChecks": true
     },
     "types": {
-        "matching": [
-            "^Foo$",
-            "^undefined$"
-        ]
+        "matching": ["^Foo$", "^undefined$"]
     }
 }

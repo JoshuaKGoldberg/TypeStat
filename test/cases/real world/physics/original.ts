@@ -7,7 +7,7 @@
     const shiftBox = (box) => {
         box.x += 1;
         box.y += 1;
-    }
+    };
 
     const box = {
         x: 0,

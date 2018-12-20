@@ -37,10 +37,7 @@ const visitParameterDeclaration = (node: ts.ParameterDeclaration, request: FileM
     return createTypeCreationMutation(request, node, declaredType, callingTypes);
 };
 
-const getCallingTypesFromReferencedSymbols = (
-    node: ts.ParameterDeclaration,
-    request: FileMutationsRequest,
-): ReadonlyArray<ts.Type> => {
+const getCallingTypesFromReferencedSymbols = (node: ts.ParameterDeclaration, request: FileMutationsRequest): ReadonlyArray<ts.Type> => {
     const callingTypes: ts.Type[] = [];
 
     // If the parameter has a default, also consider that a calling type

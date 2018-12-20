@@ -48,7 +48,7 @@ const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMut
 
 /**
  * Checks whether a variable is in a syntax location that can have a type added.
- * 
+ *
  * @param node   Node that might be blocked from having types.
  * @returns Whether the variable is allowed to have types.
  */
@@ -92,9 +92,9 @@ const collectVariableAssignedTypes = (node: ts.VariableDeclaration, request: Fil
 
         // We only care about binary expressions that assign a type to the variable
         if (
-            !ts.isBinaryExpression(useExpression)
-            || useExpression.operatorToken.getText(request.sourceFile) !== "="
-            || useExpression.left !== useIdentifier
+            !ts.isBinaryExpression(useExpression) ||
+            useExpression.operatorToken.getText(request.sourceFile) !== "=" ||
+            useExpression.left !== useIdentifier
         ) {
             continue;
         }

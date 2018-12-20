@@ -11,10 +11,10 @@ import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
 /**
  * Parses raw options from a configuration file, using Cosmiconfig to find it if necessary.
- * 
+ *
  * @param configPath   Suggested path to load from, instead of searching.
  * @returns Promise for parsed raw options from a configuration file.
- * @remarks This defaults to 
+ * @remarks This defaults to
  */
 const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> => {
     const explorer = cosmiconfig("typestat");
@@ -22,9 +22,9 @@ const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> 
 
     return cosmiconfigResult === null
         ? {
-            projectPath: normalizeAndSlashify(path.join(process.cwd(), "tsconfig.json")),
-        }
-        : cosmiconfigResult.config as RawTypeStatOptions;
+              projectPath: normalizeAndSlashify(path.join(process.cwd(), "tsconfig.json")),
+          }
+        : (cosmiconfigResult.config as RawTypeStatOptions);
 };
 
 /**
@@ -35,12 +35,10 @@ const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> 
  */
 export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | undefined> => {
     const rawOptions = await findRawOptions(argv.config);
-    const fileNames = await collectFileNames(argv, rawOptions); 
+    const fileNames = await collectFileNames(argv, rawOptions);
     const options = fillOutRawOptions(argv, rawOptions, fileNames);
 
-    return noFixesSpecified(options)
-        ? undefined
-        : options;
+    return noFixesSpecified(options) ? undefined : options;
 };
 
 const collectFileNames = async (argv: TypeStatArgv, rawOptions: RawTypeStatOptions): Promise<ReadonlyArray<string> | undefined> => {
@@ -56,8 +54,8 @@ const collectFileNames = async (argv: TypeStatArgv, rawOptions: RawTypeStatOptio
 };
 
 const noFixesSpecified = (options: TypeStatOptions): boolean =>
-    options.mutators.length === 0
-    && !options.fixes.incompleteTypes 
-    && !options.fixes.noImplicitAny 
-    && !options.fixes.noImplicitThis
-    && !options.fixes.strictNullChecks;
+    options.mutators.length === 0 &&
+    !options.fixes.incompleteTypes &&
+    !options.fixes.noImplicitAny &&
+    !options.fixes.noImplicitThis &&
+    !options.fixes.strictNullChecks;

@@ -48,7 +48,7 @@
     "lint:tslint": "tslint -p tsconfig.json -t stylish",
     "prettier:write": "prettier --config .prettierrc.json --write",
     "prettier:write:all": "npm run prettier:write ./{src,test,util}/**/*.{json,ts}",
-    "test": "mocha src/tests/runTests.js --timeout 5000",
+    "test": "mocha src/tests/runTests.js --timeout 10000",
     "tsc": "tsc",
     "verify": "npm run tsc && npm run lint && npm run test"
   },

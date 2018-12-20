@@ -29,11 +29,7 @@ export enum ResultStatus {
     Succeeded,
 }
 
-export type TypeStatResult = (
-    | ConfigurationErrorResult
-    | FailedResult
-    | SucceededResult
-);
+export type TypeStatResult = ConfigurationErrorResult | FailedResult | SucceededResult;
 
 export interface ConfigurationErrorResult {
     readonly error: Error | string;
@@ -53,9 +49,10 @@ export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
     const options = await tryLoadingOptions(argv);
     if (options === undefined || options instanceof Error) {
         return {
-            error: options === undefined
-                ? "No fixes or custom mutators specified. Consider enabling --fixNoImplicitAny (see http://github.com/joshuakgoldberg/typestat#cli)."
-                : options,
+            error:
+                options === undefined
+                    ? "No fixes or custom mutators specified. Consider enabling --fixNoImplicitAny (see http://github.com/joshuakgoldberg/typestat#cli)."
+                    : options,
             status: ResultStatus.ConfigurationError,
         };
     }
@@ -80,8 +77,6 @@ const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | 
     try {
         return loadOptions(argv);
     } catch (error) {
-        return error instanceof Error
-            ? error
-            : new Error(error as string);
+        return error instanceof Error ? error : new Error(error as string);
     }
 };

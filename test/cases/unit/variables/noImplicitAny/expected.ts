@@ -2,7 +2,7 @@
     // Primitives
 
     let givenUndefined = "";
-    givenUndefined = undefined
+    givenUndefined = undefined;
 
     let givenUndefinedAsString: string = "";
     givenUndefinedAsString = undefined;
@@ -63,7 +63,7 @@
 
     let startsAnyGivenString: any;
     startsAnyGivenString = "";
-    
+
     let startsAnyWithStringGivenString: any = "";
     startsAnyWithStringGivenString = "";
 
@@ -167,11 +167,11 @@
 
     let numberFilledImplicit = [1];
     numberFilledImplicit.push(1);
-    
+
     let numberFilledExplicit: (number | string)[] = [1];
     numberFilledExplicit.push(1);
     numberFilledExplicit.push("");
-    
+
     let numberFilledExplicitAddedString: number[] = [1];
     numberFilledExplicitAddedString.push(1);
     numberFilledExplicitAddedString.push("");
@@ -179,19 +179,19 @@
     let numberOrStringEmptyImplicit = [];
     numberOrStringEmptyImplicit.push(1);
     numberOrStringEmptyImplicit.push("");
-    
+
     let numberOrStringEmptyExplicit: number[] = [];
     numberOrStringEmptyExplicit.push(1);
     numberOrStringEmptyExplicit.push("");
-    
+
     let numberOrStringFilledImplicit = [1];
     numberOrStringFilledImplicit.push(1);
     numberOrStringFilledImplicit.push("");
-    
+
     let numberOrStringFilledExplicit: (number | string)[] = [1];
     numberOrStringFilledExplicit.push(1);
     numberOrStringFilledExplicit.push("");
-    
+
     let numberOrStringFilledExplicitAddedString: number[] = [1];
     numberOrStringFilledExplicitAddedString.push(1);
     numberOrStringFilledExplicitAddedString.push("");
@@ -199,18 +199,22 @@
     // Array Iteration
 
     const iterableStrings = ["abc", "def", "ghi"];
-    for (const string of iterableStrings) {}
+    for (const string of iterableStrings) {
+    }
 
     const iterableStringOrUndefineds: (string | undefined)[] = ["abc", "def", "ghi"];
-    for (const stringOrUndefined of iterableStringOrUndefineds) {}
+    for (const stringOrUndefined of iterableStringOrUndefineds) {
+    }
 
     // Object iteration
 
     const containsStrings = { a: "a", b: "b" };
-    for (const key in containsStrings) {}
+    for (const key in containsStrings) {
+    }
 
     const containsStringOrUndefineds: { [i: string]: string | undefined } = {};
-    for (const key in containsStringOrUndefineds) {}
+    for (const key in containsStringOrUndefineds) {
+    }
 
     // Functions
 

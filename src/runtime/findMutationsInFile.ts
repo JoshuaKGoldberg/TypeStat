@@ -1,7 +1,7 @@
 import { IMutation } from "automutate";
 import chalk from "chalk";
-
 import { readline } from "mz";
+
 import { builtInFileMutators } from "../mutators/builtInFileMutators";
 import { FileMutationsRequest } from "../mutators/fileMutator";
 
@@ -22,7 +22,9 @@ export const findMutationsInFile = async (request: FileMutationsRequest): Promis
                 break;
             }
         } catch (error) {
-            request.options.logger.stderr.write(`\nError in ${request.sourceFile.fileName} with ${mutatorName}: ${(error as Error).stack}\n\n\n`);
+            request.options.logger.stderr.write(
+                `\nError in ${request.sourceFile.fileName} with ${mutatorName}: ${(error as Error).stack}\n\n\n`,
+            );
         }
     }
 

@@ -11,18 +11,17 @@ export interface FileNamesAndServices {
 
 export const createFileNamesAndServices = async (options: TypeStatOptions): Promise<FileNamesAndServices> => {
     const services = await createLanguageServices(options);
-    const fileNames = options.fileNames === undefined
-        ? Array.from(createFileNamesUsingProgram(services.parsedConfiguration.fileNames, options))
-            .filter((fileName) => !fileName.endsWith(".d.ts"))
-        : options.fileNames;
+    const fileNames =
+        options.fileNames === undefined
+            ? Array.from(createFileNamesUsingProgram(services.parsedConfiguration.fileNames, options)).filter(
+                  (fileName) => !fileName.endsWith(".d.ts"),
+              )
+            : options.fileNames;
 
     return { fileNames, services };
 };
 
-const createFileNamesUsingProgram = (
-    programFileNames: ReadonlyArray<string>,
-    options: TypeStatOptions
-): ReadonlySet<string> => {
+const createFileNamesUsingProgram = (programFileNames: ReadonlyArray<string>, options: TypeStatOptions): ReadonlySet<string> => {
     const inputFileNames = options.fileNames;
     if (inputFileNames === undefined) {
         return new Set(programFileNames);
@@ -35,7 +34,7 @@ const createFileNamesUsingProgram = (
     return new Set(
         inputFileNames.map((inputFileName) => {
             inputFileName = normalizeAndSlashify(inputFileName);
-        
+
             // Attempt 1: already-absolute path, such as "C:/Code/repository/src/index.ts"
             let backingFileName = backingFileNames.get(inputFileName);
 

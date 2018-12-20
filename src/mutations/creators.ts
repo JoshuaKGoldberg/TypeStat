@@ -10,7 +10,7 @@ import { createTypescriptTypeCreationMutation } from "./modes/typescript/creatio
 
 /**
  * Creates a mutation to add types to an existing type, if any are new.
- * 
+ *
  * @param request   Source file, metadata, and settings to collect mutations in the file.
  * @param node   Original node with a type declaration to add to.
  * @param declaredType   Declared type from the node.
@@ -43,7 +43,7 @@ export const createTypeAdditionMutation = (
 
 /**
  * Creates a mutation to add types to a node without a type, if any are new.
- * 
+ *
  * @param request   Metadata and settings to collect mutations in a file.
  * @param begin   Starting position to add types at.
  * @param declaredType   Declared type from the node.
@@ -57,7 +57,11 @@ export const createTypeCreationMutation = (
     allAssignedTypes: ReadonlyArray<ts.Type>,
 ): ITextInsertMutation | undefined => {
     // Find the already assigned flags and symbols, as well as any missing ones
-    const { assignedFlags, assignedTypes, missingFlags, missingTypes } = collectUsageFlagsAndSymbols(request, declaredType, allAssignedTypes);
+    const { assignedFlags, assignedTypes, missingFlags, missingTypes } = collectUsageFlagsAndSymbols(
+        request,
+        declaredType,
+        allAssignedTypes,
+    );
 
     // If nothing is missing, rejoice! The type was already fine.
     if (missingFlags.size === 0 && missingTypes.size === 0) {

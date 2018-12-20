@@ -47,3 +47,9 @@ To run the `variables/all` tests, either would work:
 npm run test -- --accept --include "variables/all"
 npm run test -- --accept --include "variables(.*)all"
 ```
+
+### Debugging
+
+```shell
+node --inspect C:\Code\typestat\bin\typestat src/**/*.test.ts --config typestat.json --project src/tsconfig.json --fixStrictNullChecks --fixIncompleteTypes
+```

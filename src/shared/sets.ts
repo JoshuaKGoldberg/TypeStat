@@ -8,4 +8,4 @@ export const setSubtract = <T>(whole: ReadonlySet<T>, removals: ReadonlySet<T>):
     }
 
     return result;
-}
+};

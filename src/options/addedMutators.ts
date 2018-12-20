@@ -13,13 +13,17 @@ interface ImportedFileMutator {
 
 /**
  * Finds any added mutators to be imported via require() calls.
- * 
+ *
  * @param argv   Node arguments to pass to TypeStat.
  * @param rawOptions   Options listed as JSON in a typestat configuration file.
  * @param logger   Wraps process.stderr and process.stdout.
  * @returns Imported mutators with their friendly names.
  */
-export const collectAddedMutators = (argv: TypeStatArgv, rawOptions: RawTypeStatOptions, logger: Logger): ReadonlyArray<[string, FileMutator]> => {
+export const collectAddedMutators = (
+    argv: TypeStatArgv,
+    rawOptions: RawTypeStatOptions,
+    logger: Logger,
+): ReadonlyArray<[string, FileMutator]> => {
     const addedMutators = arrayify(argv.mutators);
 
     if (rawOptions.mutators !== undefined) {
@@ -31,9 +35,7 @@ export const collectAddedMutators = (argv: TypeStatArgv, rawOptions: RawTypeStat
     }
 
     const additions: [string, FileMutator][] = [];
-    const baseOptionsDir = rawOptions.projectPath === undefined
-        ? process.cwd()
-        : path.dirname(rawOptions.projectPath);
+    const baseOptionsDir = rawOptions.projectPath === undefined ? process.cwd() : path.dirname(rawOptions.projectPath);
 
     for (const rawAddedMutator of addedMutators) {
         try {

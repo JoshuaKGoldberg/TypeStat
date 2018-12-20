@@ -60,19 +60,15 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
 
     return assignedTypes;
 };
- 
+
 /**
  * Adds missing tyes for a reference to a property.
- * 
+ *
  * @param reference   Source code reference to a property.
  * @param assignedTypes   In-progress collection of types assigned to a property.
  * @param request   Metadata and settings to collect mutations in a file.
  */
-const updateAssignedTypesForReference = (
-    reference: ts.ReferenceEntry,
-    assignedTypes: ts.Type[],
-    request: FileMutationsRequest,
-): void => {
+const updateAssignedTypesForReference = (reference: ts.ReferenceEntry, assignedTypes: ts.Type[], request: FileMutationsRequest): void => {
     // Grab the source file containing the reference
     const referencingSourceFile = request.services.program.getSourceFile(reference.fileName);
     if (referencingSourceFile === undefined) {
