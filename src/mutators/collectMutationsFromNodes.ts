@@ -1,12 +1,17 @@
 import { IMutation } from "automutate";
 import * as ts from "typescript";
 
+import { getQuickErrorSummary } from "../shared/errors";
 import { FileMutationsRequest } from "./fileMutator";
+
+export type NodeSelector<TNode extends ts.Node> = (node: ts.Node) => node is TNode;
+
+export type NodeVisitor<TNode extends ts.Node> = (node: TNode, request: FileMutationsRequest) => Readonly<IMutation> | undefined;
 
 export const collectMutationsFromNodes = <TNode extends ts.Node>(
     request: FileMutationsRequest,
-    selector: (node: ts.Node) => node is TNode,
-    visitor: (node: TNode, request: FileMutationsRequest) => Readonly<IMutation> | undefined,
+    selector: NodeSelector<TNode>,
+    visitor: NodeVisitor<TNode>,
 ) => {
     const mutations: IMutation[] = [];
 
@@ -16,7 +21,7 @@ export const collectMutationsFromNodes = <TNode extends ts.Node>(
         }
 
         if (selector(node)) {
-            const mutation = visitor(node, request);
+            const mutation = tryGetMutation(request, node, visitor);
 
             if (mutation !== undefined) {
                 mutations.push(mutation);
@@ -29,4 +34,16 @@ export const collectMutationsFromNodes = <TNode extends ts.Node>(
     ts.forEachChild(request.sourceFile, visitNode);
 
     return mutations;
+};
+
+const tryGetMutation = <TNode extends ts.Node>(request: FileMutationsRequest, node: TNode, visitor: NodeVisitor<TNode>) => {
+    try {
+        return visitor(node, request);
+    } catch (error) {
+        request.options.logger.stderr.write(`\nError in ${request.sourceFile.fileName} at node '${node.getText(request.sourceFile)}':\n\t`);
+        request.options.logger.stderr.write(getQuickErrorSummary(error));
+        request.options.logger.stderr.write("\n\n");
+    }
+
+    return undefined;
 };

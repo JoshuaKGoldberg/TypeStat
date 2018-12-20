@@ -4,6 +4,7 @@ import * as ts from "typescript";
 
 import { readline } from "mz";
 import { TypeStatOptions } from "../options/types";
+import { LazyAsyncCache } from "../services/LazyAsyncCache";
 import { createFileNamesAndServices } from "../services/lazyFileNamesAndServices";
 import { FileInfoCache } from "../shared/FileInfoCache";
 import { convertMapToObject, Dictionary } from "../shared/maps";
@@ -16,11 +17,15 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
     let lastFileIndex = -1;
     let hasPassedFirstFile = false;
 
+    const fileNamesAndServicesCache = new LazyAsyncCache(
+        async () => createFileNamesAndServices(options),
+    );
+
     return {
         provide: async (): Promise<IMutationsWave> => {
             const startTime = Date.now();
             const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
-            const { fileNames, services } = await createFileNamesAndServices(options);
+            const { fileNames, services } = await fileNamesAndServicesCache.get();
             const waveStartedFromBeginning = lastFileIndex <= 0;
             let addedMutations = 0;
 
@@ -33,9 +38,10 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
                     continue;
                 }
 
+                const filteredNodes = collectFilteredNodes(options, sourceFile);
                 const foundMutations = await findMutationsInFile({
-                    fileInfoCache: new FileInfoCache(sourceFile),
-                    filteredNodes: collectFilteredNodes(options, sourceFile),
+                    fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
+                    filteredNodes,
                     options,
                     services,
                     sourceFile,
@@ -60,6 +66,14 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
             } else {
                 readline.clearLine(options.logger.stdout, 0);
                 readline.moveCursor(options.logger.stdout, 0, -1);
+            }
+
+            // Only recreate the language service once we've visited every file
+            // This way we don't constantly re-scan much of the source files each time there's an update
+            // Eventually it would be nice to support incremental updates
+            // See https://github.com/JoshuaKGoldberg/TypeStat/issues/36
+            if (fileMutations.size !== 0 && lastFileIndex === fileNames.length) {
+                fileNamesAndServicesCache.clear();
             }
 
             return {

@@ -50,7 +50,7 @@ const getCallingTypesFromReferencedSymbols = (
     }
 
     // Find all locations the containing method is called
-    const references = findRelevantNodeReferences(request, node.parent);
+    const references = request.fileInfoCache.getNodeReferences(node.parent);
     if (references !== undefined) {
         const parameterIndex = node.parent.parameters.indexOf(node);
 

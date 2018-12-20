@@ -13,6 +13,11 @@ export const variableMutator: FileMutator = (request: FileMutationsRequest): Rea
     collectMutationsFromNodes(request, ts.isVariableDeclaration, visitVariableDeclaration);
 
 const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+    // Binding patterns are all implicitly typed so ignore them
+    if (ts.isArrayBindingPattern(node.name) || ts.isObjectBindingPattern(node.name)) {
+        return undefined;
+    }
+
     // For-in and for-of loop varibles cannot have types, so don't bother trying to add them
     if (parentStatementCannotDeclareVariableType(node)) {
         return undefined;
@@ -81,7 +86,7 @@ const collectVariableAssignedTypes = (node: ts.VariableDeclaration, request: Fil
         const useExpression = useIdentifier.parent;
 
         // Ignore the node usage if it's inside an ignored node
-        if (isNodeFilteredOut(request, use.location)) {
+        if (isNodeFilteredOut(request.filteredNodes, use.location)) {
             continue;
         }
 

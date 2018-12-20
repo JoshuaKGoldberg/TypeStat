@@ -4,6 +4,7 @@ import { TypeStatArgv } from "../index";
 import { Logger } from "../logging/logger";
 import { FileMutator } from "../mutators/fileMutator";
 import { arrayify } from "../shared/arrays";
+import { getQuickErrorSummary } from "../shared/errors";
 import { RawTypeStatOptions } from "./types";
 
 interface ImportedFileMutator {
@@ -43,7 +44,7 @@ export const collectAddedMutators = (argv: TypeStatArgv, rawOptions: RawTypeStat
             }
         } catch (error) {
             logger.stderr.write(`Could not require ${rawAddedMutator} from ${baseOptionsDir}.\n`);
-            logger.stderr.write((error instanceof Error && error.stack !== undefined) ? error.stack : `${error}\n`);
+            logger.stderr.write(getQuickErrorSummary(error));
         }
     }
 
