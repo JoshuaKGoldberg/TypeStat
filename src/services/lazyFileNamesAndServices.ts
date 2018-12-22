@@ -1,5 +1,7 @@
 import * as path from "path";
 
+import chalk from "chalk";
+import { readline } from "mz";
 import { TypeStatOptions } from "../options/types";
 import { normalizeAndSlashify } from "../shared/paths";
 import { createLanguageServices, LanguageServices } from "./language";
@@ -10,6 +12,7 @@ export interface FileNamesAndServices {
 }
 
 export const createFileNamesAndServices = async (options: TypeStatOptions): Promise<FileNamesAndServices> => {
+    options.logger.stdout.write(chalk.grey("Preparing language services to visit files...\n"));
     const services = await createLanguageServices(options);
     const fileNames =
         options.fileNames === undefined
@@ -18,6 +21,8 @@ export const createFileNamesAndServices = async (options: TypeStatOptions): Prom
               )
             : options.fileNames;
 
+    readline.moveCursor(options.logger.stdout, 0, -1);
+    readline.clearLine(options.logger.stdout, 0);
     return { fileNames, services };
 };
 

@@ -1,4 +1,8 @@
 {
+    function functionReturnsString(): string {
+        return "";
+    }
+
     function functionReturnsUndefined(): string | undefined {
         return undefined;
     }
@@ -15,6 +19,28 @@
         return null;
     }
 
+    function functionReturnsUndefinedAsExpression(): string | undefined {
+        return undefined as undefined;
+    }
+
+    function functionReturnsUndefinedBinaryExpression(): string | undefined {
+        return true && undefined;
+    }
+
+    function functionReturnsUndefinedExpression(): string | undefined {
+        return true ? "" : undefined;
+    }
+
+    function functionReturnsUndefinedVariable(): string | undefined {
+        const text: string | undefined = undefined;
+
+        return text;
+    }
+
+    function functionReturnsVoidExpression(): string | undefined {
+        return void 0;
+    }
+
     function functionIgnoresInnerMethods(): string {
         (function(): string | undefined {
             return undefined;
@@ -23,6 +49,14 @@
         ((): string | undefined => undefined)();
 
         return "";
+    }
+
+    function functionReturnsNullAsAny(): any {
+        return null;
+    }
+
+    function functionReturnsUndefinedAsAny(): any {
+        return undefined;
     }
 
     const lambdaReturnsUndefined = (): string | undefined => {

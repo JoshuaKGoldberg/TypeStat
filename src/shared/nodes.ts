@@ -24,3 +24,9 @@ export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: num
     // tslint:disable-next-line:no-non-null-assertion
     return ts.forEachChild(sourceFile, visitNode)!;
 };
+
+/**
+ * Checks whether a node's position is completely within a parent node's.
+ */
+export const isNodeWithinNode = (sourceFile: ts.SourceFile, child: ts.Node, parent: ts.Node): boolean =>
+    child.end <= parent.end && child.getStart(sourceFile) >= parent.getStart(sourceFile);

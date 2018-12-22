@@ -4,7 +4,7 @@ import { LanguageServices } from "../services/language";
 import { findRelevantNodeReferences } from "./references";
 
 export class FileInfoCache {
-    private nodeReferences = new Map<ts.Node, ReadonlyArray<ts.ReferenceEntry> | undefined>();
+    private readonly nodeReferences = new Map<ts.Node, ReadonlyArray<ts.ReferenceEntry> | undefined>();
     private variableUsage: ReadonlyMap<ts.Identifier, tsutils.VariableInfo> | undefined;
 
     public constructor(

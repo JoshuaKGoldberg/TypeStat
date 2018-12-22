@@ -1,18 +1,44 @@
 {
+    function functionReturnsString(): string {
+        return "";
+    }
+
     function functionReturnsUndefined(): string {
-        return undefined;
+        return undefined!;
     }
 
     function functionReturnsNull(): string {
-        return null;
+        return null!;
     }
 
     function functionGivenNullReturnsUndefined(): string | null {
-        return undefined;
+        return undefined!;
     }
 
     function functionGivenUndefinedReturnsNull(): string | undefined {
-        return null;
+        return null!;
+    }
+
+    function functionReturnsUndefinedAsExpression(): string {
+        return (undefined as undefined)!;
+    }
+
+    function functionReturnsUndefinedBinaryExpression(): string {
+        return (true && undefined)!;
+    }
+
+    function functionReturnsUndefinedExpression(): string {
+        return (true ? "" : undefined)!;
+    }
+
+    function functionReturnsUndefinedVariable(): string {
+        const text: string | undefined = undefined;
+
+        return text!;
+    }
+
+    function functionReturnsVoidExpression(): string {
+        return (void 0)!;
     }
 
     function functionIgnoresInnerMethods(): string {
@@ -25,20 +51,28 @@
         return "";
     }
 
-    const lambdaReturnsUndefined = (): string => {
+    function functionReturnsNullAsAny(): any {
+        return null;
+    }
+
+    function functionReturnsUndefinedAsAny(): any {
         return undefined;
+    }
+
+    const lambdaReturnsUndefined = (): string => {
+        return undefined!;
     };
 
     const lambdaReturnsNull = (): string => {
-        return null;
+        return null!;
     };
 
     const lambdaGivenNullReturnsUndefined = (): string | null => {
-        return undefined;
+        return undefined!;
     };
 
     const lambdaGivenUndefinedReturnsNull = (): string | undefined => {
-        return null;
+        return null!;
     };
 
     const lambdaIgnoresInnerMethods = (): string => {

@@ -50,9 +50,9 @@ export const typeIsChildOf = (request: FileMutationsRequest, child: ts.Type, pot
  * This is a rough equivalent of the equivalent internal TypeScript APIs
  * They actually check whether types are assignable; this just checks whether they're 'equal'
  */
-export const areTypesRoughlyEqual = (request: FileMutationsRequest, a: ts.Type, b: ts.Type) => {
+export const areTypesRoughlyEqual = (request: FileMutationsRequest, a: ts.Type, b: ts.Type): boolean => {
     if (a === b) {
-        return;
+        return true;
     }
 
     // If the basic object flags differ, these cannot be the same type
@@ -68,8 +68,8 @@ export const areTypesRoughlyEqual = (request: FileMutationsRequest, a: ts.Type, 
     }
 
     // If either has call signatures, treat them like functions
-    const callSignaturesA = a.getCallSignatures();
-    const callSignaturesB = b.getCallSignatures();
+    const callSignaturesA = a.getCallSignatures() as ReadonlyArray<ts.Signature> | undefined;
+    const callSignaturesB = b.getCallSignatures() as ReadonlyArray<ts.Signature> | undefined;
     if (
         (callSignaturesA !== undefined && callSignaturesA.length !== 0) ||
         (callSignaturesB !== undefined && callSignaturesB.length !== 0)

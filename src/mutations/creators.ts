@@ -5,8 +5,6 @@ import { FileMutationsRequest } from "../mutators/fileMutator";
 import { NodeWithAddableType, NodeWithCreatableType } from "../shared/nodeTypes";
 import { joinIntoType } from "./aliasing";
 import { collectUsageFlagsAndSymbols } from "./collecting";
-import { createTypescriptTypeAdditionMutation } from "./modes/typescript/addition";
-import { createTypescriptTypeCreationMutation } from "./modes/typescript/creation";
 
 /**
  * Creates a mutation to add types to an existing type, if any are new.
@@ -23,7 +21,7 @@ export const createTypeAdditionMutation = (
     declaredType: ts.Type,
     allAssignedTypes: ReadonlyArray<ts.Type>,
 ): ITextInsertMutation | undefined => {
-    // Find the any missing flags and symbols (a.k.a. types)
+    // Find any missing flags and symbols (a.k.a. types)
     const { missingFlags, missingTypes } = collectUsageFlagsAndSymbols(request, declaredType, allAssignedTypes);
 
     // If nothing is missing, rejoice! The type was already fine.
@@ -38,7 +36,13 @@ export const createTypeAdditionMutation = (
     }
 
     // Create a mutation insertion that adds the missing types in
-    return createTypescriptTypeAdditionMutation(node, newTypeAlias);
+    return {
+        insertion: ` | ${newTypeAlias}`,
+        range: {
+            begin: node.type.end,
+        },
+        type: "text-insert",
+    };
 };
 
 /**
@@ -75,5 +79,11 @@ export const createTypeCreationMutation = (
     }
 
     // Create a mutation insertion that adds the assigned types in
-    return createTypescriptTypeCreationMutation(node, newTypeAlias);
+    return {
+        insertion: `: ${newTypeAlias}`,
+        range: {
+            begin: node.name.end,
+        },
+        type: "text-insert",
+    };
 };

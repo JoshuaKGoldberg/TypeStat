@@ -1,8 +1,8 @@
 import { tsquery } from "@phenomnomnominal/tsquery";
 import { IMutation, IMutationsProvider, IMutationsWave } from "automutate";
+import { readline } from "mz";
 import * as ts from "typescript";
 
-import { readline } from "mz";
 import { TypeStatOptions } from "../options/types";
 import { LazyAsyncCache } from "../services/LazyAsyncCache";
 import { createFileNamesAndServices } from "../services/lazyFileNamesAndServices";
@@ -14,10 +14,9 @@ import { findMutationsInFile } from "./findMutationsInFile";
  * Mutations to be applied to files, keyed by file name.
  */
 export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMutationsProvider => {
+    const fileNamesAndServicesCache = new LazyAsyncCache(async () => createFileNamesAndServices(options));
     let lastFileIndex = -1;
     let hasPassedFirstFile = false;
-
-    const fileNamesAndServicesCache = new LazyAsyncCache(async () => createFileNamesAndServices(options));
 
     return {
         provide: async (): Promise<IMutationsWave> => {
@@ -67,10 +66,10 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
             }
 
             // Only recreate the language service once we've visited every file
-            // This way we don't constantly re-scan much of the source files each time there's an update
+            // This way we don't constantly re-scan many of the source files each wave
             // Eventually it would be nice to support incremental updates
             // See https://github.com/JoshuaKGoldberg/TypeStat/issues/36
-            if (fileMutations.size !== 0 && lastFileIndex === fileNames.length) {
+            if (lastFileIndex === 0) {
                 fileNamesAndServicesCache.clear();
             }
 

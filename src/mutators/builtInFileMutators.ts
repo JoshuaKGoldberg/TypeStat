@@ -1,14 +1,16 @@
+import { callExpressionMutator } from "./builtIn/callExpressionMutator";
 import { functionThisMutator } from "./builtIn/functionThisMutator";
 import { parameterMutator } from "./builtIn/parameterMutator";
 import { propertyAccessExpressionMutator } from "./builtIn/propertyAccessExpressionMutator";
 import { propertyDeclarationMutator } from "./builtIn/propertyDeclarationMutator";
-import { returnMutator } from "./builtIn/returnThisMutator";
-import { variableMutator } from "./builtIn/variableMutator";
+import { returnTypeMutator } from "./builtIn/returnTypeMutator";
+import { variableDeclarationMutator } from "./builtIn/variableDeclarationMutator";
 import { FileMutator } from "./fileMutator";
 
 export const builtInFileMutators: ReadonlyArray<[string, FileMutator]> = [
-    ["variableMutator", variableMutator],
-    ["returnMutator", returnMutator],
+    ["callExpression", callExpressionMutator],
+    ["variableDeclarationMutator", variableDeclarationMutator],
+    ["returnTypeMutator", returnTypeMutator],
     ["propertyDeclarationMutator", propertyDeclarationMutator],
     ["parameterMutator", parameterMutator],
     ["propertyAccessExpressionMutator", propertyAccessExpressionMutator],

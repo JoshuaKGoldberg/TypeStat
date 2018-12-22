@@ -1,38 +1,12 @@
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { IMutation } from "automutate";
-import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../mutations/codeFixes/noImplicitAny";
-import { createTypeAdditionMutation, createTypeCreationMutation } from "../../mutations/creators";
-import { isNodeWithType } from "../../shared/nodeTypes";
-import { isNodeFilteredOut } from "../../shared/references";
-import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../fileMutator";
+import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../mutations/creators";
+import { isNodeWithType } from "../../../shared/nodeTypes";
+import { isNodeFilteredOut } from "../../../shared/references";
+import { FileMutationsRequest } from "../../fileMutator";
 
-export const variableMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
-    collectMutationsFromNodes(request, ts.isVariableDeclaration, visitVariableDeclaration);
-
-const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
-    // Binding patterns are all implicitly typed so ignore them
-    if (ts.isArrayBindingPattern(node.name) || ts.isObjectBindingPattern(node.name)) {
-        return undefined;
-    }
-
-    // For-in and for-of loop varibles cannot have types, so don't bother trying to add them
-    if (parentStatementCannotDeclareVariableType(node)) {
-        return undefined;
-    }
-
-    // If the variable violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
-    if (canNodeBeFixedForNoImplicitAny(node)) {
-        return getNoImplicitAnyMutations(node, request);
-    }
-
-    // If we don't add missing types, there's nothing else to do
-    if (!request.options.fixes.incompleteTypes) {
-        return undefined;
-    }
-
+export const fixVariableIncompleteType = (request: FileMutationsRequest, node: ts.VariableDeclaration) => {
     // Collect types later assigned to the variable, and types initially declared by or inferred on the variable
     const assignedTypes = collectVariableAssignedTypes(node, request);
     const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
@@ -45,15 +19,6 @@ const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMut
     // Since the node's missing type isn't inferrable, try our best to give it one
     return createTypeCreationMutation(request, node, declaredType, assignedTypes);
 };
-
-/**
- * Checks whether a variable is in a syntax location that can have a type added.
- *
- * @param node   Node that might be blocked from having types.
- * @returns Whether the variable is allowed to have types.
- */
-const parentStatementCannotDeclareVariableType = (node: ts.VariableDeclaration): boolean =>
-    ts.isForInStatement(node.parent.parent) || ts.isForOfStatement(node.parent.parent);
 
 /**
  * Finds types later assigned to a variable declaration.

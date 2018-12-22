@@ -1,0 +1,12 @@
+{
+    "fixes": {
+        "incompleteTypes": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true
+    },
+    "types": {
+        "aliases": {
+            "null": "null /* todo: null */"
+        }
+    }
+}

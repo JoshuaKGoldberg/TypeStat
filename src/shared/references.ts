@@ -33,7 +33,7 @@ const referenceIsFilteredOut = (filteredNodes: ReadonlySet<ts.Node>, sourceFile:
     return isNodeFilteredOut(filteredNodes, findNodeByStartingPosition(sourceFile, reference.textSpan.start));
 };
 
-export const isNodeFilteredOut = (filteredNodes: ReadonlySet<ts.Node>, node: ts.Node): boolean => {
+export const isNodeFilteredOut = (filteredNodes: ReadonlySet<ts.Node>, node: ts.Node | undefined): boolean => {
     while (node !== undefined) {
         if (filteredNodes.has(node)) {
             return true;

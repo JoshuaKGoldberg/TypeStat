@@ -1,37 +1,37 @@
 {
-    function givenStringTypeLater(abc: string): void {
+    function givenStringTypeLater(abc): void {
         console.log(abc);
     }
 
     givenStringTypeLater("");
 
-    function givenStringOrNullTypeLater(abc: string | null): void {
+    function givenStringOrNullTypeLater(abc): void {
         console.log(abc);
     }
 
-    givenStringOrNullTypeLater("" as string | null);
+    givenStringOrNullTypeLater(("" as string | null)!);
 
-    function givenStringOrNullOnStringTypeLater(abc: string | null /* todo: null */): void {
+    function givenStringOrNullOnStringTypeLater(abc: string): void {
         console.log(abc);
     }
 
-    givenStringOrNullOnStringTypeLater("" as string | null);
+    givenStringOrNullOnStringTypeLater(("" as string | null)!);
 
-    function givenStringOrUndefinedOnStringTypeLater(abc: string | undefined): void {
+    function givenStringOrUndefinedOnStringTypeLater(abc: string): void {
         console.log(abc);
     }
 
-    givenStringOrUndefinedOnStringTypeLater("" as string | undefined);
+    givenStringOrUndefinedOnStringTypeLater(("" as string | undefined)!);
 
-    function givenNullTypeLater(abc: undefined): void {
+    function givenNullTypeLater(abc): void {
         console.log(abc);
     }
 
-    givenNullTypeLater(undefined);
+    givenNullTypeLater(undefined!);
 
-    function givenUndefinedTypeLater(abc: null): void {
+    function givenUndefinedTypeLater(abc): void {
         console.log(abc);
     }
 
-    givenUndefinedTypeLater(null);
+    givenUndefinedTypeLater(null!);
 }
