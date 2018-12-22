@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/JoshuaKGoldberg/TypeStat.svg?)](https://travis-ci.org/JoshuaKGoldberg/TypeStat)
 [![NPM version](https://badge.fury.io/js/JoshuaKGoldberg.svg)](http://badge.fury.io/js/JoshuaKGoldberg)
-[![Greenkeeper badge](https://badges.greenkeeper.io/JoshuaKGoldberg/TypeStat.svg)](https://greenkeeper.io/)
 
 Adds TypeScript type annotations using static analysis.
 
