@@ -1,7 +1,8 @@
 # TypeStat
 
 [![Build Status](https://travis-ci.org/JoshuaKGoldberg/TypeStat.svg?)](https://travis-ci.org/JoshuaKGoldberg/TypeStat)
-[![NPM version](https://badge.fury.io/js/JoshuaKGoldberg.svg)](http://badge.fury.io/js/JoshuaKGoldberg)
+[![NPM version](https://badge.fury.io/js/typestat.svg)](http://badge.fury.io/js/typestat)
+![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
 
 Adds TypeScript type annotations using static analysis.
 
