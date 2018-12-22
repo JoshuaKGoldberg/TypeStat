@@ -6,8 +6,8 @@
   "dependencies": {
     "@phenomnomnominal/tsquery": "^3.0.0",
     "@types/mz": "0.0.32",
-    "automutate": "^0.7.0",
-    "automutate-tests": "^0.2.1",
+    "automutate": "^0.7.1",
+    "automutate-tests": "^0.3.0",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "cosmiconfig": "^5.0.7",
@@ -18,19 +18,19 @@
   "devDependencies": {
     "@types/cosmiconfig": "^5.0.3",
     "@types/glob": "^7.1.1",
-    "@types/node": "^10.12.12",
+    "@types/node": "^10.12.18",
     "chai": "^4.2.0",
-    "husky": "^1.2.0",
+    "husky": "^1.2.1",
     "markdownlint": "^0.11.0",
     "markdownlint-cli": "^0.13.0",
     "mocha": "^5.2.0",
     "prettier": "^1.15.3",
     "pretty-quick": "^1.8.0",
     "sentences-per-line": "^0.2.1",
-    "tslint": "^5.11.0",
+    "tslint": "^5.12.0",
     "tslint-config-prettier": "^1.17.0",
     "tsutils": "^3.5.2",
-    "typescript": "^3.2.1"
+    "typescript": "^3.2.2"
   },
   "engines": {
     "node": "^8"
