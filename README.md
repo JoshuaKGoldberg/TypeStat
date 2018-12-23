@@ -153,3 +153,7 @@ await typeStat({
     project: "./tsconfig.custom.json",
 });
 ```
+
+## Development
+
+See [Development.md](./docs/Development.md).
