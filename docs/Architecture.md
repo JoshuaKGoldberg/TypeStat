@@ -33,19 +33,26 @@ if the first round runs on `a.ts` and `b.ts`, the second will start on `c.ts`.
 Rounds stop after those thresholds to allow Automutate to write mutations regularly.
 TypeStat crashing before a round is complete shouldn't lose all accumulated mutations.
 
+Once TypeStat has visited each file, it will either:
+
+* Stop if no file had mutations applied
+* Restart _(and reload language services)_ if any file had mutations applied
+
 ### File Mutations
 
-For each file it visits, [`findMutationsInFile`](../src/runtime/findMutationsInFile.ts) will attempt to apply the following mutations in order
-_(ordered by which is likely to complete the fastest)_:
+For each file it visits, [`findMutationsInFile`](../src/runtime/findMutationsInFile.ts)
+will attempt to apply the following [built-in file mutators](../src/runtime/builtInFileMutators.ts)
+in order _(generally ordered by which is likely to complete the fastest)_:
 
-1. Variable types
-2. Function-like return types
-3. Property declaration types
-4. Parameter types
-5. Property accessors
-6. Function `this` types
+1. Call expressions
+2. Variable declarations
+3. Function-like returns
+4. Property declarations
+5. Parameters
+6. Property accessors
+7. Function `this`s
 
-Within each round of applying mutations, TypeStat will stop after each step if any mutations are found.
+Within each round of applying mutations, TypeStat will stop looking at a file after each step if any mutations are found.
 Adding mutations from one from can improve mutations from other forms, so reloading the file between rounds could reduce the number of later rounds.
 
 ## Directory Structure

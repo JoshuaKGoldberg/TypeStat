@@ -77,6 +77,10 @@ Glob patterns of file names to include.
 You can either specify these as arguments to the CLI and/or through your TypeStat configuration file.
 CLI icludes will replace any configuration file includes.
 
+```shell
+typestat ./src/**/*.ts
+```
+
 ```json
 {
     "include": [
@@ -98,6 +102,19 @@ typestat --project tsconfig.strict.json
     "project": "tsconfig.strict.json"
 }
 ```
+
+More advanced flags can be provided for:
+
+* [Filters](./docs/Filters.md)
+  * `--filter`/`filter`
+* [Fixes](./docs/Fixes.md):
+  * `--fixIncompleteTypes`/`fixes.incompleteTypes`
+  * `--fixNoImplicitAny`/`fixes.noImplicitAny`
+  * `--fixStrictNullChecks`/`fixes.strictNullChecks`
+* [Types](./docs/Types.md):
+  * `types.aliases`
+  * `--typesMatching`/`types.matching`
+  * `--typesOnlyPrimitives`/`types.onlyPrimitives`
 
 ## Node
 

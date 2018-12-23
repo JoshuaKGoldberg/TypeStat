@@ -17,6 +17,32 @@ These mutations are all purely additive and limited to the type system, meaning 
 }
 ```
 
+## `--fixIncompleteTypes`/`incompleteTypes`
+
+Whether to augment type annotations that don't capture all values constructs can be set to.
+
+This typically isn't useful on its own _(unless you have many incorrect types)_,
+but is powerful along with `noImplicitAny` and/or `strictNullChecks` to fix existing codebases for the stricter compiler flags.
+
+```shell
+typestat --fixIncompleteTypes
+```
+
+```json
+{
+    "fixes": {
+        "incompleteTypes": true
+    }
+}
+```
+
+For example, if a variable is typed as a `number` but is also assigned a `string`, this would change its type to `number | strng`:
+
+```diff
+- let abc: number = "";
++ let abc: number | string = "";
+```
+
 ## `--fixNoImplicitAny`/`noImplicitAny`
 
 Whether to add type annotations to types that don't yet have them.
@@ -96,30 +122,4 @@ For example, if a function is initially marked as returning `string` but can als
 - function abc(def: boolean): string {
 + function abc(def: boolean): string | undefined {
     return def ? "" : undefined;
-```
-
-## `--fixIncompleteTypes`/`incompleteTypes`
-
-Whether to augment type annotations that don't capture all values constructs can be set to.
-
-This typically isn't useful on its own _(unless you have many incorrect types)_,
-but is powerful along with `noImplicitAny` and/or `strictNullChecks` to fix existing codebases for the stricter compiler flags.
-
-```shell
-typestat --fixIncompleteTypes
-```
-
-```json
-{
-    "fixes": {
-        "incompleteTypes": true
-    }
-}
-```
-
-For example, if a variable is typed as a `number` but is also assigned a `string`, this would change its type to `number | strng`:
-
-```diff
-- let abc: number = "";
-+ let abc: number | string = "";
 ```

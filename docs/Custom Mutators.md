@@ -4,7 +4,7 @@ TypeStat allows adding custom mutators after the built-in mutators, similar to [
 
 ## Usage
 
-Use the `-a`/`--add` CLI flag and/or `mutators` configuration setting to add `require`-style paths of mutators to add.
+Use the `-m`/`--mutators` CLI flag and/or `mutators` configuration setting to add `require`-style paths of mutators to add.
 
 ```shell
 typestat --add my-mutator-module
@@ -40,3 +40,21 @@ export const mutator = (request: FileMutationsRequest): IMutation[] => {
 ```
 
 Mutators must be compiled to JavaScript to be run.
+
+For example, this mutator will add a `/* foo */` mutation at the beginning of each file it visits, if one doesn't yet exist in the file:
+
+```js
+const prefix = "/* foo */ ";
+
+module.exports.fileMutator = (request) => {
+    return request.sourceFile.getText().indexOf(prefix) === -1
+        ? [{
+            insertion: prefix,
+            range: {
+                begin: 0,
+            },
+            type: "text-insert",
+        }]
+        : [];
+};
+```
