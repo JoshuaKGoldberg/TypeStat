@@ -59,8 +59,9 @@ For instructions on the types of changes you can run with Typestat, see:
 1. **[Usage.md](./docs/Usage.md) for recommended steps to get started**
 2. [Fixes.md](./docs/Fixes.md) for the type of fixes TypeStat will generate mutations for
 3. [Types.md](./docs/Types.md) for configuring how to rename types or add comments in mutations
-4. [Filters.md](./docs/Filters.md) for using [tsquery](https://github.com/phenomnomnominal/tsquery) to ignore sections of source files
-5. [Custom Mutators.md](./docs/Custom%20Mutators.md) for including or creating custom mutators
+4. [Nodes.md](./docs/Nodes.md) for details on which parts of source files TypeStat will change and how
+5. [Filters.md](./docs/Filters.md) for using [tsquery](https://github.com/phenomnomnominal/tsquery) to ignore sections of source files
+6. [Custom Mutators.md](./docs/Custom%20Mutators.md) for including or creating custom mutators
 
 ### Basic Flags
 
@@ -75,8 +76,8 @@ typestat --config typestat.custom.json
 #### `include`
 
 Glob patterns of file names to include.
-You can either specify these as arguments to the CLI and/or through your TypeStat configuration file.
-CLI icludes will replace any configuration file includes.
+You can specify these as arguments to the CLI and/or through your TypeStat configuration file.
+CLI includes will replace any configuration file includes.
 
 ```shell
 typestat ./src/**/*.ts

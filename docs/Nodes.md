@@ -4,6 +4,18 @@
 
 These are the kinds of "nodes", or constructs in your code, that TypeStat will fix.
 
+## Call Expressions
+
+When adding strict null checking mode, calling function-likes with values that aren't nullable may introduce compiler errors.
+For example, if a function with one parameter of type `string` is called with an `undefined` argument, it would need a `!` added:
+
+```diff
+function abc(def: string) { }
+
+- abc(undefined);
++ abc(undefined!);
+```
+
 ## Parameters
 
 Parameters not initially with a declared type or that are later passed a type theirs doesn't include will have that type created or added onto them.
@@ -64,7 +76,7 @@ For example, if a function is initially marked as returning `string` but can als
 
 Functions that don't have an explicit return type won't have any types added, as TypeScript will infer their return type.
 
-### Variables
+### Variable Declarations
 
 Variables later assigned a type not represented by their initial type will have that type added onto them.
 
