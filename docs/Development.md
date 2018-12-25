@@ -50,6 +50,16 @@ npm run test -- --accept --include "variables(.*)all"
 
 ### Debugging
 
+A VS Code task to debug test files is shipped that allows directly placing breakpoints in source TypeScript code.
+Modify the `includes` statement in `runTests.ts` to only debug some tests.
+
+#### Performance Debugging Tips
+
+You can use the debugger in Chrome to debug TypeStat on the CLI.
+Run it with `node --inspect` then visit `chrome://inspect` to use the browser debugger.
+
+For example:
+
 ```shell
-node --inspect C:\Code\typestat\bin\typestat src/**/*.test.ts --config typestat.json --project src/tsconfig.json --fixStrictNullChecks --fixIncompleteTypes
+node --inspect typestat src/**/*.test.ts --config typestat.json --project src/tsconfig.json --fixStrictNullChecks --fixIncompleteTypes
 ```
