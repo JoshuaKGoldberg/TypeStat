@@ -1,6 +1,7 @@
 # Custom Mutators
 
-TypeStat allows adding custom mutators after the built-in mutators, similar to [custom TSLint rules](https://palantir.github.io/tslint/develop/custom-rules).
+TypeStat allows using custom mutators instead of the built-in mutators, similar to [custom TSLint rules](https://palantir.github.io/tslint/develop/custom-rules).
+Built-in mutators will be disabled if you provide any custom ones.
 
 ## Usage
 
