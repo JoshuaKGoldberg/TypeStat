@@ -39,7 +39,7 @@ export const collectAddedMutators = (
 
     for (const rawAddedMutator of addedMutators) {
         try {
-            const addedMutator = collectedAddedMutator(baseOptionsDir, rawAddedMutator, logger);
+            const addedMutator = collectAddedMutator(baseOptionsDir, rawAddedMutator, logger);
 
             if (addedMutator !== undefined) {
                 additions.push([rawAddedMutator, addedMutator]);
@@ -53,11 +53,11 @@ export const collectAddedMutators = (
     return additions;
 };
 
-const collectedAddedMutator = (baseOptionsDir: string, rawAddedMutator: string, logger: Logger): FileMutator | undefined => {
+const collectAddedMutator = (baseOptionsDir: string, rawAddedMutator: string, logger: Logger): FileMutator | undefined => {
     const requiringPath = path.join(baseOptionsDir, rawAddedMutator);
     const resolvedImport = tryRequireResolve(requiringPath);
     if (resolvedImport === undefined) {
-        logger.stderr.write(`Could not require ${rawAddedMutator} from ${baseOptionsDir}.\n`);
+        logger.stderr.write(`Could not require ${rawAddedMutator} at ${requiringPath} from ${baseOptionsDir}.\n`);
         logger.stderr.write("It doesn't seem to exist? :(\n");
         return undefined;
     }
