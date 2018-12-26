@@ -1,0 +1,30 @@
+version: 2
+jobs:
+    build:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - restore_cache:
+                  keys:
+                      - dependency-cache-{{ checksum "package-lock.json" }}
+                      - dependency-cache-
+
+            - run: npm install
+
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: dependency-cache-{{ checksum "package-lock.json" }}
+
+            - run: npm run verify
+
+workflows:
+    version: 2
+    build_and_end_to_end:
+        jobs:
+            - build
