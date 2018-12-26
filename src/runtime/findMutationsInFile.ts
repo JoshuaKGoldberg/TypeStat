@@ -34,6 +34,4 @@ export const findMutationsInFile = async (request: FileMutationsRequest): Promis
 };
 
 const collectFileMutators = (addedMutators: ReadonlyArray<[string, FileMutator]>): ReadonlyArray<[string, FileMutator]> =>
-    addedMutators.length === 0
-        ? builtInFileMutators
-        : addedMutators;
+    addedMutators.length === 0 ? builtInFileMutators : addedMutators;

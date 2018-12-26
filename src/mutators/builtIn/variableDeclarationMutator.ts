@@ -10,12 +10,12 @@ export const variableDeclarationMutator: FileMutator = (request: FileMutationsRe
     collectMutationsFromNodes(request, isNodeVisitableVariableDeclaration, visitVariableDeclaration);
 
 const isNodeVisitableVariableDeclaration = (node: ts.Node): node is ts.VariableDeclaration =>
-    ts.isVariableDeclaration(node)
+    ts.isVariableDeclaration(node) &&
     // Binding patterns are all implicitly typed, so ignore them
-    && !(ts.isArrayBindingPattern(node.name) || ts.isObjectBindingPattern(node.name))
+    !(ts.isArrayBindingPattern(node.name) || ts.isObjectBindingPattern(node.name)) &&
     // For-in and for-of loop varibles cannot have types, so don't bother trying to add them
-    && !ts.isForInStatement(node.parent.parent)
-    && !ts.isForOfStatement(node.parent.parent);
+    !ts.isForInStatement(node.parent.parent) &&
+    !ts.isForOfStatement(node.parent.parent);
 
 const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
     // If the variable violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix

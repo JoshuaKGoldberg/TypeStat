@@ -18,24 +18,17 @@ export const callExpressionMutator: FileMutator = (request: FileMutationsRequest
 };
 
 const isVisitableCallExpression = (node: ts.Node): node is ts.CallExpression =>
-    ts.isCallExpression(node)
+    ts.isCallExpression(node) &&
     // We can quickly ignore any calls without arguments
-    && node.arguments.length !== 0;
+    node.arguments.length !== 0;
 
-const visitCallExpression = (
-    node: ts.CallExpression,
-    request: FileMutationsRequest,
-): IMultipleMutations | undefined => {
+const visitCallExpression = (node: ts.CallExpression, request: FileMutationsRequest): IMultipleMutations | undefined => {
     const valueDeclaration = getValueDeclarationOfType(request, node.expression);
     if (valueDeclaration === undefined || !tsutils.isFunctionWithBody(valueDeclaration)) {
         return undefined;
     }
 
-    const argumentMutations = collectArgumentMutations(
-        request,
-        node,
-        valueDeclaration
-    );
+    const argumentMutations = collectArgumentMutations(request, node, valueDeclaration);
 
     if (argumentMutations.length === 0) {
         return undefined;
@@ -44,7 +37,11 @@ const visitCallExpression = (
     return combineMutations(...argumentMutations);
 };
 
-const collectArgumentMutations = (request: FileMutationsRequest, node: ts.CallExpression, valueDeclaration: ts.FunctionLikeDeclaration): ReadonlyArray<IMutation> => {
+const collectArgumentMutations = (
+    request: FileMutationsRequest,
+    node: ts.CallExpression,
+    valueDeclaration: ts.FunctionLikeDeclaration,
+): ReadonlyArray<IMutation> => {
     const mutations: IMutation[] = [];
     const visitableArguments = Math.min(node.arguments.length, valueDeclaration.parameters.length);
     const typeChecker = request.services.program.getTypeChecker();
@@ -60,8 +57,8 @@ const collectArgumentMutations = (request: FileMutationsRequest, node: ts.CallEx
         const typeOfParameter = typeChecker.getTypeAtLocation(valueDeclaration.parameters[i]);
 
         if (
-            isTypeMissingBetween(ts.TypeFlags.Null, typeOfArgument, typeOfParameter)
-            || isTypeMissingBetween(ts.TypeFlags.Undefined, typeOfArgument, typeOfParameter)
+            isTypeMissingBetween(ts.TypeFlags.Null, typeOfArgument, typeOfParameter) ||
+            isTypeMissingBetween(ts.TypeFlags.Undefined, typeOfArgument, typeOfParameter)
         ) {
             mutations.push(createNonNullAssertionInsertion(request.sourceFile, node.arguments[i]));
         }

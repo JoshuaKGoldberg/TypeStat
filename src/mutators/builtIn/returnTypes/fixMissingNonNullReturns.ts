@@ -10,15 +10,15 @@ import { collectReturningNodeExpressions } from "./collectReturningNodeExpressio
 export const fixMissingNonNullReturns = (request: FileMutationsRequest, node: FunctionLikeDeclarationWithType) => {
     // Collect the type initially declared as returned and whether it contains null and/or undefined
     const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node.type);
-   
+
     // If the node's explicit return type contains 'any', we can't infer anything
     if (isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Any)) {
         return undefined;
     }
 
     // If the type already has both null or undefined, rejoice! All is well
-    const returningNull = isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Null)
-    const returningUndefined = isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Undefined)
+    const returningNull = isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Null);
+    const returningUndefined = isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Undefined);
     if (returningNull && returningUndefined) {
         return undefined;
     }
@@ -30,9 +30,7 @@ export const fixMissingNonNullReturns = (request: FileMutationsRequest, node: Fu
     const returningNodeExpressions = collectReturningNodeExpressions(node);
     const mutations = collectNonNullMutations(request, node, missingReturnTypes, returningNodeExpressions);
 
-    return mutations.length === 0
-        ? undefined
-        : combineMutations(...mutations);
+    return mutations.length === 0 ? undefined : combineMutations(...mutations);
 };
 
 const collectNonNullMutations = (
@@ -44,7 +42,7 @@ const collectNonNullMutations = (
     const mutations: IMutation[] = [];
 
     for (const expression of expressions) {
-        // If the expression doesn't return a type missing from the return, it's already safe 
+        // If the expression doesn't return a type missing from the return, it's already safe
         const expressionType = request.services.program.getTypeChecker().getTypeAtLocation(expression);
         if (!isTypeFlagSetRecursively(expressionType, missingReturnTypes)) {
             continue;
