@@ -1,57 +1,62 @@
 {
-  "author": "josh Goldberg",
-  "bin": {
-    "typestat": "bin/typestat"
-  },
-  "dependencies": {
-    "@phenomnomnominal/tsquery": "^3.0.0",
-    "@types/mz": "0.0.32",
-    "automutate": "^0.7.1",
-    "automutate-tests": "^0.3.0",
-    "chalk": "^2.4.1",
-    "commander": "^2.19.0",
-    "cosmiconfig": "^5.0.7",
-    "glob": "^7.1.3",
-    "mz": "^2.7.0",
-    "npm-run-all": "^4.1.5"
-  },
-  "description": "Adds TypeScript type annotations using static analysis.",
-  "devDependencies": {
-    "@types/cosmiconfig": "^5.0.3",
-    "@types/glob": "^7.1.1",
-    "@types/node": "^10.12.18",
-    "chai": "^4.2.0",
-    "husky": "^1.2.1",
-    "markdownlint": "^0.11.0",
-    "markdownlint-cli": "^0.13.0",
-    "mocha": "^5.2.0",
-    "prettier": "^1.15.3",
-    "pretty-quick": "^1.8.0",
-    "sentences-per-line": "^0.2.1",
-    "tslint": "^5.12.0",
-    "tslint-config-prettier": "^1.17.0",
-    "tsutils": "^3.5.2",
-    "typescript": "^3.2.2"
-  },
-  "engines": {
-    "node": "^8"
-  },
-  "license": "MIT",
-  "main": "src/index.js",
-  "name": "typestat",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JoshuaKGoldberg/TypeStat.git"
-  },
-  "scripts": {
-    "lint": "run-p lint:*",
-    "lint:markdownlint": "markdownlint --config .markdownlint.json --rules ./node_modules/sentences-per-line/index.js README.md",
-    "lint:tslint": "tslint -p tsconfig.json -t stylish",
-    "prettier:write": "prettier --config .prettierrc.json --write",
-    "prettier:write:all": "npm run prettier:write ./{src,test,util}/**/*.{json,ts}",
-    "test": "mocha src/tests/runTests.js --timeout 10000",
-    "tsc": "tsc",
-    "verify": "npm run tsc && npm run lint && npm run test"
-  },
-  "version": "0.0.3"
+    "author": "josh Goldberg",
+    "bin": {
+        "typestat": "bin/typestat"
+    },
+    "dependencies": {
+        "@phenomnomnominal/tsquery": "^3.0.0",
+        "@types/mz": "0.0.32",
+        "automutate": "^0.7.1",
+        "automutate-tests": "^0.3.0",
+        "chalk": "^2.4.1",
+        "commander": "^2.19.0",
+        "cosmiconfig": "^5.0.7",
+        "glob": "^7.1.3",
+        "mz": "^2.7.0",
+        "npm-run-all": "^4.1.5"
+    },
+    "description": "Adds TypeScript type annotations using static analysis.",
+    "devDependencies": {
+        "@types/cosmiconfig": "^5.0.3",
+        "@types/glob": "^7.1.1",
+        "@types/node": "^10.12.18",
+        "chai": "^4.2.0",
+        "husky": "^1.2.1",
+        "markdownlint": "^0.11.0",
+        "markdownlint-cli": "^0.13.0",
+        "mocha": "^5.2.0",
+        "prettier": "^1.15.3",
+        "pretty-quick": "^1.8.0",
+        "sentences-per-line": "^0.2.1",
+        "tslint": "^5.12.0",
+        "tslint-config-prettier": "^1.17.0",
+        "tsutils": "^3.5.2",
+        "typescript": "^3.2.2"
+    },
+    "engines": {
+        "node": "^8"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "pretty-quick --staged --write"
+        }
+    },
+    "license": "MIT",
+    "main": "src/index.js",
+    "name": "typestat",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JoshuaKGoldberg/TypeStat.git"
+    },
+    "scripts": {
+        "lint": "run-p lint:*",
+        "lint:markdownlint": "markdownlint --config .markdownlint.json --rules ./node_modules/sentences-per-line/index.js README.md",
+        "lint:tslint": "tslint -p tsconfig.json -t stylish",
+        "prettier:write": "prettier --config .prettierrc.json --write",
+        "prettier:write:all": "npm run prettier:write ./{src,test,util}/**/*.{json,ts}",
+        "test": "mocha src/tests/runTests.js --timeout 10000",
+        "tsc": "tsc",
+        "verify": "npm run tsc && npm run lint && npm run test"
+    },
+    "version": "0.0.3"
 }

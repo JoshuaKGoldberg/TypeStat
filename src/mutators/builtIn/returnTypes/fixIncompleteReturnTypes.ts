@@ -8,8 +8,7 @@ export const fixIncompleteReturnTypes = (request: FileMutationsRequest, node: Fu
     const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node.type);
 
     // Collect types of nodes returned by the function
-    const returnedTypes = collectReturningNodeExpressions(node)
-        .map(request.services.program.getTypeChecker().getTypeAtLocation);
+    const returnedTypes = collectReturningNodeExpressions(node).map(request.services.program.getTypeChecker().getTypeAtLocation);
 
     // Add later-returned types to the node's type declaration if necessary
     return createTypeAdditionMutation(request, node, declaredType, returnedTypes);

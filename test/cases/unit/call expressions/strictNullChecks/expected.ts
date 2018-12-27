@@ -4,25 +4,25 @@
     function oneParameterStringDirect(abc: string) {}
     oneParameterStringDirect("");
 
-    function oneParameterStringBecomesNullDirect(abc: string) { }
+    function oneParameterStringBecomesNullDirect(abc: string) {}
     oneParameterStringBecomesNullDirect(null!);
-    
-    function oneParameterStringBecomesNullOrUndefinedDirect(abc: string) { }
+
+    function oneParameterStringBecomesNullOrUndefinedDirect(abc: string) {}
     oneParameterStringBecomesNullOrUndefinedDirect(null!);
 
-    function oneParameterStringBecomesUndefinedDirect(abc: string) { }
+    function oneParameterStringBecomesUndefinedDirect(abc: string) {}
     oneParameterStringBecomesUndefinedDirect(undefined!);
 
     function twoParametersStringDirect(abc: string, def: string) {}
     twoParametersStringDirect("", "");
 
-    function twoParametersStringBecomesNullDirect(abc: string, def: string) { }
+    function twoParametersStringBecomesNullDirect(abc: string, def: string) {}
     twoParametersStringBecomesNullDirect(null!, null!);
-    
-    function twoParametersStringBecomesNullOrUndefinedDirect(abc: string, def: string) { }
+
+    function twoParametersStringBecomesNullOrUndefinedDirect(abc: string, def: string) {}
     twoParametersStringBecomesNullOrUndefinedDirect(null!, undefined!);
 
-    function twoParametersStringBecomesUndefinedDirect(abc: string, def: string) { }
+    function twoParametersStringBecomesUndefinedDirect(abc: string, def: string) {}
     twoParametersStringBecomesUndefinedDirect(undefined!, undefined!);
 
     // Function results
@@ -33,9 +33,9 @@
 
     const createsStringOrUndefined = (): string | undefined => undefined;
 
-    function oneParameterStringBecomesNullIndirect(abc: string) { }
+    function oneParameterStringBecomesNullIndirect(abc: string) {}
     oneParameterStringBecomesNullIndirect(createsStringOrNull()!);
-    
-    const oneParameterStringBecomesUndefinedIndirect = (abc: string) => { };
+
+    const oneParameterStringBecomesUndefinedIndirect = (abc: string) => {};
     oneParameterStringBecomesUndefinedIndirect(createsStringOrUndefined()!);
 }

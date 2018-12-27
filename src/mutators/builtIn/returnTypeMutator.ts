@@ -12,9 +12,9 @@ export const returnTypeMutator: FileMutator = (request: FileMutationsRequest): R
     collectMutationsFromNodes(request, isNodeVisitableFunctionLikeDeclaration, visitFunctionWithBody);
 
 const isNodeVisitableFunctionLikeDeclaration = (node: ts.Node): node is FunctionLikeDeclarationWithType =>
-    tsutils.isFunctionWithBody(node)
+    tsutils.isFunctionWithBody(node) &&
     // If the node has an implicit return type, we don't need to change anything
-    && isNodeWithType(node);
+    isNodeWithType(node);
 
 const visitFunctionWithBody = (node: FunctionLikeDeclarationWithType, request: FileMutationsRequest): IMutation | undefined => {
     // If we add in missing types, try adding them in here
