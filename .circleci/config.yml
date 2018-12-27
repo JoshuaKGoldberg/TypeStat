@@ -11,19 +11,17 @@ jobs:
 
             - restore_cache:
                   keys:
-                      - dependency-cache-{{ checksum "package-lock.json" }}
+                      - dependency-cache-{{ checksum "yarn.json" }}
                       - dependency-cache-
 
-            - run: rm -rf node_modules package-lock.json
-
-            - run: npm install
+            - run: yarn
 
             - save_cache:
                   paths:
                       - node_modules
-                  key: dependency-cache-{{ checksum "package-lock.json" }}
+                  key: dependency-cache-{{ checksum "yarn.json" }}
 
-            - run: npm run verify
+            - run: yarn run verify
 
 workflows:
     version: 2
