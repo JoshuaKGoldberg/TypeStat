@@ -1,2 +1,3 @@
 *.md
 docs/**/*.md
+test/**/expected.ts
