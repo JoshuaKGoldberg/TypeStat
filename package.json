@@ -34,7 +34,7 @@
         "typescript": "^3.2.2"
     },
     "engines": {
-        "node": "^8 || ^9"
+        "node": "^8 || ^9 || ^10 || ^11 || ^12"
     },
     "husky": {
         "hooks": {

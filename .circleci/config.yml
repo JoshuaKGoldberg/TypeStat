@@ -11,7 +11,7 @@ jobs:
 
             - restore_cache:
                   keys:
-                      - dependency-cache-{{ checksum "yarn.json" }}
+                      - dependency-cache-{{ checksum "yarn.lock" }}
                       - dependency-cache-
 
             - run: yarn
@@ -19,7 +19,7 @@ jobs:
             - save_cache:
                   paths:
                       - node_modules
-                  key: dependency-cache-{{ checksum "yarn.json" }}
+                  key: dependency-cache-{{ checksum "yarn.lock" }}
 
             - run: yarn run verify
 
