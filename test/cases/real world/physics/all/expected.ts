@@ -4,7 +4,7 @@
         y: number;
     }
 
-    const shiftBox = (box: { x: any; y: any }) => {
+    const shiftBox = (box: { x: any; y: any; }) => {
         box.x += 1;
         box.y += 1;
     };

@@ -1,6 +1,6 @@
 *.d.ts
-*.js
 *.map
 node_modules/
 npm-debug.log
+src/**/*.js
 test/**/actual.ts
