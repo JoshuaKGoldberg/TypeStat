@@ -21,6 +21,7 @@ export const fillOutRawOptions = (
         filters: collectOptionals(argv.filters, rawOptions.filters),
         fixes: {
             incompleteTypes: false,
+            missingProperties: false,
             noImplicitAny: false,
             noImplicitThis: false,
             strictNullChecks: false,
@@ -38,6 +39,10 @@ export const fillOutRawOptions = (
 
     if (argv.fixIncompleteTypes !== undefined) {
         options.fixes.incompleteTypes = argv.fixIncompleteTypes;
+    }
+
+    if (argv.fixMissingProperties !== undefined) {
+        options.fixes.missingProperties = argv.fixMissingProperties;
     }
 
     if (argv.fixNoImplicitAny !== undefined) {

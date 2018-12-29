@@ -38,10 +38,6 @@ export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, reque
 
 /**
  * Uses a requesting language service to get --noImplicitAny code fixes for a type of node.
- *
- * @param node   Requesting node to retrieve fixes on.
- * @param request   Source file, metadata, and settings to collect mutations in the file.
- * @param errorCode   Corresponding error code for the node type to retrieve fixes for.
  */
 const getNoImplicitAnyCodeFixes = (node: NoImplicitAnyNode, request: FileMutationsRequest) =>
     request.services.languageService.getCodeFixesAtPosition(

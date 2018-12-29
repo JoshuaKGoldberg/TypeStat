@@ -1,38 +1,32 @@
+import { IMutation } from "automutate";
 import * as ts from "typescript";
 
-import { IMutation, ITextInsertMutation } from "automutate";
-import { isTypeFlagSetRecursively } from "../../mutations/collecting/flags";
+import { getMissingPropertyMutations } from "../../mutations/codeFixes/addMissingProperty";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
+import { getStrictPropertyAccessFix } from "./propertyAccesses/fixStrictPropertyAccess";
 
 export const propertyAccessExpressionMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    // This fixer is only relevant right now if strict null checking is enabled
-    // Later, it might be used to declare types: https://github.com/JoshuaKGoldberg/TypeStat/issues/17
-    if (!request.options.fixes.strictNullChecks) {
+    // This fixer is only relevant if strict null checking or fixing missing properties are enabled
+    if (!request.options.fixes.strictNullChecks && !request.options.fixes.missingProperties) {
         return [];
     }
 
     return collectMutationsFromNodes(request, ts.isPropertyAccessExpression, visitPropertyAccessExpression);
 };
 
-const visitPropertyAccessExpression = (
-    node: ts.PropertyAccessExpression,
-    request: FileMutationsRequest,
-): ITextInsertMutation | undefined => {
-    // Grab the type of the property being accessed by name
-    const expressionType = request.services.program.getTypeChecker().getTypeAtLocation(node.expression);
-
-    // If the property's type cannot be null or undefined, rejoice! Nothing to do.
-    if (!isTypeFlagSetRecursively(expressionType, ts.TypeFlags.Null | ts.TypeFlags.Undefined)) {
-        return undefined;
+const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression, request: FileMutationsRequest): IMutation | undefined => {
+    // If the access should create a missing property, go for that
+    const missingPropertyFix = getMissingPropertyMutations(request, node);
+    if (missingPropertyFix !== undefined) {
+        return missingPropertyFix;
     }
 
-    // Add a mutation to insert a "!" before the access
-    return {
-        insertion: "!",
-        range: {
-            begin: node.expression.end,
-        },
-        type: "text-insert",
-    };
+    // If we can fix a strict null check fix here, try that
+    const strictPropertyAccessFix = getStrictPropertyAccessFix(request, node);
+    if (strictPropertyAccessFix !== undefined) {
+        return strictPropertyAccessFix;
+    }
+
+    return undefined;
 };

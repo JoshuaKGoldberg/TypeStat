@@ -25,6 +25,10 @@ This will add `!`s as necessary to any locations that use nullable types unsafel
 
 For example, this configuration will add `!`s only to `*.test.ts` test files, such as with VS Code's [strict tests push](https://github.com/Microsoft/vscode/issues/65233):
 
+```shell
+typestat --fixStrictNullChecks ./src/**/*.test.ts
+```
+
 ```json
 {
     "fixes": {
@@ -70,3 +74,23 @@ Many more places will need them after parameters and properties are given the ne
 
 > To clean up code after this set is applied, consider using the [`no-non-null-assertion` TSLint rule](http://palantir.github.io/tslint/rules/no-non-null-assertion)
 > and its auto-fixer over time.
+
+## Converting Classes from JavaScript to TypeScript
+
+Converting classes from JavaScript to TypeScript tends to be one of the more painful parts of conversions,
+since classes in TypeScript need to have member properties declared.
+
+TypeScript provides a feature to infer and add those properties.
+Use `--fixMissingProperties`/`fixes.missingProperties` to apply those mutations across all files:
+
+```shell
+typestat --fixMissingProperties
+```
+
+```json
+{
+    "fixes": {
+        "missingProperties": true
+    }
+}
+```

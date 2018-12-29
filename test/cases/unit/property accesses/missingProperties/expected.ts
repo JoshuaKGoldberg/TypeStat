@@ -36,6 +36,9 @@
     }
 
     class Abc {
+givenNumber: number;
+givenNumberOrUndefined: number;
+givenUndefined: any;
         def() {
             this.givenNumber = 1;
             this.givenNumberOrUndefined = 1 as number | undefined;

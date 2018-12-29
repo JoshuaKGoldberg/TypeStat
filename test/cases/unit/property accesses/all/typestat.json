@@ -1,6 +1,7 @@
 {
     "fixes": {
         "incompleteTypes": true,
+        "missingProperties": true,
         "noImplicitAny": true,
         "strictNullChecks": true
     },

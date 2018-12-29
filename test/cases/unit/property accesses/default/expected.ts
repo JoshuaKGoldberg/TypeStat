@@ -34,4 +34,12 @@
         let stringOrNullOrUndefinedImplicit = "" as string | null | undefined;
         stringOrNullOrUndefinedImplicit.length;
     }
+
+    class Abc {
+        def() {
+            this.givenNumber = 1;
+            this.givenNumberOrUndefined = 1 as number | undefined;
+            this.givenUndefined = undefined;
+        }
+    }
 }

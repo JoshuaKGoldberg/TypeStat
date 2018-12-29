@@ -14,6 +14,7 @@ export interface TypeStatArgv {
     readonly config?: string;
     readonly filters?: ReadonlyArray<string>;
     readonly fixIncompleteTypes?: boolean;
+    readonly fixMissingProperties?: boolean;
     readonly fixNoImplicitAny?: boolean;
     readonly fixNoImplicitThis?: boolean;
     readonly fixStrictNullChecks?: boolean;

@@ -10,6 +10,7 @@ These mutations are all purely additive and limited to the type system, meaning 
 {
     "fixes": {
         "incompleteTypes": true,
+        "missingProperties": true,
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": true
@@ -41,6 +42,36 @@ For example, if a variable is typed as a `number` but is also assigned a `string
 ```diff
 - let abc: number = "";
 + let abc: number | string = "";
+```
+
+## `--fixMissingProperties`/`missingProperties`
+
+Whether to apply TypeScript's fixer for missing properties on classes.
+If a member is accessed on a class that doesn't declare a property with that name, one will be added in.
+
+Use this when you have classes in files that you've just renamed to `.ts`/`.tsx`.
+
+```shell
+typestat --fixMissingProperties
+```
+
+```json
+{
+    "fixes": {
+        "missingProperties": true
+    }
+}
+```
+
+For example, if a class assigns a numeric member on itself, one will be declared:
+
+```diff
+class Abc {
++   ghi: number;
+    def() {
+        this.ghi = 1;
+    }
+}
 ```
 
 ## `--fixNoImplicitAny`/`noImplicitAny`

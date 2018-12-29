@@ -31,6 +31,22 @@ abc("");
 
 ## Property Accesses
 
+### Missing Properties
+
+When `missingProperties` is enabled, any property access that sets a value to a member of `this` will be checked for the "missing property" TypeScript complaint.
+For example, if a class assigns a numeric member on itself, one will be declared:
+
+```diff
+class Abc {
++   ghi: number;
+    def() {
+        this.ghi = 1;
+    }
+}
+```
+
+### Strict Property Accesses
+
 Member properties of objects whose types include `null` or `undefined` need a `!` in strict null checking mode.
 If `strictNullChecks` is enabled, a `!` will be added in.
 

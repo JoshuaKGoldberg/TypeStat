@@ -114,6 +114,11 @@ export interface Fixes {
     incompleteTypes: boolean;
 
     /**
+     * Whether to fill in missing properties per TypeScript's code fixes.
+     */
+    missingProperties: boolean;
+
+    /**
      * Whether to add type annotations to types that don't yet have them per TypeScript's --noImplicitAny.
      */
     noImplicitAny: boolean;

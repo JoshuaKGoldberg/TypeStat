@@ -19,6 +19,7 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
         .option("-V --version", "output the package version")
         .option("--filter [...filters]", "tsquery filters to exclude within files")
         .option("--fixIncompleteTypes", "add missing types to existing, incomplete types")
+        .option("--fixMissingProperties", "add missing properties to classes from usage")
         .option("--fixNoImplicitAny", "fix TypeScript's --noImplicitAny complaints")
         .option("--fixNoImplicitThis", "fix TypeScript's --strictNullChecks complaints")
         .option("--fixStrictNullChecks", "override TypeScript's --strictNullChecks setting for added types")

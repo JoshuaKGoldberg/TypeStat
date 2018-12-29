@@ -11,10 +11,10 @@ Adds TypeScript type annotations using static analysis.
 
 ## Why?
 
-Stringent type safety with TypeScript, especially when adding [`--noImplicitAny`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitAny.html)
+Type safety with TypeScript, especially when adding [`--noImplicitAny`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitAny.html)
 or [`--strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html),
 is wonderful but can be difficult to add to large pre-existing projects.
-Adding type annotations through hundreds or thousands of legacy files is tedious and time-consuming.
+Converting from JavaScript to TypeScript or improving type annotations through hundreds or thousands of legacy files is tedious and time-consuming.
 
 This package automagically adds those missing type annotations for you with configurable comment markers.
 It can add...
