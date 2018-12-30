@@ -7,6 +7,7 @@ import { TypeStatArgv } from "../index";
 import { globAllAsync } from "../shared/glob";
 import { normalizeAndSlashify } from "../shared/paths";
 import { fillOutRawOptions } from "./fillOutRawOptions";
+import { parseRawCompilerOptions } from "./parseRawCompilerOptions";
 import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
 /**
@@ -33,12 +34,20 @@ const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> 
  * @param configPath   Manual path to a config file to use intsead of a Cosmiconfig lookup.
  * @returns Promise for filled-out TypeStat options.
  */
-export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | undefined> => {
+export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions> => {
     const rawOptions = await findRawOptions(argv.config);
-    const fileNames = await collectFileNames(argv, rawOptions);
-    const options = fillOutRawOptions(argv, rawOptions, fileNames);
+    const projectPath = getProjectPath(argv, rawOptions);
+    const [compilerOptions, fileNames] = await Promise.all([parseRawCompilerOptions(projectPath), collectFileNames(argv, rawOptions)]);
 
-    return noFixesSpecified(options) ? undefined : options;
+    return fillOutRawOptions({ argv, compilerOptions, fileNames, projectPath, rawOptions });
+};
+
+const getProjectPath = (argv: TypeStatArgv, rawOptions: RawTypeStatOptions): string => {
+    if (argv.project !== undefined) {
+        return path.join(process.cwd(), argv.project);
+    }
+
+    return rawOptions.projectPath === undefined ? normalizeAndSlashify(path.join(process.cwd(), "tsconfig.json")) : rawOptions.projectPath;
 };
 
 const collectFileNames = async (argv: TypeStatArgv, rawOptions: RawTypeStatOptions): Promise<ReadonlyArray<string> | undefined> => {
@@ -52,10 +61,3 @@ const collectFileNames = async (argv: TypeStatArgv, rawOptions: RawTypeStatOptio
 
     return globAllAsync(rawOptions.include);
 };
-
-const noFixesSpecified = (options: TypeStatOptions): boolean =>
-    options.mutators.length === 0 &&
-    !options.fixes.incompleteTypes &&
-    !options.fixes.noImplicitAny &&
-    !options.fixes.noImplicitThis &&
-    !options.fixes.strictNullChecks;

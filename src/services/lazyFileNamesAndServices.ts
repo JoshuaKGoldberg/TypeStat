@@ -11,9 +11,9 @@ export interface FileNamesAndServices {
     readonly services: LanguageServices;
 }
 
-export const createFileNamesAndServices = async (options: TypeStatOptions): Promise<FileNamesAndServices> => {
+export const createFileNamesAndServices = (options: TypeStatOptions): FileNamesAndServices => {
     options.logger.stdout.write(chalk.grey("Preparing language services to visit files...\n"));
-    const services = await createLanguageServices(options);
+    const services = createLanguageServices(options);
     const fileNames =
         options.fileNames === undefined
             ? Array.from(createFileNamesUsingProgram(services.parsedConfiguration.fileNames, options)).filter(

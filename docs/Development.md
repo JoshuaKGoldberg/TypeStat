@@ -61,5 +61,5 @@ Run it with `node --inspect` then visit `chrome://inspect` to use the browser de
 For example:
 
 ```shell
-node --inspect typestat src/**/*.test.ts --config typestat.json --project src/tsconfig.json --fixStrictNullChecks --fixIncompleteTypes
+node --inspect typestat src/**/*.test.ts --config typestat.json --project src/tsconfig.json --fixIncompleteTypes
 ```

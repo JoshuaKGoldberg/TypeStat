@@ -4,7 +4,7 @@ import { readline } from "mz";
 import * as ts from "typescript";
 
 import { TypeStatOptions } from "../options/types";
-import { LazyAsyncCache } from "../services/LazyAsyncCache";
+import { LazyCache } from "../services/LazyCache";
 import { createFileNamesAndServices } from "../services/lazyFileNamesAndServices";
 import { FileInfoCache } from "../shared/FileInfoCache";
 import { convertMapToObject, Dictionary } from "../shared/maps";
@@ -14,7 +14,7 @@ import { findMutationsInFile } from "./findMutationsInFile";
  * Mutations to be applied to files, keyed by file name.
  */
 export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMutationsProvider => {
-    const fileNamesAndServicesCache = new LazyAsyncCache(async () => createFileNamesAndServices(options));
+    const fileNamesAndServicesCache = new LazyCache(() => createFileNamesAndServices(options));
     let lastFileIndex = -1;
     let hasPassedFirstFile = false;
 
@@ -22,7 +22,7 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
         provide: async (): Promise<IMutationsWave> => {
             const startTime = Date.now();
             const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
-            const { fileNames, services } = await fileNamesAndServicesCache.get();
+            const { fileNames, services } = fileNamesAndServicesCache.get();
             const waveStartedFromBeginning = lastFileIndex <= 0;
             let addedMutations = 0;
 

@@ -7,7 +7,7 @@ These are the kinds of "nodes", or constructs in your code, that TypeStat will f
 ## Call Expressions
 
 When adding strict null checking mode, calling function-likes with values that aren't nullable may introduce compiler errors.
-For example, if a function with one parameter of type `string` is called with an `undefined` argument, it would need a `!` added:
+For example, if a function with one parameter of type `string` is called with an `undefined` argument, it could need a `!` added by `fixStrictNonNullAssertions`:
 
 ```diff
 function abc(def: string) { }
@@ -18,9 +18,9 @@ function abc(def: string) { }
 
 ## Parameters
 
-Parameters not initially with a declared type or that are later passed a type theirs doesn't include will have that type created or added onto them.
+Parameters not initially with a declared type or that are later passed a type theirs doesn't include may have that type created or added onto them.
 
-For example, if a parameter violates `--noImplicitAny`, a type will be added:
+For example, if a parameter violates `--noImplicitAny`, a type may be added by `fixNoImplicitAny`:
 
 ```diff
 - function abc(def) { }
@@ -33,7 +33,7 @@ abc("");
 
 ### Missing Properties
 
-When `missingProperties` is enabled, any property access that sets a value to a member of `this` will be checked for the "missing property" TypeScript complaint.
+When `fixMissingProperties` is enabled, any property access that sets a value to a member of `this` will be checked for the "missing property" TypeScript complaint.
 For example, if a class assigns a numeric member on itself, one will be declared:
 
 ```diff
@@ -48,7 +48,7 @@ class Abc {
 ### Strict Property Accesses
 
 Member properties of objects whose types include `null` or `undefined` need a `!` in strict null checking mode.
-If `strictNullChecks` is enabled, a `!` will be added in.
+If `strictNonNullAssertions` is enabled, a `!` will be added in.
 
 For example, if a variable can be `string | undefined`, a `!` will be added before accessing a property on it:
 
@@ -61,9 +61,9 @@ function abc(def: string | undefined) {
 
 ## Property Declarations
 
-Properties later assigned a type not represented by their initial type will have that type added onto them.
+Properties later assigned a type not represented by their initial type maybe have that type added onto them by `fixNoImplicitAny` or `fixIncompleteTypes`.
 
-For example, if a property has no type declared and no initial value but is later assigned to a `string`, `noImplicitAny` would add a type of `string`:
+For example, if a property has no type declared and has no initial value but is later assigned to a `string`, `fixNoImplicitAny` would add a type of `string`:
 
 ```diff
 class Abc {
@@ -80,9 +80,9 @@ If a property's type doesn't change, it won't have any modifications.
 
 ## Returns
 
-Functions that have an explicit return type but can return a different type will have that type added onto their return type.
+Functions that have an explicit return type but can return a different type may have that type added onto their return type by `fixIncompleteTypes`.
 
-For example, if a function is initially marked as returning `string` but can also return `undefined`, `strictNullChecks` would change its type to `string | undefined`:
+For example, if a function is initially marked as returning `string` but can also return `undefined`, `fixIncompleteTypes` would change its type to `string | undefined`:
 
 ```diff
 - function abc(def: boolean): string {
@@ -94,9 +94,9 @@ Functions that don't have an explicit return type won't have any types added, as
 
 ### Variable Declarations
 
-Variables later assigned a type not represented by their initial type will have that type added onto them.
+Variables later assigned a type not represented by their initial type may have that type added onto them by `fixIncompleteTypes`.
 
-For example, if a variable is typed as a `number` but is also assigned a `string`, `incompleteTypes` would change its type to `number | strng`:
+For example, if a variable is typed as a `number` but is also assigned a `string`, `fixIncompleteTypes` would change its type to `number | strng`:
 
 ```diff
 - let abc: number = "";

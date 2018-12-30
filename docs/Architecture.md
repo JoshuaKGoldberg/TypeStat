@@ -5,6 +5,7 @@ Before reading this, you should read:
 
 * TypeStat's [README.md](../README.md)
 * Documentation on the types of [fixes](./Fixes.md)
+* Recommended TypeStat [usage](./Usage.md)
 * [automutate](https://github.com/automutate/automutate) and [automutate-tests](https://github.com/automutate/automutate)
 
 ## Runtime

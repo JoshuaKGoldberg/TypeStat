@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { TypeStatOptions } from "../options/types";
+import { FileMutationsRequest } from "../mutators/fileMutator";
 
 /**
  * Type flags and aliases to check when --strictNullChecks is not enabled.
@@ -23,29 +23,34 @@ const strictTypeFlagsWithAliases = new Map([
     [ts.TypeFlags.Undefined, "undefined"],
 ]);
 
-export const getApplicableTypeAliases = (options: TypeStatOptions) =>
-    options.fixes.strictNullChecks ? strictTypeFlagsWithAliases : nonStrictTypeFlagAliases;
+/**
+ * @returns Built-in type flags and aliases per overall request strictNullChecks setting.
+ */
+export const getApplicableTypeAliases = (request: FileMutationsRequest) =>
+    request.options.types.strictNullChecks || request.services.program.getCompilerOptions().strictNullChecks
+        ? strictTypeFlagsWithAliases
+        : nonStrictTypeFlagAliases;
 
 /**
  * Joins assigning types into a union to be used as a type reference.
  *
  * @param flags   Flags to include in the type union.
  * @param types   Types to include in the type union.
- * @param typeOptions   Options for which types to add under what aliases.
+ * @param request   Source file, metadata, and settings to collect mutations in the file.
  * @returns Joined type union of the aliased flags and types.
  * @remarks Removes any rich types that resolve to anonymous object literals.
  */
 export const joinIntoType = (
     flags: ReadonlySet<ts.TypeFlags>,
     types: ReadonlySet<ts.Type>,
-    options: TypeStatOptions,
+    request: FileMutationsRequest,
 ): string | undefined => {
     // If we don't include rich types, ignore any new type that would add any
-    if (options.types.onlyPrimitives && types.size !== 0) {
+    if (request.options.types.onlyPrimitives && types.size !== 0) {
         return undefined;
     }
 
-    const typeAliases = getApplicableTypeAliases(options);
+    const typeAliases = getApplicableTypeAliases(request);
     let unionNames = [
         ...Array.from(types)
             .filter(isTypeNamePrintable)
@@ -54,8 +59,8 @@ export const joinIntoType = (
         ...Array.from(flags).map((type) => typeAliases.get(type)!),
     ];
 
-    if (options.types.matching !== undefined) {
-        unionNames = filterMatchingTypeNames(unionNames, options.types.matching);
+    if (request.options.types.matching !== undefined) {
+        unionNames = filterMatchingTypeNames(unionNames, request.options.types.matching);
     }
 
     if (unionNames.length === 0) {
@@ -64,7 +69,7 @@ export const joinIntoType = (
 
     return unionNames
         .map((type) => {
-            const alias = options.types.aliases.get(type);
+            const alias = request.options.types.aliases.get(type);
 
             return alias === undefined ? type : alias;
         })

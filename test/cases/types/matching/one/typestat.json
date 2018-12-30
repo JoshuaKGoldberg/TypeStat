@@ -1,9 +1,9 @@
 {
     "fixes": {
-        "incompleteTypes": true,
-        "strictNullChecks": true
+        "incompleteTypes": true
     },
     "types": {
-        "matching": ["^boolean$"]
+        "matching": ["^boolean$"],
+        "strictNullChecks": true
     }
 }

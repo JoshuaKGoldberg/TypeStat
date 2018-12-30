@@ -30,7 +30,7 @@ export const createTypeAdditionMutation = (
     }
 
     // Join the missing types into a type string to declare
-    const newTypeAlias = joinIntoType(missingFlags, missingTypes, request.options);
+    const newTypeAlias = joinIntoType(missingFlags, missingTypes, request);
     if (newTypeAlias === undefined) {
         return undefined;
     }
@@ -73,7 +73,7 @@ export const createTypeCreationMutation = (
     }
 
     // Join the missing types into a type string to declare
-    const newTypeAlias = joinIntoType(assignedFlags, assignedTypes, request.options);
+    const newTypeAlias = joinIntoType(assignedFlags, assignedTypes, request);
     if (newTypeAlias === undefined) {
         return undefined;
     }

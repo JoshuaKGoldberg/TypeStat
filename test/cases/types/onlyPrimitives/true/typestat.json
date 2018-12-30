@@ -1,9 +1,9 @@
 {
     "fixes": {
-        "incompleteTypes": true,
-        "strictNullChecks": true
+        "incompleteTypes": true
     },
     "types": {
-        "onlyPrimitives": true
+        "onlyPrimitives": true,
+        "strictNullChecks": true
     }
 }

@@ -4,6 +4,7 @@ import * as ts from "typescript";
 
 import { TypeStatOptions } from "../options/types";
 import { collectOptionals } from "../shared/arrays";
+import { normalizeAndSlashify } from "../shared/paths";
 
 /**
  * Language service and type information with their backing TypeScript configuration.
@@ -15,28 +16,12 @@ export interface LanguageServices {
 }
 
 /**
- * @param projectPath   Path to a tsconfig.json project file.
- * @returns Associated language service and type information based on the config file.
+ * @returns Associated language service and type information based on TypeStat options.
  */
-export const createLanguageServices = async (options: TypeStatOptions): Promise<LanguageServices> => {
-    // Read the raw configuration data from disk and attempt to parse it as JSON
-    const configRaw = (await fs.readFile(options.projectPath)).toString();
-    const compilerOptions = ts.parseConfigFileTextToJson(options.projectPath, configRaw);
-    if (compilerOptions.error !== undefined) {
-        throw new Error(`Could not parse compiler options from '${options.projectPath}': ${compilerOptions.error}`);
-    }
-
-    // Parse the JSON into raw TypeScript options, overriding compiler options to always be our options' equivalent
-    const compilerConfigOptionsRaw = compilerOptions.config as ts.CompilerOptions;
-    const compilerConfigOptions: ts.CompilerOptions = {
-        ...compilerConfigOptionsRaw,
-        noImplicitAny: compilerConfigOptionsRaw.noImplicitAny || options.fixes.noImplicitAny,
-        strictNullChecks: compilerConfigOptionsRaw.strict || compilerConfigOptionsRaw.strictNullChecks || options.fixes.strictNullChecks,
-    };
-
+export const createLanguageServices = (options: TypeStatOptions): LanguageServices => {
     // Create a TypeScript configuration using the raw options
     const parsedConfiguration = ts.parseJsonConfigFileContent(
-        compilerConfigOptions,
+        options.compilerOptions,
         {
             fileExists: fs.existsSync,
             readDirectory: ts.sys.readDirectory,
@@ -50,16 +35,18 @@ export const createLanguageServices = async (options: TypeStatOptions): Promise<
     // Include all possible file names in our program, including ones we won't later visit
     // TypeScript projects must include source files for all nodes we look at
     // See https://github.com/Microsoft/TypeScript/issues/28413
-    const fileNames = collectOptionals(options.fileNames, parsedConfiguration.fileNames);
+    const fileNames = Array.from(
+        new Set(Array.from(collectOptionals(options.fileNames, parsedConfiguration.fileNames)).map(normalizeAndSlashify)),
+    );
 
     // Create a basic TypeScript compiler host and program using the parsed compiler options
     const host = ts.createCompilerHost({}, true);
-    const program = ts.createProgram(fileNames, compilerConfigOptions, host);
+    const program = ts.createProgram(fileNames, options.compilerOptions, host);
 
     // Create a TypeScript language service using the compiler host
     const servicesHost: ts.LanguageServiceHost = {
         fileExists: ts.sys.fileExists,
-        getCompilationSettings: () => compilerConfigOptions,
+        getCompilationSettings: () => options.compilerOptions,
         getCurrentDirectory: () => process.cwd(),
         getDefaultLibFileName: ts.getDefaultLibFilePath,
         getScriptFileNames: () => fileNames,

@@ -1,3 +1,5 @@
+import * as ts from "typescript";
+
 import { Logger } from "../logging/logger";
 import { FileMutator } from "../mutators/fileMutator";
 import { Dictionary } from "../shared/maps";
@@ -29,11 +31,6 @@ export interface RawTypeStatOptions {
     readonly mutators?: ReadonlyArray<string>;
 
     /**
-     * Whether to skip adding types that aren't `null` or `undefined`.
-     */
-    readonly onlyStrictNullTypes?: boolean;
-
-    /**
      * Options for which types to add under what aliases.
      */
     readonly types?: RawTypeStatTypeOptions;
@@ -62,12 +59,22 @@ export interface RawTypeStatTypeOptions {
      * Whether to exclude rich types from changes, such as arrays or interfaces.
      */
     onlyPrimitives?: boolean;
+
+    /**
+     * Whether to add `null` and `undefined` as per TypeScript's --strictNullChecks.
+     */
+    strictNullChecks?: boolean;
 }
 
 /**
  * Parsed runtime options for TypeStat.
  */
 export interface TypeStatOptions {
+    /**
+     * Parsed TypeScript compiler options with relevant fields filled out.
+     */
+    readonly compilerOptions: Readonly<TypeStatCompilerOptions>;
+
     /**
      * File names to run, if not everything in the TypeScript project.
      */
@@ -105,6 +112,14 @@ export interface TypeStatOptions {
 }
 
 /**
+ * Parsed TypeScript compiler options with relevant fields filled out.
+ */
+export type TypeStatCompilerOptions = ts.CompilerOptions & {
+    noImplicitAny: boolean;
+    strictNullChecks: boolean;
+};
+
+/**
  * Cross-file settings for forms of fixes.
  */
 export interface Fixes {
@@ -124,14 +139,14 @@ export interface Fixes {
     noImplicitAny: boolean;
 
     /**
-     * Whether to add `this` type annotations to functions that don't yet have them per TypeScript's --noImplicitThis.
+     * Whether to consider `this` type annotations to functions that don't yet have them per TypeScript's --noImplicitThis.
      */
     noImplicitThis: boolean;
 
     /**
-     * Whether to add `null` and `undefined` as per TypeScript's --strictNullChecks.
+     * Whether to add missing non-null assertions in nullable property accesses, function-like calls, and return types.
      */
-    strictNullChecks: boolean;
+    strictNonNullAssertions: boolean;
 }
 
 /**
@@ -152,4 +167,9 @@ export interface TypeStatTypeOptions {
      * Whether to exclude complex types from changes, such as arrays or interfaces.
      */
     onlyPrimitives?: boolean;
+
+    /**
+     * Whether to consider `null` and `undefined` as per TypeScript's --strictNullChecks.
+     */
+    strictNullChecks?: boolean;
 }
