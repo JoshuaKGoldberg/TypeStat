@@ -37,8 +37,6 @@ describeMutationTestCases(
         const rawCompilerOptions = fs.readFileSync(typeStatPath).toString();
         const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config as ts.CompilerOptions;
 
-        compilerOptions.newLine = ts.NewLineKind.LineFeed;
-
         return createTypeStatMutationsProvider({
             ...fillOutRawOptions({
                 argv: {},
@@ -61,6 +59,7 @@ describeMutationTestCases(
         actual: "actual.ts",
         expected: "expected.ts",
         includes: arrayify(parsed.include).map((include) => new RegExp(`(.*)${include}(.*)`)),
+        normalizeEndlines: "\n",
         original: "../original.?s",
         settings: "typestat.json",
     },
