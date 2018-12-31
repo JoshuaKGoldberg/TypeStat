@@ -2,7 +2,9 @@
     "filters": ["MethodDeclaration[name.text=dispose]", "CallExpression[expression.text=teardown]"],
     "fixes": {
         "incompleteTypes": true,
-        "noImplicitAny": true,
+        "noImplicitAny": true
+    },
+    "types": {
         "strictNullChecks": true
     }
 }

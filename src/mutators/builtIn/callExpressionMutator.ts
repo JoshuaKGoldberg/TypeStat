@@ -9,8 +9,8 @@ import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
 export const callExpressionMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    // This fixer is only relevant if strict null checking is enabled
-    if (!request.options.fixes.strictNullChecks) {
+    // This fixer is only relevant if adding non-null assertions is enabled
+    if (!request.options.fixes.strictNonNullAssertions) {
         return [];
     }
 
@@ -45,12 +45,6 @@ const collectArgumentMutations = (
     const mutations: IMutation[] = [];
     const visitableArguments = Math.min(node.arguments.length, valueDeclaration.parameters.length);
     const typeChecker = request.services.program.getTypeChecker();
-
-    // random notes to put in there
-    // 1. get all the nodes
-    // 2. check something with nullability - if the return type contains null | undefined
-    // 3a. for each one, if it's an identifier created within the function, add it to the creating site
-    // 3b. otherwise, add a ! to the returning expression
 
     for (let i = 0; i < visitableArguments; i += 1) {
         const typeOfArgument = typeChecker.getTypeAtLocation(node.arguments[i]);

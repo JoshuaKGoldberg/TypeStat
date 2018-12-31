@@ -17,14 +17,22 @@ const isNodeVisitableFunctionLikeDeclaration = (node: ts.Node): node is Function
     isNodeWithType(node);
 
 const visitFunctionWithBody = (node: FunctionLikeDeclarationWithType, request: FileMutationsRequest): IMutation | undefined => {
-    // If we add in missing types, try adding them in here
+    // If we add in missing types to function-like return declarations, try adding them in here
     if (request.options.fixes.incompleteTypes) {
-        return fixIncompleteReturnTypes(request, node);
+        const incompleteReturnFixes = fixIncompleteReturnTypes(request, node);
+
+        if (incompleteReturnFixes !== undefined) {
+            return incompleteReturnFixes;
+        }
     }
 
-    // If we otherwise care about strict null types, check if and where we should add !s
-    if (request.options.fixes.strictNullChecks) {
-        return fixMissingNonNullReturns(request, node);
+    // If we otherwise add non null assertions on returns, check if and where we should add !s on returns
+    if (request.options.fixes.strictNonNullAssertions) {
+        const nonNullReturnFixes = fixMissingNonNullReturns(request, node);
+
+        if (nonNullReturnFixes !== undefined) {
+            return nonNullReturnFixes;
+        }
     }
 
     return undefined;

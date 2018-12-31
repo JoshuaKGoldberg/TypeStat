@@ -3,11 +3,12 @@
         "incompleteTypes": true,
         "missingProperties": true,
         "noImplicitAny": true,
-        "strictNullChecks": true
+        "strictNonNullAssertions": true
     },
     "types": {
         "aliases": {
             "null": "null /* todo: null */"
-        }
+        },
+        "strictNullChecks": true
     }
 }
