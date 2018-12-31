@@ -8,8 +8,8 @@ export const getStrictPropertyAccessFix = (
     request: FileMutationsRequest,
     node: ts.PropertyAccessExpression,
 ): ITextInsertMutation | undefined => {
-    // Don't do anything if we don't fix for strict null checks
-    if (!request.options.fixes.strictNullChecks) {
+    // Don't do anything if we don't fix for strict property accesses
+    if (!request.options.fixes.strictNonNullAssertions) {
         return undefined;
     }
 

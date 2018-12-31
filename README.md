@@ -111,12 +111,13 @@ More advanced flags can be provided for:
   * `--filter`/`filter`
 * [Fixes](./docs/Fixes.md):
   * `--fixIncompleteTypes`/`fixes.incompleteTypes`
+  * `--fixMissingProperties`/`fixes.missingProperties`
   * `--fixNoImplicitAny`/`fixes.noImplicitAny`
-  * `--fixStrictNullChecks`/`fixes.strictNullChecks`
+  * `--fixStrictNonNullAssertions`/`fixes.strictNonNullAssertions`
 * [Types](./docs/Types.md):
   * `types.aliases`
   * `--typesMatching`/`types.matching`
-  * `--typesOnlyPrimitives`/`types.onlyPrimitives`
+  * `--typeOnlyPrimitives`/`types.onlyPrimitives`
 
 ## Node
 
@@ -146,11 +147,11 @@ await typeStat({
 
 ```javascript
 await typeStat({
-    add: ["my-custom-mutator"],
     config: "./typestat.custom.json",
     fixIncompleteTypes: true,
     fixNoImplicitAny: true,
-    fixStrictNullChecks: true,
+    fixStrictNonNullAssertions: true,
+    mutators: ["my-custom-mutator"],
     project: "./tsconfig.custom.json",
 });
 ```

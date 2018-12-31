@@ -12,8 +12,7 @@ These mutations are all purely additive and limited to the type system, meaning 
         "incompleteTypes": true,
         "missingProperties": true,
         "noImplicitAny": true,
-        "noImplicitThis": true,
-        "strictNullChecks": true
+        "strictNonNullAssertions": true
     }
 }
 ```
@@ -129,28 +128,56 @@ typestat --fixNoImplicitThis
 > Blocked on https://github.com/Microsoft/TypeScript/issues/28964.
 -->
 
-## `--fixStrictNullChecks`/`strictNullChecks`
-
-Whether to add `| null` and `| undefined` types when constructs can be assigned them but aren't.
-
-Useful if your project is already fully onboarded onto `--noImplicitAny` but not [`--strictNullChecks`](https://basarat.gitbooks.io/typescript/docs/options/strictNullChecks.html).
+## `--fixStrictNonNullAssertions`/`strictNonNullAssertions`
 
 ```shell
-typestat --fixStrictNullChecks
+typestat --fixStrictNonNullAssertions
 ```
 
 ```json
 {
     "fixes": {
-        "strictNullChecks": true
+        "strictNonNullAssertions": true
     }
 }
 ```
 
-For example, if a function is initially marked as returning `string` but can also return `undefined`, this would change its type to `string | undefined`:
+Whether to add missing non-null assertions.
+This can add `!s` in:
+
+* Nullable property accesses
+* Function-like calls
+* Return statements
+
+Note that `strictNullChecks` must be enabled in your `tsconfig.json` and/or TypeStat configuration file.
+
+If a member of a nullable object is requested:
 
 ```diff
-- function abc(def: boolean): string {
-+ function abc(def: boolean): string | undefined {
-    return def ? "" : undefined;
+let abc: string | undefined = "def";
+
+- abc.length;
++ abc!.length;
+```
+
+Passing a nullable object to a function call of a parameter that can't be nullable:
+
+```diff
+function abc(def: string | undefined) { /* ... */ }
+
+let def: string | undefined = "ghi";
+
+- abc(def);
++ abc(def!);
+```
+
+Returning a nullable type in a function with a non-nullable return type:
+
+```diff
+function abc(): string {
+    let def: string | undefined = "ghi";
+
+-   return def;
++   return def!;
+}
 ```

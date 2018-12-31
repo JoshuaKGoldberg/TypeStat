@@ -1,6 +1,7 @@
 import { runMutations } from "automutate";
 
 import { loadOptions } from "./options/loadOptions";
+import { findComplaintForOptions } from "./options/optionVerification";
 import { TypeStatOptions } from "./options/types";
 import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutationsProvider";
 
@@ -17,11 +18,12 @@ export interface TypeStatArgv {
     readonly fixMissingProperties?: boolean;
     readonly fixNoImplicitAny?: boolean;
     readonly fixNoImplicitThis?: boolean;
-    readonly fixStrictNullChecks?: boolean;
+    readonly fixStrictNonNullAssertions?: boolean;
     readonly mutators?: string | ReadonlyArray<string>;
     readonly project?: string;
-    readonly typesOnlyPrimitives?: boolean;
-    readonly typesMatching?: ReadonlyArray<string>;
+    readonly typeMatching?: ReadonlyArray<string>;
+    readonly typeOnlyPrimitives?: boolean;
+    readonly typeStrictNullChecks?: boolean;
 }
 
 export enum ResultStatus {
@@ -48,12 +50,9 @@ export interface SucceededResult {
 
 export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
     const options = await tryLoadingOptions(argv);
-    if (options === undefined || options instanceof Error) {
+    if (options instanceof Error) {
         return {
-            error:
-                options === undefined
-                    ? "No fixes or custom mutators specified. Consider enabling --fixNoImplicitAny (see http://github.com/joshuakgoldberg/typestat#cli)."
-                    : options,
+            error: options,
             status: ResultStatus.ConfigurationError,
         };
     }
@@ -74,10 +73,16 @@ export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
     };
 };
 
-const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | Error | undefined> => {
+const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | Error> => {
+    let options: TypeStatOptions;
+
     try {
-        return loadOptions(argv);
+        options = await loadOptions(argv);
     } catch (error) {
         return error instanceof Error ? error : new Error(error as string);
     }
+
+    const optionsComplaint = findComplaintForOptions(options);
+
+    return optionsComplaint === undefined ? options : new Error(optionsComplaint);
 };

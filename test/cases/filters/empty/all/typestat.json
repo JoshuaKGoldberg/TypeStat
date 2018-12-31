@@ -2,7 +2,9 @@
     "filters": [],
     "fixes": {
         "incompleteTypes": true,
-        "noImplicitAny": true,
+        "noImplicitAny": true
+    },
+    "types": {
         "strictNullChecks": true
     }
 }

@@ -1,5 +1,5 @@
 {
-    "fixes": {
+    "types": {
         "strictNullChecks": true
     }
 }

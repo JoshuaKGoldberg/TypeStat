@@ -7,8 +7,8 @@ import { FileMutationsRequest, FileMutator } from "../fileMutator";
 import { getStrictPropertyAccessFix } from "./propertyAccesses/fixStrictPropertyAccess";
 
 export const propertyAccessExpressionMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    // This fixer is only relevant if strict null checking or fixing missing properties are enabled
-    if (!request.options.fixes.strictNullChecks && !request.options.fixes.missingProperties) {
+    // This fixer is only relevant if fixing missing properties or fixing strict property accesses are enabled
+    if (!request.options.fixes.missingProperties && !request.options.fixes.strictNonNullAssertions) {
         return [];
     }
 

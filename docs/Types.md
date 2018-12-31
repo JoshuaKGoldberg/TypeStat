@@ -34,7 +34,7 @@ type TodoAutoAddedUndefined = undefined;
 }
 ```
 
-## `--typesMatching`/`matching`
+## `--typeMatching`/`matching`
 
 Regular expression matchers added types must match.
 If one or more of these are provided, any added type must match at least one of them.
@@ -42,7 +42,7 @@ If one or more of these are provided, any added type must match at least one of 
 For example, either will only allow `null` or `undefined` as added types:
 
 ```shell
-typestat --typesMatching "^null$" --typesMatching "^undefined$"
+typestat --typeMatching "^null$" --typeMatching "^undefined$"
 ```
 
 ```json
@@ -55,13 +55,13 @@ typestat --typesMatching "^null$" --typesMatching "^undefined$"
 }
 ```
 
-## `--typesOnlyPrimitives`/`onlyPrimitives`
+## `--typeOnlyPrimitives`/`onlyPrimitives`
 
 Whether to exclude type additions that contain complex object types, such as arrays and class instances.
-This is particularly useful for `--fixStrictNullChecks`, where the only relevant types are `null` and `undefined`.
+This is particularly useful for `--typeStrictNullChecks`, where the only relevant types are `null` and `undefined`.
 
 ```shell
-typestat --typesOnlyPrimitives
+typestat --typeOnlyPrimitives
 ```
 
 ```json
@@ -71,3 +71,25 @@ typestat --typesOnlyPrimitives
     }
 }
 ```
+
+## `--typeStrictNullChecks`/`strictNullChecks`
+
+Whether to override the project's [`--strictNullChecks`](https://basarat.gitbooks.io/typescript/docs/options/strictNullChecks.html) setting.
+If true, TypeStat will set `strictNullChecks` to `true` regardless of your `tsconfig.json`.
+
+```shell
+typestat --typeStrictNullChecks
+```
+
+```json
+{
+    "types": {
+        "strictNullChecks": true
+    }
+}
+```
+
+This interacts with fixers in a few ways:
+
+* Type additions will now include `null` and/or `undefined`
+* [Property Accesses](./Nodes.md#Strict%20Property%20Accesses) will have `!`s added as needeed

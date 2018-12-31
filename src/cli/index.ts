@@ -9,7 +9,7 @@ import { getPackageVersion } from "./version";
  * Parses raw string arguments and, if they're valid, calls to a main method.
  *
  * @param dependencies   Raw string arguments and any system dependency overrides.
- * @returns Promise for the result of the main method.
+ * @returns Promise for the result of running TypeStat.
  */
 export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
     const command = new Command()
@@ -22,8 +22,12 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
         .option("--fixMissingProperties", "add missing properties to classes from usage")
         .option("--fixNoImplicitAny", "fix TypeScript's --noImplicitAny complaints")
         .option("--fixNoImplicitThis", "fix TypeScript's --strictNullChecks complaints")
-        .option("--fixStrictNullChecks", "override TypeScript's --strictNullChecks setting for added types")
-        .option("--typesOnlyPrimitives", "exclude complex types from changes, such as arrays or interfaces");
+        .option(
+            "--fixStrictNonNullAssertions",
+            "add missing non-null assertions in nullable property accesses, function-like calls, and return types",
+        )
+        .option("--typeStrictNullChecks", "override TypeScript's --strictNullChecks setting for types")
+        .option("--typeOnlyPrimitives", "exclude complex types from changes, such as arrays or interfaces");
     const parsed = command.parse(argv as string[]) as TypeStatArgv;
 
     if ({}.hasOwnProperty.call(parsed, "version")) {
