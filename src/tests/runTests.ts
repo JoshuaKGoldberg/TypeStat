@@ -37,6 +37,8 @@ describeMutationTestCases(
         const rawCompilerOptions = fs.readFileSync(typeStatPath).toString();
         const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config as ts.CompilerOptions;
 
+        compilerOptions.newLine = ts.NewLineKind.LineFeed;
+
         return createTypeStatMutationsProvider({
             ...fillOutRawOptions({
                 argv: {},
