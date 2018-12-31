@@ -59,6 +59,7 @@ describeMutationTestCases(
         actual: "actual.ts",
         expected: "expected.ts",
         includes: arrayify(parsed.include).map((include) => new RegExp(`(.*)${include}(.*)`)),
+        normalizeEndlines: "\n",
         original: "../original.?s",
         settings: "typestat.json",
     },
