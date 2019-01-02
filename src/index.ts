@@ -50,7 +50,7 @@ export interface SucceededResult {
 
 export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
     const options = await tryLoadingOptions(argv);
-    if (options instanceof Error) {
+    if (options instanceof Error || typeof options === "string") {
         return {
             error: options,
             status: ResultStatus.ConfigurationError,
@@ -73,7 +73,7 @@ export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
     };
 };
 
-const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | Error> => {
+const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | Error | string> => {
     let options: TypeStatOptions;
 
     try {
@@ -84,5 +84,5 @@ const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | 
 
     const optionsComplaint = findComplaintForOptions(options);
 
-    return optionsComplaint === undefined ? options : new Error(optionsComplaint);
+    return optionsComplaint === undefined ? options : optionsComplaint;
 };
