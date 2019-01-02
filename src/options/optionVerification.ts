@@ -5,6 +5,10 @@ export const findComplaintForOptions = (options: TypeStatOptions): string | unde
         return "No fixes or custom mutators specified. Consider enabling --fixNoImplicitAny (see http://github.com/joshuakgoldberg/typestat#cli).";
     }
 
+    if (strictNonNullAssertionsInNonStrictMode(options)) {
+        return "--fixStrictNonNullAssertions specified but not strictNullChecks. Consider enabling --strictNullChecks (see http://github.com/joshuakgoldberg/typestat/blob/master/docs/Fixes.md).";
+    }
+
     return undefined;
 };
 
@@ -13,4 +17,8 @@ const noFixesSpecified = (options: TypeStatOptions): boolean =>
     !options.fixes.incompleteTypes &&
     !options.fixes.missingProperties &&
     !options.fixes.noImplicitAny &&
-    !options.fixes.noImplicitThis;
+    !options.fixes.noImplicitThis &&
+    !options.fixes.strictNonNullAssertions;
+
+const strictNonNullAssertionsInNonStrictMode = (options: TypeStatOptions): boolean =>
+    options.fixes.strictNonNullAssertions && !options.types.strictNullChecks;
