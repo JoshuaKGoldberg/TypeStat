@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { Command } from "commander";
 
 import { ResultStatus, typeStat, TypeStatArgv, TypeStatResult } from "../index";
@@ -55,6 +56,6 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
         console.log("");
     }
 
-    console.error(result.error);
+    console.error(chalk.yellow(`${result.error}`));
     process.exit(1);
 };
