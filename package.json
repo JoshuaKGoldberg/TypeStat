@@ -58,5 +58,5 @@
         "tsc": "tsc",
         "verify": "yarn run tsc && yarn run lint && yarn run test"
     },
-    "version": "0.0.3"
+    "version": "0.0.4"
 }
