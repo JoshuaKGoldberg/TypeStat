@@ -6,8 +6,14 @@ import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
 import { fixVariableIncompleteType } from "./variableDeclarations/fixVariableIncompleteType";
 
-export const variableDeclarationMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
-    collectMutationsFromNodes(request, isNodeVisitableVariableDeclaration, visitVariableDeclaration);
+export const variableDeclarationMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+    // This mutator fixes only for --noImplicitAny or incomplete types
+    if (!request.options.fixes.noImplicitAny && !request.options.fixes.noImplicitAny) {
+        return [];
+    }
+
+    return collectMutationsFromNodes(request, isNodeVisitableVariableDeclaration, visitVariableDeclaration);
+};
 
 const isNodeVisitableVariableDeclaration = (node: ts.Node): node is ts.VariableDeclaration =>
     ts.isVariableDeclaration(node) &&
@@ -25,7 +31,10 @@ const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMut
 
     // If we fix for incomplete types, try to add them in
     if (request.options.fixes.incompleteTypes) {
-        return fixVariableIncompleteType(request, node);
+        const incompleteTypeFix = fixVariableIncompleteType(request, node);
+        if (incompleteTypeFix !== undefined) {
+            return incompleteTypeFix;
+        }
     }
 
     return undefined;

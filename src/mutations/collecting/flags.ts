@@ -19,9 +19,6 @@ export const findMissingFlags = (
     assignedFlags: ReadonlySet<ts.TypeFlags>,
     declaredFlags: ReadonlySet<ts.TypeFlags>,
 ) => {
-    // TODO: collectFlagsAndTypesFromTypes should have worked recursively to make these exhaustive. Double-check that?
-    //     For example: why is string | undefined | string still coming up?
-
     // If the type is declared to allow `any`, it can't be missing anything
     if (isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Any)) {
         return new Set();

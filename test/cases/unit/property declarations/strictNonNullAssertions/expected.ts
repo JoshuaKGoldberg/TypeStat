@@ -31,11 +31,11 @@
 
     const container = new Container();
 
-    container.givenUndefined = undefined;
-    container.givenUndefinedHasNull = undefined;
-    container.givenNull = null;
-    container.givenNullHasUndefined = null;
-    container.givenString = "";
-    container.givenStringHasNull = "";
-    container.givenStringHasNull = "";
+    container.givenUndefined = undefined!;
+    container.givenUndefinedHasNull = undefined!;
+    container.givenNull = null!;
+    container.givenNullHasUndefined = null!;
+    container.givenString = ""!;
+    container.givenStringHasNull = ""!;
+    container.givenStringHasNull = ""!;
 }

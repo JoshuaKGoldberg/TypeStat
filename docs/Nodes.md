@@ -4,6 +4,17 @@
 
 These are the kinds of "nodes", or constructs in your code, that TypeStat will fix.
 
+## Binary Expressions
+
+TypeStat will look at binary expressions where the operator is an equals sign.
+When adding strict null checkig mode, assigning values that may contain `null` or `undefined` to a value of a type that may not include them is an error.
+If `fixStrictNonNullAssertions` is enabled, a `!` may be added.
+
+```diff
+- let abc: string = undefined;
++ let abc: string = undefined!;
+```
+
 ## Call Expressions
 
 When adding strict null checking mode, calling function-likes with values that aren't nullable may introduce compiler errors.

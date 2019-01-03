@@ -6,9 +6,9 @@
         useForStringOrNullOrUndefined: string | null | undefined,
     ) {
         useForString.length;
-        useForStringOrNull!.length;
-        useForStringOrUndefined!.length;
-        useForStringOrNullOrUndefined!.length;
+        useForStringOrNull.length;
+        useForStringOrUndefined.length;
+        useForStringOrNullOrUndefined.length;
 
         let stringExplicit: string = "";
         stringExplicit.length;
@@ -17,32 +17,29 @@
         stringImplicit.length;
 
         let stringOrUndefinedExplicit: string | undefined = undefined;
-        stringOrUndefinedExplicit!.length;
+        stringOrUndefinedExplicit.length;
 
         let stringOrUndefinedImplicit = "" as string | undefined;
-        stringOrUndefinedImplicit!.length;
+        stringOrUndefinedImplicit.length;
 
         let stringOrNullExplicit: string | null = "" as string | null;
-        stringOrNullExplicit!.length;
+        stringOrNullExplicit.length;
 
         let stringOrNullImplicit = "" as null | undefined;
-        stringOrNullImplicit!.length;
+        stringOrNullImplicit.length;
 
         let stringOrNullOrUndefinedExplicit: string | null | undefined = null;
-        stringOrNullOrUndefinedExplicit!.length;
+        stringOrNullOrUndefinedExplicit.length;
 
         let stringOrNullOrUndefinedImplicit = "" as string | null | undefined;
-        stringOrNullOrUndefinedImplicit!.length;
+        stringOrNullOrUndefinedImplicit.length;
     }
 
     class Abc {
-givenNumber: number;
-givenNumberOrUndefined: number | undefined;
-givenUndefined: undefined;
         def() {
-            this.givenNumber = 1;
-            this.givenNumberOrUndefined = 1 as number | undefined;
-            this.givenUndefined = undefined;
+            this.givenNumber = 1!;
+            this.givenNumberOrUndefined = (1 as number | undefined)!;
+            this.givenUndefined = undefined!;
         }
     }
 }
