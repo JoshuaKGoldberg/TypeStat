@@ -1,3 +1,4 @@
+import { binaryExpressionMutator } from "./builtIn/binaryExpressionMutator";
 import { callExpressionMutator } from "./builtIn/callExpressionMutator";
 import { functionThisMutator } from "./builtIn/functionThisMutator";
 import { parameterMutator } from "./builtIn/parameterMutator";
@@ -8,6 +9,7 @@ import { variableDeclarationMutator } from "./builtIn/variableDeclarationMutator
 import { FileMutator } from "./fileMutator";
 
 export const builtInFileMutators: ReadonlyArray<[string, FileMutator]> = [
+    ["binaryExpressionMutator", binaryExpressionMutator],
     ["callExpression", callExpressionMutator],
     ["variableDeclarationMutator", variableDeclarationMutator],
     ["returnTypeMutator", returnTypeMutator],

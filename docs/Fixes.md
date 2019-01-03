@@ -145,11 +145,19 @@ typestat --fixStrictNonNullAssertions
 Whether to add missing non-null assertions.
 This can add `!s` in:
 
+* Binary expressions
 * Nullable property accesses
 * Function-like calls
 * Return statements
 
 Note that `strictNullChecks` must be enabled in your `tsconfig.json` and/or TypeStat configuration file.
+
+If a binary expression improperly assigns a value of that type:
+
+```diff
+- let abc: string = undefined;
++ let abc: string = undefined!;
+```
 
 If a member of a nullable object is requested:
 

@@ -4,7 +4,7 @@ import * as ts from "typescript";
 import { IMutation } from "automutate";
 import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../mutations/codeFixes/noImplicitAny";
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../mutations/creators";
-import { findNodeByStartingPosition } from "../../shared/nodes";
+import { findNodeByStartingPosition, isNodeAssigningBinaryExpression } from "../../shared/nodes";
 import { isNodeWithType } from "../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
@@ -89,11 +89,7 @@ const updateAssignedTypesForReference = (reference: ts.ReferenceEntry, assignedT
 
     // ...contained as the left-hand side of an "=" binary expression
     const binaryExpression = propertyAccess.parent;
-    if (
-        !ts.isBinaryExpression(binaryExpression) ||
-        binaryExpression.left !== propertyAccess ||
-        binaryExpression.operatorToken.kind !== ts.SyntaxKind.EqualsToken
-    ) {
+    if (!isNodeAssigningBinaryExpression(binaryExpression) || binaryExpression.left !== propertyAccess) {
         return;
     }
 

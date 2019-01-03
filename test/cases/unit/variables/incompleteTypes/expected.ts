@@ -110,40 +110,40 @@
 
     let onlyClassOneImplicit = new SampleClassOne();
     let onlyClassOneExplicitClass: SampleClassOne = new SampleClassOne();
-    let onlyClassOneExplicitInterface: SampleInterface | SampleClassOne = new SampleClassOne();
+    let onlyClassOneExplicitInterface: SampleInterface = new SampleClassOne();
 
-    let eitherClassImplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
+    let eitherClassImplicit = new SampleClassOne();
     eitherClassImplicit = new SampleClassTwo();
 
-    let eitherClassExplicit: SampleInterface | SampleClassOne | SampleClassTwo = new SampleClassOne();
+    let eitherClassExplicit: SampleInterface = new SampleClassOne();
     eitherClassExplicit = new SampleClassTwo();
 
-    let eitherClassNeedsUnionImplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsUnionImplicit = new SampleClassOne();
     eitherClassNeedsUnionImplicit = new SampleClassTwo();
 
-    let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsUnionExplicit: SampleClassOne = new SampleClassOne();
     eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
-    let eitherClassNeedsUnionExplicitInterface: SampleInterface | SampleClassOne = new SampleClassOne();
+    let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
     eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
-    let eitherClassNeedsNullImplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsNullImplicit = new SampleClassOne();
     eitherClassNeedsNullImplicit = new SampleClassTwo();
     eitherClassNeedsNullImplicit = null;
 
-    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null = new SampleClassOne();
     eitherClassNeedsNullAndClassExplicit = new SampleClassTwo();
     eitherClassNeedsNullImplicit = null;
 
-    let eitherClassNeedsUndefinedExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsUndefinedExplicit: SampleClassOne = new SampleClassOne();
     eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicit = undefined;
 
-    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | SampleClassOne = new SampleClassOne();
+    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface = new SampleClassOne();
     eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicit = undefined;
 
-    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined = new SampleClassOne();
     eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedAndClassExplicit = undefined;
 
@@ -159,16 +159,16 @@
 
     // Array pushes
 
-    let numberEmptyImplicit: Array = [];
+    let numberEmptyImplicit = [];
     numberImplicit.push(1);
 
-    let numberEmptyExplicit: number[] | Array = [];
+    let numberEmptyExplicit: number[] = [];
     numberEmptyExplicit.push(1);
 
     let numberFilledImplicit = [1];
     numberFilledImplicit.push(1);
 
-    let numberFilledExplicit: (number | string)[] | Array = [1];
+    let numberFilledExplicit: (number | string)[] = [1];
     numberFilledExplicit.push(1);
     numberFilledExplicit.push("");
 
@@ -176,11 +176,11 @@
     numberFilledExplicitAddedString.push(1);
     numberFilledExplicitAddedString.push("");
 
-    let numberOrStringEmptyImplicit: Array = [];
+    let numberOrStringEmptyImplicit = [];
     numberOrStringEmptyImplicit.push(1);
     numberOrStringEmptyImplicit.push("");
 
-    let numberOrStringEmptyExplicit: number[] | Array = [];
+    let numberOrStringEmptyExplicit: number[] = [];
     numberOrStringEmptyExplicit.push(1);
     numberOrStringEmptyExplicit.push("");
 
@@ -188,7 +188,7 @@
     numberOrStringFilledImplicit.push(1);
     numberOrStringFilledImplicit.push("");
 
-    let numberOrStringFilledExplicit: (number | string)[] | Array = [1];
+    let numberOrStringFilledExplicit: (number | string)[] = [1];
     numberOrStringFilledExplicit.push(1);
     numberOrStringFilledExplicit.push("");
 

@@ -30,3 +30,10 @@ export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: num
  */
 export const isNodeWithinNode = (sourceFile: ts.SourceFile, child: ts.Node, parent: ts.Node): boolean =>
     child.end <= parent.end && child.getStart(sourceFile) >= parent.getStart(sourceFile);
+
+/**
+ * @returns Whether a node is a binary expression that sets a value with an equals token.
+ * @remarks This only looks at = assignments, ignoring others such as +=.
+ */
+export const isNodeAssigningBinaryExpression = (node: ts.Node): node is ts.BinaryExpression =>
+    ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken;
