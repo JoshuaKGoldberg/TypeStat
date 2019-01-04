@@ -32,9 +32,9 @@
     }
 
     function functionReturnsUndefinedVariable(): string {
-        const text: string | undefined = undefined;
+        const text: string | undefined = undefined!;
 
-        return text!;
+        return text;
     }
 
     function functionReturnsVoidExpression(): string {

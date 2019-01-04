@@ -25,6 +25,32 @@
     function twoParametersStringBecomesUndefinedDirect(abc: string, def: string) {}
     twoParametersStringBecomesUndefinedDirect(undefined, undefined);
 
+    function takesString(abc: string) {}
+    takesString(null);
+    takesString(undefined);
+    takesString(null as null | undefined);
+    takesString(undefined as null | undefined);
+    takesString("" as string | null);
+    takesString("" as string | undefined);
+    takesString("" as string | null | undefined);
+
+    let emptyExplicitSibling: undefined = undefined;
+    let emptyImplicitSibling = undefined;
+    let emptyExplicitChild: undefined = undefined;
+    let emptyImplicitChild = undefined;
+    let textSibling: string | undefined = "";
+    let textChild: string | undefined = "";
+
+    takesString(emptyExplicitSibling);
+    takesString(emptyImplicitSibling);
+    takesString(textSibling);
+
+    function innerCalling() {
+        takesString(emptyExplicitChild);
+        takesString(emptyImplicitChild);
+        takesString(textChild);
+    }
+
     // Function results
 
     function createsStringOrNull(): string | null {
