@@ -1,5 +1,8 @@
 {
     "extends": ["tslint:all", "tslint-config-prettier"],
+    "linterOptions": {
+        "exclude": "package.json"
+    },
     "rules": {
         "array-type": [true, "array"],
         "arrow-return-shorthand": false,

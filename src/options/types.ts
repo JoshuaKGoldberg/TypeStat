@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { Logger } from "../logging/logger";
+import { ProcessLogger } from "../logging/logger";
 import { FileMutator } from "../mutators/fileMutator";
 import { Dictionary } from "../shared/maps";
 
@@ -93,7 +93,7 @@ export interface TypeStatOptions {
     /**
      * Wraps process.stdout.write.
      */
-    readonly logger: Logger;
+    readonly logger: ProcessLogger;
 
     /**
      * Added mutators specified by the user.

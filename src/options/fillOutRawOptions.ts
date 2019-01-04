@@ -53,7 +53,7 @@ export const fillOutRawOptions = ({
             strictNonNullAssertions: false,
             ...rawOptions.fixes,
         },
-        logger: processLogger,
+        logger: argv.logger,
         mutators: collectAddedMutators(argv, rawOptions, processLogger),
         projectPath,
         types: {
