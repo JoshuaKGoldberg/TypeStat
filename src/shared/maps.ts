@@ -13,7 +13,7 @@ export const convertMapToObject = <TValue>(map: ReadonlyMap<string, TValue>): Di
     return output;
 };
 
-export const convertObjectToMap = <TValue>(object: Readonly<Dictionary<TValue>>): ReadonlyMap<string, TValue> => {
+export const convertObjectToMap = <TValue>(object: Readonly<Dictionary<TValue>>): Map<string, TValue> => {
     const map = new Map<string, TValue>();
 
     for (const key of Object.keys(object)) {

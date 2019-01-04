@@ -24,7 +24,7 @@ export const collectAddedMutators = (
     rawOptions: RawTypeStatOptions,
     logger: Logger,
 ): ReadonlyArray<[string, FileMutator]> => {
-    const addedMutators = arrayify(argv.mutators);
+    const addedMutators = arrayify(argv.mutator);
 
     if (rawOptions.mutators !== undefined) {
         addedMutators.push(...rawOptions.mutators);
