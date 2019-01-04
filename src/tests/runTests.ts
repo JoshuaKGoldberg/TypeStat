@@ -36,10 +36,14 @@ describeMutationTestCases(
         const projectPath = path.join(projectDirectory, "tsconfig.json");
         const rawCompilerOptions = fs.readFileSync(typeStatPath).toString();
         const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config as ts.CompilerOptions;
+        const logger = {
+            stderr: process.stderr,
+            stdout: new FakeWritableStream(),
+        };
 
         return createTypeStatMutationsProvider({
             ...(fillOutRawOptions({
-                argv: {},
+                argv: { logger },
                 compilerOptions,
                 projectPath,
                 rawOptions: {
@@ -48,10 +52,6 @@ describeMutationTestCases(
                 },
             }) as TypeStatOptions),
             fileNames: [path.join(projectDirectory, "actual.ts")],
-            logger: {
-                stderr: process.stderr,
-                stdout: new FakeWritableStream(),
-            },
         });
     },
     {

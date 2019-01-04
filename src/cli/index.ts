@@ -1,18 +1,24 @@
 import chalk from "chalk";
 import { Command } from "commander";
+import * as fs from "mz/fs";
+import * as path from "path";
 
 import { ResultStatus, typeStat, TypeStatArgv, TypeStatResult } from "../index";
-import { getPackageVersion } from "./version";
+import { processLogger } from "../logging/logger";
 
-// tslint:disable:no-console
+const createDefaultRuntime = () => ({
+    logger: processLogger,
+    mainRunner: typeStat,
+});
 
 /**
  * Parses raw string arguments and, if they're valid, calls to a main method.
  *
- * @param dependencies   Raw string arguments and any system dependency overrides.
+ * @param rawArgv   Raw string arguments and any system dependency overrides.
+ * @param mainRunner   Method to run with parsed arguments: generally `typeStat`.
  * @returns Promise for the result of running TypeStat.
  */
-export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
+export const cli = async (rawArgv: ReadonlyArray<string>, runtime = createDefaultRuntime()): Promise<void> => {
     const command = new Command()
         .option("-c --config [config]", "path to a TypeStat config file")
         .option("-m --mutator [...mutator]", "require paths to any custom mutators to run")
@@ -31,17 +37,20 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
         .option("--typeMatching [...typeMatching]", "regular expression matchers added types must match.")
         .option("--typeStrictNullChecks", "override TypeScript's --strictNullChecks setting for types")
         .option("--typeOnlyPrimitives", "exclude complex types from changes, such as arrays or interfaces");
-    const parsed = command.parse(argv as string[]) as TypeStatArgv;
+    const parsedArgv: TypeStatArgv = {
+        ...(command.parse(rawArgv as string[]) as Partial<TypeStatArgv>),
+        logger: runtime.logger,
+    };
 
-    if ({}.hasOwnProperty.call(parsed, "version")) {
-        console.log(await getPackageVersion());
+    if ({}.hasOwnProperty.call(parsedArgv, "version")) {
+        runtime.logger.stdout.write(`${await getPackageVersion()}\n`);
         return;
     }
 
     let result: TypeStatResult;
 
     try {
-        result = await typeStat(parsed);
+        result = await runtime.mainRunner(parsedArgv);
     } catch (error) {
         result = {
             error: error instanceof Error ? error : new Error(error as string),
@@ -55,9 +64,16 @@ export const cli = async (argv: ReadonlyArray<string>): Promise<void> => {
 
     if (result.status === ResultStatus.ConfigurationError) {
         command.outputHelp();
-        console.log("");
+        runtime.logger.stdout.write("\n");
     }
 
-    console.error(chalk.yellow(`${result.error}`));
+    runtime.logger.stderr.write(chalk.yellow(`${result.error}\n`));
     process.exit(1);
+};
+
+const getPackageVersion = async (): Promise<string> => {
+    const packagePath = path.join(__dirname, "../package.json");
+    const rawText = (await fs.readFile(packagePath)).toString();
+
+    return (JSON.parse(rawText) as { version: string }).version;
 };

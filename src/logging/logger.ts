@@ -1,7 +1,7 @@
 /**
  * Wraps process.stderr and process.stdout.
  */
-export interface Logger {
+export interface ProcessLogger {
     readonly stderr: NodeJS.WritableStream;
     readonly stdout: NodeJS.WritableStream;
 }
@@ -9,7 +9,7 @@ export interface Logger {
 /**
  * Wraps process.stderr and process.stdout.
  */
-export const processLogger: Logger = {
+export const processLogger: ProcessLogger = {
     stderr: process.stderr,
     stdout: process.stdout,
 };

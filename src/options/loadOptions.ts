@@ -31,7 +31,7 @@ const findRawOptions = async (configPath?: string): Promise<RawTypeStatOptions> 
 /**
  * Reads TypeStat options using Cosmiconfig or a config path.
  *
- * @param configPath   Manual path to a config file to use intsead of a Cosmiconfig lookup.
+ * @param argv   Root arguments passed to TypeStat
  * @returns Promise for filled-out TypeStat options, or a string complaint from failing to make them.
  */
 export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | string> => {

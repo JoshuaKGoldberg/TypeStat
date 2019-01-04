@@ -1,7 +1,7 @@
 import * as path from "path";
 
 import { TypeStatArgv } from "../index";
-import { Logger } from "../logging/logger";
+import { ProcessLogger } from "../logging/logger";
 import { FileMutator } from "../mutators/fileMutator";
 import { arrayify } from "../shared/arrays";
 import { getQuickErrorSummary } from "../shared/errors";
@@ -14,7 +14,7 @@ interface ImportedFileMutator {
 /**
  * Finds any added mutators to be imported via require() calls.
  *
- * @param argv   Node arguments to pass to TypeStat.
+ * @param argv   Root arguments to pass to TypeStat.
  * @param rawOptions   Options listed as JSON in a typestat configuration file.
  * @param logger   Wraps process.stderr and process.stdout.
  * @returns Imported mutators with their friendly names.
@@ -22,7 +22,7 @@ interface ImportedFileMutator {
 export const collectAddedMutators = (
     argv: TypeStatArgv,
     rawOptions: RawTypeStatOptions,
-    logger: Logger,
+    logger: ProcessLogger,
 ): ReadonlyArray<[string, FileMutator]> => {
     const addedMutators = arrayify(argv.mutator);
 
@@ -53,7 +53,7 @@ export const collectAddedMutators = (
     return additions;
 };
 
-const collectAddedMutator = (baseOptionsDir: string, rawAddedMutator: string, logger: Logger): FileMutator | undefined => {
+const collectAddedMutator = (baseOptionsDir: string, rawAddedMutator: string, logger: ProcessLogger): FileMutator | undefined => {
     const requiringPath = path.join(baseOptionsDir, rawAddedMutator);
     const resolvedImport = tryRequireResolve(requiringPath);
     if (resolvedImport === undefined) {

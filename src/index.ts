@@ -1,14 +1,13 @@
 import { runMutations } from "automutate";
 
+import { ProcessLogger } from "./logging/logger";
 import { loadOptions } from "./options/loadOptions";
 import { findComplaintForOptions } from "./options/optionVerification";
 import { TypeStatOptions } from "./options/types";
 import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutationsProvider";
 
-// tslint:disable:no-console
-
 /**
- * Node arguments to pass to TypeStat.
+ * Root arguments to pass to TypeStat.
  */
 export interface TypeStatArgv {
     readonly args?: ReadonlyArray<string>;
@@ -20,6 +19,12 @@ export interface TypeStatArgv {
     readonly fixNoImplicitThis?: boolean;
     readonly fixStrictNonNullAssertions?: boolean;
     readonly mutator?: string | ReadonlyArray<string>;
+
+    /**
+     * Wraps process.stderr and process.stdout.
+     */
+    readonly logger: ProcessLogger;
+
     readonly project?: string;
     readonly typeAlias?: string | ReadonlyArray<string>;
     readonly typeMatching?: ReadonlyArray<string>;
