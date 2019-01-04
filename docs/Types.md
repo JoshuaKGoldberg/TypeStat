@@ -1,10 +1,14 @@
 # Types
 
-## `aliases`
+## `--typeAliases`/`aliases`
 
 Object mapping names of added types to strings to replace them with.
 
 For example, to replace `null` with `null /* TODO: check auto-generated types (thanks TypeStat!) */`:
+
+```shell
+typestat --typeAliases null="/* TODO: check added types (thanks TypeStat!) */"
+```
 
 ```json
 {
@@ -22,6 +26,10 @@ _(and easier to find-all in your IDE)_:
 ```typescript
 // typings.d.ts
 type TodoAutoAddedUndefined = undefined;
+```
+
+```shell
+typestat --typeAliases undefined=TodoAutoAddedUndefined
 ```
 
 ```json

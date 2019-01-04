@@ -1,6 +1,10 @@
 import { TypeStatOptions } from "./types";
 
-export const findComplaintForOptions = (options: TypeStatOptions): string | undefined => {
+export const findComplaintForOptions = (options: TypeStatOptions | string): string | undefined => {
+    if (typeof options === "string") {
+        return options;
+    }
+
     if (noFixesSpecified(options)) {
         return "No fixes or custom mutators specified. Consider enabling --fixNoImplicitAny (see http://github.com/joshuakgoldberg/typestat#cli).";
     }

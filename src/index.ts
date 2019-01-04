@@ -13,14 +13,15 @@ import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutatio
 export interface TypeStatArgv {
     readonly args?: ReadonlyArray<string>;
     readonly config?: string;
-    readonly filters?: ReadonlyArray<string>;
+    readonly filter?: string | ReadonlyArray<string>;
     readonly fixIncompleteTypes?: boolean;
     readonly fixMissingProperties?: boolean;
     readonly fixNoImplicitAny?: boolean;
     readonly fixNoImplicitThis?: boolean;
     readonly fixStrictNonNullAssertions?: boolean;
-    readonly mutators?: string | ReadonlyArray<string>;
+    readonly mutator?: string | ReadonlyArray<string>;
     readonly project?: string;
+    readonly typeAlias?: string | ReadonlyArray<string>;
     readonly typeMatching?: ReadonlyArray<string>;
     readonly typeOnlyPrimitives?: boolean;
     readonly typeStrictNullChecks?: boolean;
@@ -74,7 +75,7 @@ export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
 };
 
 const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | Error | string> => {
-    let options: TypeStatOptions;
+    let options: TypeStatOptions | string;
 
     try {
         options = await loadOptions(argv);

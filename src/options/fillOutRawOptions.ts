@@ -2,7 +2,7 @@ import * as ts from "typescript";
 
 import { TypeStatArgv } from "../index";
 import { processLogger } from "../logging/logger";
-import { collectOptionals } from "../shared/arrays";
+import { arrayify, collectOptionals } from "../shared/arrays";
 import { collectAsConfiguration } from "../shared/booleans";
 import { convertObjectToMap } from "../shared/maps";
 import { collectAddedMutators } from "./addedMutators";
@@ -16,16 +16,26 @@ export interface OptionsFromRawOptionsSettings {
     rawOptions: RawTypeStatOptions;
 }
 
+/**
+ * Combines Node and CLi argument options with project and file metadata into TypeStat options.
+ *
+ * @returns Parsed TypeStat options, or a string for an error complaint.
+ */
 export const fillOutRawOptions = ({
     argv,
     compilerOptions,
     fileNames,
     projectPath,
     rawOptions,
-}: OptionsFromRawOptionsSettings): TypeStatOptions => {
+}: OptionsFromRawOptionsSettings): TypeStatOptions | string => {
     const rawOptionTypes = rawOptions.types === undefined ? {} : rawOptions.types;
     const noImplicitAny = collectNoImplicitAny(argv, compilerOptions, rawOptions);
     const { compilerStrictNullChecks, typeStrictNullChecks } = collectStrictNullChecks(argv, compilerOptions, rawOptionTypes);
+
+    const typeAliases = collectTypeAliases(argv, rawOptionTypes);
+    if (typeof typeAliases === "string") {
+        return typeAliases;
+    }
 
     const options = {
         compilerOptions: {
@@ -34,7 +44,7 @@ export const fillOutRawOptions = ({
             strictNullChecks: compilerStrictNullChecks,
         },
         fileNames,
-        filters: collectOptionals(argv.filters, rawOptions.filters),
+        filters: collectOptionals(arrayify(argv.filter), rawOptions.filters),
         fixes: {
             incompleteTypes: false,
             missingProperties: false,
@@ -47,7 +57,7 @@ export const fillOutRawOptions = ({
         mutators: collectAddedMutators(argv, rawOptions, processLogger),
         projectPath,
         types: {
-            aliases: rawOptionTypes.aliases === undefined ? new Map() : convertObjectToMap(rawOptionTypes.aliases),
+            aliases: typeAliases,
             matching: argv.typeMatching === undefined ? rawOptionTypes.matching : argv.typeMatching,
             onlyPrimitives: collectAsConfiguration(argv.typeOnlyPrimitives, rawOptionTypes.onlyPrimitives),
             strictNullChecks: typeStrictNullChecks,
@@ -75,6 +85,23 @@ export const fillOutRawOptions = ({
     }
 
     return options;
+};
+
+const collectTypeAliases = (argv: TypeStatArgv, rawOptionTypes: RawTypeStatTypeOptions): ReadonlyMap<string, string> | string => {
+    const typeAliases = rawOptionTypes.aliases === undefined ? new Map() : convertObjectToMap(rawOptionTypes.aliases);
+
+    if (argv.typeAlias !== undefined) {
+        for (const rawTypeAlias of arrayify(argv.typeAlias)) {
+            const keyAndValue = rawTypeAlias.split("=", 2);
+            if (keyAndValue.length !== 2) {
+                return `Improper type alias: '${rawTypeAlias}'. Format these as '--typeAlias key=value'.`;
+            }
+
+            typeAliases.set(keyAndValue[0], keyAndValue[1]);
+        }
+    }
+
+    return typeAliases;
 };
 
 const collectNoImplicitAny = (
