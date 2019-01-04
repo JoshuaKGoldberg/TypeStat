@@ -2,7 +2,7 @@ import { combineMutations, IMultipleMutations, IMutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { createNonNullAssertionInsertion } from "../../mutations/typeMutating/nonNullAssertion";
+import { createNonNullAssertion } from "../../mutations/typeMutating/createNonNullAssertion";
 import { getParentOfKind, getVariableInitializerForExpression } from "../../shared/nodes";
 import { getValueDeclarationOfType, isTypeMissingBetween } from "../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
@@ -71,12 +71,12 @@ const collectArgumentMutation = (request: FileMutationsRequest, callingArgument:
             getParentOfKind(callingArgument, isFunctionBodyOrBlock),
         );
         if (declaringVariableInitializer !== undefined) {
-            return createNonNullAssertionInsertion(request.sourceFile, declaringVariableInitializer);
+            return createNonNullAssertion(request, declaringVariableInitializer);
         }
     }
 
     // Otherwise add the ! at the calling site's argument
-    return createNonNullAssertionInsertion(request.sourceFile, callingArgument);
+    return createNonNullAssertion(request, callingArgument);
 };
 
 const isFunctionBodyOrBlock = (node: ts.Node): node is ts.Block | ts.FunctionLikeDeclaration | ts.SourceFile =>

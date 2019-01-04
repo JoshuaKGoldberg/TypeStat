@@ -1,0 +1,11 @@
+{
+    "fixes": {
+        "strictNonNullAssertions": true
+    },
+    "types": {
+        "aliases": {
+            "!": "! /* TODO */"
+        },
+        "strictNullChecks": true
+    }
+}

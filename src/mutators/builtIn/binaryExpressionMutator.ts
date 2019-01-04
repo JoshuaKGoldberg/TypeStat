@@ -2,7 +2,7 @@ import { IMutation } from "automutate";
 import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../../mutations/collecting/flags";
-import { createNonNullAssertionInsertion } from "../../mutations/typeMutating/nonNullAssertion";
+import { createNonNullAssertion } from "../../mutations/typeMutating/createNonNullAssertion";
 import { isNodeAssigningBinaryExpression } from "../../shared/nodes";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
@@ -30,5 +30,5 @@ const visitBinaryExpression = (node: ts.BinaryExpression, request: FileMutations
         return undefined;
     }
 
-    return createNonNullAssertionInsertion(request.sourceFile, node.right);
+    return createNonNullAssertion(request, node.right);
 };

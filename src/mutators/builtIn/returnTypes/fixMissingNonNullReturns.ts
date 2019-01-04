@@ -2,7 +2,7 @@ import { combineMutations, IMutation } from "automutate";
 import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../../../mutations/collecting/flags";
-import { createNonNullAssertionInsertion } from "../../../mutations/typeMutating/nonNullAssertion";
+import { createNonNullAssertion } from "../../../mutations/typeMutating/createNonNullAssertion";
 import { getVariableInitializerForExpression } from "../../../shared/nodes";
 import { FunctionLikeDeclarationWithType } from "../../../shared/nodeTypes";
 import { FileMutationsRequest } from "../../fileMutator";
@@ -53,13 +53,13 @@ const collectNonNullMutations = (
         if (ts.isIdentifier(expression)) {
             const declaringVariableInitializer = getVariableInitializerForExpression(request, expression, functionLike);
             if (declaringVariableInitializer !== undefined) {
-                mutations.push(createNonNullAssertionInsertion(request.sourceFile, declaringVariableInitializer));
+                mutations.push(createNonNullAssertion(request, declaringVariableInitializer));
                 continue;
             }
         }
 
         // Otherwise, add it at the end of the expression
-        mutations.push(createNonNullAssertionInsertion(request.sourceFile, expression));
+        mutations.push(createNonNullAssertion(request, expression));
     }
 
     return mutations;
