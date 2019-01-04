@@ -5,7 +5,7 @@ import * as path from "path";
 import * as ts from "typescript";
 
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
-import { RawTypeStatOptions } from "../options/types";
+import { RawTypeStatOptions, TypeStatOptions } from "../options/types";
 import { createTypeStatMutationsProvider } from "../runtime/createTypeStatMutationsProvider";
 import { arrayify } from "../shared/arrays";
 import { FakeWritableStream } from "./FakeWritableStream";
@@ -38,7 +38,7 @@ describeMutationTestCases(
         const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config as ts.CompilerOptions;
 
         return createTypeStatMutationsProvider({
-            ...fillOutRawOptions({
+            ...(fillOutRawOptions({
                 argv: {},
                 compilerOptions,
                 projectPath,
@@ -46,7 +46,7 @@ describeMutationTestCases(
                     ...rawOptions,
                     projectPath,
                 },
-            }),
+            }) as TypeStatOptions),
             fileNames: [path.join(projectDirectory, "actual.ts")],
             logger: {
                 stderr: process.stderr,
