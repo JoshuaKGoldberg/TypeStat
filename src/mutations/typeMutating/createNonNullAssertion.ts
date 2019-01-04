@@ -1,7 +1,13 @@
 import { ITextInsertMutation, ITextSwapMutation } from "automutate";
 import * as ts from "typescript";
+import { FileMutationsRequest } from "../../mutators/fileMutator";
 
-export const createNonNullAssertionInsertion = (sourceFile: ts.SourceFile, node: ts.Node): ITextInsertMutation | ITextSwapMutation => {
+export const createNonNullAssertion = (request: FileMutationsRequest, node: ts.Node): ITextInsertMutation | ITextSwapMutation => {
+    let assertion = request.options.types.aliases.get("!");
+    if (assertion === undefined) {
+        assertion = "!";
+    }
+
     // The following node types need to be wrapped in parenthesis to stop the ! from being applied to the wrong (last) element:
     // As expressions: foo as Bar
     // Binary expressions: foo && bar
@@ -9,9 +15,9 @@ export const createNonNullAssertionInsertion = (sourceFile: ts.SourceFile, node:
     // Void expressions: void 0
     if (ts.isAsExpression(node) || ts.isBinaryExpression(node) || ts.isConditionalExpression(node) || ts.isVoidExpression(node)) {
         return {
-            insertion: `(${node.getText(sourceFile)})!`,
+            insertion: `(${node.getText(request.sourceFile)})${assertion}`,
             range: {
-                begin: node.getStart(sourceFile),
+                begin: node.getStart(request.sourceFile),
                 end: node.end,
             },
             type: "text-swap",
@@ -19,7 +25,7 @@ export const createNonNullAssertionInsertion = (sourceFile: ts.SourceFile, node:
     }
 
     return {
-        insertion: "!",
+        insertion: assertion,
         range: {
             begin: node.end,
         },

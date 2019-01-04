@@ -1,13 +1,13 @@
 # Types
 
-## `--typeAliases`/`aliases`
+## `--typeAlias`/`aliases`
 
 Object mapping names of added types to strings to replace them with.
 
 For example, to replace `null` with `null /* TODO: check auto-generated types (thanks TypeStat!) */`:
 
 ```shell
-typestat --typeAliases null="/* TODO: check added types (thanks TypeStat!) */"
+typestat --typeAlias null="/* TODO: check added types (thanks TypeStat!) */"
 ```
 
 ```json
@@ -29,7 +29,7 @@ type TodoAutoAddedUndefined = undefined;
 ```
 
 ```shell
-typestat --typeAliases undefined=TodoAutoAddedUndefined
+typestat --typeAlias undefined=TodoAutoAddedUndefined
 ```
 
 ```json
@@ -37,6 +37,22 @@ typestat --typeAliases undefined=TodoAutoAddedUndefined
     "types": {
         "aliases": {
             "undefined": "TodoAutoAddedUndefined"
+        }
+    }
+}
+```
+
+You can also alias the `!` added for non-null assertions:
+
+```shell
+typestat --typeAlias undefined=TodoAutoAddedUndefined
+```
+
+```json
+{
+    "types": {
+        "aliases": {
+            "!": "! /* TODO */"
         }
     }
 }

@@ -1,13 +1,11 @@
-import { ITextInsertMutation } from "automutate";
+import { IMutation } from "automutate";
 import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../../../mutations/collecting/flags";
+import { createNonNullAssertion } from "../../../mutations/typeMutating/createNonNullAssertion";
 import { FileMutationsRequest } from "../../fileMutator";
 
-export const getStrictPropertyAccessFix = (
-    request: FileMutationsRequest,
-    node: ts.PropertyAccessExpression,
-): ITextInsertMutation | undefined => {
+export const getStrictPropertyAccessFix = (request: FileMutationsRequest, node: ts.PropertyAccessExpression): IMutation | undefined => {
     // Don't do anything if we don't fix for strict property accesses
     if (!request.options.fixes.strictNonNullAssertions) {
         return undefined;
@@ -22,11 +20,5 @@ export const getStrictPropertyAccessFix = (
     }
 
     // Add a mutation to insert a "!" before the access
-    return {
-        insertion: "!",
-        range: {
-            begin: node.expression.end,
-        },
-        type: "text-insert",
-    };
+    return createNonNullAssertion(request, node);
 };
