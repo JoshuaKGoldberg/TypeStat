@@ -1,6 +1,9 @@
 import * as ts from "typescript";
+
+import { isTypeFlagSetRecursively } from "../mutations/collecting/flags";
 import { FileMutationsRequest } from "../mutators/fileMutator";
-import { isNodeWithinNode } from "./nodes";
+
+export type NodeSelector<TNode extends ts.Node> = (node: ts.Node) => node is TNode;
 
 /**
  * Any node type that may optionally contain a type annotation.
@@ -35,8 +38,14 @@ export type FunctionLikeDeclarationWithType = ts.FunctionLikeDeclaration & NodeW
 export const isNodeWithType = (node: NodeWithOptionalType): node is NodeWithType => node.type !== undefined;
 
 export const getValueDeclarationOfType = (request: FileMutationsRequest, node: ts.Node): ts.Node | undefined => {
+    // Try getting the symbol at the location, which sometimes only works in the latter form
     const nodeType = request.services.program.getTypeChecker().getTypeAtLocation(node);
-    const symbol = nodeType.getSymbol();
+    let symbol = nodeType.getSymbol();
+
+    if (symbol === undefined) {
+        symbol = request.services.program.getTypeChecker().getSymbolAtLocation(node);
+    }
+
     if (symbol === undefined) {
         return undefined;
     }
@@ -52,23 +61,8 @@ export const getValueDeclarationOfType = (request: FileMutationsRequest, node: t
     return symbol.declarations.length === 0 ? undefined : symbol.declarations[0];
 };
 
-export const getVariableInitializerForExpression = (
-    request: FileMutationsRequest,
-    functionLike: FunctionLikeDeclarationWithType,
-    expression: ts.Expression,
-): ts.Expression | undefined => {
-    if (!ts.isIdentifier(expression)) {
-        return undefined;
-    }
-
-    const valueDeclaration = getValueDeclarationOfType(request, expression);
-    if (valueDeclaration === undefined || !isNodeWithinNode(request.sourceFile, valueDeclaration, functionLike)) {
-        return undefined;
-    }
-
-    if (!ts.isVariableDeclaration(valueDeclaration) || valueDeclaration.initializer === undefined) {
-        return undefined;
-    }
-
-    return valueDeclaration.initializer;
-};
+/**
+ * @returns Whether a type is in the argument but not in the parameter.
+ */
+export const isTypeMissingBetween = (typeFlag: ts.TypeFlags, typeOfArgument: ts.Type, typeOfParameter: ts.Type): boolean =>
+    isTypeFlagSetRecursively(typeOfArgument, typeFlag) && !isTypeFlagSetRecursively(typeOfParameter, typeFlag);

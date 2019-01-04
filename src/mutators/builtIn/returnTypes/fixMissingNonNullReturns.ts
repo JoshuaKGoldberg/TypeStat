@@ -3,7 +3,8 @@ import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../../../mutations/collecting/flags";
 import { createNonNullAssertionInsertion } from "../../../mutations/typeMutating/nonNullAssertion";
-import { FunctionLikeDeclarationWithType, getVariableInitializerForExpression } from "../../../shared/nodeTypes";
+import { getVariableInitializerForExpression } from "../../../shared/nodes";
+import { FunctionLikeDeclarationWithType } from "../../../shared/nodeTypes";
 import { FileMutationsRequest } from "../../fileMutator";
 import { collectReturningNodeExpressions } from "./collectReturningNodeExpressions";
 
@@ -50,7 +51,7 @@ const collectNonNullMutations = (
 
         // If the expression is an variable declared in the parent function, add the ! to the variable
         if (ts.isIdentifier(expression)) {
-            const declaringVariableInitializer = getVariableInitializerForExpression(request, functionLike, expression);
+            const declaringVariableInitializer = getVariableInitializerForExpression(request, expression, functionLike);
             if (declaringVariableInitializer !== undefined) {
                 mutations.push(createNonNullAssertionInsertion(request.sourceFile, declaringVariableInitializer));
                 continue;

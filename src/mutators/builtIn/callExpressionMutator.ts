@@ -2,9 +2,9 @@ import { combineMutations, IMultipleMutations, IMutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { isTypeFlagSetRecursively } from "../../mutations/collecting/flags";
 import { createNonNullAssertionInsertion } from "../../mutations/typeMutating/nonNullAssertion";
-import { getValueDeclarationOfType } from "../../shared/nodeTypes";
+import { getParentOfKind, getVariableInitializerForExpression } from "../../shared/nodes";
+import { getValueDeclarationOfType, isTypeMissingBetween } from "../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
@@ -23,13 +23,14 @@ const isVisitableCallExpression = (node: ts.Node): node is ts.CallExpression =>
     node.arguments.length !== 0;
 
 const visitCallExpression = (node: ts.CallExpression, request: FileMutationsRequest): IMultipleMutations | undefined => {
-    const valueDeclaration = getValueDeclarationOfType(request, node.expression);
-    if (valueDeclaration === undefined || !tsutils.isFunctionWithBody(valueDeclaration)) {
+    // Collect the declared type of the function-like being called
+    const functionLikeValueDeclaration = getValueDeclarationOfType(request, node.expression);
+    if (functionLikeValueDeclaration === undefined || !tsutils.isFunctionWithBody(functionLikeValueDeclaration)) {
         return undefined;
     }
 
-    const argumentMutations = collectArgumentMutations(request, node, valueDeclaration);
-
+    // Collect mutations for each argument as needed
+    const argumentMutations = collectArgumentMutations(request, node, functionLikeValueDeclaration);
     if (argumentMutations.length === 0) {
         return undefined;
     }
@@ -39,27 +40,44 @@ const visitCallExpression = (node: ts.CallExpression, request: FileMutationsRequ
 
 const collectArgumentMutations = (
     request: FileMutationsRequest,
-    node: ts.CallExpression,
-    valueDeclaration: ts.FunctionLikeDeclaration,
+    callingNode: ts.CallExpression,
+    functionLikeValueDeclaration: ts.FunctionLikeDeclaration,
 ): ReadonlyArray<IMutation> => {
     const mutations: IMutation[] = [];
-    const visitableArguments = Math.min(node.arguments.length, valueDeclaration.parameters.length);
+    const visitableArguments = Math.min(callingNode.arguments.length, functionLikeValueDeclaration.parameters.length);
     const typeChecker = request.services.program.getTypeChecker();
 
     for (let i = 0; i < visitableArguments; i += 1) {
-        const typeOfArgument = typeChecker.getTypeAtLocation(node.arguments[i]);
-        const typeOfParameter = typeChecker.getTypeAtLocation(valueDeclaration.parameters[i]);
+        const typeOfArgument = typeChecker.getTypeAtLocation(callingNode.arguments[i]);
+        const typeOfParameter = typeChecker.getTypeAtLocation(functionLikeValueDeclaration.parameters[i]);
 
         if (
             isTypeMissingBetween(ts.TypeFlags.Null, typeOfArgument, typeOfParameter) ||
             isTypeMissingBetween(ts.TypeFlags.Undefined, typeOfArgument, typeOfParameter)
         ) {
-            mutations.push(createNonNullAssertionInsertion(request.sourceFile, node.arguments[i]));
+            mutations.push(collectArgumentMutation(request, callingNode.arguments[i]));
         }
     }
 
     return mutations;
 };
 
-const isTypeMissingBetween = (typeFlag: ts.TypeFlags, typeOfArgument: ts.Type, typeOfParameter: ts.Type): boolean =>
-    isTypeFlagSetRecursively(typeOfArgument, typeFlag) && !isTypeFlagSetRecursively(typeOfParameter, typeFlag);
+const collectArgumentMutation = (request: FileMutationsRequest, callingArgument: ts.Expression) => {
+    // If the argument is a variable declared in the parent function, add the ! to the variable
+    if (ts.isIdentifier(callingArgument)) {
+        const declaringVariableInitializer = getVariableInitializerForExpression(
+            request,
+            callingArgument,
+            getParentOfKind(callingArgument, isFunctionBodyOrBlock),
+        );
+        if (declaringVariableInitializer !== undefined) {
+            return createNonNullAssertionInsertion(request.sourceFile, declaringVariableInitializer);
+        }
+    }
+
+    // Otherwise add the ! at the calling site's argument
+    return createNonNullAssertionInsertion(request.sourceFile, callingArgument);
+};
+
+const isFunctionBodyOrBlock = (node: ts.Node): node is ts.Block | ts.FunctionLikeDeclaration | ts.SourceFile =>
+    tsutils.isFunctionWithBody(node) || ts.isBlock(node) || ts.isSourceFile(node);
