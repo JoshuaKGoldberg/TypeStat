@@ -33,9 +33,9 @@ export interface TypeStatArgv {
 }
 
 export enum ResultStatus {
-    ConfigurationError,
-    Failed,
-    Succeeded,
+    Succeeded = 0,
+    Failed = 1,
+    ConfigurationError = 2,
 }
 
 export type TypeStatResult = ConfigurationErrorResult | FailedResult | SucceededResult;
@@ -55,7 +55,9 @@ export interface SucceededResult {
 }
 
 export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
+    console.log({ argv });
     const options = await tryLoadingOptions(argv);
+    console.log({ options });
     if (options instanceof Error || typeof options === "string") {
         return {
             error: options,

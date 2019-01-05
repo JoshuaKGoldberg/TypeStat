@@ -4,7 +4,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug Tests",
+            "name": "Debug Mutation Tests",
             "preLaunchTask": "tsc",
             "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
             "args": ["--reporter", "spec", "--colors", "--no-timeouts", "${workspaceFolder}/src/tests/runTests.js"]
