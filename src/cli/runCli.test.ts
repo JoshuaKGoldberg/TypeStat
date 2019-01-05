@@ -41,7 +41,7 @@ describe("runCli", () => {
         expect(resultStatus).toEqual(ResultStatus.Failed);
     });
 
-    it.only("logs help and the error when a configuration error is reported", async () => {
+    it("logs help and the error when a configuration error is reported", async () => {
         // Arrange
         const { argv, logger, mainRunner } = createTestArgs();
         const message = "Error message";
