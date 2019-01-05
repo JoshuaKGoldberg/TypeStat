@@ -1,12 +1,11 @@
 import { ITextInsertMutation, ITextSwapMutation } from "automutate";
 import * as ts from "typescript";
+
 import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { findAliasOfType } from "../aliasing";
 
 export const createNonNullAssertion = (request: FileMutationsRequest, node: ts.Node): ITextInsertMutation | ITextSwapMutation => {
-    let assertion = request.options.types.aliases.get("!");
-    if (assertion === undefined) {
-        assertion = "!";
-    }
+    const assertion = findAliasOfType("!", request.options.types.aliases);
 
     // The following node types need to be wrapped in parenthesis to stop the ! from being applied to the wrong (last) element:
     // As expressions: foo as Bar

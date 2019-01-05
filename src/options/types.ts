@@ -154,9 +154,9 @@ export interface Fixes {
  */
 export interface TypeStatTypeOptions {
     /**
-     * Names of added types mapped to strings to replace them with.
+     * Names of added type matchers mapped to strings to replace them with.
      */
-    aliases: ReadonlyMap<string, string>;
+    aliases: ReadonlyMap<RegExp, string>;
 
     /**
      * Glob matchers added types must match, if provided.

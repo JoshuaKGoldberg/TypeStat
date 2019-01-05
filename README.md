@@ -115,9 +115,10 @@ More advanced flags can be provided for:
   * `--fixNoImplicitAny`/`fixes.noImplicitAny`
   * `--fixStrictNonNullAssertions`/`fixes.strictNonNullAssertions`
 * [Types](./docs/Types.md):
-  * `types.aliases`
-  * `--typesMatching`/`types.matching`
+  * `--typeAlias`/`types.aliases`
+  * `--typeMatching`/`types.matching`
   * `--typeOnlyPrimitives`/`types.onlyPrimitives`
+  * `--typeStrictNullChecks`/`types.strictNullChecks`
 
 ## Node
 

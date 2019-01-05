@@ -5,7 +5,7 @@
         return true;
     }
 
-    function stringOrUndefined(): string | undefined {
+    function stringOrUndefined(): string | undefined /* todo: undefined */ {
         return undefined;
     }
 

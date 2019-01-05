@@ -67,16 +67,27 @@ export const joinIntoType = (
         return undefined;
     }
 
-    return unionNames
-        .map((type) => {
-            const alias = request.options.types.aliases.get(type);
-
-            return alias === undefined ? type : alias;
-        })
-        .join(" | ");
+    return unionNames.map((type) => findAliasOfType(type, request.options.types.aliases)).join(" | ");
 };
 
 const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);
 
 const filterMatchingTypeNames = (unionNames: ReadonlyArray<string>, matching: ReadonlyArray<string>): string[] =>
     unionNames.filter((name) => matching.some((matcher) => name.match(matcher) !== null));
+
+/**
+ * Given a type name, returns its matched alias if one is found, or the type otherwise.
+ *
+ * @remarks
+ * It's likely this could become a performance concern for projects with many type aliases.
+ * If (and only if) profiling shows this to be the case, consider adding a cache to the request object.
+ */
+export const findAliasOfType = (type: string, aliases: ReadonlyMap<RegExp, string>): string => {
+    for (const [matcher, value] of aliases) {
+        if (type.match(matcher) !== null) {
+            return value.replace(/\{0\}/g, type);
+        }
+    }
+
+    return type;
+};
