@@ -89,6 +89,15 @@
         resolve = _resolve;
     });
 
+    // Async
+
+    async function _() {
+        let stringFromNullImmediate: string = await Promise.resolve<null>(null);
+
+        let stringFromUndefinedLater: string;
+        stringFromUndefinedLater = await Promise.resolve<undefined>(undefined);
+    }
+
     // Interfaces and classes
 
     interface SampleInterface {
