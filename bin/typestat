@@ -1,8 +1,15 @@
 #!/usr/bin/env node
+// tslint:disable
 
-var cli = require("../src/cli").cli;
+var runCli = require("../src/cli/runCli").runCli;
 
-cli(process.argv).catch(function (error) {
-    console.error("Error in TypeStat: " + error);
-    process.exitCode = 1;
-});
+runCli(process.argv)
+    .then(function (resultStatus) {
+        if (resultStatus !== 0) {
+            process.exitCode = 1;
+        }
+    })
+    .catch(function (error) {
+        console.error("Error in TypeStat: " + error);
+        process.exitCode = 1;
+    });

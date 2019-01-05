@@ -33,6 +33,7 @@
         "promise-function-async": false,
         "strict-boolean-expressions": [true, "allow-boolean-or-undefined", "allow-number"],
         "switch-default": false,
+        "switch-final-break": false,
         "typedef": false
     }
 }

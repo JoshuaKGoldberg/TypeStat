@@ -33,9 +33,9 @@ export interface TypeStatArgv {
 }
 
 export enum ResultStatus {
-    ConfigurationError,
-    Failed,
-    Succeeded,
+    Succeeded = 0,
+    Failed = 1,
+    ConfigurationError = 2,
 }
 
 export type TypeStatResult = ConfigurationErrorResult | FailedResult | SucceededResult;

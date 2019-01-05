@@ -5,6 +5,7 @@ import * as path from "path";
 
 import { ResultStatus, typeStat, TypeStatArgv, TypeStatResult } from "../index";
 import { processLogger } from "../logging/logger";
+import { captureHelp } from "./captureHelp";
 
 const createDefaultRuntime = () => ({
     logger: processLogger,
@@ -18,7 +19,7 @@ const createDefaultRuntime = () => ({
  * @param mainRunner   Method to run with parsed arguments: generally `typeStat`.
  * @returns Promise for the result of running TypeStat.
  */
-export const cli = async (rawArgv: ReadonlyArray<string>, runtime = createDefaultRuntime()): Promise<void> => {
+export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDefaultRuntime()): Promise<ResultStatus> => {
     const command = new Command()
         .option("-c --config [config]", "path to a TypeStat config file")
         .option("-m --mutator [...mutator]", "require paths to any custom mutators to run")
@@ -44,7 +45,7 @@ export const cli = async (rawArgv: ReadonlyArray<string>, runtime = createDefaul
 
     if ({}.hasOwnProperty.call(parsedArgv, "version")) {
         runtime.logger.stdout.write(`${await getPackageVersion()}\n`);
-        return;
+        return ResultStatus.Succeeded;
     }
 
     let result: TypeStatResult;
@@ -58,17 +59,19 @@ export const cli = async (rawArgv: ReadonlyArray<string>, runtime = createDefaul
         };
     }
 
-    if (result.status === ResultStatus.Succeeded) {
-        return;
+    switch (result.status) {
+        case ResultStatus.ConfigurationError:
+            const helpText = await captureHelp(command);
+            runtime.logger.stdout.write(`${helpText}\n`);
+            runtime.logger.stderr.write(chalk.yellow(`${result.error}\n`));
+            break;
+
+        case ResultStatus.Failed:
+            runtime.logger.stderr.write(chalk.yellow(`${result.error}\n`));
+            break;
     }
 
-    if (result.status === ResultStatus.ConfigurationError) {
-        command.outputHelp();
-        runtime.logger.stdout.write("\n");
-    }
-
-    runtime.logger.stderr.write(chalk.yellow(`${result.error}\n`));
-    process.exit(1);
+    return result.status;
 };
 
 const getPackageVersion = async (): Promise<string> => {
