@@ -8,7 +8,7 @@ import { fixVariableIncompleteType } from "./variableDeclarations/fixVariableInc
 
 export const variableDeclarationMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
     // This mutator fixes only for --noImplicitAny or incomplete types
-    if (!request.options.fixes.noImplicitAny && !request.options.fixes.noImplicitAny) {
+    if (!request.options.fixes.incompleteTypes && !request.options.fixes.noImplicitAny) {
         return [];
     }
 
