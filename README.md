@@ -107,6 +107,9 @@ typestat --project tsconfig.strict.json
 
 More advanced flags can be provided for:
 
+* [Files](./docs/Files.md)
+  * `--fileAbove`
+  * `--fileBelow`
 * [Filters](./docs/Filters.md)
   * `--filter`/`filter`
 * [Fixes](./docs/Fixes.md):

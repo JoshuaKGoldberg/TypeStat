@@ -11,6 +11,11 @@ import { Dictionary } from "../shared/maps";
  */
 export interface RawTypeStatOptions {
     /**
+     * Directives for file-level changes.
+     */
+    readonly files?: Readonly<Partial<Files>>;
+
+    /**
      * Any tsquery filters to exclude within files.
      */
     readonly filters?: ReadonlyArray<string>;
@@ -81,6 +86,11 @@ export interface TypeStatOptions {
     readonly fileNames?: ReadonlyArray<string>;
 
     /**
+     * Directives for file-level changes.
+     */
+    readonly files: Readonly<Files>;
+
+    /**
      * Any tsquery filters to exclude within files.
      */
     readonly filters?: ReadonlyArray<string>;
@@ -118,6 +128,21 @@ export type TypeStatCompilerOptions = ts.CompilerOptions & {
     noImplicitAny: boolean;
     strictNullChecks: boolean;
 };
+
+/**
+ * Directives for file-level changes.
+ */
+export interface Files {
+    /**
+     * Comment to add above modified files, if any.
+     */
+    above: string;
+
+    /**
+     * Comment to add below modified files, if any.
+     */
+    below: string;
+}
 
 /**
  * Cross-file settings for forms of fixes.

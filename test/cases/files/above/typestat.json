@@ -1,0 +1,8 @@
+{
+    "files": {
+        "above": "/* Above file */"
+    },
+    "fixes": {
+        "incompleteTypes": true
+    }
+}
