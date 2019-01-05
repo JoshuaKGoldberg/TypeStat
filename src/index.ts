@@ -12,6 +12,8 @@ import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutatio
 export interface TypeStatArgv {
     readonly args?: ReadonlyArray<string>;
     readonly config?: string;
+    readonly fileAbove?: string;
+    readonly fileBelow?: string;
     readonly filter?: string | ReadonlyArray<string>;
     readonly fixIncompleteTypes?: boolean;
     readonly fixMissingProperties?: boolean;

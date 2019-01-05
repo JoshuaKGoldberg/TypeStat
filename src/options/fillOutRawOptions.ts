@@ -5,6 +5,7 @@ import { processLogger } from "../logging/logger";
 import { arrayify, collectOptionals } from "../shared/arrays";
 import { collectAsConfiguration } from "../shared/booleans";
 import { collectAddedMutators } from "./addedMutators";
+import { collectFileOptions } from "./parsing/collectFileOptions";
 import { collectNoImplicitAny } from "./parsing/collectNoImplicitAny";
 import { collectStrictNullChecks } from "./parsing/collectStrictNullChecks";
 import { collectTypeAliases } from "./parsing/collectTypeAliases";
@@ -46,6 +47,7 @@ export const fillOutRawOptions = ({
             strictNullChecks: compilerStrictNullChecks,
         },
         fileNames,
+        files: collectFileOptions(argv, rawOptions),
         filters: collectOptionals(arrayify(argv.filter), rawOptions.filters),
         fixes: {
             incompleteTypes: false,

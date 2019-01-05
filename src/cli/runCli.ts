@@ -25,6 +25,8 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
         .option("-m --mutator [...mutator]", "require paths to any custom mutators to run")
         .option("-p --project [project]", "path to a TypeScript project file")
         .option("-V --version", "output the package version")
+        .option("--fileAbove", "comment to add above modified files")
+        .option("--fileBelow", "comment to add below modified files")
         .option("--filter [...filter]", "tsquery filters to exclude within files")
         .option("--fixIncompleteTypes", "add missing types to existing, incomplete types")
         .option("--fixMissingProperties", "add missing properties to classes from usage")

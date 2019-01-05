@@ -1,6 +1,6 @@
 # Fixes
 
-An optional set of CLI flags or configuration object containing which fixes (type additions) are enabled.
+A set of CLI flags and/or configuration object fields containing which fixes (type additions) are enabled.
 These all default to `false` but can be enabled by being set to `true`.
 
 TypeStat will apply mutations ("fixes") to files as it finds them.
