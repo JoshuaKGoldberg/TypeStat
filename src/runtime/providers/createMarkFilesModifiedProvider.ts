@@ -14,7 +14,7 @@ import { TypeStatOptions } from "../../options/types";
 export const createMarkFilesModifiedProvider = (options: TypeStatOptions, allModifiedFileNames: ReadonlySet<string>) => {
     let provided = false;
     return async (): Promise<IMutationsWave> => {
-        if (provided || (options.files.above === undefined && options.files.below === undefined)) {
+        if (provided || (options.files.above === "" && options.files.below === "")) {
             return {
                 fileMutations: undefined,
             };
