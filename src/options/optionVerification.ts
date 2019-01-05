@@ -10,7 +10,7 @@ export const findComplaintForOptions = (options: TypeStatOptions | string): stri
     }
 
     if (strictNonNullAssertionsInNonStrictMode(options)) {
-        return "--fixStrictNonNullAssertions specified but not strictNullChecks. Consider enabling --strictNullChecks (see http://github.com/joshuakgoldberg/typestat/blob/master/docs/Fixes.md).";
+        return "--fixStrictNonNullAssertions specified but not strictNullChecks. Consider enabling --typeStrictNullChecks (see http://github.com/joshuakgoldberg/typestat/blob/master/docs/Fixes.md).";
     }
 
     return undefined;
