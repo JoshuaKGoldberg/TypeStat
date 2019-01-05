@@ -4,9 +4,11 @@ import { TypeStatArgv } from "../index";
 import { processLogger } from "../logging/logger";
 import { arrayify, collectOptionals } from "../shared/arrays";
 import { collectAsConfiguration } from "../shared/booleans";
-import { convertObjectToMap } from "../shared/maps";
 import { collectAddedMutators } from "./addedMutators";
-import { RawTypeStatOptions, RawTypeStatTypeOptions, TypeStatOptions } from "./types";
+import { collectNoImplicitAny } from "./parsing/collectNoImplicitAny";
+import { collectStrictNullChecks } from "./parsing/collectStrictNullChecks";
+import { collectTypeAliases } from "./parsing/collectTypeAliases";
+import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
 export interface OptionsFromRawOptionsSettings {
     argv: TypeStatArgv;
@@ -85,73 +87,4 @@ export const fillOutRawOptions = ({
     }
 
     return options;
-};
-
-const collectTypeAliases = (argv: TypeStatArgv, rawOptionTypes: RawTypeStatTypeOptions): ReadonlyMap<string, string> | string => {
-    const typeAliases = rawOptionTypes.aliases === undefined ? new Map() : convertObjectToMap(rawOptionTypes.aliases);
-
-    if (argv.typeAlias !== undefined) {
-        for (const rawTypeAlias of arrayify(argv.typeAlias)) {
-            const keyAndValue = rawTypeAlias.split("=", 2);
-            if (keyAndValue.length !== 2) {
-                return `Improper type alias: '${rawTypeAlias}'. Format these as '--typeAlias key=value'.`;
-            }
-
-            typeAliases.set(keyAndValue[0], keyAndValue[1]);
-        }
-    }
-
-    return typeAliases;
-};
-
-const collectNoImplicitAny = (
-    argv: TypeStatArgv,
-    compilerOptions: Readonly<ts.CompilerOptions>,
-    rawOptions: RawTypeStatOptions,
-): boolean => {
-    if (argv.fixNoImplicitAny !== undefined) {
-        return argv.fixNoImplicitAny;
-    }
-
-    if (rawOptions.fixes !== undefined && rawOptions.fixes.noImplicitAny !== undefined) {
-        return rawOptions.fixes.noImplicitAny;
-    }
-
-    if (compilerOptions.noImplicitAny !== undefined) {
-        return compilerOptions.noImplicitAny;
-    }
-
-    return false;
-};
-
-const collectStrictNullChecks = (
-    argv: TypeStatArgv,
-    compilerOptions: Readonly<ts.CompilerOptions>,
-    rawOptionTypes: RawTypeStatTypeOptions,
-) => {
-    const typeStrictNullChecks =
-        rawOptionTypes.strictNullChecks === undefined ? argv.typeStrictNullChecks : rawOptionTypes.strictNullChecks;
-
-    const compilerStrictNullChecks = collectCompilerStrictNullChecks(compilerOptions, typeStrictNullChecks);
-
-    return { compilerStrictNullChecks, typeStrictNullChecks };
-};
-
-const collectCompilerStrictNullChecks = (
-    compilerOptions: Readonly<ts.CompilerOptions>,
-    typeStrictNullChecks: boolean | undefined,
-): boolean => {
-    if (typeStrictNullChecks !== undefined) {
-        return typeStrictNullChecks;
-    }
-
-    if (compilerOptions.strictNullChecks !== undefined) {
-        return compilerOptions.strictNullChecks;
-    }
-
-    if (compilerOptions.strict !== undefined) {
-        return compilerOptions.strict;
-    }
-
-    return false;
 };
