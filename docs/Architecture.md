@@ -17,9 +17,17 @@ When the `typestat` command is entered into the CLI, roughly the following happe
 3. Settings are filled from settings found with [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig), if any are found
 4. An Automutator provider is created for TypeStat with [`createTypeStatMutationsProvider`](../src/runtime/createTypeStatMutationsProvider.ts).
 
-### Mutation Providing
+### Mutation Providers
 
-Each round of mutation providing roughly:
+There are three mutation providers that are run in order by [`createTypeStatMutationsProvider`](src/runtime/createTypeStatMutationsProvider.ts):
+
+1. **Core mutations**: changes to type annotations in provided files
+2. **File renames**: if the `--fileRenameExtensions` option is enabled
+3. **Files modified**: adds annotations to the top (`--fileAbove`) and/or bottom (`--fileBelow`) of files if enabled
+
+#### Core Mutations
+
+Each round of mutations in the core mutation provider roughly:
 
 1. Records the starting time
 2. Creates a set of TypeScript language services
@@ -39,19 +47,20 @@ Once TypeStat has visited each file, it will either:
 * Stop if no file had mutations applied
 * Restart _(and reload language services)_ if any file had mutations applied
 
-### File Mutations
+#### File Mutations
 
 For each file it visits, [`findMutationsInFile`](../src/runtime/findMutationsInFile.ts)
 will attempt to apply the following [built-in file mutators](../src/runtime/builtInFileMutators.ts)
 in order _(generally ordered by which is likely to complete the fastest)_:
 
-1. Call expressions
-2. Variable declarations
-3. Function-like returns
-4. Property declarations
-5. Parameters
-6. Property accessors
-7. Function `this`s
+1. Binary expressions
+2. Call expressions
+3. Variable declarations
+4. Function-like returns
+5. Property declarations
+6. Parameters
+7. Property accessors
+8. Function `this`s
 
 Within each round of applying mutations, TypeStat will stop looking at a file after each step if any mutations are found.
 Adding mutations from one from can improve mutations from other forms, so reloading the file between rounds could reduce the number of later rounds.
