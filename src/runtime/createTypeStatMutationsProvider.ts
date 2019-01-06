@@ -3,6 +3,7 @@ import { IMutationsProvider } from "automutate";
 import { TypeStatOptions } from "../options/types";
 import { createProviderFromProviders } from "./createProviderFromProviders";
 import { createCoreMutationsProvider } from "./providers/createCoreMutationsProvider";
+import { createFileRenameProvider } from "./providers/createFileRenameProvider";
 import { createMarkFilesModifiedProvider } from "./providers/createMarkFilesModifiedProvider";
 
 /**
@@ -14,6 +15,7 @@ export const createTypeStatMutationsProvider = (options: TypeStatOptions): IMuta
     return {
         provide: createProviderFromProviders(
             createCoreMutationsProvider(options, allModifiedFiles),
+            createFileRenameProvider(options, allModifiedFiles),
             createMarkFilesModifiedProvider(options, allModifiedFiles),
         ),
     };

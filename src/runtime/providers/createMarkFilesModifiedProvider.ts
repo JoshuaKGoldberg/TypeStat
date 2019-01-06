@@ -1,7 +1,7 @@
 import { IFileMutations, IMutationsWave, ITextInsertMutation } from "automutate";
 import * as fs from "mz/fs";
-
 import { EOL } from "os";
+
 import { TypeStatOptions } from "../../options/types";
 
 /**

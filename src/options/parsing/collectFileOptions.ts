@@ -1,7 +1,7 @@
 import { TypeStatArgv } from "../../index";
 import { Files, RawTypeStatOptions } from "../types";
 
-export const collectFileOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOptions) => {
+export const collectFileOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOptions): Files => {
     const files: Partial<Files> = rawOptions.files === undefined ? {} : { ...rawOptions.files };
 
     if (argv.fileAbove !== undefined) {
@@ -15,5 +15,6 @@ export const collectFileOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOp
     return {
         above: files.above === undefined ? "" : files.above,
         below: files.below === undefined ? "" : files.below,
+        renameExtensions: (argv.fileCenameExtensions === undefined ? argv.fileCenameExtensions : files.renameExtensions) || false,
     };
 };

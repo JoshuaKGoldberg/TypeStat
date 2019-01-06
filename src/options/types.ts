@@ -142,6 +142,11 @@ export interface Files {
      * Comment to add below modified files, if any.
      */
     below: string;
+
+    /**
+     * Whether to convert .js(x) files to .ts(x).
+     */
+    renameExtensions: boolean;
 }
 
 /**
