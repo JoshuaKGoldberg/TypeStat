@@ -1,9 +1,10 @@
 import { IMutation, IMutationsWave } from "automutate";
 import { readline } from "mz";
 
+import chalk from "chalk";
 import { TypeStatOptions } from "../../options/types";
+import { createLanguageServices } from "../../services/language";
 import { LazyCache } from "../../services/LazyCache";
-import { createFileNamesAndServices } from "../../services/lazyFileNamesAndServices";
 import { FileInfoCache } from "../../shared/FileInfoCache";
 import { convertMapToObject, Dictionary } from "../../shared/maps";
 import { collectFilteredNodes } from "../collectFilteredNodes";
@@ -85,4 +86,17 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
                     : (convertMapToObject(fileMutations) as Dictionary<IMutation[]>),
         };
     };
+};
+
+const createFileNamesAndServices = (options: TypeStatOptions) => {
+    options.logger.stdout.write(chalk.grey("Preparing language services to visit files...\n"));
+    const services = createLanguageServices(options);
+    const fileNames =
+        options.fileNames === undefined
+            ? services.parsedConfiguration.fileNames.filter((fileName) => !fileName.endsWith(".d.ts"))
+            : options.fileNames;
+
+    readline.moveCursor(options.logger.stdout, 0, -1);
+    readline.clearLine(options.logger.stdout, 0);
+    return { fileNames, services };
 };
