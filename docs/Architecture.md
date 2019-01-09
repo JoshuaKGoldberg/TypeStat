@@ -19,11 +19,10 @@ When the `typestat` command is entered into the CLI, roughly the following happe
 
 ### Mutation Providers
 
-There are three mutation providers that are run in order by [`createTypeStatMutationsProvider`](src/runtime/createTypeStatMutationsProvider.ts):
+There are two mutation providers that are run in order by [`createTypeStatMutationsProvider`](src/runtime/createTypeStatMutationsProvider.ts):
 
 1. **Core mutations**: changes to type annotations in provided files
-2. **File renames**: if the `--fileRenameExtensions` option is enabled
-3. **Files modified**: adds annotations to the top (`--fileAbove`) and/or bottom (`--fileBelow`) of files if enabled
+2. **Files modified**: adds annotations to the top (`--fileAbove`) and/or bottom (`--fileBelow`) of files if enabled
 
 #### Core Mutations
 

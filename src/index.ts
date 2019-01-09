@@ -3,6 +3,7 @@ import { runMutations } from "automutate";
 import { ProcessLogger } from "./logging/logger";
 import { loadOptions } from "./options/loadOptions";
 import { findComplaintForOptions } from "./options/optionVerification";
+import { processFileRenames } from "./options/processFileRenames";
 import { TypeStatOptions } from "./options/types";
 import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutationsProvider";
 
@@ -14,7 +15,7 @@ export interface TypeStatArgv {
     readonly config?: string;
     readonly fileAbove?: string;
     readonly fileBelow?: string;
-    readonly fileCenameExtensions?: boolean;
+    readonly fileRenameExtensions?: boolean;
     readonly filter?: string | ReadonlyArray<string>;
     readonly fixIncompleteTypes?: boolean;
     readonly fixMissingProperties?: boolean;
@@ -85,10 +86,16 @@ export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
 const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | Error | string> => {
     let options: TypeStatOptions | string;
 
+    // First try loading options from the CLI and/or config file
     try {
         options = await loadOptions(argv);
     } catch (error) {
         return error instanceof Error ? error : new Error(error as string);
+    }
+
+    // If that succeeded, run any file renames needed as part of project setup
+    if (typeof options !== "string") {
+        options = await processFileRenames(options);
     }
 
     const optionsComplaint = findComplaintForOptions(options);
