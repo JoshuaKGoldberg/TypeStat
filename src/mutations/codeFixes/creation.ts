@@ -1,13 +1,22 @@
 import { combineMutations, IMultipleMutations, ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
+export interface CodeFixCreationPreferences {
+    ignoreKnownBlankTypes?: boolean;
+}
+
+const knownBlankTypes = new Set([": {}", ": any", ": null", ": Object", ": unknown"]);
+
 /**
  * Attempts to convert a language service code fix into a usable mutation.
  *
  * @param codeFixes   Code fixes  from a language service.
  * @returns Equivalent mutation, if possible.
  */
-export const createCodeFixCreationMutation = (codeFixes: ReadonlyArray<ts.CodeFixAction>): IMultipleMutations | undefined => {
+export const createCodeFixCreationMutation = (
+    codeFixes: ReadonlyArray<ts.CodeFixAction>,
+    preferences: CodeFixCreationPreferences = {},
+): IMultipleMutations | undefined => {
     if (codeFixes.length === 0) {
         return undefined;
     }
@@ -17,7 +26,12 @@ export const createCodeFixCreationMutation = (codeFixes: ReadonlyArray<ts.CodeFi
         return undefined;
     }
 
-    const { textChanges } = changes[0];
+    let { textChanges } = changes[0];
+
+    if (preferences.ignoreKnownBlankTypes) {
+        textChanges = textChanges.filter((textChange) => !knownBlankTypes.has(textChange.newText));
+    }
+
     if (textChanges.length === 0) {
         return undefined;
     }
