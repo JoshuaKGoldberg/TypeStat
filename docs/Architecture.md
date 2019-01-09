@@ -19,10 +19,19 @@ When the `typestat` command is entered into the CLI, roughly the following happe
 
 ### Mutation Providers
 
-There are two mutation providers that are run in order by [`createTypeStatMutationsProvider`](src/runtime/createTypeStatMutationsProvider.ts):
+There are three mutation providers that are run in order by [`createTypeStatMutationsProvider`](src/runtime/createTypeStatMutationsProvider.ts):
 
-1. **Core mutations**: changes to type annotations in provided files
-2. **Files modified**: adds annotations to the top (`--fileAbove`) and/or bottom (`--fileBelow`) of files if enabled
+1. **Require renames**: changes to `import` and `require` statements from `--fileRenameExtensions`
+2. **Core mutations**: changes to type annotations in provided files
+3. **Files modified**: adds annotations to the top (`--fileAbove`) and/or bottom (`--fileBelow`) of files if enabled
+
+#### Require Renames
+
+If any `require` to a file including the extension is stored as a variable, and `--fileRenameExtensions` is enabled,
+that variable will be given a type equivalent to the extensionless equivalent.
+This is done as a separate mutation provider before the core mutations to ensure these mutations are applied before core mutations.
+
+> `import` declarations cannot be given different types, so they are ignored.
 
 #### Core Mutations
 
