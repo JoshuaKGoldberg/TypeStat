@@ -2,8 +2,7 @@ import { IMutation } from "automutate";
 import chalk from "chalk";
 import { readline } from "mz";
 
-import { builtInFileMutators } from "../mutators/builtInFileMutators";
-import { FileMutationsRequest, FileMutator } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "../mutators/fileMutator";
 
 /**
  * Collects all mutations that should apply to a file.
@@ -13,7 +12,7 @@ export const findMutationsInFile = async (request: FileMutationsRequest): Promis
     request.options.logger.stdout.write(`${checkMessage}\n`);
     let mutations: ReadonlyArray<IMutation> | undefined;
 
-    for (const [mutatorName, mutator] of collectFileMutators(request.options.mutators)) {
+    for (const [mutatorName, mutator] of request.options.mutators) {
         try {
             const addedMutations = mutator(request);
 
@@ -32,6 +31,3 @@ export const findMutationsInFile = async (request: FileMutationsRequest): Promis
     readline.clearLine(request.options.logger.stdout, 1);
     return mutations;
 };
-
-const collectFileMutators = (addedMutators: ReadonlyArray<[string, FileMutator]>): ReadonlyArray<[string, FileMutator]> =>
-    addedMutators.length === 0 ? builtInFileMutators : addedMutators;
