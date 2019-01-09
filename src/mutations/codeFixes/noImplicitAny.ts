@@ -20,7 +20,13 @@ enum NoImplicitAnyErrorCode {
 }
 
 export const canNodeBeFixedForNoImplicitAny = (node: NoImplicitAnyNode): node is NoImplictAnyNodeToBeFixed =>
-    node.type === undefined && node.initializer === undefined;
+    node.type === undefined &&
+    node.initializer === undefined &&
+    // TypeScript still provides --noImplicitAny fixes for variables that can't receive them
+    // @see https://github.com/JoshuaKGoldberg/TypeStat/issues/77
+    !ts.isCatchClause(node.parent) &&
+    // TypeScript provides all parameters' --noImplicitAny fixes when asked for any parameter, so only request on the first
+    (!ts.isParameter(node) || node === node.parent.parameters[0]);
 
 export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, request: FileMutationsRequest): IMutation | undefined => {
     // If we fix for --noImplicitAny compiler complaints, try to get a fix for it and mutate using it
