@@ -2,8 +2,9 @@ import * as path from "path";
 
 import { TypeStatArgv } from "../index";
 import { ProcessLogger } from "../logging/logger";
+import { builtInFileMutators } from "../mutators/builtInFileMutators";
 import { FileMutator } from "../mutators/fileMutator";
-import { arrayify } from "../shared/arrays";
+import { arrayify, collectOptionals } from "../shared/arrays";
 import { getQuickErrorSummary } from "../shared/errors";
 import { RawTypeStatOptions } from "./types";
 
@@ -12,26 +13,21 @@ interface ImportedFileMutator {
 }
 
 /**
- * Finds any added mutators to be imported via require() calls.
+ * Finds mutators to use in runtime, as either the built-in mutators or custom mutators specified by the user.
  *
  * @param argv   Root arguments to pass to TypeStat.
  * @param rawOptions   Options listed as JSON in a typestat configuration file.
  * @param logger   Wraps process.stderr and process.stdout.
- * @returns Imported mutators with their friendly names.
+ * @returns Mutators to run with their friendly names.
  */
 export const collectAddedMutators = (
     argv: TypeStatArgv,
     rawOptions: RawTypeStatOptions,
     logger: ProcessLogger,
 ): ReadonlyArray<[string, FileMutator]> => {
-    const addedMutators = arrayify(argv.mutator);
-
-    if (rawOptions.mutators !== undefined) {
-        addedMutators.push(...rawOptions.mutators);
-    }
-
+    const addedMutators = collectOptionals(arrayify(argv.mutator), rawOptions.mutators);
     if (addedMutators.length === 0) {
-        return [];
+        return builtInFileMutators;
     }
 
     const additions: [string, FileMutator][] = [];

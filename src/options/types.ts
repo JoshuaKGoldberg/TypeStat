@@ -106,7 +106,7 @@ export interface TypeStatOptions {
     readonly logger: ProcessLogger;
 
     /**
-     * Added mutators specified by the user.
+     * Mutators to run, as either the built-in mutators or custom mutators specified by the user.
      */
     readonly mutators: ReadonlyArray<[string, FileMutator]>;
 
