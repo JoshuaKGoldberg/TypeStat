@@ -52,10 +52,10 @@ If provided, any modified file will have the text inserted as a new last line.
 The default is `""`, for no action to take.
 If a value is provided on the CLI, it will override a configuration file value (including `""`).
 
-## `--fileCenameExtensions`/`renameExtensions`
+## `--fileRenameExtensions`/`renameExtensions`
 
 ```shell
-typestat --fileCenameExtensions
+typestat --fileRenameExtensions
 ```
 
 ```json
@@ -70,4 +70,13 @@ Whether to convert `.js(x)` files to `.ts(x)`.
 When this is enabled, any file with a JavaScript extension visited by TypeStat,
 regardless of whether mutations are added, will be renamed to the equivalent TypeScript extension.
 
-The default is `false"`.
+While this option is enabled, if any `require` call to a file including the extension is stored as a variable,
+that variable will be given a type equivalent to the extensionless equivalent.
+For example:
+
+```diff
+- const sibling = require("./sibling.js");
++ const sibling: typeof import("./sibling") = require("./sibling.js");
+```
+
+The default is `false`.
