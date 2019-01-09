@@ -15,6 +15,6 @@ export const collectFileOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOp
     return {
         above: files.above === undefined ? "" : files.above,
         below: files.below === undefined ? "" : files.below,
-        renameExtensions: (argv.fileCenameExtensions === undefined ? argv.fileCenameExtensions : files.renameExtensions) || false,
+        renameExtensions: (argv.fileRenameExtensions === undefined ? files.renameExtensions : argv.fileRenameExtensions) || false,
     };
 };
