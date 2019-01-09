@@ -1,4 +1,4 @@
-import * as fs from "mz/fs";
+import { fs, readline } from "mz";
 
 import { TypeStatOptions } from "./types";
 
@@ -9,17 +9,28 @@ export const processFileRenames = async (options: TypeStatOptions): Promise<Type
 
     const newFileNames = new Set(options.fileNames);
 
-    // For each file, if it's matched by .js(x), convert it to .ts(x)
-    for (const oldFileName of options.fileNames) {
-        const newFileName = oldFileName.replace(/.js$/i, ".ts").replace(/.jsx$/i, ".tsx");
+    const filesToRename = options.fileNames
+        .map((fileName) => ({
+            newFileName: fileName.replace(/.js$/i, ".ts").replace(/.jsx$/i, ".tsx"),
+            oldFileName: fileName,
+        }))
+        .filter(({ newFileName, oldFileName }) => newFileName !== oldFileName);
 
-        if (newFileName !== oldFileName) {
-            await fs.rename(oldFileName, newFileName);
-
-            newFileNames.delete(oldFileName);
-            newFileNames.add(newFileName);
-        }
+    if (filesToRename.length === 0) {
+        return options;
     }
+
+    options.logger.stdout.write(`Renaming ${filesToRename.length} files...\n`);
+
+    for (const { oldFileName, newFileName } of filesToRename) {
+        await fs.rename(oldFileName, newFileName);
+
+        newFileNames.delete(oldFileName);
+        newFileNames.add(newFileName);
+    }
+
+    readline.moveCursor(options.logger.stdout, 0, -1);
+    readline.clearLine(options.logger.stdout, 0);
 
     return {
         ...options,
