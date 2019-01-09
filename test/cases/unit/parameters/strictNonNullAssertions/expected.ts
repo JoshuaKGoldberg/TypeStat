@@ -27,11 +27,29 @@
         console.log(abc);
     }
 
-    givenNullTypeLater(undefined!);
+    givenNullTypeLater(null!);
 
     function givenUndefinedTypeLater(abc): void {
         console.log(abc);
     }
 
-    givenUndefinedTypeLater(null!);
+    givenUndefinedTypeLater(undefined!);
+
+    function givenAnyTypeLater(abc): void {
+        console.log(abc);
+    }
+
+    givenAnyTypeLater({} as any);
+
+    function givenEmptyObjectLiteralTypeLater(abc): void {
+        console.log(abc);
+    }
+
+    givenEmptyObjectLiteralTypeLater({});
+
+    function givenObjectTypeLater(abc): void {
+        console.log(abc);
+    }
+
+    givenObjectTypeLater({} as Object);
 }

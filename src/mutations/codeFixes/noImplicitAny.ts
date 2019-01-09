@@ -34,7 +34,9 @@ export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, reque
         const codeFixes = getNoImplicitAnyCodeFixes(node, request);
 
         if (codeFixes.length !== 0) {
-            return createCodeFixCreationMutation(codeFixes);
+            return createCodeFixCreationMutation(codeFixes, {
+                ignoreKnownBlankTypes: true,
+            });
         }
     }
 
