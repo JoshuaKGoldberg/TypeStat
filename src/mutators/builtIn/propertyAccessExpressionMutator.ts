@@ -17,7 +17,7 @@ export const propertyAccessExpressionMutator: FileMutator = (request: FileMutati
     // In theory, we could also respect each node name per class, but that's hard, and it's rare to have many classes per file
     const suggestedMissingProperties = new Set<string>();
 
-    const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression, request: FileMutationsRequest): IMutation | undefined => {
+    const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression): IMutation | undefined => {
         // If the access should create a missing property, go for that
         const missingPropertyFix = getMissingPropertyMutations(request, node);
         if (missingPropertyFix !== undefined) {
