@@ -27,6 +27,7 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
         .option("-V --version", "output the package version")
         .option("--fileAbove", "comment to add above modified files")
         .option("--fileBelow", "comment to add below modified files")
+        .option("--fileRenameExtensions", "whether to convert .js(x) files to .ts(x)")
         .option("--filter [...filter]", "tsquery filters to exclude within files")
         .option("--fixIncompleteTypes", "add missing types to existing, incomplete types")
         .option("--fixMissingProperties", "add missing properties to classes from usage")
