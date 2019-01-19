@@ -2,14 +2,18 @@ import { fs, readline } from "mz";
 
 import { TypeStatOptions } from "./types";
 
-export const processFileRenames = async (options: TypeStatOptions): Promise<TypeStatOptions> => {
-    if (!options.files.renameExtensions || options.fileNames === undefined) {
+export const processFileRenames = async (options: TypeStatOptions): Promise<TypeStatOptions | string> => {
+    if (options.fileNames === undefined) {
         return options;
     }
 
+    return options.files.renameExtensions ? renameOptionFiles(options, options.fileNames) : ensureNoJsFiles(options, options.fileNames);
+};
+
+const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions> => {
     const newFileNames = new Set(options.fileNames);
 
-    const filesToRename = options.fileNames
+    const filesToRename = fileNames
         .map((fileName) => ({
             newFileName: fileName.replace(/.js$/i, ".ts").replace(/.jsx$/i, ".tsx"),
             oldFileName: fileName,
@@ -36,4 +40,17 @@ export const processFileRenames = async (options: TypeStatOptions): Promise<Type
         ...options,
         fileNames: Array.from(newFileNames),
     };
+};
+
+const ensureNoJsFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions | string> => {
+    const jsFileNames = fileNames.filter((fileName) => fileName.endsWith(".js") || fileName.endsWith(".jsx"));
+    if (jsFileNames.length === 0) {
+        return options;
+    }
+
+    return [
+        "The following JavaScript files were included in the project but --fileRenameExtensions is not enabled.",
+        "TypeStat does not yet support annotating JavaScript files.",
+        ...jsFileNames.map((fileName) => `\t${fileName}`),
+    ].join("\n");
 };

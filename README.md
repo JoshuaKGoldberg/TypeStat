@@ -17,13 +17,15 @@ is wonderful but can be difficult to add to large pre-existing projects.
 Converting from JavaScript to TypeScript or improving type annotations through hundreds or thousands of legacy files is tedious and time-consuming.
 
 This package automagically adds those missing type annotations for you with configurable comment markers.
-It can add...
+It can...
 
-✨ TypeScript types on files freshly converted from JavaScript to TypeScript!
+✨ Convert JavaScript files to TypeScript in a single bound!
 
-✨ Fixes for `--noImplicitAny` across all your files with one command!
+✨ Add TypeScript types on files freshly converted from JavaScript to TypeScript!
 
-✨ Missing `null`s and `undefined`s to get you started with `--strictNullChecks`!
+✨ Fix `--noImplicitAny` across all your files with one command!
+
+✨ Annotate Missing `null`s and `undefined`s to get you started with `--strictNullChecks`!
 
 Doing so can allow you to enable these stricter compiler flags for all code without changing the runtime of existing code.
 Hooray!
