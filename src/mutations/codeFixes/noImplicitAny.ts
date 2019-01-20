@@ -3,6 +3,7 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { createCodeFixCreationMutation } from "./creation";
+import { processCodeFixActions } from "./processCodeFixActions";
 
 export type NoImplicitAnyNode = ts.ParameterDeclaration | ts.PropertyDeclaration | ts.VariableDeclaration;
 
@@ -48,13 +49,16 @@ export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, reque
  * Uses a requesting language service to get --noImplicitAny code fixes for a type of node.
  */
 const getNoImplicitAnyCodeFixes = (node: NoImplicitAnyNode, request: FileMutationsRequest) =>
-    request.services.languageService.getCodeFixesAtPosition(
-        request.sourceFile.fileName,
-        node.getStart(request.sourceFile),
-        node.end,
-        [ts.isParameter(node) ? NoImplicitAnyErrorCode.Parameter : NoImplicitAnyErrorCode.PropertyOrVariable],
-        {
-            insertSpaceBeforeAndAfterBinaryOperators: true,
-        },
-        {},
+    processCodeFixActions(
+        request,
+        request.services.languageService.getCodeFixesAtPosition(
+            request.sourceFile.fileName,
+            node.getStart(request.sourceFile),
+            node.end,
+            [ts.isParameter(node) ? NoImplicitAnyErrorCode.Parameter : NoImplicitAnyErrorCode.PropertyOrVariable],
+            {
+                insertSpaceBeforeAndAfterBinaryOperators: true,
+            },
+            {},
+        ),
     );

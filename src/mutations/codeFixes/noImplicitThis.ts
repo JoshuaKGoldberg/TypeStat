@@ -3,6 +3,7 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { createCodeFixCreationMutation } from "./creation";
+import { processCodeFixActions } from "./processCodeFixActions";
 
 /**
  * Error code for the TypeScript language service to get --noImplicitThis code fixes.
@@ -32,13 +33,16 @@ export const getNoImplicitThisMutations = (node: ts.FunctionDeclaration, request
  * @param errorCode   Corresponding error code for the node type to retrieve fixes for.
  */
 const getNoImplicitThisCodeFixes = (node: ts.FunctionDeclaration, request: FileMutationsRequest) =>
-    request.services.languageService.getCodeFixesAtPosition(
-        request.sourceFile.fileName,
-        node.getStart(request.sourceFile),
-        node.end,
-        [noImplicitThisErrorCode],
-        {
-            insertSpaceBeforeAndAfterBinaryOperators: true,
-        },
-        {},
+    processCodeFixActions(
+        request,
+        request.services.languageService.getCodeFixesAtPosition(
+            request.sourceFile.fileName,
+            node.getStart(request.sourceFile),
+            node.end,
+            [noImplicitThisErrorCode],
+            {
+                insertSpaceBeforeAndAfterBinaryOperators: true,
+            },
+            {},
+        ),
     );

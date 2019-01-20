@@ -4,7 +4,8 @@
         y: number;
     }
 
-    const shiftBox = (box: { x: any; y: any; }) => {
+    const shiftBox = (box: terface IBox {
+     ) => {
         box.x += 1;
         box.y += 1;
     };
