@@ -45,7 +45,7 @@ describeMutationTestCases(
             ...(fillOutRawOptions({
                 argv: { logger },
                 compilerOptions,
-                packageDirectory: __dirname,
+                packageDirectory: path.dirname(projectPath),
                 projectPath,
                 rawOptions: {
                     ...rawOptions,

@@ -49,11 +49,11 @@ export const collectAddedMutators = (
     return additions;
 };
 
-const collectAddedMutator = (baseOptionsDir: string, rawAddedMutator: string, logger: ProcessLogger): FileMutator | undefined => {
-    const requiringPath = path.join(baseOptionsDir, rawAddedMutator);
+const collectAddedMutator = (packageDirectory: string, rawAddedMutator: string, logger: ProcessLogger): FileMutator | undefined => {
+    const requiringPath = path.join(packageDirectory, rawAddedMutator);
     const resolvedImport = tryRequireResolve(requiringPath);
     if (resolvedImport === undefined) {
-        logger.stderr.write(`Could not require ${rawAddedMutator} at ${requiringPath} from ${baseOptionsDir}.\n`);
+        logger.stderr.write(`Could not require ${rawAddedMutator} at ${requiringPath} from ${packageDirectory}.\n`);
         logger.stderr.write("It doesn't seem to exist? :(\n");
         return undefined;
     }
@@ -61,7 +61,7 @@ const collectAddedMutator = (baseOptionsDir: string, rawAddedMutator: string, lo
     const result = require(requiringPath) as Partial<ImportedFileMutator>;
 
     if (typeof result.fileMutator !== "function") {
-        logger.stderr.write(`Could not require ${rawAddedMutator} from ${baseOptionsDir}.\n`);
+        logger.stderr.write(`Could not require ${rawAddedMutator} from ${packageDirectory}.\n`);
 
         // tslint:disable-next-line:strict-type-predicates
         if (result.fileMutator === undefined) {
