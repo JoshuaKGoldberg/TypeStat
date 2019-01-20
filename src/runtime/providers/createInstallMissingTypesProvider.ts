@@ -2,7 +2,6 @@ import { IMutationsWave } from "automutate";
 import * as builtinModules from "builtin-modules";
 
 import { TypeStatOptions } from "../../options/types";
-import { normalizeAndSlashify } from "../../shared/paths";
 import { setSubtract } from "../../shared/sets";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
 import { createSingleUseProvider } from "../createSingleUserProvider";
@@ -43,7 +42,7 @@ export const createInstallMissingTypesProvider = (options: TypeStatOptions) => {
         }
 
         // Run the installation command using the requested or detected package manager
-        const packageManagerRunner = await collectPackageManagerRunner(options, options.package.file, options.package.missingTypes);
+        const packageManagerRunner = await collectPackageManagerRunner(options, options.package.missingTypes);
         await packageManagerRunner(options, missingTypedPackageNames);
     };
 
