@@ -1,9 +1,11 @@
-export const setSubtract = <T>(whole: ReadonlySet<T>, removals: ReadonlySet<T>): Set<T> => {
-    const result = new Set<T>();
+export const setSubtract = <T>(whole: ReadonlySet<T>, ...removals: ReadonlySet<T>[]): Set<T> => {
+    const result = new Set<T>(whole);
 
-    for (const item of whole) {
-        if (!removals.has(item)) {
-            result.add(item);
+    for (const removal of removals) {
+        for (const item of result) {
+            if (removal.has(item)) {
+                result.delete(item);
+            }
         }
     }
 

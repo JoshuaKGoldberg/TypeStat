@@ -24,7 +24,7 @@ export const createLanguageServices = (options: TypeStatOptions): LanguageServic
     const servicesHost: ts.LanguageServiceHost = {
         fileExists: ts.sys.fileExists,
         getCompilationSettings: () => options.compilerOptions,
-        getCurrentDirectory: () => process.cwd(),
+        getCurrentDirectory: () => options.package.directory,
         getDefaultLibFileName: ts.getDefaultLibFilePath,
         getScriptFileNames: () => fileNames,
         getScriptSnapshot: (fileName) =>

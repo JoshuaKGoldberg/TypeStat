@@ -107,6 +107,10 @@ typestat --project tsconfig.strict.json
 }
 ```
 
+If a relative project file path is provided, its absolute path will be resolved from `--packageDirectory`.
+
+### Usage
+
 More advanced flags can be provided for:
 
 * [Files](./docs/Files.md)
@@ -120,6 +124,10 @@ More advanced flags can be provided for:
   * `--fixMissingProperties`/`fixes.missingProperties`
   * `--fixNoImplicitAny`/`fixes.noImplicitAny`
   * `--fixStrictNonNullAssertions`/`fixes.strictNonNullAssertions`
+* [Package](./docs/Package.md):
+  * `--packageDirectory`/`package.directory`
+  * `--packageFile`/`package.file`
+  * `--packageMissingTypes`/`package.missingTypes`
 * [Types](./docs/Types.md):
   * `--typeAlias`/`types.aliases`
   * `--typeMatching`/`types.matching`

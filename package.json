@@ -7,6 +7,7 @@
         "@phenomnomnominal/tsquery": "^3.0.0",
         "@types/mz": "0.0.32",
         "automutate": "^0.7.1",
+        "builtin-modules": "^3.0.0",
         "chalk": "^2.4.1",
         "commander": "^2.19.0",
         "cosmiconfig": "^5.0.7",
@@ -16,6 +17,7 @@
     },
     "description": "Adds TypeScript type annotations using static analysis.",
     "devDependencies": {
+        "@types/builtin-modules": "^2.0.0",
         "@types/cosmiconfig": "^5.0.3",
         "@types/glob": "^7.1.1",
         "@types/jest": "^23.3.11",

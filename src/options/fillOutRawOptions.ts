@@ -4,9 +4,10 @@ import { TypeStatArgv } from "../index";
 import { processLogger } from "../logging/logger";
 import { arrayify, collectOptionals } from "../shared/arrays";
 import { collectAsConfiguration } from "../shared/booleans";
-import { collectAddedMutators } from "./addedMutators";
+import { collectAddedMutators } from "./parsing/collectAddedMutators";
 import { collectFileOptions } from "./parsing/collectFileOptions";
 import { collectNoImplicitAny } from "./parsing/collectNoImplicitAny";
+import { collectPackageOptions } from "./parsing/collectPackageOptions";
 import { collectStrictNullChecks } from "./parsing/collectStrictNullChecks";
 import { collectTypeAliases } from "./parsing/collectTypeAliases";
 import { RawTypeStatOptions, TypeStatOptions } from "./types";
@@ -15,6 +16,7 @@ export interface OptionsFromRawOptionsSettings {
     argv: TypeStatArgv;
     compilerOptions: Readonly<ts.CompilerOptions>;
     fileNames?: ReadonlyArray<string>;
+    packageDirectory: string;
     projectPath: string;
     rawOptions: RawTypeStatOptions;
 }
@@ -28,6 +30,7 @@ export const fillOutRawOptions = ({
     argv,
     compilerOptions,
     fileNames,
+    packageDirectory,
     projectPath,
     rawOptions,
 }: OptionsFromRawOptionsSettings): TypeStatOptions | string => {
@@ -39,6 +42,8 @@ export const fillOutRawOptions = ({
     if (typeof typeAliases === "string") {
         return typeAliases;
     }
+
+    const packageOptions = collectPackageOptions(argv, packageDirectory, rawOptions);
 
     const options = {
         compilerOptions: {
@@ -58,7 +63,8 @@ export const fillOutRawOptions = ({
             ...rawOptions.fixes,
         },
         logger: argv.logger,
-        mutators: collectAddedMutators(argv, rawOptions, processLogger),
+        mutators: collectAddedMutators(argv, rawOptions, packageOptions.directory, processLogger),
+        package: packageOptions,
         projectPath,
         types: {
             aliases: typeAliases,
