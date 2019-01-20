@@ -5,7 +5,7 @@
         "noImplicitAny": true
     },
     "types": {
-        "onlyPrimitives": true,
+        "onlyPrimitives": false,
         "strictNullChecks": true
     }
 }

@@ -21,3 +21,5 @@ export const collectOptionals = <T>(...arrays: (ReadonlyArray<T> | undefined)[])
 
     return results;
 };
+
+export const isNotUndefined = <T>(item: T | undefined): item is T => item !== undefined;
