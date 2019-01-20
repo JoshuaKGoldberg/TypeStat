@@ -37,6 +37,9 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
             "--fixStrictNonNullAssertions",
             "add missing non-null assertions in nullable property accesses, function-like calls, and return types",
         )
+        .option("--packageDirectory [packageDirectory]", "working directory (cwd) of the project")
+        .option("--packageFile [packageFile]", "package.json path to consider the project's package")
+        .option("--packageMissingTypes [packageMissingTypes]", "package manager to install missing types, or unspecified to auto-detect")
         .option("--typeAlias [...typeAlias]", "add a key=value to replace added type names with")
         .option("--typeMatching [...typeMatching]", "regular expression matchers added types must match.")
         .option("--typeStrictNullChecks", "override TypeScript's --strictNullChecks setting for types")

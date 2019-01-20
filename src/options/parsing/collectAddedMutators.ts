@@ -1,12 +1,12 @@
 import * as path from "path";
 
-import { TypeStatArgv } from "../index";
-import { ProcessLogger } from "../logging/logger";
-import { builtInFileMutators } from "../mutators/builtInFileMutators";
-import { FileMutator } from "../mutators/fileMutator";
-import { arrayify, collectOptionals } from "../shared/arrays";
-import { getQuickErrorSummary } from "../shared/errors";
-import { RawTypeStatOptions } from "./types";
+import { TypeStatArgv } from "../../index";
+import { ProcessLogger } from "../../logging/logger";
+import { builtInFileMutators } from "../../mutators/builtInFileMutators";
+import { FileMutator } from "../../mutators/fileMutator";
+import { arrayify, collectOptionals } from "../../shared/arrays";
+import { getQuickErrorSummary } from "../../shared/errors";
+import { RawTypeStatOptions } from "../types";
 
 interface ImportedFileMutator {
     fileMutator: FileMutator;
@@ -17,12 +17,14 @@ interface ImportedFileMutator {
  *
  * @param argv   Root arguments to pass to TypeStat.
  * @param rawOptions   Options listed as JSON in a typestat configuration file.
+ * @param packageDirectory   Base directory to resolve paths from.
  * @param logger   Wraps process.stderr and process.stdout.
  * @returns Mutators to run with their friendly names.
  */
 export const collectAddedMutators = (
     argv: TypeStatArgv,
     rawOptions: RawTypeStatOptions,
+    packageDirectory: string,
     logger: ProcessLogger,
 ): ReadonlyArray<[string, FileMutator]> => {
     const addedMutators = collectOptionals(arrayify(argv.mutator), rawOptions.mutators);
@@ -31,17 +33,15 @@ export const collectAddedMutators = (
     }
 
     const additions: [string, FileMutator][] = [];
-    const baseOptionsDir = rawOptions.projectPath === undefined ? process.cwd() : path.dirname(rawOptions.projectPath);
-
     for (const rawAddedMutator of addedMutators) {
         try {
-            const addedMutator = collectAddedMutator(baseOptionsDir, rawAddedMutator, logger);
+            const addedMutator = collectAddedMutator(packageDirectory, rawAddedMutator, logger);
 
             if (addedMutator !== undefined) {
                 additions.push([rawAddedMutator, addedMutator]);
             }
         } catch (error) {
-            logger.stderr.write(`Could not require ${rawAddedMutator} from ${baseOptionsDir}.\n`);
+            logger.stderr.write(`Could not require ${rawAddedMutator} from ${packageDirectory}.\n`);
             logger.stderr.write(getQuickErrorSummary(error));
         }
     }

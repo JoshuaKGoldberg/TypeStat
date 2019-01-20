@@ -15,18 +15,23 @@ import { RawTypeStatOptions, TypeStatOptions } from "./types";
  * @returns Promise for filled-out TypeStat options, or a string complaint from failing to make them.
  */
 export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | string> => {
-    const foundRawOptions = await findRawOptions(argv.config);
-    const { rawOptions } = foundRawOptions;
-    const projectPath = getProjectPath(argv, foundRawOptions);
-    const [compilerOptions, fileNames] = await Promise.all([parseRawCompilerOptions(projectPath), collectFileNames(argv, rawOptions)]);
+    const packageDirectory = argv.packageDirectory === undefined ? process.cwd() : argv.packageDirectory;
 
-    return fillOutRawOptions({ argv, compilerOptions, fileNames, projectPath, rawOptions });
+    const foundRawOptions = await findRawOptions(packageDirectory, argv.config);
+    const { rawOptions } = foundRawOptions;
+    const projectPath = getProjectPath(packageDirectory, argv, foundRawOptions);
+    const [compilerOptions, fileNames] = await Promise.all([
+        parseRawCompilerOptions(projectPath),
+        collectFileNames(argv, packageDirectory, rawOptions),
+    ]);
+
+    return fillOutRawOptions({ argv, compilerOptions, fileNames, packageDirectory, projectPath, rawOptions });
 };
 
-const getProjectPath = (argv: TypeStatArgv, foundOptions: FoundRawOptions): string => {
+const getProjectPath = (packageDirectory: string, argv: TypeStatArgv, foundOptions: FoundRawOptions): string => {
     // If a --project is provided by Node argv / the CLI, use that
     if (argv.project !== undefined) {
-        return path.join(process.cwd(), argv.project);
+        return path.join(packageDirectory, argv.project);
     }
 
     // If the TypeStat configuration file has a projectPath field, use that relative to the file
@@ -34,11 +39,15 @@ const getProjectPath = (argv: TypeStatArgv, foundOptions: FoundRawOptions): stri
         return normalizeAndSlashify(path.join(path.dirname(foundOptions.filePath), foundOptions.rawOptions.projectPath));
     }
 
-    // Otherwise give up and try a ./tsconfig.json relative to the user's cwd
-    return normalizeAndSlashify(path.join(process.cwd(), "tsconfig.json"));
+    // Otherwise give up and try a ./tsconfig.json relative to the package directory
+    return normalizeAndSlashify(path.join(packageDirectory, "tsconfig.json"));
 };
 
-const collectFileNames = async (argv: TypeStatArgv, rawOptions: RawTypeStatOptions): Promise<ReadonlyArray<string> | undefined> => {
+const collectFileNames = async (
+    argv: TypeStatArgv,
+    packageDirectory: string,
+    rawOptions: RawTypeStatOptions,
+): Promise<ReadonlyArray<string> | undefined> => {
     if (argv.args !== undefined && argv.args.length !== 0) {
         return globAllAsync(argv.args);
     }
@@ -47,5 +56,5 @@ const collectFileNames = async (argv: TypeStatArgv, rawOptions: RawTypeStatOptio
         return undefined;
     }
 
-    return globAllAsync(rawOptions.include);
+    return globAllAsync(rawOptions.include.map((include) => path.join(packageDirectory, include)));
 };

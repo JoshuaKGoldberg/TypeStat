@@ -36,14 +36,19 @@ export interface RawTypeStatOptions {
     readonly mutators?: ReadonlyArray<string>;
 
     /**
-     * Options for which types to add under what aliases.
+     * Directives for project-level changes.
      */
-    readonly types?: RawTypeStatTypeOptions;
+    readonly package?: Readonly<Partial<Package>>;
 
     /**
      * Path to a TypeScript configuration file, if not "tsconfig.json".
      */
     readonly projectPath?: string;
+
+    /**
+     * Options for which types to add under what aliases.
+     */
+    readonly types?: RawTypeStatTypeOptions;
 }
 
 /**
@@ -111,14 +116,19 @@ export interface TypeStatOptions {
     readonly mutators: ReadonlyArray<[string, FileMutator]>;
 
     /**
-     * Options for which types to add under what aliases.
+     * Directives for project-level changes.
      */
-    readonly types: TypeStatTypeOptions;
+    readonly package: Readonly<Package>;
 
     /**
      * Path to a tsconfig.json file.
      */
     readonly projectPath: string;
+
+    /**
+     * Options for which types to add under what aliases.
+     */
+    readonly types: TypeStatTypeOptions;
 }
 
 /**
@@ -177,6 +187,26 @@ export interface Fixes {
      * Whether to add missing non-null assertions in nullable property accesses, function-like calls, and return types.
      */
     strictNonNullAssertions: boolean;
+}
+
+/**
+ * Directives for package-level changes.
+ */
+export interface Package {
+    /**
+     * Working directory to base paths off of.
+     */
+    directory: string;
+
+    /**
+     * Path to a package.json to consider the project's package.
+     */
+    file: string;
+
+    /**
+     * Package manager to install missing types, if not `true` to auto-detect or `undefined` to not.
+     */
+    missingTypes: true | "npm" | "yarn" | undefined;
 }
 
 /**

@@ -3,6 +3,7 @@ import * as fs from "mz/fs";
 import { EOL } from "os";
 
 import { TypeStatOptions } from "../../options/types";
+import { createSingleUseProvider } from "../createSingleUserProvider";
 
 /**
  * Creates a mutations wave to mark all previously mutated files as modified.
@@ -12,23 +13,23 @@ import { TypeStatOptions } from "../../options/types";
  * @returns Mutations wave marking all mutated files as modified.
  */
 export const createMarkFilesModifiedProvider = (options: TypeStatOptions, allModifiedFileNames: ReadonlySet<string>) => {
-    let provided = false;
-    return async (): Promise<IMutationsWave> => {
-        if (provided || (options.files.above === "" && options.files.below === "")) {
-            return {
-                fileMutations: undefined,
-            };
-        }
+    return createSingleUseProvider(
+        async (): Promise<IMutationsWave> => {
+            if (options.files.above === "" && options.files.below === "") {
+                return {
+                    fileMutations: undefined,
+                };
+            }
 
-        const fileMutations: IFileMutations = {};
-        provided = true;
+            const fileMutations: IFileMutations = {};
 
-        for (const fileName of allModifiedFileNames) {
-            fileMutations[fileName] = await createFileMutations(options, fileName);
-        }
+            for (const fileName of allModifiedFileNames) {
+                fileMutations[fileName] = await createFileMutations(options, fileName);
+            }
 
-        return { fileMutations };
-    };
+            return { fileMutations };
+        },
+    );
 };
 
 const createFileMutations = async (options: TypeStatOptions, fileName: string): Promise<ITextInsertMutation[]> => {

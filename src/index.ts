@@ -5,7 +5,7 @@ import { loadOptions } from "./options/loadOptions";
 import { findComplaintForOptions } from "./options/optionVerification";
 import { processFileRenames } from "./options/processFileRenames";
 import { TypeStatOptions } from "./options/types";
-import { createTypeStatMutationsProvider } from "./runtime/createTypeStatMutationsProvider";
+import { createTypeStatProvider } from "./runtime/createTypeStatProvider";
 
 /**
  * Root arguments to pass to TypeStat.
@@ -29,6 +29,9 @@ export interface TypeStatArgv {
      */
     readonly logger: ProcessLogger;
 
+    readonly packageDirectory?: string;
+    readonly packageFile?: string;
+    readonly packageMissingTypes?: true | "npm" | "yarn";
     readonly project?: string;
     readonly typeAlias?: string | ReadonlyArray<string>;
     readonly typeMatching?: ReadonlyArray<string>;
@@ -69,7 +72,7 @@ export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
 
     try {
         await runMutations({
-            mutationsProvider: createTypeStatMutationsProvider(options),
+            mutationsProvider: createTypeStatProvider(options),
         });
     } catch (error) {
         return {

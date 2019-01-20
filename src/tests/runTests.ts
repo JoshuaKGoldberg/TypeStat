@@ -6,7 +6,7 @@ import * as ts from "typescript";
 
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions, TypeStatOptions } from "../options/types";
-import { createTypeStatMutationsProvider } from "../runtime/createTypeStatMutationsProvider";
+import { createTypeStatProvider } from "../runtime/createTypeStatProvider";
 import { arrayify } from "../shared/arrays";
 import { FakeWritableStream } from "./FakeWritableStream";
 
@@ -41,10 +41,11 @@ describeMutationTestCases(
             stdout: new FakeWritableStream(),
         };
 
-        return createTypeStatMutationsProvider({
+        return createTypeStatProvider({
             ...(fillOutRawOptions({
                 argv: { logger },
                 compilerOptions,
+                packageDirectory: __dirname,
                 projectPath,
                 rawOptions: {
                     ...rawOptions,
