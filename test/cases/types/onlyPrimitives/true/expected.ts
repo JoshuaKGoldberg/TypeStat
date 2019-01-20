@@ -3,8 +3,8 @@
     receivesNumberOrString(0);
     receivesNumberOrString("");
 
-    class Foo { }
-    class Bar { }
+    class Foo {}
+    class Bar {}
 
     const foo = new Foo();
     const bar = new Bar();
