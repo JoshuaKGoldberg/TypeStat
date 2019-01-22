@@ -15,7 +15,7 @@ export interface TypeStatArgv {
     readonly config?: string;
     readonly fileAbove?: string;
     readonly fileBelow?: string;
-    readonly fileRenameExtensions?: boolean;
+    readonly fileRenameExtensions?: boolean | "ts" | "tsx";
     readonly filter?: string | ReadonlyArray<string>;
     readonly fixIncompleteTypes?: boolean;
     readonly fixMissingProperties?: boolean;

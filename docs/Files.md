@@ -70,6 +70,60 @@ Whether to convert `.js(x)` files to `.ts(x)`.
 When this is enabled, any file with a JavaScript extension visited by TypeStat,
 regardless of whether mutations are added, will be renamed to the equivalent TypeScript extension.
 
+### Mapping Extensions
+
+This field has four potential allowed configurations:
+
+* `false` _(default)_: skip renaming file extensions
+* `true`: auto-detect whether a file should be `.ts` or `.tsx`
+
+    ```shell
+    typestat --fileRenameExtensions
+    ```
+
+    ```json
+    {
+        "files": {
+            "renameExtensions": true
+        }
+    }
+    ```
+
+* `"ts"`: always convert to `.ts`
+
+    ```shell
+    typestat --fileRenameExtensions ts
+    ```
+
+    ```json
+    {
+        "files": {
+            "renameExtensions": "ts"
+        }
+    }
+    ```
+
+* `"tsx"`: always convert to `.tsx`
+
+    ```shell
+    typestat --fileRenameExtensions tsx
+    ```
+
+    ```json
+    {
+        "files": {
+            "renameExtensions": "tsx"
+        }
+    }
+    ```
+
+When auto-detection is enabled, a file will be converted to `.tsx` if either of the following is true:
+
+* It `import`s or `require`s from the `"react"` module
+* Its original file extension is `.jsx`
+
+### Handling `require`s
+
 While this option is enabled, if any `require` call to a file including the extension is stored as a variable,
 that variable will be given a type equivalent to the extensionless equivalent.
 For example:
@@ -79,4 +133,5 @@ For example:
 + const sibling: typeof import("./sibling") = require("./sibling.js");
 ```
 
-The default is `false`.
+This is necessary because TypeStat does not modify emitted JavaScript.
+Removing extensions can sometimes cause unexpected behavior changes.
