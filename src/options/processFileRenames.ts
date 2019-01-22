@@ -13,12 +13,12 @@ export const processFileRenames = async (options: TypeStatOptions): Promise<Type
 const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions> => {
     const newFileNames = new Set(options.fileNames);
 
-    const filesToRename = fileNames
-        .map((fileName) => ({
-            newFileName: fileName.replace(/.js$/i, ".ts").replace(/.jsx$/i, ".tsx"),
+    const filesToRename = (await Promise.all(
+        fileNames.map(async (fileName) => ({
+            newFileName: await getNewFileName(options, fileName),
             oldFileName: fileName,
-        }))
-        .filter(({ newFileName, oldFileName }) => newFileName !== oldFileName);
+        })),
+    )).filter(({ newFileName, oldFileName }) => newFileName !== oldFileName);
 
     if (filesToRename.length === 0) {
         return options;
@@ -40,6 +40,28 @@ const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyAr
         ...options,
         fileNames: Array.from(newFileNames),
     };
+};
+
+const getNewFileName = async (options: TypeStatOptions, oldFileName: string): Promise<string> => {
+    const oldExtension = oldFileName.substring(oldFileName.lastIndexOf("."));
+    const beforeExtension = oldFileName.substring(0, oldFileName.length - oldExtension.length);
+
+    if (options.files.renameExtensions === "tsx" || oldExtension === ".jsx") {
+        return `${beforeExtension}.tsx`;
+    }
+
+    if (options.files.renameExtensions === "ts") {
+        return `${beforeExtension}.ts`;
+    }
+
+    const fileContents = (await fs.readFile(oldFileName)).toString();
+    const fileContentsJoined = fileContents.replace(/ /g, "").replace(/"/g, "'");
+
+    if (fileContentsJoined.includes(`require('react')`) || fileContentsJoined.includes(`from'react'`)) {
+        return `${beforeExtension}.tsx`;
+    }
+
+    return `${beforeExtension}.ts`;
 };
 
 const ensureNoJsFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions | string> => {

@@ -156,7 +156,7 @@ export interface Files {
     /**
      * Whether to convert .js(x) files to .ts(x).
      */
-    renameExtensions: boolean;
+    renameExtensions: boolean | "ts" | "tsx";
 }
 
 /**

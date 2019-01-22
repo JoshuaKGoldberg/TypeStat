@@ -12,9 +12,19 @@ export const collectFileOptions = (argv: TypeStatArgv, rawOptions: RawTypeStatOp
         files.below = argv.fileBelow;
     }
 
+    let renameExtensions = argv.fileRenameExtensions;
+
+    if (renameExtensions === undefined) {
+        renameExtensions = files.renameExtensions;
+    }
+
+    if (renameExtensions === undefined) {
+        renameExtensions = false;
+    }
+
     return {
         above: files.above === undefined ? "" : files.above,
         below: files.below === undefined ? "" : files.below,
-        renameExtensions: (argv.fileRenameExtensions === undefined ? files.renameExtensions : argv.fileRenameExtensions) || false,
+        renameExtensions,
     };
 };
