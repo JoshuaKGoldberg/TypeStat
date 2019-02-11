@@ -6,8 +6,8 @@ import { TypeStatOptions } from "../options/types";
 import { collectOptionals } from "../shared/arrays";
 import { normalizeAndSlashify } from "../shared/paths";
 
-export const createProgramConfiguration = async (options: TypeStatOptions) => {
-    const ts = await requireExposedTypeScript();
+export const createProgramConfiguration = (options: TypeStatOptions) => {
+    const ts = requireExposedTypeScript();
 
     // Create a TypeScript configuration using the raw options
     const parsedConfiguration = ts.parseJsonConfigFileContent(

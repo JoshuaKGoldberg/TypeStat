@@ -51,27 +51,35 @@ export type ExposedTypeChecker = import("typescript").TypeChecker & {
     isTypeAssignableTo(source: Type, target: Type): boolean;
 };
 
-export const requireExposedTypeScript = async (): Promise<ExposedTypeScript> => {
+let previouslyExposedTypeScript: ExposedTypeScript | undefined;
+
+export const requireExposedTypeScript = (): ExposedTypeScript => {
+    // If we've already exposed it, use the existing value
+    if (previouslyExposedTypeScript !== undefined) {
+        return previouslyExposedTypeScript;
+    }
+
     // Find where the file should be required from
     const localRequireFile = require.resolve("typescript");
 
     // Grab the existing first characters of the file: arbitrarily, 256 of them
-    // We do more than just the first line in case other tools have modified it
-    const originalContentStart = await readCharactersOfFile(localRequireFile, 256);
+    // We read more than just the first line in case other tools have modified it
+    const originalContentStart = readCharactersOfFile(localRequireFile, 256);
 
     // If the file already has a /* TypeStat! */ in there, there's nothing to change
     if (originalContentStart.includes("/* TypeStat! */")) {
-        return require(localRequireFile) as ExposedTypeScript;
+        previouslyExposedTypeScript = require(localRequireFile) as ExposedTypeScript;
+        return previouslyExposedTypeScript;
     }
 
-    const originalContent = (await fs.readFile(localRequireFile)).toString();
+    const originalContent = fs.readFileSync(localRequireFile).toString();
 
     // Save and clear any existing "typescript" module from the require cache
     const originalLocalRequireFile = require.cache[localRequireFile];
     delete require.cache[localRequireFile];
 
     // Write an export blurb to add `isTypeAssignableTo` to created `checker`s
-    await fs.writeFile(
+    fs.writeFileSync(
         localRequireFile,
         [
             "/* TypeStat! */",
@@ -81,12 +89,12 @@ export const requireExposedTypeScript = async (): Promise<ExposedTypeScript> => 
     );
 
     // Require this new TypeScript that exposes `isTypeAssignableTo`
-    const exposedTypeScript = require(localRequireFile);
+    previouslyExposedTypeScript = require(localRequireFile) as ExposedTypeScript;
 
     // Add back whatever existing module was cached
     delete require.cache[localRequireFile];
     require.cache[localRequireFile] = originalLocalRequireFile;
 
     // Return the exposed version of TypeScript, and never speak of this again
-    return exposedTypeScript;
+    return previouslyExposedTypeScript;
 };

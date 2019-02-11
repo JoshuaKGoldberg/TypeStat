@@ -31,7 +31,7 @@ export const createInstallMissingTypesProvider = (options: TypeStatOptions) => {
         }
 
         // Collect every package name referenced by every file in the project
-        const { services } = await createFileNamesAndServices(options);
+        const { services } = createFileNamesAndServices(options);
         const referencedPackageNames = collectReferencedPackageNames(services);
 
         // Ignore package names already referenced in package.json or that don't exist in DefinitelyTyped

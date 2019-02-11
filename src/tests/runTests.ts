@@ -2,8 +2,8 @@ import { describeMutationTestCases } from "automutate-tests";
 import { Command } from "commander";
 import * as fs from "fs";
 import * as path from "path";
-import * as ts from "typescript";
 
+import { requireExposedTypeScript } from "../mutations/createExposedTypeScript";
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions, TypeStatOptions } from "../options/types";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider";
@@ -23,6 +23,9 @@ const parsed = new Command()
     .option("-a, --accept", "override existing expected results instead of asserting")
     .parse(process.argv) as ParsedTestArgv;
 
+// Modify TypeScript here so that no tests incur the performance penalty of doing it themselves
+const ts = requireExposedTypeScript();
+
 describeMutationTestCases(
     path.join(__dirname, "../../test"),
     (fileName: string, typeStatPath: string | undefined) => {
@@ -35,7 +38,7 @@ describeMutationTestCases(
 
         const projectPath = path.join(projectDirectory, "tsconfig.json");
         const rawCompilerOptions = fs.readFileSync(typeStatPath).toString();
-        const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config as ts.CompilerOptions;
+        const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config as {};
         const logger = {
             stderr: process.stderr,
             stdout: new FakeWritableStream(),
