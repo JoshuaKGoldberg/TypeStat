@@ -1,3 +1,7 @@
+// Ensure TypeScript is exposed before any files import it
+import { requireExposedTypeScript } from "./mutations/createExposedTypeScript";
+requireExposedTypeScript();
+
 import { runMutations } from "automutate";
 
 import { ProcessLogger } from "./logging/logger";
