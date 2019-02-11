@@ -50,7 +50,10 @@ export const joinIntoType = (
         return undefined;
     }
 
+    // Grab the built-in aliases for types we'll be outputting
     const typeAliases = getApplicableTypeAliases(request);
+
+    // Convert types to their aliased names per our type aliases
     let unionNames = [
         ...Array.from(types)
             .filter(isTypeNamePrintable)
@@ -59,6 +62,7 @@ export const joinIntoType = (
         ...Array.from(flags).map((type) => typeAliases.get(type)!),
     ];
 
+    // If we exclude unmatched types, remove those
     if (request.options.types.matching !== undefined) {
         unionNames = filterMatchingTypeNames(unionNames, request.options.types.matching);
     }

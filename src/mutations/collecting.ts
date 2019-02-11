@@ -5,7 +5,6 @@ import { FileMutationsRequest } from "../mutators/fileMutator";
 import { setSubtract } from "../shared/sets";
 import { getApplicableTypeAliases } from "./aliasing";
 import { findMissingFlags, isTypeFlagSetRecursively } from "./collecting/flags";
-import { areTypesRoughlyEqual, typeIsChildOf } from "./comparisons";
 
 /**
  * Collects assigned and missing flags and types, recursively accounting for type unions.
@@ -108,30 +107,23 @@ const findMissingTypes = (
         }
     }
 
-    const rootLevelAssignedTypes = new Set(assignedTypes);
+    const remainingMissingTypes = new Set(assignedTypes);
 
-    const shouldRemoveAssignedType = (assignedType: ts.Type) => {
-        for (const potentialParentType of [...assignedTypes, ...declaredTypes]) {
-            if (assignedType === potentialParentType) {
-                continue;
-            }
-
-            if (
-                areTypesRoughlyEqual(request, assignedType, potentialParentType) ||
-                typeIsChildOf(request, assignedType, potentialParentType)
-            ) {
-                return true;
+    const isAssignedTypeMissingFromDeclared = (assignedType: ts.Type) => {
+        for (const potentialParentType of declaredTypes) {
+            if (request.services.program.getTypeChecker().isTypeAssignableTo(assignedType, potentialParentType)) {
+                return false;
             }
         }
 
-        return false;
+        return true;
     };
 
     for (const assignedType of assignedTypes) {
-        if (shouldRemoveAssignedType(assignedType)) {
-            rootLevelAssignedTypes.delete(assignedType);
+        if (!isAssignedTypeMissingFromDeclared(assignedType)) {
+            remainingMissingTypes.delete(assignedType);
         }
     }
 
-    return setSubtract(rootLevelAssignedTypes, declaredTypes);
+    return setSubtract(remainingMissingTypes, declaredTypes);
 };

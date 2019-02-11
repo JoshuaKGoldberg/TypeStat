@@ -1,6 +1,7 @@
 import * as fs from "mz/fs";
 import * as ts from "typescript";
 
+import { ExposedProgram } from "../mutations/createExposedTypeScript";
 import { TypeStatOptions } from "../options/types";
 import { createProgramConfiguration } from "./createProgramConfiguration";
 
@@ -10,7 +11,7 @@ import { createProgramConfiguration } from "./createProgramConfiguration";
 export interface LanguageServices {
     readonly parsedConfiguration: ts.ParsedCommandLine;
     readonly languageService: ts.LanguageService;
-    readonly program: ts.Program;
+    readonly program: ExposedProgram;
 }
 
 /**

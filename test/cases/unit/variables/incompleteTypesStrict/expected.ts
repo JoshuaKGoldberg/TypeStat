@@ -111,7 +111,7 @@
 
     class SampleClassTwo implements SampleInterface {
         readonly optional = false;
-        readonly required = 1;
+        readonly required = 2;
     }
 
     let onlyInterfaceImplicit = { required: 1 };
@@ -119,12 +119,12 @@
 
     let onlyClassOneImplicit = new SampleClassOne();
     let onlyClassOneExplicitClass: SampleClassOne = new SampleClassOne();
-    let onlyClassOneExplicitInterface: SampleInterface | SampleClassOne = new SampleClassOne();
+    let onlyClassOneExplicitInterface: SampleInterface = new SampleClassOne();
 
     let eitherClassImplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
     eitherClassImplicit = new SampleClassTwo();
 
-    let eitherClassExplicit: SampleInterface | SampleClassOne | SampleClassTwo = new SampleClassOne();
+    let eitherClassExplicit: SampleInterface = new SampleClassOne();
     eitherClassExplicit = new SampleClassTwo();
 
     let eitherClassNeedsUnionImplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
@@ -133,8 +133,8 @@
     let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
-    let eitherClassNeedsUnionExplicitInterface: SampleInterface | SampleClassOne = new SampleClassOne();
-    eitherClassNeedsUnionExplicit = new SampleClassTwo();
+    let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
+    eitherClassNeedsUnionExplicitInterface = new SampleClassTwo();
 
     let eitherClassNeedsNullImplicit: SampleClassOne | SampleClassTwo | null = new SampleClassOne();
     eitherClassNeedsNullImplicit = new SampleClassTwo();
@@ -142,15 +142,15 @@
 
     let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsNullAndClassExplicit = new SampleClassTwo();
-    eitherClassNeedsNullImplicit = null;
+    eitherClassNeedsNullAndClassExplicit = null;
 
     let eitherClassNeedsUndefinedExplicit: SampleClassOne | SampleClassTwo | undefined = new SampleClassOne();
     eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicit = undefined;
 
-    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | SampleClassOne = new SampleClassOne();
-    eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
-    eitherClassNeedsUndefinedExplicit = undefined;
+    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | undefined = new SampleClassOne();
+    eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo();
+    eitherClassNeedsUndefinedExplicitInterface = undefined;
 
     let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();
@@ -171,13 +171,13 @@
     let numberEmptyImplicit = [];
     numberImplicit.push(1);
 
-    let numberEmptyExplicit: number[] | Array = [];
+    let numberEmptyExplicit: number[] = [];
     numberEmptyExplicit.push(1);
 
     let numberFilledImplicit = [1];
     numberFilledImplicit.push(1);
 
-    let numberFilledExplicit: (number | string)[] | Array = [1];
+    let numberFilledExplicit: (number | string)[] = [1];
     numberFilledExplicit.push(1);
     numberFilledExplicit.push("");
 
@@ -189,7 +189,7 @@
     numberOrStringEmptyImplicit.push(1);
     numberOrStringEmptyImplicit.push("");
 
-    let numberOrStringEmptyExplicit: number[] | Array = [];
+    let numberOrStringEmptyExplicit: number[] = [];
     numberOrStringEmptyExplicit.push(1);
     numberOrStringEmptyExplicit.push("");
 
@@ -197,7 +197,7 @@
     numberOrStringFilledImplicit.push(1);
     numberOrStringFilledImplicit.push("");
 
-    let numberOrStringFilledExplicit: (number | string)[] | Array = [1];
+    let numberOrStringFilledExplicit: (number | string)[] = [1];
     numberOrStringFilledExplicit.push(1);
     numberOrStringFilledExplicit.push("");
 
@@ -211,7 +211,7 @@
     for (const string of iterableStrings) {
     }
 
-    const iterableStringOrUndefineds: (string | undefined)[] | Array = ["abc", "def", "ghi"];
+    const iterableStringOrUndefineds: (string | undefined)[] = ["abc", "def", "ghi"];
     for (const stringOrUndefined of iterableStringOrUndefineds) {
     }
 
