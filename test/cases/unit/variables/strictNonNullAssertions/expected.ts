@@ -111,7 +111,7 @@
 
     class SampleClassTwo implements SampleInterface {
         readonly optional = false;
-        readonly required = 1;
+        readonly required = 2;
     }
 
     let onlyInterfaceImplicit = { required: 1 };
@@ -134,7 +134,7 @@
     eitherClassNeedsUnionExplicit = new SampleClassTwo()!;
 
     let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
-    eitherClassNeedsUnionExplicit = new SampleClassTwo()!;
+    eitherClassNeedsUnionExplicitInterface = new SampleClassTwo()!;
 
     let eitherClassNeedsNullImplicit = new SampleClassOne();
     eitherClassNeedsNullImplicit = new SampleClassTwo()!;
@@ -142,15 +142,15 @@
 
     let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null = new SampleClassOne();
     eitherClassNeedsNullAndClassExplicit = new SampleClassTwo()!;
-    eitherClassNeedsNullImplicit = null!;
+    eitherClassNeedsNullAndClassExplicit = null!;
 
     let eitherClassNeedsUndefinedExplicit: SampleClassOne = new SampleClassOne();
     eitherClassNeedsUndefinedExplicit = new SampleClassTwo()!;
     eitherClassNeedsUndefinedExplicit = undefined!;
 
     let eitherClassNeedsUndefinedExplicitInterface: SampleInterface = new SampleClassOne();
-    eitherClassNeedsUndefinedExplicit = new SampleClassTwo()!;
-    eitherClassNeedsUndefinedExplicit = undefined!;
+    eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo()!;
+    eitherClassNeedsUndefinedExplicitInterface = undefined!;
 
     let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined = new SampleClassOne();
     eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();

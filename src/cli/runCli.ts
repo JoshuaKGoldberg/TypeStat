@@ -1,3 +1,7 @@
+// Ensure TypeScript is exposed before any files import it
+import { requireExposedTypeScript } from "../mutations/createExposedTypeScript";
+requireExposedTypeScript();
+
 import chalk from "chalk";
 import { Command } from "commander";
 import * as fs from "mz/fs";
