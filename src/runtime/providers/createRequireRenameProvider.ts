@@ -22,7 +22,7 @@ export const createRequireRenameProvider = (options: TypeStatOptions, allModifie
             }
 
             const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
-            const { fileNames, services } = createFileNamesAndServices(options);
+            const { fileNames, services } = await createFileNamesAndServices(options);
             const allFileNames = new Set(fileNames);
 
             for (const fileName of fileNames) {

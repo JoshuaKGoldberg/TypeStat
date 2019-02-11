@@ -23,7 +23,7 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
     return async (): Promise<IMutationsWave> => {
         const startTime = Date.now();
         const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
-        const { fileNames, services } = fileNamesAndServicesCache.get();
+        const { fileNames, services } = await fileNamesAndServicesCache.get();
         const waveStartedFromBeginning = lastFileIndex <= 0;
         let addedMutations = 0;
 

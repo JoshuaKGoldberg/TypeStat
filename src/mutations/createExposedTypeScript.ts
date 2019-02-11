@@ -19,7 +19,9 @@ This file finds `typescript.js` on disk and writes a change to expose the functi
 */
 
 import { fs } from "mz";
+import { EOL } from "os";
 import { Type } from "typescript";
+import { readCharactersOfFile } from "./readCharactersOfFile";
 
 /* tslint:disable no-dynamic-delete no-unsafe-any no-require-imports */
 
@@ -49,25 +51,40 @@ export type ExposedTypeChecker = import("typescript").TypeChecker & {
     isTypeAssignableTo(source: Type, target: Type): boolean;
 };
 
-export const requireExposedTypeScript = (): ExposedTypeScript => {
+export const requireExposedTypeScript = async (): Promise<ExposedTypeScript> => {
     // Find where the file should be required from
     const localRequireFile = require.resolve("typescript");
-    const originalContent = fs.readFileSync(localRequireFile).toString();
+
+    // Grab the existing first characters of the file: arbitrarily, 256 of them
+    // We do more than just the first line in case other tools have modified it
+    const originalContentStart = await readCharactersOfFile(localRequireFile, 256);
+
+    // If the file already has a /* TypeStat! */ in there, there's nothing to change
+    if (originalContentStart.includes("/* TypeStat! */")) {
+        return require(localRequireFile) as ExposedTypeScript;
+    }
+
+    const originalContent = (await fs.readFile(localRequireFile)).toString();
 
     // Save and clear any existing "typescript" module from the require cache
     const originalLocalRequireFile = require.cache[localRequireFile];
     delete require.cache[localRequireFile];
 
     // Write an export blurb to add `isTypeAssignableTo` to created `checker`s
-    const exposedContent = originalContent.replace("var checker = {", "var checker = { /* TypeStat! */ isTypeAssignableTo,");
-    fs.writeFileSync(localRequireFile, exposedContent);
+    await fs.writeFile(
+        localRequireFile,
+        [
+            "/* TypeStat! */",
+            "/* This file was modified by TypeStat to expose isTypeAssignableTo on type checkers. */",
+            originalContent.replace("var checker = {", "var checker = { /* TypeStat! */ isTypeAssignableTo,"),
+        ].join(EOL),
+    );
 
     // Require this new TypeScript that exposes `isTypeAssignableTo`
     const exposedTypeScript = require(localRequireFile);
 
-    // Add back whatever existing module was cached, and reset file contents
+    // Add back whatever existing module was cached
     delete require.cache[localRequireFile];
-    fs.writeFileSync(localRequireFile, originalContent);
     require.cache[localRequireFile] = originalLocalRequireFile;
 
     // Return the exposed version of TypeScript, and never speak of this again

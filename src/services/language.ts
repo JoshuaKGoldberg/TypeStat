@@ -15,11 +15,11 @@ export interface LanguageServices {
 }
 
 /**
- * @returns Associated language service and type information based on TypeStat options.
+ * @returns Promise for associated language service and type information based on TypeStat options.
  */
-export const createLanguageServices = (options: TypeStatOptions): LanguageServices => {
+export const createLanguageServices = async (options: TypeStatOptions): Promise<LanguageServices> => {
     // Collect file names and parse raw options into a TypeScript program with its configuration settings
-    const { fileNames, parsedConfiguration, program } = createProgramConfiguration(options);
+    const { fileNames, parsedConfiguration, program } = await createProgramConfiguration(options);
 
     // Create a TypeScript language service using the compiler host
     const servicesHost: ts.LanguageServiceHost = {

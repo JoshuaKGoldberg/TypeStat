@@ -4,9 +4,9 @@ import { readline } from "mz";
 import { TypeStatOptions } from "../options/types";
 import { createLanguageServices } from "../services/language";
 
-export const createFileNamesAndServices = (options: TypeStatOptions) => {
+export const createFileNamesAndServices = async (options: TypeStatOptions) => {
     options.logger.stdout.write(chalk.grey("Preparing language services to visit files...\n"));
-    const services = createLanguageServices(options);
+    const services = await createLanguageServices(options);
     const fileNames =
         options.fileNames === undefined
             ? services.parsedConfiguration.fileNames.filter((fileName) => !fileName.endsWith(".d.ts"))
