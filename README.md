@@ -25,7 +25,7 @@ It can...
 
 ✨ Fix `--noImplicitAny` across all your files with one command!
 
-✨ Annotate Missing `null`s and `undefined`s to get you started with `--strictNullChecks`!
+✨ Annotate missing `null`s and `undefined`s to get you started with `--strictNullChecks`!
 
 Doing so can allow you to enable these stricter compiler flags for all code without changing the runtime of existing code.
 Hooray!
