@@ -1,5 +1,14 @@
 # Development
 
+Thanks for looking at TypeStat!
+It's very new and I very much would appreciate your help.
+
+Any issue marked as [accepting prs](https://github.com/JoshuaKGoldberg/TypeStat/issues?q=is%3Aissue+is%3Aopen+label%3A%22accepting+prs%22) on the issue tracker is fair game to take on.
+
+Please do file issues if you find bugs or lacking features!
+
+## Local Setup
+
 After installing [Node >=8](https://nodejs.org/en/download) and [yarn](https://yarnpkg.com), clone and install packages locally with:
 
 ```shell
