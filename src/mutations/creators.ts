@@ -3,6 +3,7 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
 import { NodeWithAddableType, NodeWithCreatableType } from "../shared/nodeTypes";
+
 import { joinIntoType } from "./aliasing";
 import { collectUsageFlagsAndSymbols } from "./collecting";
 

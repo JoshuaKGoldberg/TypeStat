@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 
 import { LanguageServices } from "../services/language";
+
 import { findNodeByStartingPosition } from "./nodes";
 
 export const findRelevantNodeReferences = (

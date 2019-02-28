@@ -1,6 +1,6 @@
 // Ensure TypeScript is exposed before any files import it
-import { requireExposedTypeScript } from "../mutations/createExposedTypeScript";
-requireExposedTypeScript();
+// tslint:disable-next-line
+require("../mutations/createExposedTypeScript").requireExposedTypeScript();
 
 import chalk from "chalk";
 import { Command } from "commander";
@@ -9,6 +9,7 @@ import * as path from "path";
 
 import { ResultStatus, typeStat, TypeStatArgv, TypeStatResult } from "../index";
 import { processLogger } from "../logging/logger";
+
 import { captureHelp } from "./captureHelp";
 
 const createDefaultRuntime = () => ({

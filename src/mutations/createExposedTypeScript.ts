@@ -21,6 +21,7 @@ This file finds `typescript.js` on disk and writes a change to expose the functi
 import { fs } from "mz";
 import { EOL } from "os";
 import { Type } from "typescript";
+
 import { readCharactersOfFile } from "./readCharactersOfFile";
 
 /* tslint:disable no-dynamic-delete no-unsafe-any no-require-imports */

@@ -4,6 +4,7 @@ import { TypeStatArgv } from "../index";
 import { processLogger } from "../logging/logger";
 import { arrayify, collectOptionals } from "../shared/arrays";
 import { collectAsConfiguration } from "../shared/booleans";
+
 import { collectAddedMutators } from "./parsing/collectAddedMutators";
 import { collectFileOptions } from "./parsing/collectFileOptions";
 import { collectNoImplicitAny } from "./parsing/collectNoImplicitAny";

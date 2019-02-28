@@ -3,6 +3,7 @@ import * as ts from "typescript";
 
 import { getQuickErrorSummary } from "../shared/errors";
 import { NodeSelector } from "../shared/nodeTypes";
+
 import { FileMutationsRequest } from "./fileMutator";
 
 export type NodeVisitor<TNode extends ts.Node> = (node: TNode, request: FileMutationsRequest) => Readonly<IMutation> | undefined;

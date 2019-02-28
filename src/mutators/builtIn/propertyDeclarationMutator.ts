@@ -1,7 +1,7 @@
+import { IMutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { IMutation } from "automutate";
 import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../mutations/codeFixes/noImplicitAny";
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../mutations/creators";
 import { findNodeByStartingPosition, isNodeAssigningBinaryExpression } from "../../shared/nodes";

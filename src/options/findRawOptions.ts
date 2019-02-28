@@ -1,9 +1,9 @@
-import * as path from "path";
-
 // tslint:disable-next-line:no-require-imports
 import cosmiconfig = require("cosmiconfig");
+import * as path from "path";
 
 import { normalizeAndSlashify } from "../shared/paths";
+
 import { RawTypeStatOptions } from "./types";
 
 /**
