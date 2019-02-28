@@ -3,6 +3,7 @@ import * as ts from "typescript";
 
 import { ExposedProgram } from "../mutations/createExposedTypeScript";
 import { TypeStatOptions } from "../options/types";
+
 import { createProgramConfiguration } from "./createProgramConfiguration";
 
 /**

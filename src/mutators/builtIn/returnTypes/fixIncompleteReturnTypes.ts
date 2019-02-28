@@ -1,6 +1,7 @@
 import { createTypeAdditionMutation } from "../../../mutations/creators";
 import { FunctionLikeDeclarationWithType } from "../../../shared/nodeTypes";
 import { FileMutationsRequest } from "../../fileMutator";
+
 import { collectReturningNodeExpressions } from "./collectReturningNodeExpressions";
 
 export const fixIncompleteReturnTypes = (request: FileMutationsRequest, node: FunctionLikeDeclarationWithType) => {

@@ -4,6 +4,7 @@ import * as ts from "typescript";
 import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../mutations/codeFixes/noImplicitAny";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
+
 import { fixVariableIncompleteType } from "./variableDeclarations/fixVariableIncompleteType";
 
 export const variableDeclarationMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {

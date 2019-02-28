@@ -8,6 +8,7 @@ import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions, TypeStatOptions } from "../options/types";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider";
 import { arrayify } from "../shared/arrays";
+
 import { FakeWritableStream } from "./FakeWritableStream";
 
 interface ParsedTestArgv {

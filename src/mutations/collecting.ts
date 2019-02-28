@@ -3,6 +3,7 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
 import { setSubtract } from "../shared/sets";
+
 import { getApplicableTypeAliases } from "./aliasing";
 import { findMissingFlags, isTypeFlagSetRecursively } from "./collecting/flags";
 

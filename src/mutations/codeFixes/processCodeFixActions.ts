@@ -2,6 +2,7 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { isNotUndefined } from "../../shared/arrays";
+
 import { extractRawCodefixUnionTypes } from "./extractRawCodefixUnionTypes";
 
 /**

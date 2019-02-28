@@ -1,6 +1,8 @@
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
+
 import { LanguageServices } from "../services/language";
+
 import { findRelevantNodeReferences } from "./references";
 
 export class FileInfoCache {

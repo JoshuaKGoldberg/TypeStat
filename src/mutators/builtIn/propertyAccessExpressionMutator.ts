@@ -4,6 +4,7 @@ import * as ts from "typescript";
 import { getMissingPropertyMutations } from "../../mutations/codeFixes/addMissingProperty";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
+
 import { getStrictPropertyAccessFix } from "./propertyAccesses/fixStrictPropertyAccess";
 
 export const propertyAccessExpressionMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {

@@ -1,6 +1,6 @@
+import { IMutation } from "automutate";
 import * as ts from "typescript";
 
-import { IMutation } from "automutate";
 import { getNoImplicitThisMutations } from "../../mutations/codeFixes/noImplicitThis";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";

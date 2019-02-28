@@ -3,6 +3,7 @@ import * as path from "path";
 import { TypeStatArgv } from "../index";
 import { globAllAsync } from "../shared/glob";
 import { normalizeAndSlashify } from "../shared/paths";
+
 import { fillOutRawOptions } from "./fillOutRawOptions";
 import { findRawOptions, FoundRawOptions } from "./findRawOptions";
 import { parseRawCompilerOptions } from "./parseRawCompilerOptions";

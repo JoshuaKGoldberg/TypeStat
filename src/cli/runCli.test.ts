@@ -1,8 +1,8 @@
-import { runCli } from "./runCli";
-
 import { ResultStatus } from "..";
 import { version } from "../../package.json";
+
 import { StubWritableStream } from "./index.stubs";
+import { runCli } from "./runCli";
 
 const createTestArgs = (...argv: string[]) => ({
     argv: ["node.exe", "typestat", ...argv],
