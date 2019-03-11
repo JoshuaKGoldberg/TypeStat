@@ -8,7 +8,7 @@ Built-in mutators will be disabled if you provide any custom ones.
 Use the `-m`/`--mutators` CLI flag and/or `mutators` configuration setting to add `require`-style paths of mutators to add.
 
 ```shell
-typestat --add my-mutator-module
+typestat --mutators my-mutator-module
 ```
 
 ```json
