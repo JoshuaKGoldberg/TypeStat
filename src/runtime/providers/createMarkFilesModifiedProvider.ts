@@ -1,8 +1,8 @@
 import { IFileMutations, IMutationsWave, ITextInsertMutation } from "automutate";
 import * as fs from "mz/fs";
-import { EOL } from "os";
 
 import { TypeStatOptions } from "../../options/types";
+import { printNewLine } from "../../shared/printing";
 import { createSingleUseProvider } from "../createSingleUserProvider";
 
 /**
@@ -36,7 +36,7 @@ const createFileMutations = async (options: TypeStatOptions, fileName: string): 
     const mutations: ITextInsertMutation[] = [];
     const fileContents = (await fs.readFile(fileName)).toString();
     const fileContentsTrimmed = fileContents.trim();
-    const newLine = options.compilerOptions.newLine === undefined ? EOL : options.compilerOptions.newLine;
+    const newLine = printNewLine(options.compilerOptions);
 
     if (options.files.above !== "" && !fileContentsTrimmed.startsWith(options.files.above)) {
         mutations.push({

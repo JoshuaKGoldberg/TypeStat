@@ -1,7 +1,7 @@
 import { IMutation, ITextInsertMutation } from "automutate";
-import { EOL } from "os";
 import * as ts from "typescript";
 
+import { printNewLine } from "../../shared/printing";
 import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../fileMutator";
 
@@ -47,15 +47,11 @@ const visitClassDeclaration = (node: ts.ClassDeclaration, request: FileMutations
         return undefined;
     }
 
+    // Since we did find the propTypes object, we can generate an interface from its members
+    // That interface will be injected with blank lines around it just before the class
     const interfaceNode = createInterfaceFromPropTypes(node, propTypes);
     const interfaceNodeText = request.services.printNode(interfaceNode);
-    // Todo: unified utility for printing endlines with EOL as backup..
-    const endline =
-        request.options.compilerOptions.newLine === undefined
-            ? EOL
-            : request.options.compilerOptions.newLine === ts.NewLineKind.CarriageReturnLineFeed
-            ? "\r\n"
-            : "\n";
+    const endline = printNewLine(request.options.compilerOptions);
 
     return {
         insertion: [endline, endline, interfaceNodeText, endline].join(""),
