@@ -1,7 +1,6 @@
 import * as ts from "typescript";
 
-import { getPropTypesMember } from "./propTypesExtraction";
-import { createPropTypesMemberTypeNode } from "./propTypesTransforms";
+import { createPropTypesProperty } from "./propTypesProperties";
 
 export const createInterfaceFromPropTypes = (node: ts.ClassDeclaration, propTypes: ts.ObjectLiteralExpression) => {
     const members: ts.TypeElement[] = [];
@@ -21,29 +20,5 @@ export const createInterfaceFromPropTypes = (node: ts.ClassDeclaration, propType
         undefined /* typeParameters */,
         undefined /* heritageClauses */,
         members,
-    );
-};
-
-const createPropTypesProperty = (rawProperty: ts.ObjectLiteralElementLike) => {
-    if (!ts.isPropertyAssignment(rawProperty) || !ts.isIdentifier(rawProperty.name)) {
-        return undefined;
-    }
-
-    const propTypesMembers = getPropTypesMember(rawProperty.initializer);
-    if (propTypesMembers === undefined) {
-        return undefined;
-    }
-
-    const memberTypeNode = createPropTypesMemberTypeNode(propTypesMembers);
-    if (memberTypeNode === undefined) {
-        return undefined;
-    }
-
-    return ts.createPropertySignature(
-        undefined /* modifiers */,
-        ts.createIdentifier(rawProperty.name.text),
-        propTypesMembers.isRequired === undefined ? ts.createToken(ts.SyntaxKind.QuestionToken) : undefined,
-        memberTypeNode,
-        undefined /* initializer */,
     );
 };

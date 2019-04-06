@@ -1,11 +1,9 @@
 import * as ts from "typescript";
 
-import { PropTypesMembers } from "./propTypesExtraction";
+import { PropTypesAccessNode, PropTypesMembers } from "./propTypesExtraction";
+import { createPropTypesProperty } from "./propTypesProperties";
 
-export const createPropTypesMemberTypeNode = ({
-    accessNode,
-    nameNode,
-}: Exclude<PropTypesMembers, "isRequired">): ts.TypeNode | undefined => {
+export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropTypesMembers, "isRequired">): ts.TypeNode | undefined => {
     switch (nameNode.text) {
         case "array":
             return ts.createArrayTypeNode(ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword));
@@ -22,16 +20,7 @@ export const createPropTypesMemberTypeNode = ({
             return ts.createTypeReferenceNode(ts.createIdentifier("ReactElement"), undefined);
 
         case "instanceOf":
-            if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
-                return undefined;
-            }
-
-            const className = accessNode.parent.arguments[0];
-            if (!ts.isIdentifier(className)) {
-                return undefined;
-            }
-
-            return ts.createTypeReferenceNode(ts.createIdentifier(className.text), undefined);
+            return createInstanceOfTransform(accessNode);
 
         case "number":
             return ts.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
@@ -43,6 +32,9 @@ export const createPropTypesMemberTypeNode = ({
         case "object":
             return ts.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword);
 
+        case "shape":
+            return createShapeTransform(accessNode);
+
         case "string":
             return ts.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
 
@@ -53,6 +45,41 @@ export const createPropTypesMemberTypeNode = ({
     // Todo: arrayOf
     // Todo: oneOf
     // Todo: oneOfType
-    // Todo: shape
     return undefined;
+};
+
+const createInstanceOfTransform = (accessNode: PropTypesAccessNode) => {
+    if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
+        return undefined;
+    }
+
+    const className = accessNode.parent.arguments[0];
+    if (!ts.isIdentifier(className)) {
+        return undefined;
+    }
+
+    return ts.createTypeReferenceNode(ts.createIdentifier(className.text), undefined);
+};
+
+const createShapeTransform = (accessNode: PropTypesAccessNode) => {
+    if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
+        return undefined;
+    }
+
+    const shape = accessNode.parent.arguments[0];
+    // Todo: handle shared variables and `...` object spreads
+    if (!ts.isObjectLiteralExpression(shape)) {
+        return undefined;
+    }
+
+    const members: ts.TypeElement[] = [];
+
+    for (const rawProperty of shape.properties) {
+        const member = createPropTypesProperty(rawProperty);
+        if (member !== undefined) {
+            members.push(member);
+        }
+    }
+
+    return ts.createTypeLiteralNode(members);
 };

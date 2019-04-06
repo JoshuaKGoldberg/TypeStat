@@ -14,6 +14,26 @@ interface MyComponentProps {
     nodeRequired: ReactNode;
     number?: number;
     numberRequired: number;
+    shape?: {
+        subShape?: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
+        };
+        subShapeRequired: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
+        };
+    };
+    shapeRequired: {
+        subShape?: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
+        };
+        subShapeRequired: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
+        };
+    };
     string?: string;
     stringRequired: string;
 }
@@ -58,6 +78,6 @@ interface MyComponentProps {
             strings: PropTypes.oneOf([1, 2, 3]),
             stringsRequired: PropTypes.oneOf([1, 2, 3]).isRequired,
             stringsType: PropTypes.oneOfType([PropTypes.string]),
-        }
+        };
     }
 }
