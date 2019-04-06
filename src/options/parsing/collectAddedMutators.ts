@@ -2,7 +2,7 @@ import * as path from "path";
 
 import { TypeStatArgv } from "../../index";
 import { ProcessLogger } from "../../logging/logger";
-import { builtInFileMutators } from "../../mutators/builtInFileMutators";
+import { builtInFileMutators } from "../../mutators/builtIn";
 import { FileMutator } from "../../mutators/fileMutator";
 import { arrayify, collectOptionals } from "../../shared/arrays";
 import { getQuickErrorSummary } from "../../shared/errors";

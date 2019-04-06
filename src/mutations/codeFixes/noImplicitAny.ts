@@ -31,19 +31,16 @@ export const canNodeBeFixedForNoImplicitAny = (node: NoImplicitAnyNode): node is
     (!ts.isParameter(node) || node === node.parent.parameters[0]);
 
 export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, request: FileMutationsRequest): IMutation | undefined => {
-    // If we fix for --noImplicitAny compiler complaints, try to get a fix for it and mutate using it
-    if (request.options.fixes.noImplicitAny) {
-        const codeFixes = getNoImplicitAnyCodeFixes(node, request);
-
-        if (codeFixes.length !== 0) {
-            return createCodeFixCreationMutation(codeFixes, {
-                ignoreKnownBlankTypes: true,
-            });
-        }
+    // Retrieve code fix suggestions for --noImplicitAny from the requesting language service
+    const codeFixes = getNoImplicitAnyCodeFixes(node, request);
+    if (codeFixes.length === 0) {
+        return undefined;
     }
 
-    // We don't bother making our own --noImplicitAny fixes, since TypeScript is guaranteed to do it better
-    return undefined;
+    // Convert those code fix suggestions to our own mutations format
+    return createCodeFixCreationMutation(codeFixes, {
+        ignoreKnownBlankTypes: true,
+    });
 };
 
 /**

@@ -12,17 +12,17 @@ import { processCodeFixActions } from "./processCodeFixActions";
 const fixMissingPropertyErrorCode = 2339;
 
 export const getMissingPropertyMutations = (request: FileMutationsRequest, node: ts.PropertyAccessExpression): IMutation | undefined => {
-    // If we fix for missing properties and this is a "this" access, try to get a fix for it and mutate using it
-    if (request.options.fixes.missingProperties && nodeIsSettingThisMember(node)) {
-        const codeFixes = getMissingPropertyCodeFixes(node, request);
-
-        if (codeFixes.length !== 0) {
-            return createCodeFixCreationMutation(codeFixes);
-        }
+    // Skip nodes that aren't setting a member of a `this` node
+    if (!nodeIsSettingThisMember(node)) {
+        return undefined;
     }
 
-    // We don't bother making our own missing property fixes, since TypeScript is guaranteed to do it better
-    return undefined;
+    const codeFixes = getMissingPropertyCodeFixes(node, request);
+    if (codeFixes.length === 0) {
+        return undefined;
+    }
+
+    return createCodeFixCreationMutation(codeFixes);
 };
 
 /**

@@ -83,3 +83,17 @@ export const getVariableInitializerForExpression = (
 
     return valueDeclaration.initializer;
 };
+
+export const getClassExtendsType = (node: ts.ClassDeclaration): ts.ExpressionWithTypeArguments | undefined => {
+    const { heritageClauses } = node;
+    if (heritageClauses === undefined) {
+        return undefined;
+    }
+
+    const classExtension = heritageClauses.find((clause) => clause.token === ts.SyntaxKind.ExtendsKeyword);
+    if (classExtension === undefined) {
+        return undefined;
+    }
+
+    return classExtension.types.length === 1 ? classExtension.types[0] : undefined;
+};

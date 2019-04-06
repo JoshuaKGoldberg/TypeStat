@@ -21,7 +21,6 @@ const noFixesSpecified = (options: TypeStatOptions): boolean =>
     !options.fixes.incompleteTypes &&
     !options.fixes.missingProperties &&
     !options.fixes.noImplicitAny &&
-    !options.fixes.noImplicitThis &&
     !options.fixes.strictNonNullAssertions;
 
 const strictNonNullAssertionsInNonStrictMode = (options: TypeStatOptions): boolean =>
