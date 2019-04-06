@@ -36,11 +36,36 @@ typestat --fixIncompleteTypes
 }
 ```
 
-For example, if a variable is typed as a `number` but is also assigned a `string`, this would change its type to `number | strng`:
+For example, if a variable is typed as a `number` but is also assigned a `string`, this would change its type to `number | string`:
 
 ```diff
 - let abc: number = "";
 + let abc: number | string = "";
+```
+
+### React
+
+React components can have types their props and states filled in using:
+
+* Component classes: static `propTypes` properties
+* Functional components: `propTypes` properties
+* Both: regular usage in JSX
+
+Component classes will generate `interface`s, while functional components will generate `type`s.
+
+For example, the change to this `NameGreeter` component would be:
+
+```diff
++ type NameGreeterProps = {
++     name: string;
++ };
++
+- const NameGreeter = (props) => <span>Hello, {props.name}!</span>;
++ const NameGreeter: React.FC<NameGreeterProps> = (props) => <span>Hello, {props.name}!</span>;
+
+NameGreeter.propTypes = {
+    name: PropTypes.string.isRequired,
+};
 ```
 
 ## `--fixMissingProperties`/`missingProperties`
