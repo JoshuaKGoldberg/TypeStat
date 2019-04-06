@@ -8,16 +8,20 @@ interface MyComponentProps {
     arrayRequired: any[];
     bool?: boolean;
     boolRequired: boolean;
+    element?: React.ReactElement;
+    elementRequired: React.ReactElement;
     func?: Function;
     funcRequired: Function;
     instanceOfString?: String;
     instanceOfStringRequired: String;
-    node?: ReactNode;
-    nodeRequired: ReactNode;
+    node?: React.ReactNode;
+    nodeRequired: React.ReactNode;
     number?: number;
     numberRequired: number;
     numbers?: number[];
     numbersRequired: number[];
+    numbersExact?: (1 | 2 | 3)[];
+    numbersExactRequired: (1 | 2 | 3)[];
     shape?: {
         subShape?: {
             subSubNumber?: number;
@@ -40,6 +44,10 @@ interface MyComponentProps {
     };
     string?: string;
     stringRequired: string;
+    strings?: ("a" | "bc" | "def")[];
+    stringsRequired: ("a" | "bc" | "def")[];
+    stringsAndNumbers?: ("a" | 2 | "def" | 4)[];
+    stringsAndNumbersRequired: ("a" | 2 | "def" | 4)[];
 }
 
     class MyComponent extends React.Component {
@@ -48,6 +56,8 @@ interface MyComponentProps {
             arrayRequired: PropTypes.array.isRequired,
             bool: PropTypes.bool,
             boolRequired: PropTypes.bool.isRequired,
+            element: PropTypes.element,
+            elementRequired: PropTypes.element.isRequired,
             func: PropTypes.func,
             funcRequired: PropTypes.func.isRequired,
             instanceOfString: PropTypes.instanceOf(String),
@@ -83,8 +93,10 @@ interface MyComponentProps {
             }).isRequired,
             string: PropTypes.string,
             stringRequired: PropTypes.string.isRequired,
-            strings: PropTypes.oneOf([1, 2, 3]),
-            stringsRequired: PropTypes.oneOf([1, 2, 3]).isRequired,
+            strings: PropTypes.oneOf(['a', 'bc', 'def']),
+            stringsRequired: PropTypes.oneOf(['a', 'bc', 'def']).isRequired,
+            stringsAndNumbers: PropTypes.oneOf(['a', 2, 'def', 4]),
+            stringsAndNumbersRequired: PropTypes.oneOf(['a', 2, 'def', 4]).isRequired,
             stringsType: PropTypes.oneOfType([PropTypes.string]),
         };
     }

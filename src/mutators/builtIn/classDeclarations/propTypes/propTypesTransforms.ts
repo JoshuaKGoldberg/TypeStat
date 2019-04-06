@@ -1,5 +1,7 @@
 import * as ts from "typescript";
 
+import { KnownTypeLiteralNode, transformLiteralTypeToKeyword } from "../../../../shared/transforms";
+
 import { getPropTypesMember, PropTypesAccessNode, PropTypesMembers } from "./propTypesExtraction";
 import { createPropTypesProperty } from "./propTypesProperties";
 
@@ -18,9 +20,7 @@ export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropT
             return ts.createTypeReferenceNode(ts.createIdentifier("Function"), undefined);
 
         case "element":
-            // Todo: how to auto-import React just for its types?
-            // Todo: is this the right type name?
-            return ts.createTypeReferenceNode(ts.createIdentifier("ReactElement"), undefined);
+            return ts.createTypeReferenceNode(ts.createIdentifier("React.ReactElement"), undefined);
 
         case "instanceOf":
             return createInstanceOfTransform(accessNode);
@@ -29,11 +29,13 @@ export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropT
             return ts.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
 
         case "node":
-            // Todo: how to auto-import React just for its types?
-            return ts.createTypeReferenceNode(ts.createIdentifier("ReactNode"), undefined);
+            return ts.createTypeReferenceNode(ts.createIdentifier("React.ReactNode"), undefined);
 
         case "object":
             return ts.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword);
+
+        case "oneOf":
+            return createOneOfTransform(accessNode);
 
         case "shape":
             return createShapeTransform(accessNode);
@@ -45,7 +47,6 @@ export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropT
             return ts.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword);
     }
 
-    // Todo: oneOf
     // Todo: oneOfType
     return undefined;
 };
@@ -79,6 +80,30 @@ const createInstanceOfTransform = (accessNode: PropTypesAccessNode) => {
     }
 
     return ts.createTypeReferenceNode(ts.createIdentifier(className.text), undefined);
+};
+
+const createOneOfTransform = (accessNode: PropTypesAccessNode) => {
+    if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
+        return undefined;
+    }
+
+    const allowedItems = accessNode.parent.arguments[0];
+    if (!ts.isArrayLiteralExpression(allowedItems)) {
+        return undefined;
+    }
+
+    const allowedTypes = allowedItems.elements
+        .map(transformLiteralTypeToKeyword)
+        .filter((typeNode): typeNode is KnownTypeLiteralNode => typeNode !== undefined);
+    if (allowedTypes.length === 0) {
+        return undefined;
+    }
+
+    const unionType = ts.createUnionTypeNode(allowedTypes);
+
+    const arrayTemplatedType = allowedTypes.length === 1 ? unionType : ts.createParenthesizedType(unionType);
+
+    return ts.createArrayTypeNode(arrayTemplatedType);
 };
 
 const createShapeTransform = (accessNode: PropTypesAccessNode) => {

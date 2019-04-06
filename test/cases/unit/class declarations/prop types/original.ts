@@ -8,6 +8,8 @@ import PropTypes from "prop-types";
             arrayRequired: PropTypes.array.isRequired,
             bool: PropTypes.bool,
             boolRequired: PropTypes.bool.isRequired,
+            element: PropTypes.element,
+            elementRequired: PropTypes.element.isRequired,
             func: PropTypes.func,
             funcRequired: PropTypes.func.isRequired,
             instanceOfString: PropTypes.instanceOf(String),
@@ -43,8 +45,10 @@ import PropTypes from "prop-types";
             }).isRequired,
             string: PropTypes.string,
             stringRequired: PropTypes.string.isRequired,
-            strings: PropTypes.oneOf([1, 2, 3]),
-            stringsRequired: PropTypes.oneOf([1, 2, 3]).isRequired,
+            strings: PropTypes.oneOf(["a", "bc", "def"]),
+            stringsRequired: PropTypes.oneOf(["a", "bc", "def"]).isRequired,
+            stringsAndNumbers: PropTypes.oneOf(["a", 2, "def", 4]),
+            stringsAndNumbersRequired: PropTypes.oneOf(["a", 2, "def", 4]).isRequired,
             stringsType: PropTypes.oneOfType([PropTypes.string]),
         };
     }
