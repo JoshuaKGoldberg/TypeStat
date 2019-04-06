@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 {
     class MyComponent extends React.Component {
         static propTypes = {
+            array: PropTypes.array,
+            arrayRequired: PropTypes.array.isRequired,
             bool: PropTypes.bool,
             boolRequired: PropTypes.bool.isRequired,
             func: PropTypes.func,
@@ -14,8 +16,10 @@ import PropTypes from "prop-types";
             nodeRequired: PropTypes.node.isRequired,
             number: PropTypes.number,
             numberRequired: PropTypes.number.isRequired,
-            numbers: PropTypes.oneOf([1, 2, 3]),
-            numbersRequired: PropTypes.oneOf([1, 2, 3]).isRequired,
+            numbers: PropTypes.arrayOf(PropTypes.number),
+            numbersRequired: PropTypes.arrayOf(PropTypes.number).isRequired,
+            numbersExact: PropTypes.oneOf([1, 2, 3]),
+            numbersExactRequired: PropTypes.oneOf([1, 2, 3]).isRequired,
             numbersType: PropTypes.oneOfType([PropTypes.number]),
             shape: PropTypes.shape({
                 subShape: PropTypes.shape({

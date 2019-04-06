@@ -1,12 +1,15 @@
 import * as ts from "typescript";
 
-import { PropTypesAccessNode, PropTypesMembers } from "./propTypesExtraction";
+import { getPropTypesMember, PropTypesAccessNode, PropTypesMembers } from "./propTypesExtraction";
 import { createPropTypesProperty } from "./propTypesProperties";
 
 export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropTypesMembers, "isRequired">): ts.TypeNode | undefined => {
     switch (nameNode.text) {
         case "array":
             return ts.createArrayTypeNode(ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword));
+
+        case "arrayOf":
+            return createArrayOfTransform(accessNode);
 
         case "bool":
             return ts.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
@@ -42,10 +45,27 @@ export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropT
             return ts.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword);
     }
 
-    // Todo: arrayOf
     // Todo: oneOf
     // Todo: oneOfType
     return undefined;
+};
+
+const createArrayOfTransform = (accessNode: PropTypesAccessNode) => {
+    if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
+        return undefined;
+    }
+
+    const memberTypeNode = getPropTypesMember(accessNode.parent.arguments[0]);
+    if (memberTypeNode === undefined) {
+        return undefined;
+    }
+
+    const innerTransform = createPropTypesTransform(memberTypeNode);
+    if (innerTransform === undefined) {
+        return undefined;
+    }
+
+    return ts.createArrayTypeNode(innerTransform);
 };
 
 const createInstanceOfTransform = (accessNode: PropTypesAccessNode) => {
