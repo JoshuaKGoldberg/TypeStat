@@ -6,7 +6,7 @@ export type KnownTypeLiteralNode =
     | ts.NullLiteral & ts.Token<ts.SyntaxKind.NullKeyword>
     | ts.TypeQueryNode;
 
-export const transformLiteralTypeToKeyword = (node: ts.Node): KnownTypeLiteralNode | undefined => {
+export const transformLiteralToTypeLiteralNode = (node: ts.Node): KnownTypeLiteralNode | undefined => {
     if (ts.isIdentifier(node)) {
         ts.createTypeQueryNode(ts.createIdentifier(node.text));
     }

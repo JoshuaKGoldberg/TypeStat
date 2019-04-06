@@ -50,6 +50,7 @@ import PropTypes from "prop-types";
             stringsAndNumbers: PropTypes.oneOf(["a", 2, "def", 4]),
             stringsAndNumbersRequired: PropTypes.oneOf(["a", 2, "def", 4]).isRequired,
             stringsType: PropTypes.oneOfType([PropTypes.string]),
+            stringsOrNumbersType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         };
     }
 }
