@@ -13,6 +13,7 @@ export interface LanguageServices {
     readonly parsedConfiguration: ts.ParsedCommandLine;
     readonly languageService: ts.LanguageService;
     readonly program: ExposedProgram;
+    readonly printNode: (node: ts.Node) => string;
 }
 
 /**
@@ -37,5 +38,16 @@ export const createLanguageServices = (options: TypeStatOptions): LanguageServic
     };
     const languageService = ts.createLanguageService(servicesHost, ts.createDocumentRegistry());
 
-    return { languageService, parsedConfiguration, program };
+    // This printer will later come in handy for emitting raw ASTs to text
+    const printer = ts.createPrinter({
+        newLine: options.compilerOptions.newLine,
+    });
+    const treePrinter = (node: ts.Node) =>
+        printer.printNode(
+            ts.EmitHint.Unspecified,
+            node,
+            ts.createSourceFile("temp.ts", "", ts.ScriptTarget.Latest, false, ts.ScriptKind.TSX),
+        );
+
+    return { languageService, parsedConfiguration, program, printNode: treePrinter };
 };
