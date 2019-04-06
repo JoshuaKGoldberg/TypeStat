@@ -14,29 +14,29 @@ export const classDeclarationMutator: FileMutator = (request: FileMutationsReque
         return [];
     }
 
+    const isVisitableComponentClass = (node: ts.Node): node is ts.ClassDeclaration =>
+        ts.isClassDeclaration(node) && classExtendsReactComponent(node);
+
+    const classExtendsReactComponent = (node: ts.ClassDeclaration): boolean => {
+        const { heritageClauses } = node;
+        if (heritageClauses === undefined) {
+            return false;
+        }
+
+        const classExtension = heritageClauses.find((clause) => clause.token === ts.SyntaxKind.ExtendsKeyword);
+        if (classExtension === undefined) {
+            return false;
+        }
+
+        return extensionExpressionIsReactComponent(classExtension.types[0]);
+    };
+
+    const extensionExpressionIsReactComponent = (node: ts.ExpressionWithTypeArguments): boolean => {
+        // Todo: actually check the type for this
+        return node.getText().includes("Component");
+    };
+
     return collectMutationsFromNodes(request, isVisitableComponentClass, visitClassDeclaration);
-};
-
-const isVisitableComponentClass = (node: ts.Node): node is ts.ClassDeclaration =>
-    ts.isClassDeclaration(node) && classExtendsReactComponent(node);
-
-const classExtendsReactComponent = (node: ts.ClassDeclaration): boolean => {
-    const { heritageClauses } = node;
-    if (heritageClauses === undefined) {
-        return false;
-    }
-
-    const classExtension = heritageClauses.find((clause) => clause.token === ts.SyntaxKind.ExtendsKeyword);
-    if (classExtension === undefined) {
-        return false;
-    }
-
-    return extensionExpressionIsReactComponent(classExtension.types[0]);
-};
-
-const extensionExpressionIsReactComponent = (node: ts.ExpressionWithTypeArguments): boolean => {
-    // Todo: actually check the type this
-    return node.getText().includes("Component");
 };
 
 const visitClassDeclaration = (node: ts.ClassDeclaration, request: FileMutationsRequest): ITextInsertMutation | undefined => {

@@ -47,7 +47,9 @@ For example, if a variable is typed as a `number` but is also assigned a `string
 
 React components can have types their props and states filled in using:
 
-* Component classes: static `propTypes` properties
+* Component classes:
+  * `static propTypes = ...` properties
+  * Later-assigned `.propTypes = ...` properties
 * Functional components: `propTypes` properties
 * Both: regular usage in JSX
 
@@ -56,17 +58,24 @@ Component classes will generate `interface`s, while functional components will g
 For example, the change to this `NameGreeter` component would be:
 
 ```diff
-+ type NameGreeterProps = {
++ interface NameGreeterProps {
 +     name: string;
-+ };
-+
-- const NameGreeter = (props) => <span>Hello, {props.name}!</span>;
-+ const NameGreeter: React.FC<NameGreeterProps> = (props) => <span>Hello, {props.name}!</span>;
++ }
 
-NameGreeter.propTypes = {
-    name: PropTypes.string.isRequired,
-};
+- class NameGreeter extends React.Component {
++ class NameGreeter extends React.Component<NameGreeterProps> {
+    static propTypes = {
+        name: PropTypes.string.isRequired,
+    };
+
+    render() {
+        return `Hello, ${this.props.name}!`;
+    }
+}
 ```
+
+> So far, only `static propTypes` are implemented.
+> See [#129](https://github.com/JoshuaKGoldberg/TypeStat/pull/129) for tracking on more!
 
 ## `--fixMissingProperties`/`missingProperties`
 
