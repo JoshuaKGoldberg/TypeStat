@@ -60,10 +60,10 @@ Once TypeStat has visited each file, it will either:
 For each file it visits, [`findMutationsInFile`](../src/runtime/findMutationsInFile.ts)
 will attempt to apply [built-in file mutators](../src/mutators/builtIn/index.ts):
 
-1. [`fixIncompleteTypes`](../src/mutators/builtIn/fixIncompleteTypes/README.md)
-2. [`fixMissingProperties`](../src/mutators/builtIn/fixMissingProperties/README.md)
-3. [`fixNoImplicitAny`](../src/mutators/builtIn/fixNoImplicitAny/README.md)
-4. [`fixStrictNonNullAssertions`](../src/mutators/builtIn/fixStrictNonNullAssertions/README.md)
+* [`fixIncompleteTypes`](../src/mutators/builtIn/fixIncompleteTypes/README.md)
+* [`fixMissingProperties`](../src/mutators/builtIn/fixMissingProperties/README.md)
+* [`fixNoImplicitAny`](../src/mutators/builtIn/fixNoImplicitAny/README.md)
+* [`fixStrictNonNullAssertions`](../src/mutators/builtIn/fixStrictNonNullAssertions/README.md)
 
 Each fixer targets a general range of potential type improvements and contains a series of sub-fixers that target individual improvements.
 For example, `fixIncompleteTypes` contains a `fixIncompleteParameterTypes` fixer that fills in incomplete types for parameters.

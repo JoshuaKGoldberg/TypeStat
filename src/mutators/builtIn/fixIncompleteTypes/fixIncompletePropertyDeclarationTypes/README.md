@@ -1,1 +1,0 @@
-# Incomplete Property Declaration Types

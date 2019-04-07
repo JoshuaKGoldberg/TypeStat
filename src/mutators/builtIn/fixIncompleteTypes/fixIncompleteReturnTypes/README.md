@@ -1,3 +1,0 @@
-# Incomplete Return Types
-
-wat

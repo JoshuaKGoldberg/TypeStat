@@ -1,1 +1,0 @@
-# --noImplicitAny Property Declarations
