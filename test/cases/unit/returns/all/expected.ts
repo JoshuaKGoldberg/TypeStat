@@ -1,4 +1,4 @@
-{
+(function() {
     function functionReturnsString(): string {
         return "";
     }
@@ -84,4 +84,4 @@
 
         return "";
     };
-}
+})();

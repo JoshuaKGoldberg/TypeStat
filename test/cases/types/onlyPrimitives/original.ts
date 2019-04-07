@@ -1,4 +1,4 @@
-{
+(function() {
     const receivesNumberOrString = (param) => param;
     receivesNumberOrString(0);
     receivesNumberOrString("");
@@ -70,4 +70,4 @@
 
     function receivesInstanceEitherOrText(either) {}
     receivesInstanceEitherOrText(instanceEither);
-}
+})();
