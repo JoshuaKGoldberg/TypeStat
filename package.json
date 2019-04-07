@@ -13,6 +13,7 @@
         "cosmiconfig": "^5.1.0",
         "glob": "^7.1.3",
         "mz": "^2.7.0",
+        "ts-simple-type": "^0.2.27",
         "tsutils": "^3.8.0",
         "typescript": "^3.3.3333"
     },

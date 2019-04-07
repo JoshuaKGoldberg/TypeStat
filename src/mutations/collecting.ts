@@ -1,3 +1,4 @@
+import { isAssignableToType } from "ts-simple-type";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
@@ -112,7 +113,7 @@ const findMissingTypes = (
 
     const isAssignedTypeMissingFromDeclared = (assignedType: ts.Type) => {
         for (const potentialParentType of declaredTypes) {
-            if (request.services.program.getTypeChecker().isTypeAssignableTo(assignedType, potentialParentType)) {
+            if (isAssignableToType(assignedType, potentialParentType, request.services.program.getTypeChecker())) {
                 return false;
             }
         }

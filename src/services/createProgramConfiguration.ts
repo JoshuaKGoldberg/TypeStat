@@ -1,14 +1,12 @@
 import * as fs from "mz/fs";
 import * as path from "path";
+import * as ts from "typescript";
 
-import { requireExposedTypeScript } from "../mutations/createExposedTypeScript";
 import { TypeStatOptions } from "../options/types";
 import { collectOptionals } from "../shared/arrays";
 import { normalizeAndSlashify } from "../shared/paths";
 
 export const createProgramConfiguration = (options: TypeStatOptions) => {
-    const ts = requireExposedTypeScript();
-
     // Create a TypeScript configuration using the raw options
     const parsedConfiguration = ts.parseJsonConfigFileContent(
         options.compilerOptions,
