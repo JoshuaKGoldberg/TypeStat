@@ -1,53 +1,53 @@
-(function () {
+(function() {
     // Primitives
 
-    let givenUndefined: string | undefined = "";
-    givenUndefined = undefined;
+    let givenUndefined = "";
+    givenUndefined = undefined!;
 
-    let givenUndefinedAsString: string | undefined = "";
-    givenUndefinedAsString = undefined;
+    let givenUndefinedAsString: string = "";
+    givenUndefinedAsString = undefined!;
 
-    let givenUndefinedHasNull: string | null | undefined = "";
-    givenUndefinedHasNull = undefined;
+    let givenUndefinedHasNull: string | null = "";
+    givenUndefinedHasNull = undefined!;
 
-    let givenNullAndUndefinedHasNull: string | null | undefined = "";
-    givenNullAndUndefinedHasNull = null;
-    givenNullAndUndefinedHasNull = undefined;
+    let givenNullAndUndefinedHasNull: string | null = "";
+    givenNullAndUndefinedHasNull = null!;
+    givenNullAndUndefinedHasNull = undefined!;
 
-    let givenNull: string | null /* todo: null */ = "";
-    givenNull = null;
+    let givenNull = "";
+    givenNull = null!;
 
-    let givenNullAsString: string | null /* todo: null */ = "";
-    givenNullAsString = null;
+    let givenNullAsString: string = "";
+    givenNullAsString = null!;
 
-    let givenNullHasUndefined: string | undefined | null /* todo: null */ = "";
-    givenNullHasUndefined = null;
+    let givenNullHasUndefined: string | undefined = "";
+    givenNullHasUndefined = null!;
 
-    let givenNullAndUndefinedHasUndefined: string | undefined | null /* todo: null */ = "";
-    givenNullAndUndefinedHasUndefined = null;
-    givenNullHasUndefined = undefined;
+    let givenNullAndUndefinedHasUndefined: string | undefined = "";
+    givenNullAndUndefinedHasUndefined = null!;
+    givenNullHasUndefined = undefined!;
 
     let givenString;
-    givenString = "";
+    givenString = ""!;
 
     let givenStringAsString: string = "";
-    givenStringAsString = "";
+    givenStringAsString = ""!;
 
     let givenStringHasNull: string | null = "";
-    givenStringHasNull = "";
+    givenStringHasNull = ""!;
 
     let givenStringHasUndefined: string | undefined = "";
-    givenStringHasNull = "";
+    givenStringHasNull = ""!;
 
-    let setToUndefined: string | undefined = undefined;
+    let setToUndefined: string = undefined;
 
-    let setToUndefinedHasNull: string | null | undefined = undefined;
+    let setToUndefinedHasNull: string | null = undefined;
 
-    let setToNull: string | null /* todo: null */ = null;
+    let setToNull: string = null;
 
     let setToNullAsNull = null;
 
-    let setToNullHasUndefined: string | undefined | null /* todo: null */ = null;
+    let setToNullHasUndefined: string | undefined = null;
 
     let setToString = "";
 
@@ -62,15 +62,15 @@
     let startsAnyWithString: any = "";
 
     let startsAnyGivenString: any;
-    startsAnyGivenString = "";
+    startsAnyGivenString = ""!;
 
     let startsAnyWithStringGivenString: any = "";
-    startsAnyWithStringGivenString = "";
+    startsAnyWithStringGivenString = ""!;
 
     let startsStringWithAny: string = {} as any;
 
     let startsStringGivenAny: string;
-    startsStringGivenAny = {} as any;
+    startsStringGivenAny = ({} as any)!;
 
     // Void and undefined
 
@@ -82,11 +82,11 @@
     let startsVoidWithUndefined: void = undefined;
 
     let startsVoidGivenUndefined: void;
-    startsVoidGivenUndefined = undefined;
+    startsVoidGivenUndefined = undefined!;
 
     let resolveDeclaredVoid: (v: void) => void;
     new Promise<void>((_resolve) => {
-        resolve = _resolve;
+        resolve = _resolve!;
     });
 
     // Async
@@ -95,7 +95,7 @@
         let stringFromNullImmediate: string = await Promise.resolve<null>(null);
 
         let stringFromUndefinedLater: string;
-        stringFromUndefinedLater = await Promise.resolve<undefined>(undefined);
+        stringFromUndefinedLater = (await Promise.resolve<undefined>(undefined))!;
     }
 
     // Interfaces and classes
@@ -121,50 +121,50 @@
     let onlyClassOneExplicitClass: SampleClassOne = new SampleClassOne();
     let onlyClassOneExplicitInterface: SampleInterface = new SampleClassOne();
 
-    let eitherClassImplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
-    eitherClassImplicit = new SampleClassTwo();
+    let eitherClassImplicit = new SampleClassOne();
+    eitherClassImplicit = new SampleClassTwo()!;
 
     let eitherClassExplicit: SampleInterface = new SampleClassOne();
-    eitherClassExplicit = new SampleClassTwo();
+    eitherClassExplicit = new SampleClassTwo()!;
 
-    let eitherClassNeedsUnionImplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
-    eitherClassNeedsUnionImplicit = new SampleClassTwo();
+    let eitherClassNeedsUnionImplicit = new SampleClassOne();
+    eitherClassNeedsUnionImplicit = new SampleClassTwo()!;
 
-    let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
-    eitherClassNeedsUnionExplicit = new SampleClassTwo();
+    let eitherClassNeedsUnionExplicit: SampleClassOne = new SampleClassOne();
+    eitherClassNeedsUnionExplicit = new SampleClassTwo()!;
 
     let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
-    eitherClassNeedsUnionExplicitInterface = new SampleClassTwo();
+    eitherClassNeedsUnionExplicitInterface = new SampleClassTwo()!;
 
-    let eitherClassNeedsNullImplicit: SampleClassOne | SampleClassTwo | null /* todo: null */ = new SampleClassOne();
-    eitherClassNeedsNullImplicit = new SampleClassTwo();
-    eitherClassNeedsNullImplicit = null;
+    let eitherClassNeedsNullImplicit = new SampleClassOne();
+    eitherClassNeedsNullImplicit = new SampleClassTwo()!;
+    eitherClassNeedsNullImplicit = null!;
 
-    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo = new SampleClassOne();
-    eitherClassNeedsNullAndClassExplicit = new SampleClassTwo();
-    eitherClassNeedsNullAndClassExplicit = null;
+    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null = new SampleClassOne();
+    eitherClassNeedsNullAndClassExplicit = new SampleClassTwo()!;
+    eitherClassNeedsNullAndClassExplicit = null!;
 
-    let eitherClassNeedsUndefinedExplicit: SampleClassOne | SampleClassTwo | undefined = new SampleClassOne();
-    eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
-    eitherClassNeedsUndefinedExplicit = undefined;
+    let eitherClassNeedsUndefinedExplicit: SampleClassOne = new SampleClassOne();
+    eitherClassNeedsUndefinedExplicit = new SampleClassTwo()!;
+    eitherClassNeedsUndefinedExplicit = undefined!;
 
-    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | undefined = new SampleClassOne();
-    eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo();
-    eitherClassNeedsUndefinedExplicitInterface = undefined;
+    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface = new SampleClassOne();
+    eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo()!;
+    eitherClassNeedsUndefinedExplicitInterface = undefined!;
 
-    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined = new SampleClassOne();
     eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();
-    eitherClassNeedsUndefinedAndClassExplicit = undefined;
+    eitherClassNeedsUndefinedAndClassExplicit = undefined!;
 
     // Array setting
     let numberImplicit = [1];
-    numberImplicit = [1];
+    numberImplicit = [1]!;
 
     let numberExplicitPrimitive: number[] = [1];
-    numberExplicitPrimitive = [1];
+    numberExplicitPrimitive = [1]!;
 
     let numberExplicitTemplated: Array<number> = [1];
-    numberExplicitTemplated = [1] as Array<number>;
+    numberExplicitTemplated = ([1] as Array<number>)!;
 
     // Array pushes
 
@@ -228,9 +228,9 @@
     // Functions
 
     let resolve: () => void;
-    resolve = () => {};
+    resolve = () => {}!;
 
     new Promise<void>((_resolve) => {
-        resolve = _resolve;
+        resolve = _resolve!;
     });
 })();

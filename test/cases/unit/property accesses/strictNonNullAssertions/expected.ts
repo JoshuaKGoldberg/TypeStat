@@ -1,4 +1,4 @@
-{
+(function() {
     function _(
         useForString: string,
         useForStringOrNull: string | null,

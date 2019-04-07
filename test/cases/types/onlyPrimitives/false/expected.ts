@@ -43,7 +43,7 @@
     instance.memberTextOrNumber = "";
     instance.memberTextOrArray = ["foo"];
 
-    let text;
+    let text: string;
     text = "";
 
     let textOrInstance;
@@ -65,9 +65,9 @@
     function receivesTextOrInstance(text) {}
     receivesTextOrInstance(text);
 
-    function receivesInstanceEither(either: Bar) {}
+    function receivesInstanceEither(either) {}
     receivesInstanceEither(instanceEither);
 
-    function receivesInstanceEitherOrText(either: Bar) {}
+    function receivesInstanceEitherOrText(either) {}
     receivesInstanceEitherOrText(instanceEither);
 })();

@@ -20,11 +20,11 @@
     receivesFooOrString(new Foo());
     receivesFooOrString("");
 
-    function stringOrBoolean(): string | boolean {
+    function stringOrBoolean(): string {
         return true;
     }
 
-    function stringOrUndefined(): string | undefined {
+    function stringOrUndefined(): string {
         return undefined;
     }
 
@@ -43,7 +43,7 @@
     instance.memberTextOrNumber = "";
     instance.memberTextOrArray = ["foo"];
 
-    let text;
+    let text: string;
     text = "";
 
     let textOrInstance;

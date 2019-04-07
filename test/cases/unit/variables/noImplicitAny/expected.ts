@@ -1,4 +1,4 @@
-(function () {
+(function() {
     // Primitives
 
     let givenUndefined = "";
@@ -27,7 +27,7 @@
     givenNullAndUndefinedHasUndefined = null;
     givenNullHasUndefined = undefined;
 
-    let givenString;
+    let givenString: string;
     givenString = "";
 
     let givenStringAsString: string = "";
@@ -85,7 +85,7 @@
     startsVoidGivenUndefined = undefined;
 
     let resolveDeclaredVoid: (v: void) => void;
-    new Promise<void>((_resolve: () => void) => {
+    new Promise<void>((_resolve) => {
         resolve = _resolve;
     });
 
@@ -230,7 +230,7 @@
     let resolve: () => void;
     resolve = () => {};
 
-    new Promise<void>((_resolve: () => void) => {
+    new Promise<void>((_resolve) => {
         resolve = _resolve;
     });
 })();

@@ -1,4 +1,4 @@
-(function () {
+(function() {
     // Primitives
 
     let givenUndefined = "";

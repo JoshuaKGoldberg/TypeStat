@@ -1,4 +1,4 @@
-(function () {
+(function() {
     class Container {
         givenUndefined: string | undefined = "";
 

@@ -47,7 +47,7 @@
 
     givenEmptyObjectLiteralTypeLater({});
 
-    function givenObjectTypeLater(abc: Object): void {
+    function givenObjectTypeLater(abc): void {
         console.log(abc);
     }
 
