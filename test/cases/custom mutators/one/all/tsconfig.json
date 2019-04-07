@@ -1,6 +1,3 @@
 {
-    "compilerOptions": {
-        "isolatedModules": true
-    },
     "include": ["actual.ts"]
 }

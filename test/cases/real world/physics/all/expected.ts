@@ -1,11 +1,11 @@
-{
+(function() {
     interface IBox {
         x: number;
         y: number;
     }
 
-    const shiftBox = (box: terface IBox {
-     ) => {
+    const shiftBox = (box: n() {
+    interface ) => {
         box.x += 1;
         box.y += 1;
     };
@@ -16,4 +16,4 @@
     };
 
     shiftBox(box);
-}
+})();

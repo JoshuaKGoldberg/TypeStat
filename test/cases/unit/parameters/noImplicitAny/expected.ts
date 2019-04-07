@@ -1,4 +1,4 @@
-{
+(function() {
     function givenStringTypeLater(abc: string): void {
         console.log(abc);
     }
@@ -52,4 +52,4 @@
     }
 
     givenObjectTypeLater({} as Object);
-}
+})();

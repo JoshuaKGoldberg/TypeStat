@@ -1,4 +1,4 @@
-{
+(function() {
     function _(
         useForString: string,
         useForStringOrNull: string | null,
@@ -53,4 +53,4 @@ givenTwiceDifferent: number;
             this.givenTwiceDifferent = undefined;
         }
     }
-}
+})();
