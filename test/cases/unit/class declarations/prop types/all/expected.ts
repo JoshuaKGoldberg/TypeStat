@@ -124,5 +124,5 @@ interface LaterAssignedComponentProps {
     LaterAssignedComponent.propTypes = {
         string: PropTypes.string,
         stringRequired: PropTypes.string.isRequired,
-    }
+    };
 })();
