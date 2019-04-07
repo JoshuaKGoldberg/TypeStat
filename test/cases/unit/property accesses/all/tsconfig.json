@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "isolatedModules": true,
         "strictNullChecks": true
     },
     "files": ["actual.ts"]
