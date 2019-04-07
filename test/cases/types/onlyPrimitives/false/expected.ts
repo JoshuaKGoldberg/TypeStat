@@ -65,9 +65,9 @@
     function receivesTextOrInstance(text) {}
     receivesTextOrInstance(text);
 
-    function receivesInstanceEither(either: Bar | Bar) {}
+    function receivesInstanceEither(either: Bar) {}
     receivesInstanceEither(instanceEither);
 
-    function receivesInstanceEitherOrText(either: Bar | Bar) {}
+    function receivesInstanceEitherOrText(either: Bar) {}
     receivesInstanceEitherOrText(instanceEither);
 })();
