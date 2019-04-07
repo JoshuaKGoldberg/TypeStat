@@ -11,14 +11,20 @@ type PropTypesMember = ts.PropertyDeclaration & {
     };
 };
 
-const getStaticPropTypes = (member: ts.ClassElement): member is PropTypesMember =>
-    ts.isPropertyDeclaration(member) &&
-    tsutils.hasModifier(member.modifiers, ts.SyntaxKind.StaticKeyword) &&
-    ts.isIdentifier(member.name) &&
-    member.name.text === "propTypes" &&
-    member.initializer !== undefined &&
-    ts.isObjectLiteralExpression(member.initializer);
+/**
+ * @returns Whether a node is a `propTypes` class member with an object literal value.
+ */
+const getStaticPropTypes = (node: ts.ClassElement): node is PropTypesMember =>
+    ts.isPropertyDeclaration(node) &&
+    tsutils.hasModifier(node.modifiers, ts.SyntaxKind.StaticKeyword) &&
+    ts.isIdentifier(node.name) &&
+    node.name.text === "propTypes" &&
+    node.initializer !== undefined &&
+    ts.isObjectLiteralExpression(node.initializer);
 
+/**
+ * @returns Object literal `propTypes` assigned to the class, if it exists in a sibling property setter.
+ */
 const getPropTypesStatement = (node: ts.Node, className: string) => {
     if (!ts.isExpressionStatement(node) || !ts.isBinaryExpression(node.expression)) {
         return undefined;

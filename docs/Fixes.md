@@ -17,65 +17,13 @@ These mutations are all purely additive and limited to the type system, meaning 
 }
 ```
 
-## `--fixIncompleteTypes`/`incompleteTypes`
+## Fixers
+
+### `--fixIncompleteTypes`/`incompleteTypes`
 
 Whether to augment type annotations that don't capture all values constructs can be set to.
 
-This typically isn't useful on its own _(unless you have many incorrect types)_,
-but is powerful along with `noImplicitAny` and/or `strictNullChecks` to fix existing codebases for the stricter compiler flags.
-
-```shell
-typestat --fixIncompleteTypes
-```
-
-```json
-{
-    "fixes": {
-        "incompleteTypes": true
-    }
-}
-```
-
-For example, if a variable is typed as a `number` but is also assigned a `string`, this would change its type to `number | string`:
-
-```diff
-- let abc: number = "";
-+ let abc: number | string = "";
-```
-
-### React
-
-React components can have types their props and states filled in using:
-
-* Component classes:
-  * `static propTypes = ...` properties
-  * Later-assigned `.propTypes = ...` properties
-* Functional components: `propTypes` properties
-* Both: regular usage in JSX
-
-Component classes will generate `interface`s, while functional components will generate `type`s.
-
-For example, the change to this `NameGreeter` component would be:
-
-```diff
-+ interface NameGreeterProps {
-+     name: string;
-+ }
-
-- class NameGreeter extends React.Component {
-+ class NameGreeter extends React.Component<NameGreeterProps> {
-    static propTypes = {
-        name: PropTypes.string.isRequired,
-    };
-
-    render() {
-        return `Hello, ${this.props.name}!`;
-    }
-}
-```
-
-> So far, only `static propTypes` are implemented.
-> See [#129](https://github.com/JoshuaKGoldberg/TypeStat/pull/129) for tracking on more!
+See [fixIncompleteTypes/README.md](../src/mutators/builtIn/fixIncompleteTypes/README.md).
 
 ## `--fixMissingProperties`/`missingProperties`
 
@@ -223,3 +171,25 @@ function abc(): string {
 +   return def!;
 }
 ```
+
+## Example
+
+Given a function is declared to return a `string` but can return `undefined`:
+
+* With `--fixIncompleteTypes`/`incompleteTypes` enabled, TypeStat would add `| undefined` to the function's return type:
+
+    ```diff
+    - function returnsEither(): string {
+    + function returnsEither(): string | undefined {
+        return Math.random() > 0.5 ? string : undefined;
+    }
+    ```
+
+* With `--fixStrictNonNullAssertions`/`strictNonNullAssertions` enabled, TypeStat would add `!` to the return statement:
+
+    ```diff
+    function returnsEither(): string | undefined {
+    -    return Math.random() > 0.5 ? string : undefined;
+    +    return Math.random() > 0.5 ? string : undefined!;
+    }
+    ```

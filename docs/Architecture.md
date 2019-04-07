@@ -58,20 +58,20 @@ Once TypeStat has visited each file, it will either:
 #### File Mutations
 
 For each file it visits, [`findMutationsInFile`](../src/runtime/findMutationsInFile.ts)
-will attempt to apply the following [built-in file mutators](../src/runtime/builtInFileMutators.ts)
-in order _(generally ordered by which is likely to complete the fastest)_:
+will attempt to apply [built-in file mutators](../src/mutators/builtIn/index.ts):
 
-1. Binary expressions
-2. Call expressions
-3. Variable declarations
-4. Function-like returns
-5. Property declarations
-6. Parameters
-7. Property accessors
-8. Function `this`s
+1. [`fixIncompleteTypes`](../src/mutators/builtIn/fixIncompleteTypes/README.md)
+2. [`fixMissingProperties`](../src/mutators/builtIn/fixMissingProperties/README.md)
+3. [`fixNoImplicitAny`](../src/mutators/builtIn/fixNoImplicitAny/README.md)
+4. [`fixStrictNonNullAssertions`](../src/mutators/builtIn/fixStrictNonNullAssertions/README.md)
+
+Each fixer targets a general range of potential type improvements and contains a series of sub-fixers that target individual improvements.
+For example, `fixIncompleteTypes` contains a `fixIncompleteParameterTypes` fixer that fills in incomplete types for parameters.
 
 Within each round of applying mutations, TypeStat will stop looking at a file after each step if any mutations are found.
 Adding mutations from one from can improve mutations from other forms, so reloading the file between rounds could reduce the number of later rounds.
+
+> See [Fixes.md](./Fixes.md).
 
 ## Directory Structure
 
