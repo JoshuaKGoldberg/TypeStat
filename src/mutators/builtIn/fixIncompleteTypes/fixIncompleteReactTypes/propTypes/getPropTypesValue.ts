@@ -1,8 +1,6 @@
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../../../../fileMutator";
-
 type PropTypesMember = ts.PropertyDeclaration & {
     initializer: ts.ObjectLiteralExpression;
     name: {
@@ -22,10 +20,26 @@ const getStaticPropTypes = (node: ts.ClassElement): node is PropTypesMember =>
     node.initializer !== undefined &&
     ts.isObjectLiteralExpression(node.initializer);
 
+const getPropTypesChildFromParent = (parent: ts.Node, className: string) => {
+    let result: ts.ObjectLiteralExpression | undefined;
+
+    parent.forEachChild((child: ts.Node) => {
+        const propTypes = isPropTypesStatement(child, className);
+        if (propTypes !== undefined) {
+            result = propTypes;
+            return true;
+        }
+
+        return false;
+    });
+
+    return result;
+};
+
 /**
  * @returns Object literal `propTypes` assigned to the class, if it exists in a sibling property setter.
  */
-const getPropTypesStatement = (node: ts.Node, className: string) => {
+const isPropTypesStatement = (node: ts.Node, className: string) => {
     if (!ts.isExpressionStatement(node) || !ts.isBinaryExpression(node.expression)) {
         return undefined;
     }
@@ -52,15 +66,12 @@ const getPropTypesStatement = (node: ts.Node, className: string) => {
  * This assumes an object literal (`{ ... }`) with all inline members.
  * It doesn't yet handle shared variable references or `...` spread operations.
  */
-export const getPropTypesValue = (node: ts.ClassDeclaration, request: FileMutationsRequest): ts.ObjectLiteralExpression | undefined => {
+export const getPropTypesValue = (node: ts.ClassDeclaration): ts.ObjectLiteralExpression | undefined => {
     // If the class' parent declares a prop types for it, use it
     if (node.name !== undefined) {
-        for (const sibling of node.parent.getChildren(request.sourceFile)) {
-            const propTypesStatement = getPropTypesStatement(sibling, node.name.text);
-
-            if (propTypesStatement !== undefined) {
-                return propTypesStatement;
-            }
+        const propTypesStatement = getPropTypesChildFromParent(node.parent, node.name.text);
+        if (propTypesStatement !== undefined) {
+            return propTypesStatement;
         }
     }
 

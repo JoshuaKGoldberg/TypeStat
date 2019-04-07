@@ -52,5 +52,20 @@ import PropTypes from "prop-types";
             stringsType: PropTypes.oneOfType([PropTypes.string]),
             stringsOrNumbersType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         };
+
+        render() {
+            return "";
+        }
     }
+
+    class LaterAssignedComponent extends React.Component {
+        render() {
+            return "";
+        }
+    }
+
+    LaterAssignedComponent.propTypes = {
+        string: PropTypes.string,
+        stringRequired: PropTypes.string.isRequired,
+    };
 })();

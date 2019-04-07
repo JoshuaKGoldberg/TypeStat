@@ -121,7 +121,7 @@ Adding in a props interface to an existing component class:
 }
 ```
 
-> So far, only `static propTypes` are implemented.
+> So far, only class components are implemented, not functional components.
 > See [#129](https://github.com/JoshuaKGoldberg/TypeStat/pull/129) for tracking on more!
 
 ### Incomplete Return Types
