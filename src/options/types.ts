@@ -179,11 +179,6 @@ export interface Fixes {
     noImplicitAny: boolean;
 
     /**
-     * Whether to consider `this` type annotations to functions that don't yet have them per TypeScript's --noImplicitThis.
-     */
-    noImplicitThis: boolean;
-
-    /**
      * Whether to add missing non-null assertions in nullable property accesses, function-like calls, and return types.
      */
     strictNonNullAssertions: boolean;

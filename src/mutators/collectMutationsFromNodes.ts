@@ -40,7 +40,9 @@ const tryGetMutation = <TNode extends ts.Node>(request: FileMutationsRequest, no
     try {
         return visitor(node, request);
     } catch (error) {
-        request.options.logger.stderr.write(`\nError in ${request.sourceFile.fileName} at node '${node.getText(request.sourceFile)}':\n\t`);
+        request.options.logger.stderr.write(
+            `\nError in ${request.sourceFile.fileName} at node '${node.getText(request.sourceFile)}' (position ${node.pos}):\n\t`,
+        );
         request.options.logger.stderr.write(getQuickErrorSummary(error));
         request.options.logger.stderr.write("\n\n");
     }

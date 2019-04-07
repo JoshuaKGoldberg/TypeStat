@@ -2,18 +2,13 @@ import { combineMutations, IMultipleMutations, IMutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { createNonNullAssertion } from "../../mutations/typeMutating/createNonNullAssertion";
-import { getParentOfKind, getVariableInitializerForExpression } from "../../shared/nodes";
-import { getValueDeclarationOfType, isTypeMissingBetween } from "../../shared/nodeTypes";
-import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../fileMutator";
+import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion";
+import { getParentOfKind, getVariableInitializerForExpression } from "../../../../shared/nodes";
+import { getValueDeclarationOfType, isTypeMissingBetween } from "../../../../shared/nodeTypes";
+import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
+import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const callExpressionMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    // This fixer is only relevant if adding non-null assertions is enabled
-    if (!request.options.fixes.strictNonNullAssertions) {
-        return [];
-    }
-
+export const fixStrictNonNullAssertionCallExpressions: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
     return collectMutationsFromNodes(request, isVisitableCallExpression, visitCallExpression);
 };
 
@@ -47,10 +42,12 @@ const collectArgumentMutations = (
     const visitableArguments = Math.min(callingNode.arguments.length, functionLikeValueDeclaration.parameters.length);
     const typeChecker = request.services.program.getTypeChecker();
 
+    // Check the types of each argument being passed in against the declared parameter type
     for (let i = 0; i < visitableArguments; i += 1) {
         const typeOfArgument = typeChecker.getTypeAtLocation(callingNode.arguments[i]);
         const typeOfParameter = typeChecker.getTypeAtLocation(functionLikeValueDeclaration.parameters[i]);
 
+        // If either null or undefined is missing in the argument, we'll need a ! mutation
         if (
             isTypeMissingBetween(ts.TypeFlags.Null, typeOfArgument, typeOfParameter) ||
             isTypeMissingBetween(ts.TypeFlags.Undefined, typeOfArgument, typeOfParameter)

@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { KnownTypeLiteralNode, transformLiteralToTypeLiteralNode } from "../../../../shared/transforms";
+import { KnownTypeLiteralNode, transformLiteralToTypeLiteralNode } from "../../../../../shared/transforms";
 
 import { getPropTypesMember, PropTypesAccessNode, PropTypesMembers } from "./propTypesExtraction";
 import { createPropTypesProperty } from "./propTypesProperties";

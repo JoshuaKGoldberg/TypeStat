@@ -1,15 +1,25 @@
 import { combineMutations, IMutation } from "automutate";
+import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { isTypeFlagSetRecursively } from "../../../mutations/collecting/flags";
-import { createNonNullAssertion } from "../../../mutations/typeMutating/createNonNullAssertion";
-import { getVariableInitializerForExpression } from "../../../shared/nodes";
-import { FunctionLikeDeclarationWithType } from "../../../shared/nodeTypes";
-import { FileMutationsRequest } from "../../fileMutator";
+import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags";
+import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion";
+import { getVariableInitializerForExpression } from "../../../../shared/nodes";
+import { FunctionLikeDeclarationWithType, isNodeWithType } from "../../../../shared/nodeTypes";
+import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
+import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
 import { collectReturningNodeExpressions } from "./collectReturningNodeExpressions";
 
-export const fixMissingNonNullReturns = (request: FileMutationsRequest, node: FunctionLikeDeclarationWithType) => {
+export const fixStrictNonNullAssertionReturnTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+    collectMutationsFromNodes(request, isNodeVisitableFunctionLikeDeclaration, visitFunctionWithBody);
+
+const isNodeVisitableFunctionLikeDeclaration = (node: ts.Node): node is FunctionLikeDeclarationWithType =>
+    tsutils.isFunctionWithBody(node) &&
+    // If the node has an implicit return type, we don't need to change anything
+    isNodeWithType(node);
+
+const visitFunctionWithBody = (node: FunctionLikeDeclarationWithType, request: FileMutationsRequest): IMutation | undefined => {
     // Collect the type initially declared as returned and whether it contains null and/or undefined
     const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node.type);
 
@@ -18,7 +28,7 @@ export const fixMissingNonNullReturns = (request: FileMutationsRequest, node: Fu
         return undefined;
     }
 
-    // If the type already has both null or undefined, rejoice! All is well
+    // If the type already has both null or undefined, all is well; rejoice!
     const returningNull = isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Null);
     const returningUndefined = isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Undefined);
     if (returningNull && returningUndefined) {

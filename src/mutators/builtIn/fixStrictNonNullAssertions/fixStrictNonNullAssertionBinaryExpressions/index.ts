@@ -1,18 +1,13 @@
 import { IMutation } from "automutate";
 import * as ts from "typescript";
 
-import { isTypeFlagSetRecursively } from "../../mutations/collecting/flags";
-import { createNonNullAssertion } from "../../mutations/typeMutating/createNonNullAssertion";
-import { isNodeAssigningBinaryExpression } from "../../shared/nodes";
-import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../fileMutator";
+import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags";
+import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion";
+import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
+import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
+import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const binaryExpressionMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    // We only fix on binary expressions for missing non-null assertions
-    if (!request.options.fixes.strictNonNullAssertions) {
-        return [];
-    }
-
+export const fixStrictNonNullAssertionBinaryExpressions: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
     return collectMutationsFromNodes(request, isNodeAssigningBinaryExpression, visitBinaryExpression);
 };
 

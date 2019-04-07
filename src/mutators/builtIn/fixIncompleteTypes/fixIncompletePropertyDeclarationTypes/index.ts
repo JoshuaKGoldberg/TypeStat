@@ -2,27 +2,16 @@ import { IMutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../mutations/codeFixes/noImplicitAny";
-import { createTypeAdditionMutation, createTypeCreationMutation } from "../../mutations/creators";
-import { findNodeByStartingPosition, isNodeAssigningBinaryExpression } from "../../shared/nodes";
-import { isNodeWithType } from "../../shared/nodeTypes";
-import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../fileMutator";
+import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../../mutations/creators";
+import { findNodeByStartingPosition, isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
+import { isNodeWithType } from "../../../../shared/nodeTypes";
+import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
+import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const propertyDeclarationMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+export const fixIncompletePropertyDeclarationTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
     collectMutationsFromNodes(request, ts.isPropertyDeclaration, visitPropertyDeclaration);
 
 const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMutationsRequest): IMutation | undefined => {
-    // If the property violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
-    if (canNodeBeFixedForNoImplicitAny(node)) {
-        return getNoImplicitAnyMutations(node, request);
-    }
-
-    // If we don't add missing types, there's nothing else to do
-    if (!request.options.fixes.incompleteTypes) {
-        return undefined;
-    }
-
     // Collect types later assigned to the property, and types initially declared by or inferred on the property
     const assignedTypes = collectPropertyAssignedTypes(node, request);
     const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
@@ -62,7 +51,7 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
 };
 
 /**
- * Adds missing tyes for a reference to a property.
+ * Adds missing types for a reference to a property.
  *
  * @param reference   Source code reference to a property.
  * @param assignedTypes   In-progress collection of types assigned to a property.

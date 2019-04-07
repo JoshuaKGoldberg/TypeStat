@@ -1,15 +1,13 @@
 import { IMutation } from "automutate";
 import * as ts from "typescript";
 
-import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../mutations/codeFixes/noImplicitAny";
-import { collectMutationsFromNodes } from "../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../fileMutator";
+import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../../../mutations/codeFixes/noImplicitAny";
+import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
+import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-import { fixVariableIncompleteType } from "./variableDeclarations/fixVariableIncompleteType";
-
-export const variableDeclarationMutator: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    // This mutator fixes only for --noImplicitAny or incomplete types
-    if (!request.options.fixes.incompleteTypes && !request.options.fixes.noImplicitAny) {
+export const fixNoImplicitAnyVariableDeclarations: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+    // This mutator fixes only for --noImplicitAny
+    if (!request.options.fixes.noImplicitAny) {
         return [];
     }
 
@@ -28,14 +26,6 @@ const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMut
     // If the variable violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
     if (canNodeBeFixedForNoImplicitAny(node)) {
         return getNoImplicitAnyMutations(node, request);
-    }
-
-    // If we fix for incomplete types, try to add them in
-    if (request.options.fixes.incompleteTypes) {
-        const incompleteTypeFix = fixVariableIncompleteType(request, node);
-        if (incompleteTypeFix !== undefined) {
-            return incompleteTypeFix;
-        }
     }
 
     return undefined;
