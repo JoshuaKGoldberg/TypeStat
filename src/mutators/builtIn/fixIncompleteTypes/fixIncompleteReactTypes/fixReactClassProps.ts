@@ -31,7 +31,7 @@ export const fixReactClassProps: FileMutator = (request: FileMutationsRequest): 
 const visitClassDeclaration = (node: ts.ClassDeclaration, request: FileMutationsRequest): ITextInsertMutation | undefined => {
     // Try to find a static `propTypes` member to indicate the interface
     // If it doesn't exist, we can't infer anything about the class here, so we bail out
-    const propTypes = getPropTypesValue(node, request);
+    const propTypes = getPropTypesValue(node);
     if (propTypes === undefined) {
         return undefined;
     }
