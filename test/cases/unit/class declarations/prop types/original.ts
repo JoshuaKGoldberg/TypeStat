@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-{
+(function() {
     class MyComponent extends React.Component {
         static propTypes = {
             array: PropTypes.array,
@@ -53,4 +53,4 @@ import PropTypes from "prop-types";
             stringsOrNumbersType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         };
     }
-}
+})();

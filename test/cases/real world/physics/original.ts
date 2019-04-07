@@ -1,4 +1,4 @@
-{
+(function() {
     interface IBox {
         x: number;
         y: number;
@@ -15,4 +15,4 @@
     };
 
     shiftBox(box);
-}
+})();

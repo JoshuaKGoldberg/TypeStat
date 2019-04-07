@@ -1,4 +1,4 @@
-{
+(function() {
     class Foo {}
 
     function stringOrBoolean(): string | boolean {
@@ -16,4 +16,4 @@
     function stringOrFunction(): string | __function {
         return () => {};
     }
-}
+})();

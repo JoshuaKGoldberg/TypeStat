@@ -1,4 +1,4 @@
-{
+(function() {
     function givenStringTypeLater(abc): void {
         console.log(abc);
     }
@@ -9,31 +9,31 @@
         console.log(abc);
     }
 
-    givenStringOrNullTypeLater(("" as string | null)!);
+    givenStringOrNullTypeLater("" as string | null);
 
-    function givenStringOrNullOnStringTypeLater(abc: string): void {
+    function givenStringOrNullOnStringTypeLater(abc: string | null /* todo: null */): void {
         console.log(abc);
     }
 
-    givenStringOrNullOnStringTypeLater(("" as string | null)!);
+    givenStringOrNullOnStringTypeLater("" as string | null);
 
-    function givenStringOrUndefinedOnStringTypeLater(abc: string): void {
+    function givenStringOrUndefinedOnStringTypeLater(abc: string | undefined): void {
         console.log(abc);
     }
 
-    givenStringOrUndefinedOnStringTypeLater(("" as string | undefined)!);
+    givenStringOrUndefinedOnStringTypeLater("" as string | undefined);
 
     function givenNullTypeLater(abc): void {
         console.log(abc);
     }
 
-    givenNullTypeLater(null!);
+    givenNullTypeLater(null);
 
     function givenUndefinedTypeLater(abc): void {
         console.log(abc);
     }
 
-    givenUndefinedTypeLater(undefined!);
+    givenUndefinedTypeLater(undefined);
 
     function givenAnyTypeLater(abc): void {
         console.log(abc);
@@ -47,9 +47,9 @@
 
     givenEmptyObjectLiteralTypeLater({});
 
-    function givenObjectTypeLater(abc): void {
+    function givenObjectTypeLater(abc: Object): void {
         console.log(abc);
     }
 
     givenObjectTypeLater({} as Object);
-}
+})();

@@ -1,4 +1,4 @@
-{
+(function() {
     const receivesNumberOrString = (param) => param;
     receivesNumberOrString(0);
     receivesNumberOrString("");
@@ -43,7 +43,7 @@
     instance.memberTextOrNumber = "";
     instance.memberTextOrArray = ["foo"];
 
-    let text: string;
+    let text;
     text = "";
 
     let textOrInstance;
@@ -65,9 +65,9 @@
     function receivesTextOrInstance(text) {}
     receivesTextOrInstance(text);
 
-    function receivesInstanceEither(either) {}
+    function receivesInstanceEither(either: Bar) {}
     receivesInstanceEither(instanceEither);
 
-    function receivesInstanceEitherOrText(either) {}
+    function receivesInstanceEitherOrText(either: Bar) {}
     receivesInstanceEitherOrText(instanceEither);
-}
+})();

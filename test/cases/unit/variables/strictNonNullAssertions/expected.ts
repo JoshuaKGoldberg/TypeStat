@@ -1,4 +1,4 @@
-{
+(function () {
     // Primitives
 
     let givenUndefined = "";
@@ -233,4 +233,4 @@
     new Promise<void>((_resolve) => {
         resolve = _resolve!;
     });
-}
+})();

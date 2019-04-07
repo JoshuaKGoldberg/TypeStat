@@ -1,4 +1,4 @@
-{
+(function() {
     // Direct calls
 
     function oneParameterStringDirect(abc: string) {}
@@ -64,4 +64,4 @@
 
     const oneParameterStringBecomesUndefinedIndirect = (abc: string) => {};
     oneParameterStringBecomesUndefinedIndirect(createsStringOrUndefined());
-}
+})();

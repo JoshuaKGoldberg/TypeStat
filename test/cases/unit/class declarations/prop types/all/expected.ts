@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-{
+(function() {
 
 interface MyComponentProps {
     array?: any[];
@@ -104,4 +104,4 @@ interface MyComponentProps {
             stringsOrNumbersType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
         };
     }
-}
+})();

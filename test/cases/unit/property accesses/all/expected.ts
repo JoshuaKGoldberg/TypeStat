@@ -48,4 +48,4 @@
             this.givenTwiceDifferent = undefined!;
         }
     }
-}
+})();

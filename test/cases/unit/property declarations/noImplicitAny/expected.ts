@@ -1,4 +1,4 @@
-{
+(function () {
     class Container {
         givenUndefined: string = "";
 
@@ -38,4 +38,4 @@
     container.givenString = "";
     container.givenStringHasNull = "";
     container.givenStringHasNull = "";
-}
+})();

@@ -1,4 +1,4 @@
-{
+(function() {
     const receivesNumberOrString = (param) => param;
     receivesNumberOrString(0);
     receivesNumberOrString("");
@@ -20,11 +20,11 @@
     receivesFooOrString(new Foo());
     receivesFooOrString("");
 
-    function stringOrBoolean(): string {
+    function stringOrBoolean(): string | boolean {
         return true;
     }
 
-    function stringOrUndefined(): string {
+    function stringOrUndefined(): string | undefined {
         return undefined;
     }
 
@@ -43,7 +43,7 @@
     instance.memberTextOrNumber = "";
     instance.memberTextOrArray = ["foo"];
 
-    let text: string;
+    let text;
     text = "";
 
     let textOrInstance;
@@ -70,4 +70,4 @@
 
     function receivesInstanceEitherOrText(either) {}
     receivesInstanceEitherOrText(instanceEither);
-}
+})();

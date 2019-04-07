@@ -1,4 +1,4 @@
-{
+(function() {
     class Foo {
         public value: number = 3;
 
@@ -18,4 +18,4 @@
     teardown(() => {
         foo = null;
     });
-}
+})();

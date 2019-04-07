@@ -53,4 +53,4 @@ givenTwiceDifferent: number;
             this.givenTwiceDifferent = undefined;
         }
     }
-}
+})();
