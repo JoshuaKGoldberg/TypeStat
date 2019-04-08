@@ -4022,10 +4022,10 @@ ts-jest@^24.0.0:
     semver "^5.5"
     yargs-parser "10.x"
 
-ts-simple-type@^0.2.27:
-  version "0.2.27"
-  resolved "https://registry.yarnpkg.com/ts-simple-type/-/ts-simple-type-0.2.27.tgz#57f7907d7de95428d685fa320925661cd3533469"
-  integrity sha512-jtjbPQFB9arbzQ1fkG3N2o2PUQpIwwZEtu1f53LHL7lZKYYgePXKhcorMZqcS6brHgioBKZEaiQiWaxLfUwDuw==
+ts-simple-type@^0.2.28:
+  version "0.2.28"
+  resolved "https://registry.yarnpkg.com/ts-simple-type/-/ts-simple-type-0.2.28.tgz#0c5905fabf24a6d99132b5bae66afb88a9da5273"
+  integrity sha512-4ul6oWyqXHqUe70Vr8kABSThaUN+EhNArBSVyRbbhY0xuVs/fxaSkbZ06W+h1F7jqTq55gWjdh2M5owsomRs/Q==
 
 tslib@^1.8.0, tslib@^1.8.1:
   version "1.9.3"

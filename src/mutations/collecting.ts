@@ -113,7 +113,7 @@ const findMissingTypes = (
 
     const isAssignedTypeMissingFromDeclared = (assignedType: ts.Type) => {
         for (const potentialParentType of declaredTypes) {
-            if (isAssignableToType(assignedType, potentialParentType, request.services.program.getTypeChecker())) {
+            if (isAssignableToType(potentialParentType, assignedType, request.services.program.getTypeChecker())) {
                 return false;
             }
         }
