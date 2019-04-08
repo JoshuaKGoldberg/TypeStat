@@ -36,7 +36,7 @@
         "prettier": "1.16.4",
         "pretty-quick": "1.10.0",
         "sentences-per-line": "0.2.1",
-        "ts-jest": "24.0.0",
+        "ts-jest": "24.0.2",
         "tslint": "5.13.0",
         "tslint-config-prettier": "1.18.0"
     },
