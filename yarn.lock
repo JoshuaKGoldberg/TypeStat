@@ -388,10 +388,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha512-fh+pAqt4xRzPfqA6eh3Z2y6fyZavRIumvjhaCL753+TVkGKGhpPeyrJG2JftD0T9q4GF00KjefsQ+PQNDdWQaQ==
 
-"@types/node@11.13.3":
-  version "11.13.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.3.tgz#dbc789a46f82d96d3ac86dd10b84f86bab111d22"
-  integrity sha512-OgizLUF0unveHVSI74hyX1J5vQeteANZX+Gqc5qr6fR7JVFYBmzJmcxAncBl8H9Cwz2Zks2dx4uQc7g77iUcWQ==
+"@types/node@11.13.4":
+  version "11.13.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.4.tgz#f83ec3c3e05b174b7241fadeb6688267fe5b22ca"
+  integrity sha512-+rabAZZ3Yn7tF/XPGHupKIL5EcAbrLxnTr/hgQICxbeuAfWtT0UZSfULE+ndusckBItcv4o6ZeOJplQikVcLvQ==
 
 "@types/prop-types@*", "@types/prop-types@15.7.0":
   version "15.7.0"
