@@ -5,7 +5,7 @@ import { FileMutationsRequest } from "../../mutators/fileMutator";
 
 import { addIncompleteTypesToType } from "./addIncompleteTypesToType";
 import { addMissingTypesToType } from "./addMissingTypesToType";
-import { deduplicatePropertiesAsTypes, originalTypeHasIncompleteType, TypesByName, TypesAndNodesByName } from "./eliminations";
+import { deduplicatePropertiesAsTypes, originalTypeHasIncompleteType, TypesAndNodesByName, TypesByName } from "./eliminations";
 
 export const createTypeExpansionMutation = (
     request: FileMutationsRequest,
