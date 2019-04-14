@@ -1,16 +1,23 @@
 import { combineMutations, IMutation, ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
-import { TypesAndNodesByName } from "./eliminations";
+import { TypeSummary } from "./summarization";
 
-export const addIncompleteTypesToType = (incompleteTypes: TypesAndNodesByName): IMutation => {
+export type TypeSummariesPerNodeByName = Map<string, TypeSummaryWithNode>;
+
+export interface TypeSummaryWithNode {
+    summary: TypeSummary;
+    originalProperty: ts.PropertySignature;
+}
+
+export const addIncompleteTypesToType = (incompleteTypes: TypeSummariesPerNodeByName): IMutation | undefined => {
     const mutations: ITextInsertMutation[] = [];
 
-    for (const { memberNode, types } of incompleteTypes.values()) {
-        mutations.push(fillInIncompleteType(memberNode, types));
+    for (const { originalProperty, summary } of incompleteTypes.values()) {
+        mutations.push(fillInIncompleteType(originalProperty, summary.types));
     }
 
-    return combineMutations(...mutations);
+    return mutations.length === 0 ? undefined : combineMutations(...mutations);
 };
 
 /**

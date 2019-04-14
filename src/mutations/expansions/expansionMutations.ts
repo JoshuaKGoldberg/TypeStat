@@ -3,49 +3,63 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 
-import { addIncompleteTypesToType } from "./addIncompleteTypesToType";
+import { addIncompleteTypesToType, TypeSummariesPerNodeByName } from "./addIncompleteTypesToType";
 import { addMissingTypesToType } from "./addMissingTypesToType";
-import { deduplicatePropertiesAsTypes, originalTypeHasIncompleteType, TypesAndNodesByName, TypesByName } from "./eliminations";
+import { originalTypeHasIncompleteType } from "./eliminations";
+import { summarizeAllAssignedTypes, TypeSummariesByName } from "./summarization";
 
+export type AssignedTypesByName = Map<string, ts.Type>;
+
+/**
+ * Given an interface or type declaration and a set of later-assigned types,
+ * expands the original declaration to now also include the types.
+ */
 export const createTypeExpansionMutation = (
     request: FileMutationsRequest,
     node: ts.InterfaceDeclaration | ts.TypeLiteralNode,
-    originalType: ts.Type,
-    assignedTypes: ReadonlyArray<ts.Type>,
+    allAssignedTypes: AssignedTypesByName[],
 ): IMutation | undefined => {
-    const assignedProperties = assignedTypes.reduce<ts.Symbol[]>((prev, next) => prev.concat(next.getProperties()), []);
+    const originalPropertiesByName = groupPropertyDeclarationsByName(node);
+    const summarizedAssignedTypes = summarizeAllAssignedTypes(request, allAssignedTypes);
+    const incompleteTypes: TypeSummariesPerNodeByName = new Map();
+    const missingTypes: TypeSummariesByName = new Map();
 
-    return createPropertiesExpansionMutation(request, node, originalType, assignedProperties);
-};
-
-export const createPropertiesExpansionMutation = (
-    request: FileMutationsRequest,
-    node: ts.InterfaceDeclaration | ts.TypeLiteralNode,
-    originalType: ts.Type,
-    assignedProperties: ReadonlyArray<ts.Symbol>,
-): IMutation | undefined => {
-    const incompleteTypes: TypesAndNodesByName = new Map();
-    const missingTypes: TypesByName = new Map();
-
-    for (const [name, assignedTypes] of deduplicatePropertiesAsTypes(request, assignedProperties)) {
+    for (const [name, summary] of summarizedAssignedTypes) {
         // If the original type doesn't have the name at all, we'll need to add it in
-        if (originalType.getProperty(name) === undefined) {
-            missingTypes.set(name, assignedTypes);
+        const originalProperty = originalPropertiesByName.get(name);
+        if (originalProperty === undefined) {
+            missingTypes.set(name, summary);
             continue;
         }
 
         // If the type matches an existing property in name but not in type, we'll add the new type in there
-        if (originalTypeHasIncompleteType(request, originalType, assignedTypes)) {
-            incompleteTypes.set(name, {
-                memberNode: originalType.symbol.valueDeclaration as ts.PropertySignature,
-                types: assignedTypes,
-            });
+        const originalPropertyType = request.services.program.getTypeChecker().getTypeAtLocation(originalProperty);
+        if (originalTypeHasIncompleteType(request, originalPropertyType, summary.types)) {
+            incompleteTypes.set(name, { originalProperty, summary });
         }
     }
 
-    const mutations = [addIncompleteTypesToType(incompleteTypes), addMissingTypesToType(node, missingTypes)].filter(
+    const mutations = [addIncompleteTypesToType(incompleteTypes), addMissingTypesToType(request, node, missingTypes)].filter(
         (mutation): mutation is IMutation => mutation !== undefined,
     );
 
     return mutations.length === 0 ? undefined : combineMutations(...mutations);
+};
+
+const groupPropertyDeclarationsByName = (node: ts.InterfaceDeclaration | ts.TypeLiteralNode) => {
+    const propertiesByName: Map<string, ts.PropertySignature> = new Map();
+
+    for (const member of node.members) {
+        if (
+            !ts.isPropertySignature(member) ||
+            !(ts.isStringLiteral(member.name) || ts.isNumericLiteral(member.name)) ||
+            member.type === undefined
+        ) {
+            continue;
+        }
+
+        propertiesByName.set(member.name.text, member);
+    }
+
+    return propertiesByName;
 };

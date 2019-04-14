@@ -71,7 +71,14 @@ export const joinIntoType = (
         return undefined;
     }
 
-    return unionNames.map((type) => findAliasOfType(type, request.options.types.aliases)).join(" | ");
+    // Remove any duplicate names, since seemingly different flags or types might resolve to the same
+    unionNames = [...new Set(unionNames)];
+
+    // Alias the unioned names into what they'll be printed as
+    // We intentionally don't remove duplicates here, as some aliases might be "TODO" or similar
+    unionNames = unionNames.map((type) => findAliasOfType(type, request.options.types.aliases));
+
+    return unionNames.join(" | ");
 };
 
 const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);
