@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
+import { collectFlagsAndTypesFromTypes } from "./collecting";
 
 /**
  * Type flags and aliases to check when --strictNullChecks is not enabled.
@@ -101,4 +102,15 @@ export const findAliasOfType = (type: string, aliases: ReadonlyMap<RegExp, strin
     }
 
     return type;
+};
+
+/**
+ * Creates a printable type name summarizing existing type(s).
+ */
+export const createTypeName = (request: FileMutationsRequest, ...types: ts.Type[]) => {
+    // Find the flags and nested types from the declared type
+    const [typeFlags, allTypes] = collectFlagsAndTypesFromTypes(request, ...types);
+
+    // Join the missing types into a type string
+    return joinIntoType(typeFlags, allTypes, request);
 };

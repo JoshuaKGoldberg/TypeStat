@@ -1,12 +1,12 @@
 import { ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
+import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { printNewLine } from "../../shared/printing";
+import { createTypeName } from "../aliasing";
+
 import { getEndInsertionPoint } from "./getEndInsertionPoint";
 import { TypeSummariesByName, TypeSummary } from "./summarization";
-import { printNewLine } from "../../shared/printing";
-import { FileMutationsRequest } from "../../mutators/fileMutator";
-import { findAliasOfType } from "../aliasing";
-import { createTypeName } from "../creators";
 
 export const addMissingTypesToType = (
     request: FileMutationsRequest,

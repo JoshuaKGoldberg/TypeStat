@@ -5,7 +5,7 @@ import { FileMutationsRequest } from "../mutators/fileMutator";
 import { NodeWithAddableType, NodeWithCreatableType } from "../shared/nodeTypes";
 
 import { joinIntoType } from "./aliasing";
-import { collectUsageFlagsAndSymbols, collectFlagsAndTypesFromTypes } from "./collecting";
+import { collectUsageFlagsAndSymbols } from "./collecting";
 
 /**
  * Creates a mutation to add types to an existing type, if any are new.
@@ -87,12 +87,4 @@ export const createTypeCreationMutation = (
         },
         type: "text-insert",
     };
-};
-
-export const createTypeName = (request: FileMutationsRequest, ...types: ts.Type[]) => {
-    // Find the flags and nested types from the declared type
-    const [typeFlags, allTypes] = collectFlagsAndTypesFromTypes(request, ...types);
-
-    // Join the missing types into a type string
-    return joinIntoType(typeFlags, allTypes, request);
 };

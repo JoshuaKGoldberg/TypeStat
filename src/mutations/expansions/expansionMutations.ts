@@ -39,7 +39,7 @@ export const createTypeExpansionMutation = (
         }
     }
 
-    const mutations = [addIncompleteTypesToType(incompleteTypes), addMissingTypesToType(request, node, missingTypes)].filter(
+    const mutations = [addIncompleteTypesToType(request, incompleteTypes), addMissingTypesToType(request, node, missingTypes)].filter(
         (mutation): mutation is IMutation => mutation !== undefined,
     );
 

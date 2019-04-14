@@ -5,7 +5,7 @@
 [![Join the chat at https://gitter.im/TypeStat/community](https://badges.gitter.im/TypeStat/community.svg)](https://gitter.im/TypeStat/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-14cc21.svg)
 
-Adds TypeScript type annotations using static analysis.
+Adds and improves TypeScript type annotations using static analysis.
 
 > ⚡💀 **Danger**: new and experimental; use at your own risk! 💀⚡
 
