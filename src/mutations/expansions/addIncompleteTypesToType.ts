@@ -33,7 +33,7 @@ const fillInIncompleteType = (request: FileMutationsRequest, memberNode: ts.Prop
     const begin = memberNode.type === undefined ? memberNode.name.end : memberNode.type.end;
 
     return {
-        insertion: `| ${createTypeName(request, ...types)}`,
+        insertion: ` | ${createTypeName(request, ...types)}`,
         range: { begin },
         type: "text-insert",
     };

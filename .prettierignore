@@ -2,3 +2,4 @@
 docs/**/*.md
 test/**/actual.*
 test/**/expected.*
+test/**/original.*

@@ -11,5 +11,10 @@ propString?: string
 
     class MyComponent extends React.Component<MyProps> {}
 
-    const addsString = <MyComponent propBooleanExplicit={true} propBooleanImplicit propNumber={0} propString="" />;
+    const addsString = <MyComponent
+        propBooleanExplicit={true}
+        propBooleanImplicit
+        propNumber={0}
+        propString=""
+    />;
 })();

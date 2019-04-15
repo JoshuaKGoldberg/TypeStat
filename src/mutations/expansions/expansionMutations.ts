@@ -52,7 +52,7 @@ const groupPropertyDeclarationsByName = (node: ts.InterfaceDeclaration | ts.Type
     for (const member of node.members) {
         if (
             !ts.isPropertySignature(member) ||
-            !(ts.isStringLiteral(member.name) || ts.isNumericLiteral(member.name)) ||
+            !(ts.isIdentifier(member.name) || ts.isNumericLiteral(member.name) || ts.isStringLiteral(member.name)) ||
             member.type === undefined
         ) {
             continue;
