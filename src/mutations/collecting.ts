@@ -35,13 +35,13 @@ export const collectUsageFlagsAndSymbols = (
 };
 
 /**
- * Separates raw type nodes into their contained flags and types.
+ * Separates raw type node(s) into their contained flags and types.
  *
  * @param options   Source file, metadata, and settings to collect mutations in the file.
  * @param allTypes   Any number of raw type nodes.
  * @returns Flags and types found within the raw type nodes.
  */
-const collectFlagsAndTypesFromTypes = (
+export const collectFlagsAndTypesFromTypes = (
     request: FileMutationsRequest,
     ...allTypes: ts.Type[]
 ): [ReadonlySet<ts.TypeFlags>, ReadonlySet<ts.Type>] => {

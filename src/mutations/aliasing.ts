@@ -2,6 +2,8 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
 
+import { collectFlagsAndTypesFromTypes } from "./collecting";
+
 /**
  * Type flags and aliases to check when --strictNullChecks is not enabled.
  */
@@ -71,7 +73,14 @@ export const joinIntoType = (
         return undefined;
     }
 
-    return unionNames.map((type) => findAliasOfType(type, request.options.types.aliases)).join(" | ");
+    // Remove any duplicate names, since seemingly different flags or types might resolve to the same
+    unionNames = [...new Set(unionNames)];
+
+    // Alias the unioned names into what they'll be printed as
+    // We intentionally don't remove duplicates here, as some aliases might be "TODO" or similar
+    unionNames = unionNames.map((type) => findAliasOfType(type, request.options.types.aliases));
+
+    return unionNames.join(" | ");
 };
 
 const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);
@@ -94,4 +103,15 @@ export const findAliasOfType = (type: string, aliases: ReadonlyMap<RegExp, strin
     }
 
     return type;
+};
+
+/**
+ * Creates a printable type name summarizing existing type(s).
+ */
+export const createTypeName = (request: FileMutationsRequest, ...types: ts.Type[]) => {
+    // Find the flags and nested types from the declared type
+    const [typeFlags, allTypes] = collectFlagsAndTypesFromTypes(request, ...types);
+
+    // Join the missing types into a type string
+    return joinIntoType(typeFlags, allTypes, request);
 };

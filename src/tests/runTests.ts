@@ -56,16 +56,16 @@ describeMutationTestCases(
                     projectPath,
                 },
             }) as TypeStatOptions),
-            fileNames: [path.join(projectDirectory, "actual.ts")],
+            fileNames: [fileName],
         });
     },
     {
         accept: parsed.accept,
-        actual: "actual.ts",
-        expected: "expected.ts",
+        actual: (original) => (original.endsWith("x") ? "actual.tsx" : "actual.ts"),
+        expected: (original) => (original.endsWith("x") ? "expected.tsx" : "expected.ts"),
         includes: arrayify(parsed.include).map((include) => new RegExp(`(.*)${include}(.*)`)),
         normalizeEndlines: "\n",
-        original: "../original.?s",
+        original: "../original.*",
         settings: "typestat.json",
     },
 );

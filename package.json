@@ -16,7 +16,7 @@
         "tsutils": "^3.8.0",
         "typescript": "^3.3.3333"
     },
-    "description": "Adds TypeScript type annotations using static analysis.",
+    "description": "Adds and improves TypeScript type annotations using static analysis.",
     "devDependencies": {
         "@types/builtin-modules": "2.0.0",
         "@types/cosmiconfig": "5.0.3",
