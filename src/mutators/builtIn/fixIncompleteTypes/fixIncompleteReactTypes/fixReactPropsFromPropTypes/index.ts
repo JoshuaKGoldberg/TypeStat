@@ -3,7 +3,7 @@ import { IMutation, ITextInsertMutation } from "automutate";
 import { printNewLine } from "../../../../../shared/printing";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../../fileMutator";
-import { isVisitableComponentNode, ReactComponentNode } from "../reactFiltering/isVisitableComponentClass";
+import { isReactComponentNode, ReactComponentNode } from "../reactFiltering/isReactComponentNode";
 
 import { createInterfaceFromPropTypes } from "./propTypes/createInterfaceFromPropTypes";
 import { getPropTypesValue } from "./propTypes/getPropTypesValue";
@@ -12,7 +12,7 @@ import { getPropTypesValue } from "./propTypes/getPropTypesValue";
  * Creates an initial props type for a component from its PropTypes declaration.
  */
 export const fixReactPropsFromPropTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    return collectMutationsFromNodes(request, isVisitableComponentNode, visitClassDeclaration);
+    return collectMutationsFromNodes(request, isReactComponentNode, visitClassDeclaration);
 };
 
 const visitClassDeclaration = (node: ReactComponentNode, request: FileMutationsRequest): ITextInsertMutation | undefined => {

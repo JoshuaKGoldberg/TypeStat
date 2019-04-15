@@ -2,12 +2,17 @@ import * as ts from "typescript";
 
 import { getClassExtendsType } from "../../../../../shared/nodes";
 
-/**
- * @remarks Eventually, this should also allow functional components.
- */
-export type ReactComponentNode = ts.ClassDeclaration;
+export type ReactComponentNode = ReactClassComponentNode | ReactFunctionalComponentNode;
 
-export const isVisitableComponentNode = (node: ts.Node): node is ReactComponentNode => {
+export type ReactClassComponentNode = ts.ClassDeclaration | ts.ClassExpression;
+
+export type ReactFunctionalComponentNode = ts.ArrowFunction | ts.FunctionDeclaration | ts.FunctionExpression;
+
+export const isReactComponentNode = (node: ts.Node): node is ReactComponentNode => {
+    if (ts.isArrowFunction(node) || ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node)) {
+        return true;
+    }
+
     if (!ts.isClassDeclaration(node)) {
         return false;
     }

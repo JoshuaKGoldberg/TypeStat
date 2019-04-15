@@ -1,7 +1,7 @@
 import { createTypeExpansionMutation } from "../../../../../mutations/expansions/expansionMutations";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../../fileMutator";
-import { isVisitableComponentNode, ReactComponentNode } from "../reactFiltering/isVisitableComponentClass";
+import { isReactComponentNode, ReactComponentNode } from "../reactFiltering/isReactComponentNode";
 
 import { getComponentAssignedTypesFromUsage } from "./getComponentAssignedTypesFromUsage";
 import { getComponentPropsNode } from "./getComponentPropsNode";
@@ -10,10 +10,10 @@ import { getComponentPropsNode } from "./getComponentPropsNode";
  * Expands the existing props type for a component from its usages.
  */
 export const fixReactPropsFromLaterAssignments: FileMutator = (request) => {
-    return collectMutationsFromNodes(request, isVisitableComponentNode, visitClassDeclaration);
+    return collectMutationsFromNodes(request, isReactComponentNode, visitReactComponentNode);
 };
 
-const visitClassDeclaration = (node: ReactComponentNode, request: FileMutationsRequest) => {
+const visitReactComponentNode = (node: ReactComponentNode, request: FileMutationsRequest) => {
     // Grab the node used to declare the node's props type, if it exists
     const propsNode = getComponentPropsNode(request, node);
     if (propsNode === undefined) {
