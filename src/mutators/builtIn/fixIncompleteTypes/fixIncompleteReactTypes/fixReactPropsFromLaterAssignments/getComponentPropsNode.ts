@@ -2,7 +2,7 @@ import * as ts from "typescript";
 
 import { getClassExtendsType } from "../../../../../shared/nodes";
 import { FileMutationsRequest } from "../../../../fileMutator";
-import { ReactComponentNode, ReactFunctionalComponentNode, ReactClassComponentNode } from "../reactFiltering/isReactComponentNode";
+import { ReactClassComponentNode, ReactComponentNode, ReactFunctionalComponentNode } from "../reactFiltering/isReactComponentNode";
 
 export type ReactComponentPropsNode = ts.InterfaceDeclaration | ts.TypeLiteralNode;
 
