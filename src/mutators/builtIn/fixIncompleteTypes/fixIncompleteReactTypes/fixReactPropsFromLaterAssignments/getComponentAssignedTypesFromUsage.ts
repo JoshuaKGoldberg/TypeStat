@@ -3,7 +3,7 @@ import * as ts from "typescript";
 import { AssignedTypesByName } from "../../../../../mutations/expansions/expansionMutations";
 import { findNodeByStartingPosition } from "../../../../../shared/nodes";
 import { FileMutationsRequest } from "../../../../fileMutator";
-import { ReactComponentNode } from "../reactFiltering/isVisitableComponentClass";
+import { ReactComponentNode } from "../reactFiltering/isReactComponentNode";
 
 /**
  * Finds all assigned types for properties in each JSX usage of a React component.
@@ -12,7 +12,7 @@ export const getComponentAssignedTypesFromUsage = (
     request: FileMutationsRequest,
     node: ReactComponentNode,
 ): AssignedTypesByName[] | undefined => {
-    const references = request.fileInfoCache.getNodeReferences(node);
+    const references = getComponentReferences(request, node);
     if (references === undefined) {
         return undefined;
     }
@@ -25,6 +25,14 @@ export const getComponentAssignedTypesFromUsage = (
     }
 
     return assignedTypes;
+};
+
+const getComponentReferences = (request: FileMutationsRequest, node: ReactComponentNode) => {
+    if (ts.isClassDeclaration(node) || ts.isFunctionDeclaration(node)) {
+        return request.fileInfoCache.getNodeReferences(node);
+    }
+
+    return request.fileInfoCache.getNodeReferences(node.parent);
 };
 
 const updateAssignedTypesForReference = (

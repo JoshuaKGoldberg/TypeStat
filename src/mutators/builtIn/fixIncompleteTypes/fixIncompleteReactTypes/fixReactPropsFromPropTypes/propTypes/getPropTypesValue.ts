@@ -1,6 +1,8 @@
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
+import { ReactComponentNode } from "../../reactFiltering/isReactComponentNode";
+
 type PropTypesMember = ts.PropertyDeclaration & {
     initializer: ts.ObjectLiteralExpression;
     name: {
@@ -66,8 +68,8 @@ const isPropTypesStatement = (node: ts.Node, className: string) => {
  * This assumes an object literal (`{ ... }`) with all inline members.
  * It doesn't yet handle shared variable references or `...` spread operations.
  */
-export const getPropTypesValue = (node: ts.ClassDeclaration): ts.ObjectLiteralExpression | undefined => {
-    // If the class' parent declares a prop types for it, use it
+export const getPropTypesValue = (node: ReactComponentNode): ts.ObjectLiteralExpression | undefined => {
+    // If the component's parent declares a prop types for it, use it
     if (node.name !== undefined) {
         const propTypesStatement = getPropTypesChildFromParent(node.parent, node.name.text);
         if (propTypesStatement !== undefined) {
@@ -75,10 +77,13 @@ export const getPropTypesValue = (node: ts.ClassDeclaration): ts.ObjectLiteralEx
         }
     }
 
-    // If the class declares its own static prop types, use it
-    const staticPropTypes = node.members.find(getStaticPropTypes);
-    if (staticPropTypes !== undefined) {
-        return staticPropTypes.initializer;
+    // If the component is a class that declares its own static prop types, use it
+    if (ts.isClassDeclaration(node)) {
+        const staticPropTypes = node.members.find(getStaticPropTypes);
+
+        if (staticPropTypes !== undefined) {
+            return staticPropTypes.initializer;
+        }
     }
 
     // Since none of the above worked out, assume no prop types are declared
