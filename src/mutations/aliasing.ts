@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
+
 import { collectFlagsAndTypesFromTypes } from "./collecting";
 
 /**

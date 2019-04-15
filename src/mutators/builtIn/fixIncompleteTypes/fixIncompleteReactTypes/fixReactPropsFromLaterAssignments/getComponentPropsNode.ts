@@ -7,7 +7,7 @@ import { ReactComponentNode } from "../reactFiltering/isVisitableComponentClass"
 export type ReactComponentPropsNode = ts.InterfaceDeclaration | ts.TypeLiteralNode;
 
 /**
- * Finds the corresponding interface or type literal to declare a component's props type, if it exists.
+ * Finds the corresponding interface or type literal that declares a component's props type, if it exists.
  */
 export const getComponentPropsNode = (request: FileMutationsRequest, node: ReactComponentNode): ReactComponentPropsNode | undefined => {
     const extendsType = getClassExtendsType(node);

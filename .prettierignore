@@ -1,3 +1,4 @@
 *.md
 docs/**/*.md
-test/**/expected.ts
+test/**/actual.*
+test/**/expected.*

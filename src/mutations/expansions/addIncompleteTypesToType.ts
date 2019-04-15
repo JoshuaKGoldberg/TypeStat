@@ -13,6 +13,9 @@ export interface TypeSummaryWithNode {
     originalProperty: ts.PropertySignature;
 }
 
+/**
+ * Appends new types as union type nodes to existing, apparently incomplete types.
+ */
 export const addIncompleteTypesToType = (
     request: FileMutationsRequest,
     incompleteTypes: TypeSummariesPerNodeByName,

@@ -63,9 +63,9 @@ describeMutationTestCases(
         accept: parsed.accept,
         actual: (original) => (original.endsWith("x") ? "actual.tsx" : "actual.ts"),
         expected: (original) => (original.endsWith("x") ? "expected.tsx" : "expected.ts"),
-        includes: arrayify(["missing props"]).map((include) => new RegExp(`(.*)${include}(.*)`)),
+        includes: arrayify(parsed.include).map((include) => new RegExp(`(.*)${include}(.*)`)),
         normalizeEndlines: "\n",
-        original: "../original.?s?",
+        original: "../original.*",
         settings: "typestat.json",
     },
 );

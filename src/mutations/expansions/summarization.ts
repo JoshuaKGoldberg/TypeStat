@@ -11,6 +11,9 @@ export interface TypeSummary {
     types: ts.Type[];
 }
 
+/**
+ * Groups a list of assignments into, for each property name, the possible types under it and whether it's always provided.
+ */
 export const summarizeAllAssignedTypes = (request: FileMutationsRequest, allAssignedTypes: AssignedTypesByName[]): TypeSummariesByName => {
     const typeSummariesByName: TypeSummariesByName = new Map();
 

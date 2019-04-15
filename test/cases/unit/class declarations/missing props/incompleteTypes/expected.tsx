@@ -3,10 +3,10 @@ import React from "react";
 (function() {
     interface MyProps {
         unused: boolean;
-        propBooleanExplicit?: boolean;
-        propBooleanImplicit?: boolean;
-        propNumber?: number;
-        propString?: string;
+propBooleanExplicit?: boolean
+propBooleanImplicit?: boolean
+propNumber?: number
+propString?: string
     }
 
     class MyComponent extends React.Component<MyProps> {}
