@@ -37,7 +37,7 @@
         "pretty-quick": "1.10.0",
         "sentences-per-line": "0.2.1",
         "ts-jest": "24.0.2",
-        "tslint": "5.15.0",
+        "tslint": "5.16.0",
         "tslint-config-prettier": "1.18.0"
     },
     "engines": {
