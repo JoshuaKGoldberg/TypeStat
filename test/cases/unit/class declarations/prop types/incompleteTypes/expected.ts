@@ -53,7 +53,7 @@ interface MyComponentProps {
     stringsOrNumbersType?: (string | number)[];
 }
 
-    class MyComponent extends React.Component {
+    class MyComponent extends React.Component<MyComponentProps> {
         static propTypes = {
             array: PropTypes.array,
             arrayRequired: PropTypes.array.isRequired,
@@ -115,7 +115,7 @@ interface LaterAssignedComponentProps {
 }
 
 
-    class LaterAssignedComponent extends React.Component {
+    class LaterAssignedComponent extends React.Component<LaterAssignedComponentProps> {
         render() {
             return "";
         }
