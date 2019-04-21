@@ -16,15 +16,19 @@ export const createInterfaceFromPropTypes = (node: ReactComponentNode, propTypes
 
     const apparentName = getApparentNameOfComponent(node);
 
-    return ts.createInterfaceDeclaration(
+    // Todo: allow preference for name templating
+    const interfaceName = apparentName === undefined ? "AnonymousClassProps" : `${apparentName}Props`;
+
+    const interfaceNode = ts.createInterfaceDeclaration(
         undefined /* decorators */,
         undefined /* modifiers */,
-        // Todo: allow preference for name templating
-        apparentName === undefined ? "AnonymousClassProps" : `${apparentName}Props`,
+        interfaceName,
         undefined /* typeParameters */,
         undefined /* heritageClauses */,
         members,
     );
+
+    return { interfaceName, interfaceNode };
 };
 
 const getApparentNameOfComponent = (node: ReactComponentNode): string | undefined => {

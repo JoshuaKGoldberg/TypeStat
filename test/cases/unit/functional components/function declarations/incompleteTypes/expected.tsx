@@ -16,7 +16,7 @@ interface DeclaresPropsWithPropTypesProps {
 }
 
 
-    function DeclaresPropsWithPropTypes(props) {}
+    function DeclaresPropsWithPropTypes(props: DeclaresPropsWithPropTypesProps) {}
 
     DeclaresPropsWithPropTypes.propTypes = {
         declaredString: PropTypes.string,
