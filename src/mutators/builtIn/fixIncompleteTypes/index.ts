@@ -1,6 +1,7 @@
 import { findFirstMutations } from "../../../shared/runtime";
 import { FileMutationsRequest } from "../../fileMutator";
 
+import { fixIncompleteInterfaceOrTypeLiteralGenerics } from "./fixIncompleteInterfaceOrTypeLiteralGenerics";
 import { fixIncompleteParameterTypes } from "./fixIncompleteParameterTypes";
 import { fixIncompletePropertyDeclarationTypes } from "./fixIncompletePropertyDeclarationTypes";
 import { fixIncompleteReactTypes } from "./fixIncompleteReactTypes";
@@ -10,6 +11,7 @@ import { fixIncompleteVariableTypes } from "./fixIncompleteVariableTypes";
 export const fixIncompleteTypes = (request: FileMutationsRequest) =>
     request.options.fixes.incompleteTypes
         ? findFirstMutations(request, [
+              ["fixIncompleteInterfaceOrTypeLiteralGenerics", fixIncompleteInterfaceOrTypeLiteralGenerics],
               ["fixIncompleteParameterTypes", fixIncompleteParameterTypes],
               ["fixIncompletePropertyDeclarationTypes", fixIncompletePropertyDeclarationTypes],
               ["fixIncompleteReactTypes", fixIncompleteReactTypes],

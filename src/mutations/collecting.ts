@@ -20,10 +20,10 @@ export const collectUsageFlagsAndSymbols = (
     allAssignedTypes: ReadonlyArray<ts.Type>,
 ) => {
     // Collect which flags and types are declared (as a type annotation)...
-    const [declaredFlags, declaredTypes] = collectFlagsAndTypesFromTypes(request, declaredType);
+    const [declaredFlags, declaredTypes] = collectFlagsAndTypesFromTypes(request, [declaredType]);
 
     // ...and which are later assigned
-    const [assignedFlags, assignedTypes] = collectFlagsAndTypesFromTypes(request, ...allAssignedTypes);
+    const [assignedFlags, assignedTypes] = collectFlagsAndTypesFromTypes(request, allAssignedTypes);
 
     // Subtract the above to find any flags or types assigned but not declared
     return {
@@ -39,15 +39,17 @@ export const collectUsageFlagsAndSymbols = (
  *
  * @param options   Source file, metadata, and settings to collect mutations in the file.
  * @param allTypes   Any number of raw type nodes.
+ * @param allowStrictNullCheckAliases   Whether to allow `null` and `undefined` aliases regardless of compiler strictness.
  * @returns Flags and types found within the raw type nodes.
  */
 export const collectFlagsAndTypesFromTypes = (
     request: FileMutationsRequest,
-    ...allTypes: ts.Type[]
-): [ReadonlySet<ts.TypeFlags>, ReadonlySet<ts.Type>] => {
+    allTypes: ReadonlyArray<ts.Type>,
+    allowStrictNullCheckAliases?: boolean,
+): [Set<ts.TypeFlags>, Set<ts.Type>] => {
     const foundFlags = new Set<ts.TypeFlags>();
     const foundTypes = new Set<ts.Type>();
-    const applicableTypeAliases = getApplicableTypeAliases(request);
+    const applicableTypeAliases = getApplicableTypeAliases(request, allowStrictNullCheckAliases);
 
     // Scan each type for undeclared type additions
     for (const type of allTypes) {
@@ -67,7 +69,7 @@ export const collectFlagsAndTypesFromTypes = (
         // If the type is a union, add any flags or types found within it
         if ("types" in type) {
             const subTypes = recursivelyCollectSubTypes(type);
-            const [subFlags, deepSubTypes] = collectFlagsAndTypesFromTypes(request, ...subTypes);
+            const [subFlags, deepSubTypes] = collectFlagsAndTypesFromTypes(request, subTypes);
 
             for (const subFlag of subFlags) {
                 foundFlags.add(subFlag);

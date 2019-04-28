@@ -19,6 +19,10 @@ export type NodeWithType = ts.Node & {
     type: ts.TypeNode;
 };
 
+export type NodeWithIdentifierName = ts.Node & {
+    name: ts.Identifier;
+};
+
 /**
  * Node types TypeStat may attempt to create a type declaration on.
  */
@@ -35,7 +39,31 @@ export type NodeWithAddableType = NodeWithType &
  */
 export type FunctionLikeDeclarationWithType = ts.FunctionLikeDeclaration & NodeWithType;
 
+// TODO: make this a more specific type
+// Will have to deal with instantiations (new Container<T>() { ... }) and declarations (class Container<T>() { ... }))
+export type NodeWithDefinedTypeArguments = ts.Node & {
+    typeArguments: ts.NodeArray<ts.TypeNode>;
+};
+
+// TODO: make this a more specific type
+// Will have to deal with instantiations (new Container<T>() { ... }) and declarations (class Container<T>() { ... }))
+export type NodeWithDefinedTypeParameters = ts.Node & {
+    typeParameters: ts.NodeArray<ts.TypeNode>;
+};
+
 export const isNodeWithType = (node: NodeWithOptionalType): node is NodeWithType => node.type !== undefined;
+
+export const isNodeWithIdentifierName = (node: ts.Node): node is NodeWithIdentifierName => {
+    return "name" in node;
+};
+
+export const isNodeWithDefinedTypeArguments = (node: ts.Node): node is NodeWithDefinedTypeArguments => {
+    return "typeArguments" in node;
+};
+
+export const isNodeWithDefinedTypeParameters = (node: ts.Node): node is NodeWithDefinedTypeParameters => {
+    return "typeParameters" in node;
+};
 
 export const getValueDeclarationOfType = (request: FileMutationsRequest, node: ts.Node): ts.Node | undefined => {
     // Try getting the symbol at the location, which sometimes only works in the latter form
@@ -66,3 +94,13 @@ export const getValueDeclarationOfType = (request: FileMutationsRequest, node: t
  */
 export const isTypeMissingBetween = (typeFlag: ts.TypeFlags, typeOfArgument: ts.Type, typeOfParameter: ts.Type): boolean =>
     isTypeFlagSetRecursively(typeOfArgument, typeFlag) && !isTypeFlagSetRecursively(typeOfParameter, typeFlag);
+
+export const getIdentifyingTypeLiteralParent = (node: ts.TypeLiteralNode) => {
+    const { parent } = node;
+    if (ts.isTypeAliasDeclaration(parent)) {
+        return parent.name;
+    }
+
+    // ???
+    return node;
+};

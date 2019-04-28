@@ -45,6 +45,7 @@ const printMissingType = (request: FileMutationsRequest, name: string, summary: 
         name,
         summary.alwaysProvided ? "?: " : ": ",
         createTypeName(request, ...summary.types),
+        ";",
         printNewLine(request.options.compilerOptions),
     ].join("");
 };
