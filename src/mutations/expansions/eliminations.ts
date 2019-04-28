@@ -12,5 +12,5 @@ export const originalTypeHasIncompleteType = (
 ) => {
     const typeChecker = request.services.program.getTypeChecker();
 
-    return candidateTypes.some((assignedType) => !typeChecker.isTypeAssignableTo(originalType, assignedType));
+    return candidateTypes.some((assignedType) => !typeChecker.isTypeAssignableTo(assignedType, originalType));
 };

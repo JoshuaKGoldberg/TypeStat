@@ -30,6 +30,39 @@ export const findRelevantNodeReferences = (
     return Array.from(references);
 };
 
+// TODO: file issue to clean up existing uses of findRelevantNodeReferences that could just use this
+export const findRelevantNodeReferencesAsNodes = (
+    filteredNodes: ReadonlySet<ts.Node>,
+    services: LanguageServices,
+    sourceFile: ts.SourceFile,
+    identifyingNode: ts.Node,
+): ts.Node[] | undefined => {
+    const references = findRelevantNodeReferences(filteredNodes, services, sourceFile, identifyingNode);
+    if (references === undefined) {
+        return undefined;
+    }
+
+    const referencingNodes: ts.Node[] = [];
+
+    for (const reference of references) {
+        // Grab the source file containing the reference
+        const referencingSourceFile = services.program.getSourceFile(reference.fileName);
+        if (referencingSourceFile === undefined) {
+            continue;
+        }
+
+        // Find the referencing node from its place in the source file, unless it's roughly the original node
+        const referencingNode = findNodeByStartingPosition(sourceFile, reference.textSpan.start);
+        if (referencingNode === identifyingNode || referencingNode === identifyingNode) {
+            continue;
+        }
+
+        referencingNodes.push(referencingNode);
+    }
+
+    return referencingNodes;
+};
+
 const referenceIsFilteredOut = (filteredNodes: ReadonlySet<ts.Node>, sourceFile: ts.SourceFile, reference: ts.ReferenceEntry): boolean => {
     return isNodeFilteredOut(filteredNodes, findNodeByStartingPosition(sourceFile, reference.textSpan.start));
 };
