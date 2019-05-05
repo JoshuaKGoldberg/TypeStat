@@ -8,6 +8,7 @@ import { convertMapToObject, Dictionary } from "../../shared/maps";
 import { collectFilteredNodes } from "../collectFilteredNodes";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
 import { findMutationsInFile } from "../findMutationsInFile";
+import { NameGenerator } from "../../shared/NameGenerator";
 
 /**
  * Creates a mutations provider that runs the core mutations within TypeStat.
@@ -37,9 +38,11 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
             }
 
             const filteredNodes = collectFilteredNodes(options, sourceFile);
+            const nameGenerator = new NameGenerator(sourceFile.fileName);
             const foundMutations = await findMutationsInFile({
                 fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
                 filteredNodes,
+                nameGenerator,
                 options,
                 services,
                 sourceFile,

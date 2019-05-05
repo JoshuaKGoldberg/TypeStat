@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { AssignedTypesByName } from "../../../../../mutations/expansions/expansionMutations";
+import { AssignedTypesByName } from "../../../../../mutations/assignments";
 import { findNodeByStartingPosition } from "../../../../../shared/nodes";
 import { FileMutationsRequest } from "../../../../fileMutator";
 import { ReactComponentNode } from "../reactFiltering/isReactComponentNode";

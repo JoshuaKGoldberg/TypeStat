@@ -2,10 +2,9 @@ import { ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
-import { printNewLine } from "../../shared/printing";
-import { createTypeName } from "../aliasing";
+import { printNamedTypeSummary } from "../../shared/printing/nodePrinting";
 
-import { TypeSummariesByName, TypeSummary } from "./summarization";
+import { TypeSummariesByName } from "./summarization";
 
 /**
  * Adds new named type properties to a declaration that is missing them.
@@ -18,7 +17,7 @@ export const addMissingTypesToType = (
     let insertion = "";
 
     for (const [name, summary] of missingTypes) {
-        insertion += printMissingType(request, name, summary);
+        insertion += printNamedTypeSummary(request, name, summary);
     }
 
     return {
@@ -38,14 +37,4 @@ const getEndInsertionPoint = ({ end, members }: ts.InterfaceDeclaration | ts.Typ
     const lastMember = members[members.length - 1];
 
     return Math.min(lastMember.end + 1, end);
-};
-
-const printMissingType = (request: FileMutationsRequest, name: string, summary: TypeSummary): string => {
-    return [
-        name,
-        summary.alwaysProvided ? "?: " : ": ",
-        createTypeName(request, ...summary.types),
-        ";",
-        printNewLine(request.options.compilerOptions),
-    ].join("");
 };

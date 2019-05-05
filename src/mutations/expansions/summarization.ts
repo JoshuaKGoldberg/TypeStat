@@ -1,8 +1,7 @@
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
-
-import { AssignedTypesByName } from "./expansionMutations";
+import { AssignedTypesByName } from "../assignments";
 
 export type TypeSummariesByName = Map<string, TypeSummary>;
 

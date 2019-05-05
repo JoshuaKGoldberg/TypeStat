@@ -1,7 +1,7 @@
 import { combineMutations, IMutation, ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
-import { printNewLine } from "../../../../../shared/printing";
+import { printNewLine } from "../../../../../shared/printing/newlines";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../../fileMutator";
 import { isReactComponentNode, ReactComponentNode } from "../reactFiltering/isReactComponentNode";

@@ -31,7 +31,7 @@ const collectDirectNodeReferences = (request: FileMutationsRequest, node: Interf
     return request.fileInfoCache.getNodeReferencesAsNodes(identifyingNode);
 };
 
-const expandReferencesForGenericTypes = (
+export const expandReferencesForGenericTypes = (
     request: FileMutationsRequest,
     interfaceOrTypeLiteral: InterfaceOrTypeLiteral,
     referencingNodes: ReadonlyArray<ts.Node>,
@@ -101,10 +101,6 @@ const collectGenericReferencesOfType = (
     }
 
     for (const referencingTypeNode of referencingTypeNodes) {
-        // if (typeChecker.getTypeAtLocation(referencingTypeNode) !== originalType) {
-        //     continue;
-        // }
-
         // From the referencing type node, grab the node it's declared as the type of
         if (!ts.isTypeNode(referencingTypeNode)) {
             continue;

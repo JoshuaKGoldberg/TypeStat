@@ -1,7 +1,8 @@
 import { IMutation } from "automutate";
 import * as ts from "typescript";
 
-import { createTypeExpansionMutation, joinAssignedTypesByName } from "../../../../mutations/expansions/expansionMutations";
+import { joinAssignedTypesByName } from "../../../../mutations/assignments";
+import { createTypeExpansionMutation } from "../../../../mutations/expansions/expansionMutations";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
