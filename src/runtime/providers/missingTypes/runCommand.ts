@@ -13,8 +13,8 @@ const commandAliases = new Map([["npm", isWindows() ? "npm.cmd" : undefined], ["
  * @param fullCommand   Command to spawnute, including args.
  * @returns Promise for the result code of the command.
  */
-export const runCommand = async (options: TypeStatOptions, fullCommand: string) => {
-    const [command, ...args] = fullCommand.split(" ");
+export const runCommand = async (options: TypeStatOptions, fullCommand: string | string[]) => {
+    const [command, ...args] = typeof fullCommand === "string" ? fullCommand.split(" ") : fullCommand;
     const commandAlias = getCommandAlias(command);
 
     options.logger.stdout.write(chalk.grey(`> ${commandAlias} ${args.join(" ")}\n`));

@@ -1,0 +1,10 @@
+const fs = require("mz/fs");
+const { EOL } = require("os");
+
+const writeToFiles = async () => {
+    for (const filePath of process.argv.slice(2)) {
+        await fs.writeFile(filePath, ["// Processed!", await fs.readFile(filePath)].join(EOL.repeat(2)));
+    }
+};
+
+writeToFiles();

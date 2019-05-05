@@ -41,6 +41,11 @@ export interface RawTypeStatOptions {
     readonly package?: Readonly<Partial<Package>>;
 
     /**
+     * Hooks to run after mutations are complete.
+     */
+    readonly postProcess?: Readonly<Partial<PostProcess>>;
+
+    /**
      * Path to a TypeScript configuration file, if not "tsconfig.json".
      */
     readonly projectPath?: string;
@@ -119,6 +124,11 @@ export interface TypeStatOptions {
      * Directives for project-level changes.
      */
     readonly package: Readonly<Package>;
+
+    /**
+     * Hooks to run after mutations are complete.
+     */
+    readonly postProcess: Readonly<PostProcess>;
 
     /**
      * Path to a tsconfig.json file.
@@ -202,6 +212,16 @@ export interface Package {
      * Package manager to install missing types, if not `true` to auto-detect or `undefined` to not.
      */
     missingTypes: true | "npm" | "yarn" | undefined;
+}
+
+/**
+ * Hooks to run after mutations are complete.
+ */
+export interface PostProcess {
+    /**
+     * Shell commands to execute in order after mutations on mutated file paths.
+     */
+    shell: ReadonlyArray<ReadonlyArray<string>>;
 }
 
 /**

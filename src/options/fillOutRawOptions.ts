@@ -46,6 +46,11 @@ export const fillOutRawOptions = ({
 
     const packageOptions = collectPackageOptions(argv, packageDirectory, rawOptions);
 
+    const shell: ReadonlyArray<string>[] = [];
+    if (rawOptions.postProcess !== undefined && rawOptions.postProcess.shell !== undefined) {
+        shell.push(...rawOptions.postProcess.shell);
+    }
+
     const options = {
         compilerOptions: {
             ...compilerOptions,
@@ -65,6 +70,7 @@ export const fillOutRawOptions = ({
         logger: argv.logger,
         mutators: collectAddedMutators(argv, rawOptions, packageOptions.directory, processLogger),
         package: packageOptions,
+        postProcess: { shell },
         projectPath,
         types: {
             aliases: typeAliases,

@@ -6,6 +6,7 @@ import { createProviderFromProviders } from "./createProviderFromProviders";
 import { createCoreMutationsProvider } from "./providers/createCoreMutationsProvider";
 import { createInstallMissingTypesProvider } from "./providers/createInstallMissingTypesProvider";
 import { createMarkFilesModifiedProvider } from "./providers/createMarkFilesModifiedProvider";
+import { createPostProcessingProvider } from "./providers/createPostProcessingProvider";
 import { createRequireRenameProvider } from "./providers/createRequireRenameProvider";
 
 /**
@@ -20,6 +21,7 @@ export const createTypeStatProvider = (options: TypeStatOptions): IMutationsProv
             createRequireRenameProvider(options, allModifiedFiles),
             createCoreMutationsProvider(options, allModifiedFiles),
             createMarkFilesModifiedProvider(options, allModifiedFiles),
+            createPostProcessingProvider(options, allModifiedFiles),
         ),
     };
 };
