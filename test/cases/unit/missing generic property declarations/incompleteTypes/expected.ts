@@ -3,11 +3,11 @@
         first: TFirst;
     }
 
-type ExtendingWithAddedTFirst = {
+type ExtendingWithAddedFirst = {
 added?: boolean;
 };
 
-    class ExtendingWithAdded extends OneTypeParameter<ExtendingWithAddedTFirst> {
+    class ExtendingWithAdded extends OneTypeParameter<ExtendingWithAddedFirst> {
         constructor() {
             super();
             this.first = {
@@ -16,11 +16,11 @@ added?: boolean;
         }
     }
 
-type ExtendingWithExistingTFirst = {
+type ExtendingWithExistingFirst = {
 added?: boolean;
 };
 
-    class ExtendingWithExisting extends OneTypeParameter<ExtendingWithExistingTFirst> {
+    class ExtendingWithExisting extends OneTypeParameter<ExtendingWithExistingFirst> {
         constructor() {
             super();
             this.first = {
@@ -33,20 +33,24 @@ added?: boolean;
         second: TSecond;
     }
 
+type ExtendingWithDefaultSecond = {
+added?: boolean;
+};
 
-
-    class ExtendingWithDefault extends SkippedTypeParameter<{}, {}> {
+    class ExtendingWithDefault extends SkippedTypeParameter<{}, ExtendingWithDefaultSecond> {
         constructor() {
             super();
             this.second = {
-                existing: true,
+                added: true,
             };
         }
     }
 
+type ExtendingWithSkippedSecond = {
+added?: boolean;
+};
 
-
-    class ExtendingWithSkipped extends SkippedTypeParameter<{}> {
+    class ExtendingWithSkipped extends SkippedTypeParameter<{}, ExtendingWithSkippedSecond> {
         constructor() {
             super();
             this.second = {

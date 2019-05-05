@@ -5,10 +5,10 @@ import { TypeStatOptions } from "../../options/types";
 import { LazyCache } from "../../services/LazyCache";
 import { FileInfoCache } from "../../shared/FileInfoCache";
 import { convertMapToObject, Dictionary } from "../../shared/maps";
+import { NameGenerator } from "../../shared/NameGenerator";
 import { collectFilteredNodes } from "../collectFilteredNodes";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
 import { findMutationsInFile } from "../findMutationsInFile";
-import { NameGenerator } from "../../shared/NameGenerator";
 
 /**
  * Creates a mutations provider that runs the core mutations within TypeStat.
