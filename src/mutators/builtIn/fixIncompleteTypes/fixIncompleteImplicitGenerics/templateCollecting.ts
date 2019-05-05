@@ -25,8 +25,12 @@ export const findMissingTemplateTypes = (
     if (childClass.heritageClauses !== undefined) {
         for (const heritageClause of childClass.heritageClauses) {
             if (heritageClause.token === ts.SyntaxKind.ExtendsKeyword) {
-                for (i; i < heritageClause.types.length; i += 1) {
-                    missingTemplateTypes.push(undefined);
+                for (const heritageType of heritageClause.types) {
+                    if (heritageType.typeArguments !== undefined) {
+                        for (i; i < heritageType.typeArguments.length; i += 1) {
+                            missingTemplateTypes.push(undefined);
+                        }
+                    }
                 }
             }
         }
