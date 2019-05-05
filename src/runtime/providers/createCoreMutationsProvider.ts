@@ -5,6 +5,7 @@ import { TypeStatOptions } from "../../options/types";
 import { LazyCache } from "../../services/LazyCache";
 import { FileInfoCache } from "../../shared/FileInfoCache";
 import { convertMapToObject, Dictionary } from "../../shared/maps";
+import { NameGenerator } from "../../shared/NameGenerator";
 import { collectFilteredNodes } from "../collectFilteredNodes";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
 import { findMutationsInFile } from "../findMutationsInFile";
@@ -37,9 +38,11 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
             }
 
             const filteredNodes = collectFilteredNodes(options, sourceFile);
+            const nameGenerator = new NameGenerator(sourceFile.fileName);
             const foundMutations = await findMutationsInFile({
                 fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
                 filteredNodes,
+                nameGenerator,
                 options,
                 services,
                 sourceFile,

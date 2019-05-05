@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { AssignedTypeValue } from "../../../../mutations/expansions/expansionMutations";
+import { AssignedTypeValue } from "../../../../mutations/assignments";
 import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
 import { FileMutationsRequest } from "../../../fileMutator";
 
