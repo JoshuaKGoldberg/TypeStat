@@ -15,10 +15,6 @@ import { runCommand } from "./missingTypes/runCommand";
 export const createPostProcessingProvider = (options: TypeStatOptions, allModifiedFilePaths: ReadonlySet<string>) => {
     return createSingleUseProvider(
         async (): Promise<IMutationsWave> => {
-            if (options.postProcess.shell.length === 0) {
-                return {};
-            }
-
             for (const shellCommand of options.postProcess.shell) {
                 await runCommand(options, [...shellCommand, ...Array.from(allModifiedFilePaths)]);
             }
