@@ -16,11 +16,9 @@ export const addNewTypeNodes = (request: FileMutationsRequest, node: ts.ClassLik
 };
 
 export const addMissingTemplateTypes = (extension: ts.ExpressionWithTypeArguments, templateTypeNames: string[]) => {
-    const typeNamesJoined = templateTypeNames.join(", ");
-
     if (extension.typeArguments === undefined) {
         return {
-            insertion: `<${typeNamesJoined}>`,
+            insertion: `<${templateTypeNames.join(", ")}>`,
             range: {
                 begin: extension.end,
             },
@@ -31,7 +29,7 @@ export const addMissingTemplateTypes = (extension: ts.ExpressionWithTypeArgument
     const lastExistingTypeArgument = extension.typeArguments[extension.typeArguments.length - 1];
 
     return {
-        insertion: `, ${typeNamesJoined}`,
+        insertion: `, ${templateTypeNames.slice(extension.typeArguments.length).join(", ")}`,
         range: {
             begin: lastExistingTypeArgument.end,
         },

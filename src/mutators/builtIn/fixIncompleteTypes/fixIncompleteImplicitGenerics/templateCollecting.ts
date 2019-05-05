@@ -22,9 +22,13 @@ export const findMissingTemplateTypes = (
     let i = 0;
 
     // Ignore any type parameters already declared on the class
-    if (childClass.typeParameters !== undefined) {
-        for (i; i < childClass.typeParameters.length; i += 1) {
-            missingTemplateTypes.push(undefined);
+    if (childClass.heritageClauses !== undefined) {
+        for (const heritageClause of childClass.heritageClauses) {
+            if (heritageClause.token === ts.SyntaxKind.ExtendsKeyword) {
+                for (i; i < heritageClause.types.length; i += 1) {
+                    missingTemplateTypes.push(undefined);
+                }
+            }
         }
     }
 
@@ -42,24 +46,41 @@ const collectMissingParameterTypes = (
     childClass: ts.ClassLikeDeclaration,
     baseTypeParameter: ts.TypeParameterDeclaration,
 ): AssignedTypesByName | undefined => {
-    const assignedTypeValues: AssignedTypeValue[] = [];
-
     // Each usage of the base type parameter might introduce new assigned types
-    // TODO: now have to expand these generic references
     const typeParameterReferences = collectTypeParameterReferences(request, baseTypeParameter);
     if (typeParameterReferences === undefined) {
         return undefined;
     }
 
+    // Collect all types assigned by those uses that don't already exist on the template's default
+    const missingAssignedTypeValues = collectMissingAssignedParameterTypes(request, childClass, baseTypeParameter, typeParameterReferences);
+
+    // If we've found nothing, the parameter checks out and shouldn't be filled in
+    if (missingAssignedTypeValues.length === 0) {
+        return undefined;
+    }
+
+    // If we've found missing types, return them to indicate they should be filled in
+    return joinAssignedTypesByName(request, missingAssignedTypeValues);
+};
+
+const collectMissingAssignedParameterTypes = (
+    request: FileMutationsRequest,
+    childClass: ts.ClassLikeDeclaration,
+    baseTypeParameter: ts.TypeParameterDeclaration,
+    typeParameterReferences: ts.Node[],
+) => {
+    const assignedTypeValues: AssignedTypeValue[] = [];
     const typeChecker = request.services.program.getTypeChecker();
     const childClassType = typeChecker.getTypeAtLocation(childClass);
-    const baseTypeParameterType = typeChecker.getTypeAtLocation(baseTypeParameter);
+    const defaultTypeParameterType =
+        baseTypeParameter.default === undefined ? undefined : typeChecker.getTypeAtLocation(baseTypeParameter.default);
 
     for (const typeParameterReference of typeParameterReferences) {
-        const discoveredAssignedTypes = getMissingAssignedTypesOnChildClassNode(
+        const discoveredAssignedTypes = collectMissingAssignedTypesOnChildClassNode(
             typeChecker,
             childClassType,
-            baseTypeParameterType,
+            defaultTypeParameterType,
             typeParameterReference,
         );
 
@@ -68,19 +89,13 @@ const collectMissingParameterTypes = (
         }
     }
 
-    // If we've found nothing, the parameter checks out and shouldn't be filled in
-    if (assignedTypeValues.length === 0) {
-        return undefined;
-    }
-
-    // If we've found missing types, return them to indicate they should be filled in
-    return joinAssignedTypesByName(request, assignedTypeValues);
+    return assignedTypeValues;
 };
 
-const getMissingAssignedTypesOnChildClassNode = (
+const collectMissingAssignedTypesOnChildClassNode = (
     typeChecker: ExposedTypeChecker,
     childClassType: ts.Type,
-    baseTypeParameterType: ts.Type,
+    defaultTypeParameterType: ts.Type | undefined,
     typeParameterReference: ts.Node,
 ) => {
     const parentPropertyAccess = typeParameterReference.parent;
@@ -97,7 +112,7 @@ const getMissingAssignedTypesOnChildClassNode = (
 
     // If the grandparent is an assigning binary expression, add the right side as a full new type
     if (isNodeAssigningBinaryExpression(parentPropertyAccess.parent)) {
-        return getMissingAssignedType(typeChecker, baseTypeParameterType, parentPropertyAccess.parent.right);
+        return getMissingAssignedType(typeChecker, defaultTypeParameterType, parentPropertyAccess.parent.right);
     }
 
     // Otherwise we ignore any other types
@@ -105,9 +120,15 @@ const getMissingAssignedTypesOnChildClassNode = (
     return undefined;
 };
 
-const getMissingAssignedType = (typeChecker: ExposedTypeChecker, baseTypeParameterType: ts.Type, rightExpression: ts.Expression) => {
+const getMissingAssignedType = (
+    typeChecker: ExposedTypeChecker,
+    defaultTypeParameterType: ts.Type | undefined,
+    rightExpression: ts.Expression,
+) => {
     const rightExpressionType = typeChecker.getTypeAtLocation(rightExpression);
-    if (typeChecker.isTypeAssignableTo(rightExpressionType, baseTypeParameterType)) {
+
+    // If the type parameter came with a default, ignore types already assignable to it
+    if (defaultTypeParameterType !== undefined && typeChecker.isTypeAssignableTo(rightExpressionType, defaultTypeParameterType)) {
         return undefined;
     }
 

@@ -25,7 +25,7 @@ export const fillInMissingTemplateTypes = (
         // Example: a React component's props are {} but its state needs a new type
         if (templateTypes === undefined) {
             templateTypeNames.push(findDefaultTemplateValue(request, baseTypeParameters[i]));
-            break;
+            continue;
         }
 
         // In this case, the template type is missing: create a new type to fill the missing template type
