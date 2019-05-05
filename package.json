@@ -28,7 +28,7 @@
         "automutate-tests": "0.3.5",
         "chai": "4.2.0",
         "husky": "2.2.0",
-        "jest": "24.7.1",
+        "jest": "24.8.0",
         "markdownlint": "0.13.0",
         "markdownlint-cli": "0.15.0",
         "mocha": "6.1.4",
