@@ -3,6 +3,10 @@
         first: TFirst;
     }
 
+    class ExtendedWithNothingAdded extends OneTypeParameter {
+        ignored = 0;
+    }
+
 type ExtendingWithAddedFirst = {
 added?: boolean;
 };
@@ -16,46 +20,34 @@ added?: boolean;
         }
     }
 
-type ExtendingWithExistingFirst = {
-added?: boolean;
-};
+    // class ExtendingWithExisting extends OneTypeParameter {
+    //     constructor() {
+    //         super();
+    //         this.first = {
+    //             existing: true,
+    //         };
+    //     }
+    // }
 
-    class ExtendingWithExisting extends OneTypeParameter<ExtendingWithExistingFirst> {
-        constructor() {
-            super();
-            this.first = {
-                existing: true,
-            };
-        }
-    }
+    // class SkippedTypeParameter<TFirst, TSecond = { existing: true }> {
+    //     second: TSecond;
+    // }
 
-    class SkippedTypeParameter<TFirst, TSecond = { existing: true }> {
-        second: TSecond;
-    }
+    // class ExtendingWithDefault extends SkippedTypeParameter<{}> {
+    //     constructor() {
+    //         super();
+    //         this.second = {
+    //             added: true,
+    //         };
+    //     }
+    // }
 
-type ExtendingWithDefaultSecond = {
-added?: boolean;
-};
-
-    class ExtendingWithDefault extends SkippedTypeParameter<{}, ExtendingWithDefaultSecond> {
-        constructor() {
-            super();
-            this.second = {
-                added: true,
-            };
-        }
-    }
-
-type ExtendingWithSkippedSecond = {
-added?: boolean;
-};
-
-    class ExtendingWithSkipped extends SkippedTypeParameter<{}, ExtendingWithSkippedSecond> {
-        constructor() {
-            super();
-            this.second = {
-                existing: true,
-            };
-        }
-    }
+    // class ExtendingWithSkipped extends SkippedTypeParameter {
+    //     constructor() {
+    //         super();
+    //         this.second = {
+    //             existing: true,
+    //         };
+    //     }
+    // }
 })();
