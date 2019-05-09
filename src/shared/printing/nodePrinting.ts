@@ -1,5 +1,5 @@
-import { TypeSummariesByName, TypeSummary } from "../../mutations/expansions/summarization";
 import { createTypeName } from "../../mutations/aliasing";
+import { TypeSummariesByName, TypeSummary } from "../../mutations/expansions/summarization";
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 
 import { printNewLine } from "./newlines";
