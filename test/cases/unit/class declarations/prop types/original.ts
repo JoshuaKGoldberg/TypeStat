@@ -22,7 +22,8 @@ import PropTypes from "prop-types";
             numbersRequired: PropTypes.arrayOf(PropTypes.number).isRequired,
             numbersExact: PropTypes.oneOf([1, 2, 3]),
             numbersExactRequired: PropTypes.oneOf([1, 2, 3]).isRequired,
-            numbersType: PropTypes.oneOfType([PropTypes.number]),
+            numberType: PropTypes.oneOfType([PropTypes.number]),
+            numberOrStringType: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             shape: PropTypes.shape({
                 subShape: PropTypes.shape({
                     subSubNumber: PropTypes.number,
