@@ -26,7 +26,7 @@ const visitReactComponentNode = (node: ReactComponentNode, request: FileMutation
     }
 
     // Since we did find the propTypes object, we can generate an interface from its members
-    const { interfaceName, interfaceNode } = createInterfaceFromPropTypes(node, propTypes);
+    const { interfaceName, interfaceNode } = createInterfaceFromPropTypes(request, node, propTypes);
 
     // That interface will be injected with blank lines around it just before the class
     const mutations: IMutation[] = [createInterfaceCreationMutation(request, node, interfaceNode)];
