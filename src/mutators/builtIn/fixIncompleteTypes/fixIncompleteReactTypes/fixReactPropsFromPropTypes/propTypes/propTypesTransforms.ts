@@ -101,10 +101,7 @@ const createOneOfTransform = (accessNode: PropTypesAccessNode) => {
         return undefined;
     }
 
-    const unionType = ts.createUnionTypeNode(allowedTypes);
-    const arrayTemplatedType = allowedTypes.length === 1 ? unionType : ts.createParenthesizedType(unionType);
-
-    return ts.createArrayTypeNode(arrayTemplatedType);
+    return ts.createUnionTypeNode(allowedTypes);
 };
 
 const createOneOfTypeTransform = (accessNode: PropTypesAccessNode) => {
@@ -133,10 +130,7 @@ const createOneOfTypeTransform = (accessNode: PropTypesAccessNode) => {
         return undefined;
     }
 
-    const unionType = ts.createUnionTypeNode(allowedTypes);
-    const arrayTemplatedType = allowedTypes.length === 1 ? unionType : ts.createParenthesizedType(unionType);
-
-    return ts.createArrayTypeNode(arrayTemplatedType);
+    return ts.createUnionTypeNode(allowedTypes);
 };
 
 const createShapeTransform = (accessNode: PropTypesAccessNode) => {

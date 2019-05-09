@@ -20,9 +20,10 @@ interface MyComponentProps {
     numberRequired: number;
     numbers?: number[];
     numbersRequired: number[];
-    numbersExact?: (1 | 2 | 3)[];
-    numbersExactRequired: (1 | 2 | 3)[];
-    numbersType?: (number)[];
+    numbersExact?: 1 | 2 | 3;
+    numbersExactRequired: 1 | 2 | 3;
+    numberType?: number;
+    numberOrStringType?: number | string;
     shape?: {
         subShape?: {
             subSubNumber?: number;
@@ -45,12 +46,12 @@ interface MyComponentProps {
     };
     string?: string;
     stringRequired: string;
-    strings?: ("a" | "bc" | "def")[];
-    stringsRequired: ("a" | "bc" | "def")[];
-    stringsAndNumbers?: ("a" | 2 | "def" | 4)[];
-    stringsAndNumbersRequired: ("a" | 2 | "def" | 4)[];
-    stringsType?: (string)[];
-    stringsOrNumbersType?: (string | number)[];
+    strings?: "a" | "bc" | "def";
+    stringsRequired: "a" | "bc" | "def";
+    stringsAndNumbers?: "a" | 2 | "def" | 4;
+    stringsAndNumbersRequired: "a" | 2 | "def" | 4;
+    stringsType?: string;
+    stringsOrNumbersType?: string | number;
 }
 
     class MyComponent extends React.Component<MyComponentProps> {
@@ -73,7 +74,8 @@ interface MyComponentProps {
             numbersRequired: PropTypes.arrayOf(PropTypes.number).isRequired,
             numbersExact: PropTypes.oneOf([1, 2, 3]),
             numbersExactRequired: PropTypes.oneOf([1, 2, 3]).isRequired,
-            numbersType: PropTypes.oneOfType([PropTypes.number]),
+            numberType: PropTypes.oneOfType([PropTypes.number]),
+            numberOrStringType: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
             shape: PropTypes.shape({
                 subShape: PropTypes.shape({
                     subSubNumber: PropTypes.number,
