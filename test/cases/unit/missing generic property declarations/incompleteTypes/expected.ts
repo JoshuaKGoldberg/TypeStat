@@ -20,34 +20,46 @@ added?: boolean;
         }
     }
 
-    // class ExtendingWithExisting extends OneTypeParameter {
-    //     constructor() {
-    //         super();
-    //         this.first = {
-    //             existing: true,
-    //         };
-    //     }
-    // }
+type ExtendingWithExistingFirst = {
+added?: boolean;
+};
 
-    // class SkippedTypeParameter<TFirst, TSecond = { existing: true }> {
-    //     second: TSecond;
-    // }
+    class ExtendingWithExisting extends OneTypeParameter<ExtendingWithExistingFirst> {
+        constructor() {
+            super();
+            this.first = {
+                existing: true,
+            };
+        }
+    }
 
-    // class ExtendingWithDefault extends SkippedTypeParameter<{}> {
-    //     constructor() {
-    //         super();
-    //         this.second = {
-    //             added: true,
-    //         };
-    //     }
-    // }
+    class SkippedTypeParameter<TFirst, TSecond = { existing: true }> {
+        second: TSecond;
+    }
 
-    // class ExtendingWithSkipped extends SkippedTypeParameter {
-    //     constructor() {
-    //         super();
-    //         this.second = {
-    //             existing: true,
-    //         };
-    //     }
-    // }
+type ExtendingWithDefaultSecond = {
+added?: boolean;
+};
+
+    class ExtendingWithDefault extends SkippedTypeParameter<{}, ExtendingWithDefaultSecond> {
+        constructor() {
+            super();
+            this.second = {
+                added: true,
+            };
+        }
+    }
+
+type ExtendingWithSkippedSecond = {
+added?: boolean;
+};
+
+    class ExtendingWithSkipped extends SkippedTypeParameter<{}, ExtendingWithSkippedSecond> {
+        constructor() {
+            super();
+            this.second = {
+                existing: true,
+            };
+        }
+    }
 })();
