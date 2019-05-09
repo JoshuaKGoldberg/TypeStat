@@ -1,10 +1,17 @@
+import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
+import { getFriendlyFileName } from "../../../../../../shared/fileNames";
+import { FileMutationsRequest } from "../../../../../fileMutator";
 import { ReactComponentNode } from "../../reactFiltering/isReactComponentNode";
 
 import { createPropTypesProperty } from "./propTypesProperties";
 
-export const createInterfaceFromPropTypes = (node: ReactComponentNode, propTypes: ts.ObjectLiteralExpression) => {
+export const createInterfaceFromPropTypes = (
+    request: FileMutationsRequest,
+    node: ReactComponentNode,
+    propTypes: ts.ObjectLiteralExpression,
+) => {
     const members: ts.TypeElement[] = [];
 
     for (const rawProperty of propTypes.properties) {
@@ -14,10 +21,7 @@ export const createInterfaceFromPropTypes = (node: ReactComponentNode, propTypes
         }
     }
 
-    const apparentName = getApparentNameOfComponent(node);
-
-    // Todo: allow preference for name templating
-    const interfaceName = apparentName === undefined ? "AnonymousClassProps" : `${apparentName}Props`;
+    const interfaceName = `${getApparentNameOfComponent(request, node)}Props`;
 
     const interfaceNode = ts.createInterfaceDeclaration(
         undefined /* decorators */,
@@ -31,10 +35,16 @@ export const createInterfaceFromPropTypes = (node: ReactComponentNode, propTypes
     return { interfaceName, interfaceNode };
 };
 
-const getApparentNameOfComponent = (node: ReactComponentNode): string | undefined => {
+export const getApparentNameOfComponent = (request: FileMutationsRequest, node: ReactComponentNode): string | undefined => {
+    // If the node itself has a name, great!
     if (node.name !== undefined) {
         return node.name.text;
     }
 
-    return undefined;
+    // If the node is the default export of its file, use the file's name
+    if (tsutils.hasModifier(node.modifiers, ts.SyntaxKind.DefaultKeyword)) {
+        return getFriendlyFileName(request.sourceFile.fileName);
+    }
+
+    return "AnonymousClass";
 };
