@@ -13,7 +13,13 @@
         return new Foo();
     }
 
-    function stringOrFunction(): string | __function {
+    function stringOrFunction(): string | (() => void) {
         return () => {};
+    }
+
+    function stringOrFunctionReturningString(): string | (() => string) {
+        return () => {
+            return "";
+        };
     }
 })();
