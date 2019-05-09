@@ -3,6 +3,10 @@
         first: TFirst;
     }
 
+    class ExtendedWithNothingAdded extends OneTypeParameter {
+        ignored = 0;
+    }
+
     class ExtendingWithAdded extends OneTypeParameter {
         constructor() {
             super();

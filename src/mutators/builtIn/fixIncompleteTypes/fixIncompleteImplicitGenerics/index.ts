@@ -1,6 +1,7 @@
 import { combineMutations, IMutation } from "automutate";
 import * as ts from "typescript";
 
+import { isNotUndefined } from "../../../../shared/arrays";
 import { getBaseClassDeclaration, getClassExtendsExpression } from "../../../../shared/nodeExtensions";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
@@ -27,7 +28,9 @@ const visitClassLike = (node: ts.ClassLikeDeclaration, request: FileMutationsReq
 
     // If that class declares any templated types, check the node's types assigned as them
     const missingTemplateTypes = findMissingTemplateTypes(request, node, baseClass);
-    if (missingTemplateTypes.length === 0) {
+
+    // We can skip performing any mutation if none of the parameter types had missing types
+    if (missingTemplateTypes.length === 0 || !missingTemplateTypes.some(isNotUndefined)) {
         return undefined;
     }
 
