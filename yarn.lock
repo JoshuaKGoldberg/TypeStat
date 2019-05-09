@@ -2662,10 +2662,10 @@ markdownlint-cli@0.15.0:
     minimatch "~3.0.4"
     rc "~1.2.7"
 
-markdownlint@0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.14.0.tgz#4cbccb41f7fd8875be188ea3fa9ccd31a6c863b0"
-  integrity sha512-PkLe36HTB0ZkU8Kveq4rGmftFgPxioweqofHyHLcPD9SKyUdMAgUgNJQ4+OXjpsVPLLL3qYoxPewsQ5G3FI+iQ==
+markdownlint@0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.14.1.tgz#62666d897284b44af20627229334045248f1c941"
+  integrity sha512-W3RxMP8GYyJAhgUXIXvBOXT2ai89qDIuLf2ZM0Xd+XcwXBS6Hu06Hg2UKNwMDPTy0uQK8YWCH4hkdxlevm/BgQ==
   dependencies:
     markdown-it "8.4.2"
 
