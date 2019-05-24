@@ -63,7 +63,9 @@ export const joinIntoType = (
     let unionNames = [
         ...Array.from(types)
             .filter(isTypeNamePrintable)
-            .map((type) => type.symbol.name),
+            .map((type) => printFriendlyNameOfType(request, type))
+            // If the type is aliased to a () => lambda, it should probably be wrapped in ()
+            .map((type) => (type.includes(") =>") ? `(${type})` : type)),
         // tslint:disable-next-line:no-non-null-assertion
         ...Array.from(flags).map((type) => typeAliases.get(type)!),
     ];
@@ -128,4 +130,47 @@ export const createTypeName = (request: FileMutationsRequest, ...types: ts.Type[
     }
 
     return undefined;
+};
+
+export const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
+    // If the type isn't a function, we can generally print it directly by name
+    // Note that the type given to this function shouldn't be union or intersection types
+    const callSignatures = type.getCallSignatures();
+    if (callSignatures.length === 0) {
+        return type.symbol.name;
+    }
+
+    // If there's only one type signature, use the happy () => ... shorthand
+    if (callSignatures.length === 1) {
+        return printShorthandCallSignature(request, callSignatures[0]);
+    }
+
+    // Looks like we'd have to print a { (): ...; (): ...; } multiple call signatures object
+    // ...but this is such a rare case in TypeStat usage, that for now, let's just use Function (lol)
+    return "Function";
+};
+
+const printShorthandCallSignature = (request: FileMutationsRequest, callSignature: ts.Signature): string => {
+    const parameters = callSignature.parameters.map((parameter) => printSignatureParameter(request, parameter));
+    const returnType = createTypeName(request, callSignature.getReturnType());
+    const typeParameters =
+        callSignature.typeParameters === undefined || callSignature.typeParameters.length === 0
+            ? undefined
+            : callSignature.typeParameters.map((typeParameter) => createTypeName(request, typeParameter));
+
+    let text = `(${parameters.join(", ")}) => ${returnType === undefined ? `void` : returnType}`;
+
+    if (typeParameters !== undefined) {
+        text = `<${typeParameters.join(", ")}>` + text;
+    }
+
+    return text;
+};
+
+const printSignatureParameter = (request: FileMutationsRequest, parameter: ts.Symbol) => {
+    const valueDeclaration = parameter.valueDeclaration as ts.ParameterDeclaration;
+    const { name } = valueDeclaration;
+    const type = request.services.program.getTypeChecker().getTypeAtLocation(valueDeclaration);
+
+    return `${name}: ${createTypeName(request, type)}`;
 };

@@ -16,4 +16,10 @@
     function stringOrFunction(): string {
         return () => {};
     }
+
+    function stringOrFunctionReturningString(): string {
+        return () => {
+            return "";
+        };
+    }
 })();
