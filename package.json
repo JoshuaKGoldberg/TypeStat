@@ -27,7 +27,7 @@
         "@types/react": "16.8.19",
         "automutate-tests": "0.3.5",
         "chai": "4.2.0",
-        "husky": "2.3.0",
+        "husky": "2.4.0",
         "jest": "24.8.0",
         "markdownlint": "0.14.2",
         "markdownlint-cli": "0.16.0",
