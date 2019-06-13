@@ -24,7 +24,7 @@
         "@types/jest": "24.0.14",
         "@types/node": "11.13.9",
         "@types/prop-types": "15.7.1",
-        "@types/react": "16.8.19",
+        "@types/react": "16.8.20",
         "automutate-tests": "0.3.5",
         "chai": "4.2.0",
         "husky": "2.4.1",
