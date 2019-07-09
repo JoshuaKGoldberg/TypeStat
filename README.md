@@ -40,6 +40,7 @@ npm i -g typestat
 ```
 
 TypeStat can be installed globally or as a project dependency via npm/yarn.
+Requires [Node LTS](https://nodejs.org/en/about/releases).
 
 ## CLI
 
