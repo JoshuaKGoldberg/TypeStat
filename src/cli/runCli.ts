@@ -63,6 +63,7 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
     try {
         result = await runtime.mainRunner(parsedArgv);
     } catch (error) {
+        console.log("Caught main runner", { error });
         result = {
             error: error instanceof Error ? error : new Error(error as string),
             status: ResultStatus.Failed,

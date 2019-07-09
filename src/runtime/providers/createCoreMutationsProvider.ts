@@ -24,7 +24,8 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
     return async (): Promise<IMutationsWave> => {
         const startTime = Date.now();
         const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
-        const { fileNames, services } = fileNamesAndServicesCache.get();
+        let { fileNames, services } = fileNamesAndServicesCache.get();
+        // fileNames = ["webpack/assets/javascripts/account/components/Billing/SubscriptionCancelModal.tsx"];
         const waveStartedFromBeginning = lastFileIndex <= 0;
         let addedMutations = 0;
 
@@ -60,6 +61,10 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
 
         if (lastFileIndex === fileNames.length) {
             lastFileIndex = 0;
+
+            // Eventually it would be nice to support incremental updates...
+            // See https://github.com/JoshuaKGoldberg/TypeStat/issues/36
+            fileNamesAndServicesCache.clear();
         }
 
         if (!hasPassedFirstFile) {
@@ -67,14 +72,6 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
         } else {
             readline.clearLine(options.logger.stdout, 0);
             readline.moveCursor(options.logger.stdout, 0, -1);
-        }
-
-        // Only recreate the language service once we've visited every file
-        // This way we don't constantly re-scan many of the source files each wave
-        // Eventually it would be nice to support incremental updates
-        // See https://github.com/JoshuaKGoldberg/TypeStat/issues/36
-        if (lastFileIndex === 0) {
-            fileNamesAndServicesCache.clear();
         }
 
         for (const fileName of fileMutations.keys()) {

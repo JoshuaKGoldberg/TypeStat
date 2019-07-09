@@ -7,7 +7,7 @@ import { getValueDeclarationOfType, NodeSelector } from "./nodeTypes";
 /**
  * Finds a node in a source file by its starting position.
  */
-export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: number): ts.Node => {
+export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: number): ts.Node | undefined => {
     if (start >= sourceFile.end) {
         throw new Error(`Cannot request start ${start} outside of source file '${sourceFile.fileName}'.`);
     }

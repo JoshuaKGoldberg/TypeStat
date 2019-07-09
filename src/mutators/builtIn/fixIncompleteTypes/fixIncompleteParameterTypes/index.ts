@@ -1,8 +1,7 @@
-import { IMutation } from "automutate";
+import { IMutation, combineMutations } from "automutate";
 import * as ts from "typescript";
 
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../../mutations/creators";
-import { findNodeByStartingPosition } from "../../../../shared/nodes";
 import { isNodeWithType } from "../../../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
@@ -23,7 +22,16 @@ const visitParameterDeclaration = (node: ts.ParameterDeclaration, request: FileM
     }
 
     // Since the parameter doesn't have its own type, give it one if necessary
-    return createTypeCreationMutation(request, node, declaredType, callingTypes);
+    const typeCreationMutation = createTypeCreationMutation(request, node, declaredType, callingTypes);
+    if (typeCreationMutation === undefined) {
+        return undefined;
+    }
+
+    // If the parameter is in an arrow function without parenthesis, add those parenthesis as well
+    const parentArrowWithoutParenthesis = getParentArrowWithoutParenthesis(node);
+    return parentArrowWithoutParenthesis === undefined
+        ? typeCreationMutation
+        : addParameterAndParenthesisMutation(parentArrowWithoutParenthesis, typeCreationMutation);
 };
 
 const getCallingTypesFromReferencedSymbols = (node: ts.ParameterDeclaration, request: FileMutationsRequest): ReadonlyArray<ts.Type> => {
@@ -35,7 +43,7 @@ const getCallingTypesFromReferencedSymbols = (node: ts.ParameterDeclaration, req
     }
 
     // Find all locations the containing method is called
-    const references = request.fileInfoCache.getNodeReferences(node.parent);
+    const references = request.fileInfoCache.getNodeReferencesAsNodes(node.parent);
     if (references !== undefined) {
         const parameterIndex = node.parent.parameters.indexOf(node);
 
@@ -50,32 +58,27 @@ const getCallingTypesFromReferencedSymbols = (node: ts.ParameterDeclaration, req
 
 const updateCallingTypesForReference = (
     parameterIndex: number,
-    reference: ts.ReferenceEntry,
+    callingNode: ts.Node,
     callingTypes: ts.Type[],
     request: FileMutationsRequest,
 ): void => {
-    // Make sure the reference doesn't just (re-)define the property
-    if (reference.isDefinition) {
-        return;
-    }
-
-    // Grab the source file containing the reference
-    const referencingSourceFile = request.services.program.getSourceFile(reference.fileName);
-    if (referencingSourceFile === undefined) {
-        return;
-    }
-
-    // In order to be calling with this parameter, the referencing node should be an expression...
-    const callingNode = findNodeByStartingPosition(referencingSourceFile, reference.textSpan.start);
-    if (!ts.isExpressionStatement(callingNode)) {
-        return;
-    }
-
-    // ...that calls to the parameter we're looking at
-    if (!ts.isCallExpression(callingNode.expression) || callingNode.expression.arguments.length <= parameterIndex) {
+    // Filter to only call expressions that call to the parameter we're looking at
+    if (
+        !ts.isExpressionStatement(callingNode) ||
+        !ts.isCallExpression(callingNode.expression) ||
+        callingNode.expression.arguments.length <= parameterIndex
+    ) {
         return;
     }
 
     // Mark the type of parameter at our index as being called with
     callingTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(callingNode.expression.arguments[parameterIndex]));
+};
+
+const getParentArrowWithoutParenthesis = (node: ts.ParameterDeclaration): ts.ArrowFunction | undefined => {
+    return ts.isArrowFunction(node.parent) ? node.parent : undefined;
+};
+
+const addParameterAndParenthesisMutation = (getParentArrowWithoutParenthesis, createTypeCreationMutation) => {
+    return combineMutations();
 };

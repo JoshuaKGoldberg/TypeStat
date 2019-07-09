@@ -29,25 +29,18 @@ export const getComponentAssignedTypesFromUsage = (
 
 const getComponentReferences = (request: FileMutationsRequest, node: ReactComponentNode) => {
     if (ts.isClassDeclaration(node) || ts.isFunctionDeclaration(node)) {
-        return request.fileInfoCache.getNodeReferences(node);
+        return request.fileInfoCache.getNodeReferencesAsNodes(node);
     }
 
-    return request.fileInfoCache.getNodeReferences(node.parent);
+    return request.fileInfoCache.getNodeReferencesAsNodes(node.parent);
 };
 
 const updateAssignedTypesForReference = (
-    reference: ts.ReferenceEntry,
+    identifier: ts.Node,
     componentAssignedTypes: AssignedTypesByName[],
     request: FileMutationsRequest,
 ): void => {
-    // Grab the source file containing the reference
-    const referencingSourceFile = request.services.program.getSourceFile(reference.fileName);
-    if (referencingSourceFile === undefined) {
-        return;
-    }
-
     // In order to assign props, the referencing node should be an identifier...
-    const identifier = findNodeByStartingPosition(referencingSourceFile, reference.textSpan.start);
     if (!ts.isIdentifier(identifier)) {
         return;
     }

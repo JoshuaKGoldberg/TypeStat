@@ -78,6 +78,7 @@ export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
             mutationsProvider: createTypeStatProvider(options),
         });
     } catch (error) {
+        console.log("Caught index typeStat", { error });
         return {
             error: error as Error,
             status: ResultStatus.Failed,
@@ -96,6 +97,7 @@ const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | 
     try {
         options = await loadOptions(argv);
     } catch (error) {
+        console.log("Caught index tryLoadingOptions", { options });
         return error instanceof Error ? error : new Error(error as string);
     }
 

@@ -110,7 +110,11 @@ const findMissingTypes = (
         }
     }
 
-    const remainingMissingTypes = new Set(assignedTypes);
+    // Ignore function types, as they're often very messy and confusing to reason about
+    // It's more likely non-assigned function types are what users would consider bugs
+    // For example, covariant functions might not be assignable, but should be fixed manually
+    const assignedNonFunctionTypes = Array.from(assignedTypes).filter((assignedType) => assignedType.getCallSignatures().length === 0);
+    const remainingMissingTypes = new Set(assignedNonFunctionTypes);
 
     const isAssignedTypeMissingFromDeclared = (assignedType: ts.Type) => {
         for (const potentialParentType of declaredTypes) {
@@ -122,7 +126,7 @@ const findMissingTypes = (
         return true;
     };
 
-    for (const assignedType of assignedTypes) {
+    for (const assignedType of assignedNonFunctionTypes) {
         if (!isAssignedTypeMissingFromDeclared(assignedType)) {
             remainingMissingTypes.delete(assignedType);
         }
