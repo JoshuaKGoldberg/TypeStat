@@ -38,11 +38,10 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
             }
 
             const filteredNodes = collectFilteredNodes(options, sourceFile);
-            const nameGenerator = new NameGenerator(sourceFile.fileName);
             const foundMutations = await findMutationsInFile({
                 fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
                 filteredNodes,
-                nameGenerator,
+                nameGenerator: new NameGenerator(sourceFile.fileName),
                 options,
                 services,
                 sourceFile,
@@ -60,6 +59,12 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
 
         if (lastFileIndex === fileNames.length) {
             lastFileIndex = 0;
+
+            // Only recreate the language service once we've visited every file
+            // This way we don't constantly re-scan many of the source files each wave
+            // Eventually it would be nice to support incremental updates
+            // See https://github.com/JoshuaKGoldberg/TypeStat/issues/36
+            fileNamesAndServicesCache.clear();
         }
 
         if (!hasPassedFirstFile) {
@@ -67,14 +72,6 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
         } else {
             readline.clearLine(options.logger.stdout, 0);
             readline.moveCursor(options.logger.stdout, 0, -1);
-        }
-
-        // Only recreate the language service once we've visited every file
-        // This way we don't constantly re-scan many of the source files each wave
-        // Eventually it would be nice to support incremental updates
-        // See https://github.com/JoshuaKGoldberg/TypeStat/issues/36
-        if (lastFileIndex === 0) {
-            fileNamesAndServicesCache.clear();
         }
 
         for (const fileName of fileMutations.keys()) {

@@ -1,3 +1,6 @@
+/**
+ * Generates new names that are unique per file.
+ */
 export class NameGenerator {
     private readonly countsPerBase = new Map<string, number>();
 
