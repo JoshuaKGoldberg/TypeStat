@@ -1,6 +1,7 @@
 import { combineMutations, IMutation, ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
+import { getClassExtendsType } from "../../../../../shared/nodes";
 import { printNewLine } from "../../../../../shared/printing/newlines";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../../fileMutator";
@@ -9,7 +10,6 @@ import { isReactComponentNode, ReactComponentNode } from "../reactFiltering/isRe
 import { createInterfaceUsageMutation } from "./annotation/createInterfaceUsageMutation";
 import { createInterfaceFromPropTypes } from "./propTypes/createInterfaceFromPropTypes";
 import { getPropTypesValue } from "./propTypes/getPropTypesValue";
-import { getClassExtendsType } from "../../../../../shared/nodes";
 
 /**
  * Creates an initial props type for a component from its PropTypes declaration.
