@@ -2,7 +2,6 @@ import { IMutation } from "automutate";
 import * as ts from "typescript";
 
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../../mutations/creators";
-import { findNodeByStartingPosition } from "../../../../shared/nodes";
 import { isNodeWithType } from "../../../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
@@ -35,7 +34,7 @@ const getCallingTypesFromReferencedSymbols = (node: ts.ParameterDeclaration, req
     }
 
     // Find all locations the containing method is called
-    const references = request.fileInfoCache.getNodeReferences(node.parent);
+    const references = request.fileInfoCache.getNodeReferencesAsNodes(node.parent);
     if (references !== undefined) {
         const parameterIndex = node.parent.parameters.indexOf(node);
 
@@ -50,23 +49,11 @@ const getCallingTypesFromReferencedSymbols = (node: ts.ParameterDeclaration, req
 
 const updateCallingTypesForReference = (
     parameterIndex: number,
-    reference: ts.ReferenceEntry,
+    callingNode: ts.Node,
     callingTypes: ts.Type[],
     request: FileMutationsRequest,
 ): void => {
-    // Make sure the reference doesn't just (re-)define the property
-    if (reference.isDefinition) {
-        return;
-    }
-
-    // Grab the source file containing the reference
-    const referencingSourceFile = request.services.program.getSourceFile(reference.fileName);
-    if (referencingSourceFile === undefined) {
-        return;
-    }
-
     // In order to be calling with this parameter, the referencing node should be an expression...
-    const callingNode = findNodeByStartingPosition(referencingSourceFile, reference.textSpan.start);
     if (!ts.isExpressionStatement(callingNode)) {
         return;
     }
