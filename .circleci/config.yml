@@ -1,4 +1,5 @@
-version: 2
+version: 2.1
+
 jobs:
     build:
         docker:
@@ -11,20 +12,127 @@ jobs:
 
             - restore_cache:
                   keys:
-                      - dependency-cache-{{ checksum "yarn.lock" }}
-                      - dependency-cache-
+                      - dependency-cache-1-{{ checksum "yarn.lock" }}
 
-            - run: yarn
+            - run: npm install
 
             - save_cache:
                   paths:
                       - node_modules
-                  key: dependency-cache-{{ checksum "yarn.lock" }}
+                  key: dependency-cache-1-{{ checksum "yarn.lock" }}
 
-            - run: yarn run verify
+            - persist_to_workspace:
+                  root: "."
+                  paths:
+                      - ./*
+                      - node_modules
+                      - yarn.lock
+                      - src
+
+    lint-markdownlint:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: yarn run lint:markdownlint
+
+    lint-tslint:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: yarn run lint:tslint
+
+    prettier:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: yarn run prettier:write
+
+    test-mutation:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: yarn run test:mutation
+
+    test-unit:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: yarn run test:unit
+
+    tsc:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: yarn run tsc
 
 workflows:
     version: 2
-    build_and_end_to_end:
+    commit:
         jobs:
             - build
+            - lint-markdownlint:
+                  requires:
+                      - build
+            - lint-tslint:
+                  requires:
+                      - build
+            - prettier:
+                  requires:
+                      - build
+            - test-mutation:
+                  requires:
+                      - build
+            - test-unit:
+                  requires:
+                      - build
+            - tsc:
+                  requires:
+                      - build
