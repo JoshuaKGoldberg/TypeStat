@@ -2,7 +2,6 @@ import { IMutation } from "automutate";
 import * as ts from "typescript";
 
 import { TypeStatOptions } from "../../options/types";
-import { LanguageServices } from "../../services/language";
 
 import { createRequireMutation } from "./createRequireMutation";
 import { isRequireToJsFile } from "./isRequireToJsFile";
@@ -10,7 +9,6 @@ import { isRequireToJsFile } from "./isRequireToJsFile";
 export interface RequireRenameRequest {
     allFileNames: ReadonlySet<string>;
     options: TypeStatOptions;
-    services: LanguageServices;
     sourceFile: ts.SourceFile;
 }
 
