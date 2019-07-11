@@ -69,6 +69,8 @@ jobs:
             - attach_workspace:
                   at: "."
 
+            - run: ls -lR src
+
             - run: yarn run test:mutation
 
     test-unit:
