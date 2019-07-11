@@ -1,5 +1,5 @@
 import { IMutationsWave } from "automutate";
-import * as builtinModules from "builtin-modules";
+import builtinModules from "builtin-modules";
 
 import { TypeStatOptions } from "../../options/types";
 import { setSubtract } from "../../shared/sets";
