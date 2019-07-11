@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-    build:
+    dependencies:
         docker:
             - image: circleci/node:latest
 
@@ -101,23 +101,29 @@ jobs:
 
             - run: yarn run tsc
 
+            - persist_to_workspace:
+                  root: "."
+                  paths:
+                      - src
+
 workflows:
     version: 2
     commit:
         jobs:
-            - build
+            - dependencies
             - lint-markdownlint:
                   requires:
-                      - build
+                      - dependencies
             - lint-tslint:
                   requires:
-                      - build
+                      - dependencies
             - test-mutation:
                   requires:
-                      - build
+                      - dependencies
+                      - tsc
             - test-unit:
                   requires:
-                      - build
+                      - dependencies
             - tsc:
                   requires:
-                      - build
+                      - dependencies
