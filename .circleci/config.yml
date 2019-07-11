@@ -12,14 +12,14 @@ jobs:
 
             - restore_cache:
                   keys:
-                      - dependency-cache-1-{{ checksum "yarn.lock" }}
+                      - dependency-cache-2-{{ checksum "yarn.lock" }}
 
-            - run: npm install
+            - run: yarn
 
             - save_cache:
                   paths:
                       - node_modules
-                  key: dependency-cache-1-{{ checksum "yarn.lock" }}
+                  key: dependency-cache-2-{{ checksum "yarn.lock" }}
 
             - persist_to_workspace:
                   root: "."
