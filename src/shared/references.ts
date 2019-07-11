@@ -66,10 +66,17 @@ const findRelevantNodeReferences = (
 
     const references = new Set<ts.ReferenceEntry>();
 
-    // For each reference within the referencing symbols, add it if it's not the child of a filtered node
+    // For each reference within the referencing symbols, add it if it's not the child of a filtered node or a .d.ts file
     for (const referenceSymbol of referencedSymbols) {
         for (const reference of referenceSymbol.references) {
-            if (!referenceIsFilteredOut(filteredNodes, sourceFile, reference)) {
+            // Grab the source file containing the reference
+            const referencingSourceFile = services.program.getSourceFile(reference.fileName);
+            if (referencingSourceFile === undefined || referencingSourceFile.isDeclarationFile) {
+                continue;
+            }
+
+            // Add the reference if it's not a child of nodes we filter out
+            if (!referenceIsFilteredOut(filteredNodes, referencingSourceFile, reference)) {
                 references.add(reference);
             }
         }
