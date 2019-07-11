@@ -1,4 +1,4 @@
-import * as glob from "glob";
+import glob from "glob";
 
 export const globAsync = async (include: string, options: glob.IOptions = {}): Promise<ReadonlyArray<string>> =>
     new Promise<ReadonlyArray<string>>((resolve, reject) => {

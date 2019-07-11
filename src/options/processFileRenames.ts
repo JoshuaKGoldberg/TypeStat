@@ -1,4 +1,4 @@
-import { fs, readline } from "mz";
+import { fs } from "mz";
 
 import { TypeStatOptions } from "./types";
 
@@ -32,9 +32,6 @@ const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyAr
         newFileNames.delete(oldFileName);
         newFileNames.add(newFileName);
     }
-
-    readline.moveCursor(options.logger.stdout, 0, -1);
-    readline.clearLine(options.logger.stdout, 0);
 
     return {
         ...options,

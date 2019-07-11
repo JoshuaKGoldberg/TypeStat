@@ -28,7 +28,8 @@ const getClassComponentPropsNode = (request: FileMutationsRequest, node: ReactCl
         return undefined;
     }
 
-    const declaration = propsNodeSymbol.declarations.length === 0 ? undefined : propsNodeSymbol.declarations[0];
+    const symbolDeclarations = propsNodeSymbol.getDeclarations();
+    const declaration = symbolDeclarations === undefined || symbolDeclarations.length === 0 ? undefined : symbolDeclarations[0];
 
     return declaration !== undefined && isReactComponentPropsNode(declaration) ? declaration : undefined;
 };

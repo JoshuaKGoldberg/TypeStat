@@ -35,7 +35,6 @@ export const createRequireRenameProvider = (options: TypeStatOptions, allModifie
                 const foundMutations = findRequireRenameMutationsInFile({
                     allFileNames,
                     options,
-                    services,
                     sourceFile,
                 });
 
