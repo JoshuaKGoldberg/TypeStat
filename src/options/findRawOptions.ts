@@ -1,5 +1,9 @@
-// tslint:disable-next-line:no-require-imports
-import cosmiconfig = require("cosmiconfig");
+// The version of cosmiconfig used when this disable was added did not support default exports
+// `import =` is not supported by babel-typescript
+// ...if either of those no longer hold true, please do change back to `import cosmiconfig from "cosmiconfig"`...
+/* tslint:disable no-any no-unsafe-any no-require-imports no-var-requires */
+
+const cosmiconfig = require("cosmiconfig");
 import * as path from "path";
 
 import { normalizeAndSlashify } from "../shared/paths";
@@ -45,7 +49,7 @@ export const findRawOptions = async (packageDirectory: string, configPath?: stri
           };
 };
 
-const extractConfigAsRelative = (cosmiconfigResult: NonNullable<cosmiconfig.CosmiconfigResult>): RawTypeStatOptions => {
+const extractConfigAsRelative = (cosmiconfigResult: any): RawTypeStatOptions => {
     let config = cosmiconfigResult.config as RawTypeStatOptions;
 
     if (config.package !== undefined && config.package.directory !== undefined && !path.isAbsolute(config.package.directory)) {
