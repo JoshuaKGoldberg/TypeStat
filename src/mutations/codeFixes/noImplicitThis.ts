@@ -23,7 +23,6 @@ export const getNoImplicitThisMutations = (node: ts.ThisExpression, request: Fil
  *
  * @param node   Requesting node to retrieve fixes on.
  * @param request   Source file, metadata, and settings to collect mutations in the file.
- * @param errorCode   Corresponding error code for the node type to retrieve fixes for.
  */
 const getNoImplicitThisCodeFixes = (node: ts.ThisExpression, request: FileMutationsRequest) =>
     processCodeFixActions(
