@@ -12,6 +12,7 @@ These mutations are all purely additive and limited to the type system, meaning 
         "incompleteTypes": true,
         "missingProperties": true,
         "noImplicitAny": true,
+        "noImplicitThis": true,
         "strictNonNullAssertions": true
     }
 }
@@ -36,6 +37,12 @@ See [fixMisingProperties/README.md](../src/mutators/builtIn/fixMissingProperties
 Whether to add type annotations to declarations that don't yet have them.
 
 See [fixNoImplicitAny/README.md](../src/mutators/builtIn/fixNoImplicitAny/README.md).
+
+## `--fixNoImplicitThis`/`noImplicitThis`
+
+Whether to add type annotations for `this` types on functions that don't yet have them.
+
+See [fixNoImplicitThis/README.md](../src/mutators/builtIn/fixNoImplicitThis/README.md).
 
 ## `--fixStrictNonNullAssertions`/`strictNonNullAssertions`
 

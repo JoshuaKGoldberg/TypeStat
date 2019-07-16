@@ -63,6 +63,7 @@ will attempt to apply [built-in file mutators](../src/mutators/builtIn/index.ts)
 * [`fixIncompleteTypes`](../src/mutators/builtIn/fixIncompleteTypes/README.md)
 * [`fixMissingProperties`](../src/mutators/builtIn/fixMissingProperties/README.md)
 * [`fixNoImplicitAny`](../src/mutators/builtIn/fixNoImplicitAny/README.md)
+* [`fixNoImplicitThis`](../src/mutators/builtIn/fixNoImplicitThis/README.md)
 * [`fixStrictNonNullAssertions`](../src/mutators/builtIn/fixStrictNonNullAssertions/README.md)
 
 Each fixer targets a general range of potential type improvements and contains a series of sub-fixers that target individual improvements.

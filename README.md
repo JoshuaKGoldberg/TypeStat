@@ -23,7 +23,7 @@ It can...
 
 ✨ Add TypeScript types on files freshly converted from JavaScript to TypeScript!
 
-✨ Fix `--noImplicitAny` across all your files with one command!
+✨ Fix `--noImplicitAny`/`--noImplicitThis` across all your files with one command!
 
 ✨ Annotate missing `null`s and `undefined`s to get you started with `--strictNullChecks`!
 

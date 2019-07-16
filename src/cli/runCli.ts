@@ -37,6 +37,7 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
         .option("--fixIncompleteTypes", "add missing types to existing, incomplete types")
         .option("--fixMissingProperties", "add missing properties to classes from usage")
         .option("--fixNoImplicitAny", "fix TypeScript's --noImplicitAny complaints")
+        .option("--fixNoImplicitThis", "fix TypeScript's --fixNoImplicitThis complaints")
         .option(
             "--fixStrictNonNullAssertions",
             "add missing non-null assertions in nullable property accesses, function-like calls, and return types",

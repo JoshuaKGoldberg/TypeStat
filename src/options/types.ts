@@ -146,6 +146,7 @@ export interface TypeStatOptions {
  */
 export type TypeStatCompilerOptions = ts.CompilerOptions & {
     noImplicitAny: boolean;
+    noImplicitThis: boolean;
     strictNullChecks: boolean;
 };
 
@@ -187,6 +188,11 @@ export interface Fixes {
      * Whether to add type annotations to types that don't yet have them per TypeScript's --noImplicitAny.
      */
     noImplicitAny: boolean;
+
+    /**
+     * Whether to add type annotations to functions that don't yet have them per TypeScript's --noImplicitThis.
+     */
+    noImplicitThis: boolean;
 
     /**
      * Whether to add missing non-null assertions in nullable property accesses, function-like calls, and return types.

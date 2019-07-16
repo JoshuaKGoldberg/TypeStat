@@ -4891,10 +4891,10 @@ type-fest@^0.4.1:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.4.1.tgz#8bdf77743385d8a4f13ba95f610f5ccd68c728f8"
   integrity sha512-IwzA/LSfD2vC1/YDYMv/zHP4rDF1usCwllsDpbolT3D4fUepIO7f9K70jjmUewU/LmGUKJcwcVtDCpnKk4BPMw==
 
-typescript@^3.3.3333:
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.3.tgz#0eb320e4ace9b10eadf5bc6103286b0f8b7c224f"
-  integrity sha512-FFgHdPt4T/duxx6Ndf7hwgMZZjZpB+U0nMNGVCYPq0rEzWKjEDobm4J6yb3CS7naZ0yURFqdw9Gwc7UOh/P9oQ==
+typescript@^3.6.0-dev.20190716:
+  version "3.6.0-dev.20190716"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.0-dev.20190716.tgz#56e38c6dae463cfeb910f4658357a795a5a9f539"
+  integrity sha512-XDts5OCx8Yw43z9mo6YapZfD6/eUQ9wYeONR3ChiJDiFUVlr/3vGzK2DF5XTaRgY068AU+xDj+ngk95uEldhkw==
 
 uc.micro@^1.0.1, uc.micro@^1.0.5:
   version "1.0.6"
