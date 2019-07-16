@@ -1,6 +1,7 @@
 import { combineMutations, IMutation, ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
+import { getClassExtendsType } from "../../../../../shared/nodes";
 import { printNewLine } from "../../../../../shared/printing/newlines";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../../fileMutator";
@@ -18,8 +19,17 @@ export const fixReactPropsFromPropTypes: FileMutator = (request: FileMutationsRe
 };
 
 const visitReactComponentNode = (node: ReactComponentNode, request: FileMutationsRequest): IMutation | undefined => {
+    // If the node is a class declaration, don't bother with prop types if it already declares a React.Component template
+    if (ts.isClassDeclaration(node)) {
+        const extendsType = getClassExtendsType(node);
+
+        if (extendsType !== undefined && extendsType.typeArguments !== undefined && extendsType.typeArguments.length > 0) {
+            return undefined;
+        }
+    }
+
     // Try to find a static `propTypes` member to indicate the interface
-    // If it doesn't exist, we can't infer anything about the class here, so we bail out
+    // If it doesn't exist, we can't infer anything about the component here, so we bail out
     const propTypes = getPropTypesValue(node);
     if (propTypes === undefined) {
         return undefined;
@@ -28,7 +38,7 @@ const visitReactComponentNode = (node: ReactComponentNode, request: FileMutation
     // Since we did find the propTypes object, we can generate an interface from its members
     const { interfaceName, interfaceNode } = createInterfaceFromPropTypes(request, node, propTypes);
 
-    // That interface will be injected with blank lines around it just before the class
+    // That interface will be injected with blank lines around it just before the component
     const mutations: IMutation[] = [createInterfaceCreationMutation(request, node, interfaceNode)];
 
     // We'll also annotate the component with a type declaration to use the new prop type

@@ -11,6 +11,7 @@
         "file-name-casing": false,
         "linebreak-style": false,
         "interface-name": [true, "never-prefix"],
+        "match-default-export-name": false,
         "member-ordering": false,
         "newline-before-return": false,
         "no-any": false,
@@ -32,6 +33,7 @@
         "prefer-template": false,
         "promise-function-async": false,
         "strict-boolean-expressions": false,
+        "strict-comparisons": [true, { "allow-object-equal-comparison": true }],
         "switch-default": false,
         "switch-final-break": false,
         "typedef": false

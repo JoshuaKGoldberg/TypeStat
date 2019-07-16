@@ -5,7 +5,7 @@ export interface CodeFixCreationPreferences {
     ignoreKnownBlankTypes?: boolean;
 }
 
-const knownBlankTypes = new Set([": {}", ": any", ": null", ": Object", ": unknown"]);
+const knownBlankTypes = new Set([": {}", ": any", ": never", ": null", ": Object", ": unknown"]);
 
 /**
  * Attempts to convert a language service code fix into a usable mutation.
@@ -32,7 +32,7 @@ export const createCodeFixCreationMutation = (
         textChanges = textChanges.filter((textChange) => !knownBlankTypes.has(textChange.newText));
     }
 
-    if (textChanges.length === 0) {
+    if (textChanges.length === 0 || isOnlyParenthesis(textChanges)) {
         return undefined;
     }
 
@@ -48,3 +48,6 @@ export const createCodeFixCreationMutation = (
         ),
     );
 };
+
+const isOnlyParenthesis = (textChanges: ts.TextChange[]) =>
+    textChanges.length === 2 && textChanges[0].newText === "(" && textChanges[1].newText === ")";

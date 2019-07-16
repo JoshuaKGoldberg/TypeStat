@@ -22,4 +22,10 @@
             return "";
         };
     }
+
+    function multipleFunctionTypes(): () => void {
+        return Math.random() > 0.5
+            ? ((() => {}) as (() => void))
+            : ((() => {}) as (() => undefined))
+    }
 })();

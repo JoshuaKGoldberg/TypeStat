@@ -1,6 +1,7 @@
-version: 2
+version: 2.1
+
 jobs:
-    build:
+    dependencies:
         docker:
             - image: circleci/node:latest
 
@@ -11,20 +12,118 @@ jobs:
 
             - restore_cache:
                   keys:
-                      - dependency-cache-{{ checksum "yarn.lock" }}
-                      - dependency-cache-
+                      - dependency-cache-2-{{ checksum "yarn.lock" }}
 
             - run: yarn
 
             - save_cache:
                   paths:
                       - node_modules
-                  key: dependency-cache-{{ checksum "yarn.lock" }}
+                  key: dependency-cache-2-{{ checksum "yarn.lock" }}
 
-            - run: yarn run verify
+            - persist_to_workspace:
+                  root: "."
+                  paths:
+                      - ./*
+                      - node_modules
+                      - yarn.lock
+                      - src
+
+    lint-markdownlint:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: yarn run lint:markdownlint
+
+    lint-tslint:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: yarn run lint:tslint
+
+    test-mutation:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: ls -lR src
+
+            - run: yarn run test:mutation
+
+    test-unit:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: yarn run test:unit
+
+    tsc:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: yarn run tsc
+
+            - persist_to_workspace:
+                  root: "."
+                  paths:
+                      - src
 
 workflows:
     version: 2
-    build_and_end_to_end:
+    commit:
         jobs:
-            - build
+            - dependencies
+            - lint-markdownlint:
+                  requires:
+                      - dependencies
+            - lint-tslint:
+                  requires:
+                      - dependencies
+            - test-mutation:
+                  requires:
+                      - dependencies
+                      - tsc
+            - test-unit:
+                  requires:
+                      - dependencies
+            - tsc:
+                  requires:
+                      - dependencies

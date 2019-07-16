@@ -18,7 +18,7 @@ export const findMissingFlags = (
     declaredType: ts.Type,
     assignedFlags: ReadonlySet<ts.TypeFlags>,
     declaredFlags: ReadonlySet<ts.TypeFlags>,
-) => {
+): Set<ts.TypeFlags> => {
     // If the type is declared to allow `any`, it can't be missing anything
     if (isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Any)) {
         return new Set();

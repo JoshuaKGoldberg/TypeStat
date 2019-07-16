@@ -4,33 +4,18 @@ import { LanguageServices } from "../services/language";
 
 import { findNodeByStartingPosition } from "./nodes";
 
-export const findRelevantNodeReferences = (
-    filteredNodes: ReadonlySet<ts.Node>,
-    services: LanguageServices,
-    sourceFile: ts.SourceFile,
-    node: ts.Node,
-): ts.ReferenceEntry[] | undefined => {
-    // Find all locations the containing method is referenced
-    const referencedSymbols = services.languageService.findReferences(sourceFile.fileName, node.getStart(sourceFile));
-    if (referencedSymbols === undefined) {
-        return undefined;
-    }
-
-    const references = new Set<ts.ReferenceEntry>();
-
-    // For each reference within the referencing symbols, add it if it's not the child of a filtered node
-    for (const referenceSymbol of referencedSymbols) {
-        for (const reference of referenceSymbol.references) {
-            if (!referenceIsFilteredOut(filteredNodes, sourceFile, reference)) {
-                references.add(reference);
-            }
+export const isNodeFilteredOut = (filteredNodes: ReadonlySet<ts.Node>, node: ts.Node | undefined): boolean => {
+    while (node !== undefined) {
+        if (filteredNodes.has(node)) {
+            return true;
         }
+
+        node = node.parent;
     }
 
-    return Array.from(references);
+    return false;
 };
 
-// TODO: file issue to clean up existing uses of findRelevantNodeReferences that could just use this
 export const findRelevantNodeReferencesAsNodes = (
     filteredNodes: ReadonlySet<ts.Node>,
     services: LanguageServices,
@@ -51,9 +36,9 @@ export const findRelevantNodeReferencesAsNodes = (
             continue;
         }
 
-        // Find the referencing node from its place in the source file, unless it's roughly the original node
-        const referencingNode = findNodeByStartingPosition(sourceFile, reference.textSpan.start);
-        if (referencingNode === identifyingNode || referencingNode === identifyingNode) {
+        // Find the referencing node from its place in that source file, unless it's the original node
+        const referencingNode = findNodeByStartingPosition(referencingSourceFile, reference.textSpan.start);
+        if (referencingNode === identifyingNode) {
             continue;
         }
 
@@ -67,14 +52,35 @@ const referenceIsFilteredOut = (filteredNodes: ReadonlySet<ts.Node>, sourceFile:
     return isNodeFilteredOut(filteredNodes, findNodeByStartingPosition(sourceFile, reference.textSpan.start));
 };
 
-export const isNodeFilteredOut = (filteredNodes: ReadonlySet<ts.Node>, node: ts.Node | undefined): boolean => {
-    while (node !== undefined) {
-        if (filteredNodes.has(node)) {
-            return true;
-        }
-
-        node = node.parent;
+const findRelevantNodeReferences = (
+    filteredNodes: ReadonlySet<ts.Node>,
+    services: LanguageServices,
+    sourceFile: ts.SourceFile,
+    node: ts.Node,
+): ts.ReferenceEntry[] | undefined => {
+    // Find all locations the node is referenced
+    const referencedSymbols = services.languageService.findReferences(sourceFile.fileName, node.getStart(sourceFile));
+    if (referencedSymbols === undefined) {
+        return undefined;
     }
 
-    return false;
+    const references = new Set<ts.ReferenceEntry>();
+
+    // For each reference within the referencing symbols, add it if it's not the child of a filtered node or a .d.ts file
+    for (const referenceSymbol of referencedSymbols) {
+        for (const reference of referenceSymbol.references) {
+            // Grab the source file containing the reference
+            const referencingSourceFile = services.program.getSourceFile(reference.fileName);
+            if (referencingSourceFile === undefined || referencingSourceFile.isDeclarationFile) {
+                continue;
+            }
+
+            // Add the reference if it's not a child of nodes we filter out
+            if (!referenceIsFilteredOut(filteredNodes, referencingSourceFile, reference)) {
+                references.add(reference);
+            }
+        }
+    }
+
+    return Array.from(references);
 };

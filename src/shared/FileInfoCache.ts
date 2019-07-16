@@ -3,11 +3,10 @@ import * as ts from "typescript";
 
 import { LanguageServices } from "../services/language";
 
-import { findRelevantNodeReferences, findRelevantNodeReferencesAsNodes } from "./references";
+import { findRelevantNodeReferencesAsNodes } from "./references";
 
 export class FileInfoCache {
-    private readonly nodeReferences = new Map<ts.Node, ReadonlyArray<ts.ReferenceEntry> | undefined>();
-    private readonly nodeReferencesAsNodes = new Map<ts.Node, ReadonlyArray<ts.Node> | undefined>();
+    private readonly nodeReferences = new Map<ts.Node, ReadonlyArray<ts.Node> | undefined>();
     private variableUsage: ReadonlyMap<ts.Identifier, tsutils.VariableInfo> | undefined;
 
     public constructor(
@@ -17,26 +16,14 @@ export class FileInfoCache {
     ) {}
 
     /**
-     * @returns All raw reference entries from a node.
-     */
-    public getNodeReferences(node: ts.Node): ReadonlyArray<ts.ReferenceEntry> | undefined {
-        let references = this.nodeReferences.get(node);
-
-        if (references === undefined) {
-            references = findRelevantNodeReferences(this.filteredNodes, this.services, this.sourceFile, node);
-        }
-
-        return references;
-    }
-
-    /**
      * @returns All corresponding nodes for the reference entries for a node.
      */
     public getNodeReferencesAsNodes(node: ts.Node): ReadonlyArray<ts.Node> | undefined {
-        let references = this.nodeReferencesAsNodes.get(node);
+        let references = this.nodeReferences.get(node);
 
         if (references === undefined) {
             references = findRelevantNodeReferencesAsNodes(this.filteredNodes, this.services, this.sourceFile, node);
+            this.nodeReferences.set(node, references);
         }
 
         return references;

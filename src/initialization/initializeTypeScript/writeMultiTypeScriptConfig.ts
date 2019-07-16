@@ -1,4 +1,5 @@
-import { promises as fs } from "fs";
+import { fs } from "mz";
+import { promisify } from "util";
 
 import { InitializationImprovement } from "./improvements";
 

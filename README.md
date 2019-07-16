@@ -27,7 +27,8 @@ Hooray!
 
 ## Usage
 
-⚡ To start, the `typestat` command will launch an interactive guide to setting up a configuration file. 
+⚡ To start, the `typestat` command will launch an interactive guide to setting up a configuration file.
+Requires [Node LTS](https://nodejs.org/en/about/releases).
 
 ```shell
 npx typestat

@@ -1,4 +1,4 @@
-import { promises as fs } from "fs";
+import { writeFile } from "mz/fs";
 
 import { InitializationRenames } from "./renames";
 
@@ -9,7 +9,7 @@ export interface JavaScriptConfigSettings {
 }
 
 export const writeJavaScriptConfig = async ({ fileName, sourceFiles, renames }: JavaScriptConfigSettings) => {
-    await fs.writeFile(
+    await writeFile(
         fileName,
         JSON.stringify(
             {
