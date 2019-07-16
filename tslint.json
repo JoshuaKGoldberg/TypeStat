@@ -31,7 +31,7 @@
         "prefer-switch": false,
         "prefer-template": false,
         "promise-function-async": false,
-        "strict-boolean-expressions": [true, "allow-boolean-or-undefined", "allow-number"],
+        "strict-boolean-expressions": false,
         "switch-default": false,
         "switch-final-break": false,
         "typedef": false

@@ -8,6 +8,7 @@ import * as fs from "mz/fs";
 import * as path from "path";
 
 import { ResultStatus, typeStat, TypeStatArgv, TypeStatResult } from "../index";
+import { initialization } from "../initialization";
 import { processLogger } from "../logging/logger";
 
 import { captureHelp } from "./captureHelp";
@@ -25,8 +26,13 @@ const createDefaultRuntime = () => ({
  * @returns Promise for the result of running TypeStat.
  */
 export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDefaultRuntime()): Promise<ResultStatus> => {
+    if (rawArgv.length === 2) {
+        return initialization(runtime.logger);
+    }
+
     const command = new Command()
         .option("-c --config [config]", "path to a TypeStat config file")
+        .option("-i --init [init]", "run config initialization wizard")
         .option("-m --mutator [...mutator]", "require paths to any custom mutators to run")
         .option("-p --project [project]", "path to a TypeScript project file")
         .option("-V --version", "output the package version")
@@ -56,6 +62,10 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
     if ({}.hasOwnProperty.call(parsedArgv, "version")) {
         runtime.logger.stdout.write(`${await getPackageVersion()}\n`);
         return ResultStatus.Succeeded;
+    }
+
+    if ({}.hasOwnProperty.call(parsedArgv, "init")) {
+        return initialization(runtime.logger);
     }
 
     let result: TypeStatResult;

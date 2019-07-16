@@ -1,23 +1,16 @@
 # TypeStat
 
-[![Circle CI](https://circleci.com/gh/JoshuaKGoldberg/TypeStat.svg?style=svg)](https://circleci.com/gh/JoshuaKGoldberg/TypeStat)
-[![NPM version](https://badge.fury.io/js/typestat.svg)](http://badge.fury.io/js/typestat)
-[![Join the chat at https://gitter.im/TypeStat/community](https://badges.gitter.im/TypeStat/community.svg)](https://gitter.im/TypeStat/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 ![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-14cc21.svg)
+![TypeScript: Strict](https://img.shields.io/badge/typescript-strict-yellow.svg)
+[![Circle CI](https://img.shields.io/circleci/build/github/JoshuaKGoldberg/TypeStat.svg)](https://circleci.com/gh/JoshuaKGoldberg/TypeStat)
+[![Join the chat at https://gitter.im/TypeStat/community](https://img.shields.io/badge/chat-gitter-informational.svg)](https://gitter.im/TypeStat/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![NPM version](https://badge.fury.io/js/typestat.svg)](http://badge.fury.io/js/typestat)
 
-Adds and improves TypeScript type annotations using static analysis.
+**Converts JavaScript to TypeScript and TypeScript to better TypeScript.**
 
 > ⚡💀 **Danger**: new and experimental; use at your own risk! 💀⚡
 
-## Why?
-
-Type safety with TypeScript, especially when adding [`--noImplicitAny`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitAny.html)
-or [`--strictNullChecks`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html),
-is wonderful but can be difficult to add to large pre-existing projects.
-Converting from JavaScript to TypeScript or improving type annotations through hundreds or thousands of legacy files is tedious and time-consuming.
-
-This package automagically adds those missing type annotations for you with configurable comment markers.
-It can...
+## What?
 
 ✨ Convert JavaScript files to TypeScript in a single bound!
 
@@ -27,34 +20,26 @@ It can...
 
 ✨ Annotate missing `null`s and `undefined`s to get you started with `--strictNullChecks`!
 
-Doing so can allow you to enable these stricter compiler flags for all code without changing the runtime of existing code.
 Hooray!
 💪
 
 > 👉 Protip: also take a look at [TypeWiz](https://github.com/urish/typewiz)! 👈
 
-## Installation
+## Usage
+
+⚡ To start, the `typestat` command will launch an interactive guide to setting up a configuration file. 
 
 ```shell
-npm i -g typestat
+npx typestat
 ```
 
-TypeStat can be installed globally or as a project dependency via npm/yarn.
+> ```shell
+> 👋 Welcome to TypeStat! 👋
+> This will create a new typestat.json for you.
+> ...
+> ```
 
-## CLI
-
-```shell
-typestat
-```
-
-This will use [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig)
-to search for a `package.json` `"typestat"` property or configuration file such to read settings from.
-
-You can run on only a subset of files by passing globs to the command:
-
-```shell
-typestat src/demo/*.ts src/utils/**/*.ts
-```
+After, use `typestat --config typestat.json` to convert your files.
 
 For instructions on the types of changes you can run with Typestat, see:
 
@@ -173,4 +158,4 @@ await typeStat({
 
 ## Development
 
-See [Development.md](./docs/Development.md).
+See [Development.md](./docs/Development.md). 💖
