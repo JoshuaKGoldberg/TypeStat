@@ -4,17 +4,19 @@ import { InitializationImprovement } from "./improvements";
 
 export interface SingleTypeScriptConfigSettings {
     fileName: string;
+    project: string;
     improvements: ReadonlySet<InitializationImprovement>;
     sourceFiles: string;
 }
 
-export const writeSingleTypeScriptConfig = async ({ fileName, sourceFiles, improvements }: SingleTypeScriptConfigSettings) => {
+export const writeSingleTypeScriptConfig = async ({ fileName, project, sourceFiles, improvements }: SingleTypeScriptConfigSettings) => {
     await fs.writeFile(
         fileName,
         JSON.stringify(
             {
                 fixes: printImprovements(improvements),
                 include: [sourceFiles],
+                projectPath: project,
             },
             undefined,
             4,

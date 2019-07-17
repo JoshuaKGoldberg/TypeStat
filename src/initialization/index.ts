@@ -8,6 +8,7 @@ import { getQuickErrorSummary } from "../shared/errors";
 
 import { initializeJavaScript } from "./initializeJavaScript";
 import { initializeTypeScript } from "./initializeTypeScript";
+import { initializeProject } from "./project";
 import { InitializationPurpose } from "./purpose";
 
 const fileName = "typestat.json";
@@ -51,5 +52,7 @@ const runPrompts = async () => {
         },
     ]);
 
-    await (purpose === InitializationPurpose.ConvertJavaScript ? initializeJavaScript : initializeTypeScript)(fileName);
+    const project = await initializeProject();
+
+    await (purpose === InitializationPurpose.ConvertJavaScript ? initializeJavaScript : initializeTypeScript)({ fileName, project });
 };

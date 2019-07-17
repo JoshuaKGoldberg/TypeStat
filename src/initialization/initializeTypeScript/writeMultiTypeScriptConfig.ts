@@ -1,16 +1,22 @@
 import { fs } from "mz";
-import { promisify } from "util";
 
 import { InitializationImprovement } from "./improvements";
 
 export interface MultiTypeScriptConfigSettings {
     fileName: string;
     improvements: ReadonlySet<InitializationImprovement>;
+    project: string;
     sourceFiles: string;
     testFiles: string;
 }
 
-export const writeMultiTypeScriptConfig = async ({ fileName, improvements, sourceFiles, testFiles }: MultiTypeScriptConfigSettings) => {
+export const writeMultiTypeScriptConfig = async ({
+    fileName,
+    improvements,
+    project,
+    sourceFiles,
+    testFiles,
+}: MultiTypeScriptConfigSettings) => {
     await fs.writeFile(
         fileName,
         JSON.stringify(
@@ -21,15 +27,18 @@ export const writeMultiTypeScriptConfig = async ({ fileName, improvements, sourc
                         strictNonNullAssertions: true,
                     },
                     include: [testFiles],
+                    projectPath: project,
                 },
                 {
                     exclude: [testFiles],
                     fixes: printImprovements(improvements),
                     include: [sourceFiles],
+                    projectPath: project,
                 },
                 {
                     fixes: printImprovements(improvements),
                     include: [testFiles, sourceFiles],
+                    projectPath: project,
                 },
             ],
             undefined,
