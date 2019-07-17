@@ -4,11 +4,12 @@ import { InitializationRenames } from "./renames";
 
 export interface JavaScriptConfigSettings {
     fileName: string;
+    project: string;
     renames: InitializationRenames;
     sourceFiles: string;
 }
 
-export const writeJavaScriptConfig = async ({ fileName, sourceFiles, renames }: JavaScriptConfigSettings) => {
+export const writeJavaScriptConfig = async ({ fileName, project, sourceFiles, renames }: JavaScriptConfigSettings) => {
     await writeFile(
         fileName,
         JSON.stringify(
@@ -22,6 +23,7 @@ export const writeJavaScriptConfig = async ({ fileName, sourceFiles, renames }: 
                     noImplicitAny: true,
                 },
                 include: [sourceFiles],
+                project,
             },
             undefined,
             4,

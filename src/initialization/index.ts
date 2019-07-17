@@ -7,6 +7,7 @@ import { ProcessLogger } from "../logging/logger";
 import { getQuickErrorSummary } from "../shared/errors";
 
 import { initializeJavaScript } from "./initializeJavaScript";
+import { initializeProject } from "./initializeProject";
 import { initializeTypeScript } from "./initializeTypeScript";
 import { InitializationPurpose } from "./purpose";
 
@@ -51,5 +52,7 @@ const runPrompts = async () => {
         },
     ]);
 
-    await (purpose === InitializationPurpose.ConvertJavaScript ? initializeJavaScript : initializeTypeScript)(fileName);
+    const project = await initializeProject();
+
+    await (purpose === InitializationPurpose.ConvertJavaScript ? initializeJavaScript : initializeTypeScript)({ fileName, project });
 };

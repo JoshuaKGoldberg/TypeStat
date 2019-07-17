@@ -6,11 +6,18 @@ import { InitializationImprovement } from "./improvements";
 export interface MultiTypeScriptConfigSettings {
     fileName: string;
     improvements: ReadonlySet<InitializationImprovement>;
+    project: string;
     sourceFiles: string;
     testFiles: string;
 }
 
-export const writeMultiTypeScriptConfig = async ({ fileName, improvements, sourceFiles, testFiles }: MultiTypeScriptConfigSettings) => {
+export const writeMultiTypeScriptConfig = async ({
+    fileName,
+    improvements,
+    project,
+    sourceFiles,
+    testFiles,
+}: MultiTypeScriptConfigSettings) => {
     await fs.writeFile(
         fileName,
         JSON.stringify(
@@ -21,15 +28,18 @@ export const writeMultiTypeScriptConfig = async ({ fileName, improvements, sourc
                         strictNonNullAssertions: true,
                     },
                     include: [testFiles],
+                    project,
                 },
                 {
                     exclude: [testFiles],
                     fixes: printImprovements(improvements),
                     include: [sourceFiles],
+                    project,
                 },
                 {
                     fixes: printImprovements(improvements),
                     include: [testFiles, sourceFiles],
+                    project,
                 },
             ],
             undefined,
