@@ -1,14 +1,10 @@
 # Types
 
-## `--typeAlias`/`aliases`
+## `aliases`
 
 Object mapping names of added types to strings to replace them with.
 
 For example, to replace `null` with `null /* TODO: check auto-generated types (thanks TypeStat!) */`:
-
-```shell
-typestat --typeAlias "null=null /* TODO: check added types (thanks TypeStat!) */"
-```
 
 ```json
 {
@@ -32,10 +28,6 @@ type TodoAutoAdded_null = null;
 type TodoAutoAdded_undefined = undefined;
 ```
 
-```shell
-typestat --typeAlias "null|undefined=TodoAutoAdded_{0}"
-```
-
 ```json
 {
     "types": {
@@ -48,10 +40,6 @@ typestat --typeAlias "null|undefined=TodoAutoAdded_{0}"
 
 You can also alias the `!` added for non-null assertions:
 
-```shell
-typestat --typeAlias undefined=TodoAutoAddedUndefined
-```
-
 ```json
 {
     "types": {
@@ -62,16 +50,12 @@ typestat --typeAlias undefined=TodoAutoAddedUndefined
 }
 ```
 
-## `--typeMatching`/`matching`
+## `matching`
 
 Regular expression matchers added types must match.
 If one or more of these are provided, any added type must match at least one of them.
 
 For example, either will only allow `null` or `undefined` as added types:
-
-```shell
-typestat --typeMatching "^null$" --typeMatching "^undefined$"
-```
 
 ```json
 {
@@ -83,14 +67,10 @@ typestat --typeMatching "^null$" --typeMatching "^undefined$"
 }
 ```
 
-## `--typeOnlyPrimitives`/`onlyPrimitives`
+## `onlyPrimitives`
 
 Whether to exclude type additions that contain complex object types, such as arrays and class instances.
-This is particularly useful for `--typeStrictNullChecks`, where the only relevant types are `null` and `undefined`.
-
-```shell
-typestat --typeOnlyPrimitives
-```
+This is particularly useful for `types.strictNullChecks`, where the only relevant types are `null` and `undefined`.
 
 ```json
 {
@@ -100,14 +80,10 @@ typestat --typeOnlyPrimitives
 }
 ```
 
-## `--typeStrictNullChecks`/`strictNullChecks`
+## `strictNullChecks`
 
 Whether to override the project's [`--strictNullChecks`](https://basarat.gitbooks.io/typescript/docs/options/strictNullChecks.html) setting.
 If true, TypeStat will set `strictNullChecks` to `true` regardless of your `tsconfig.json`.
-
-```shell
-typestat --typeStrictNullChecks
-```
 
 ```json
 {

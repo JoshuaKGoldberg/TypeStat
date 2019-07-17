@@ -69,10 +69,6 @@ For instructions on the types of changes you can run with Typestat, see:
 
 Path to a TypeStat configuration file, if you'd like a custom path.
 
-```shell
-typestat --config typestat.custom.json
-```
-
 #### `include`
 
 Glob patterns of file names to include.
@@ -91,20 +87,6 @@ typestat ./src/**/*.ts
 }
 ```
 
-#### `-p`/`--project`
-
-Path to a TypeScript project file, if you'd like a path other than `./tsconfig.json`.
-
-```shell
-typestat --project tsconfig.strict.json
-```
-
-```json
-{
-    "project": "tsconfig.strict.json"
-}
-```
-
 If a relative project file path is provided, its absolute path will be resolved from `--packageDirectory`.
 
 ### Usage
@@ -112,25 +94,25 @@ If a relative project file path is provided, its absolute path will be resolved 
 More advanced flags can be provided for:
 
 * [Files](./docs/Files.md)
-  * `--fileAbove`/`files.above`
-  * `--fileBelow`/`files.below`
-  * `--fileConvertFileExtensions`/`files.convertFileExtensions`
+  * `files.above`
+  * `files.below`
+  * `files.convertFileExtensions`
 * [Filters](./docs/Filters.md)
-  * `--filter`/`filter`
+  * `filter`
 * [Fixes](./docs/Fixes.md):
-  * `--fixIncompleteTypes`/`fixes.incompleteTypes`
-  * `--fixMissingProperties`/`fixes.missingProperties`
-  * `--fixNoImplicitAny`/`fixes.noImplicitAny`
-  * `--fixStrictNonNullAssertions`/`fixes.strictNonNullAssertions`
+  * `fixes.incompleteTypes`
+  * `fixes.missingProperties`
+  * `fixes.noImplicitAny`
+  * `fixes.strictNonNullAssertions`
 * [Package](./docs/Package.md):
-  * `--packageDirectory`/`package.directory`
-  * `--packageFile`/`package.file`
-  * `--packageMissingTypes`/`package.missingTypes`
+  * `package.directory`
+  * `package.file`
+  * `package.missingTypes`
 * [Types](./docs/Types.md):
-  * `--typeAlias`/`types.aliases`
-  * `--typeMatching`/`types.matching`
-  * `--typeOnlyPrimitives`/`types.onlyPrimitives`
-  * `--typeStrictNullChecks`/`types.strictNullChecks`
+  * `types.aliases`
+  * `types.matching`
+  * `types.onlyPrimitives`
+  * `types.strictNullChecks`
 
 ## Node
 

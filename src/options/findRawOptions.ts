@@ -20,12 +20,12 @@ export interface FoundRawOptions {
 /**
  * Parses raw options from a configuration file.
  *
- * @param packageDirectory   Base directory to resolve paths from.
+ * @param cwd   Base directory to resolve paths from.
  * @param configPath   Suggested path to load from, instead of searching.
  * @returns Promise for parsed raw options from a configuration file.
  */
-export const findRawOptions = async (packageDirectory: string, configPath: string): Promise<FoundRawOptions | string> => {
-    const resolutionPath = path.join(packageDirectory, configPath);
+export const findRawOptions = async (cwd: string, configPath: string): Promise<FoundRawOptions | string> => {
+    const resolutionPath = path.join(cwd, configPath);
 
     let filePath: string;
     try {

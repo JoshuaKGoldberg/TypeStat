@@ -1,4 +1,4 @@
-# `--fixIncompleteTypes`/`incompleteTypes`
+# `incompleteTypes`
 
 Whether to augment type annotations that don't capture all values constructs can be set to.
 
@@ -10,10 +10,6 @@ Whether to augment type annotations that don't capture all values constructs can
 Note that `strictNullChecks` must be enabled in your `tsconfig.json` and/or TypeStat configuration file to add `| null` and `| undefined`.
 
 ## Configuration
-
-```shell
-typestat --fixIncompleteTypes
-```
 
 ```json
 {

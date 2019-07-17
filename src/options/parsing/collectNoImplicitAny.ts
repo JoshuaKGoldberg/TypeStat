@@ -1,17 +1,8 @@
 import * as ts from "typescript";
 
-import { TypeStatArgv } from "../../index";
 import { RawTypeStatOptions } from "../types";
 
-export const collectNoImplicitAny = (
-    argv: TypeStatArgv,
-    compilerOptions: Readonly<ts.CompilerOptions>,
-    rawOptions: RawTypeStatOptions,
-): boolean => {
-    if (argv.fixNoImplicitAny !== undefined) {
-        return argv.fixNoImplicitAny;
-    }
-
+export const collectNoImplicitAny = (compilerOptions: Readonly<ts.CompilerOptions>, rawOptions: RawTypeStatOptions): boolean => {
     if (rawOptions.fixes !== undefined && rawOptions.fixes.noImplicitAny !== undefined) {
         return rawOptions.fixes.noImplicitAny;
     }
