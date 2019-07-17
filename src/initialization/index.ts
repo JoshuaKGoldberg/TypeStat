@@ -31,7 +31,7 @@ export const initialization = async (logger: ProcessLogger): Promise<ResultStatu
         return ResultStatus.ConfigurationError;
     }
 
-    logger.stdout.write(chalk.reset(`${EOL}Awesome! You're now ready to:${EOL}${EOL}`));
+    logger.stdout.write(chalk.reset(`${EOL}Awesome! You're now ready to:${EOL}`));
     logger.stdout.write(chalk.greenBright(`typestat --config ${fileName}`));
     logger.stdout.write(chalk.reset(`${EOL}${EOL}Once you run that, TypeStat will start auto-fixing your typings.${EOL}`));
     logger.stdout.write(chalk.yellow(`Please report any bugs on https://github.com/JoshuaKGoldberg/TypeStat! `));
