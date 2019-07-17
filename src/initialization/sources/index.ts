@@ -20,7 +20,7 @@ const initializeBuiltInSources = async (completion: string) => {
         {
             choices,
             initial: choices[choices.length - 1],
-            message: "Which grep matches your source files?",
+            message: "Which glob matches your source files?",
             name: "sourceFiles",
             type: "select",
         },
@@ -29,7 +29,7 @@ const initializeBuiltInSources = async (completion: string) => {
     return sourceFiles as string;
 };
 
-const getCustomSources = async (completion: string): Promise<string> => {
+const getCustomSources = async (completion: string) => {
     const { sourceFiles } = await prompt([
         {
             initial: `src${completion}`,
@@ -39,5 +39,5 @@ const getCustomSources = async (completion: string): Promise<string> => {
         },
     ]);
 
-    return !`${sourceFiles}` ? getCustomSources(completion) : (sourceFiles as string);
+    return sourceFiles as string;
 };
