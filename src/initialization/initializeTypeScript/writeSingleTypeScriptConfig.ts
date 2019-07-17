@@ -16,7 +16,7 @@ export const writeSingleTypeScriptConfig = async ({ fileName, project, sourceFil
             {
                 fixes: printImprovements(improvements),
                 include: [sourceFiles],
-                project,
+                projectPath: project,
             },
             undefined,
             4,

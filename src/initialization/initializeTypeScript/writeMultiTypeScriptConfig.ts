@@ -1,5 +1,4 @@
 import { fs } from "mz";
-import { promisify } from "util";
 
 import { InitializationImprovement } from "./improvements";
 
@@ -28,18 +27,18 @@ export const writeMultiTypeScriptConfig = async ({
                         strictNonNullAssertions: true,
                     },
                     include: [testFiles],
-                    project,
+                    projectPath: project,
                 },
                 {
                     exclude: [testFiles],
                     fixes: printImprovements(improvements),
                     include: [sourceFiles],
-                    project,
+                    projectPath: project,
                 },
                 {
                     fixes: printImprovements(improvements),
                     include: [testFiles, sourceFiles],
-                    project,
+                    projectPath: project,
                 },
             ],
             undefined,
