@@ -19,25 +19,25 @@ These mutations are all purely additive and limited to the type system, meaning 
 
 ## Fixers
 
-### `--fixIncompleteTypes`/`incompleteTypes`
+### `incompleteTypes`
 
 Whether to augment type annotations that don't capture all values constructs can be set to.
 
 See [fixIncompleteTypes/README.md](../src/mutators/builtIn/fixIncompleteTypes/README.md).
 
-### `--fixMissingProperties`/`missingProperties`
+### `missingProperties`
 
 Whether to apply TypeScript's fixer for missing properties on classes.
 
 See [fixMisingProperties/README.md](../src/mutators/builtIn/fixMissingProperties/README.md).
 
-## `--fixNoImplicitAny`/`noImplicitAny`
+## `noImplicitAny`
 
 Whether to add type annotations to declarations that don't yet have them.
 
 See [fixNoImplicitAny/README.md](../src/mutators/builtIn/fixNoImplicitAny/README.md).
 
-## `--fixStrictNonNullAssertions`/`strictNonNullAssertions`
+## `strictNonNullAssertions`
 
 Whether to add missing non-null assertions.
 

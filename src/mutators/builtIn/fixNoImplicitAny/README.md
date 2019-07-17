@@ -1,4 +1,4 @@
-# `--fixNoImplicitAny`/`noImplicitAny`
+# `noImplicitAny`
 
 Whether to add type annotations to declarations that don't yet have them.
 
@@ -13,10 +13,6 @@ Places that don't need added types (i.e. would violate [`no-unnecessary-type-ann
 won't have them added.
 
 ## Configuration
-
-```shell
-typestat --fixNoImplicitAny
-```
 
 ```json
 {

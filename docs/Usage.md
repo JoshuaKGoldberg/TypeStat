@@ -22,11 +22,7 @@ Converting classes from JavaScript to TypeScript tends to be one of the more pai
 since classes in TypeScript need to have member properties declared.
 
 TypeScript provides a feature to infer and add those properties.
-Use `--fixMissingProperties`/`fixes.missingProperties` to apply those mutations across all files:
-
-```shell
-typestat --fixMissingProperties
-```
+Use `fixes.missingProperties` to apply those mutations across all files:
 
 ```json
 {
@@ -44,10 +40,6 @@ This will add `!`s as necessary to any locations that use nullable types unsafel
 ### Preferring ! Assertions
 
 For example, this configuration will add `!`s only to `*.test.ts` test files, such as with VS Code's [strict tests push](https://github.com/Microsoft/vscode/issues/65233):
-
-```shell
-typestat --fixStrictNonNullAssertions --typeStrictNullChecks ./src/**/*.test.ts
-```
 
 ```json
 {

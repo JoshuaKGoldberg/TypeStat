@@ -12,11 +12,7 @@ An optional set of CLI flags and/or configuration object fields containing packa
 }
 ```
 
-## `--packageDirectory`/`directory`
-
-```shell
-typestat --packageDirectory "../MyRepo"
-```
+## `directory`
 
 ```json
 {
@@ -29,11 +25,7 @@ typestat --packageDirectory "../MyRepo"
 Base directory to resolve paths from.
 All non-absolute paths within all settings except `-c`/`--config` will be resolved against this directory.
 
-## `--packageFile`/`file`
-
-```shell
-typestat --packageFile "./node/package.json"
-```
+## `file`
 
 ```json
 {
@@ -46,13 +38,9 @@ typestat --packageFile "./node/package.json"
 File path to a `package.json` to consider the project's package file.
 If not provided, defaults to `./package.json`.
 
-If `--packageFile` is relative, `--packageDirectory` will be used as a root path to resolve from.
+If `package.file` is relative, `package.directory` will be used as a root path to resolve from.
 
-## `--packageMissingTypes`/`missingTypes`
-
-```shell
-typestat --packageMissingTypes
-```
+## `missingTypes`
 
 ```json
 {
@@ -72,7 +60,7 @@ For example, if the following code exists in any file within the TypeScript proj
 import { array } from "lodash/array";
 ```
 
-TypeStat will attempt to install `@types/lodash` unless it's already any form of dependency in the `--packageFile`,
+TypeStat will attempt to install `@types/lodash` unless it's already any form of dependency in the `package.file`,
 
 ### Package Manager Configuration
 
@@ -80,10 +68,6 @@ This field has four potential allowed configurations:
 
 * `false` _(default)_: skip installing missing packages
 * `true`: auto-detect whether to use Yarn _(if a `yarn.lock` exists)_ or npm _(default)_
-
-    ```shell
-    typestat --packageMissingTypes
-    ```
 
     ```json
     {
@@ -95,10 +79,6 @@ This field has four potential allowed configurations:
 
 * `"npm"`: install using npm
 
-    ```shell
-    typestat --packageMissingTypes npm
-    ```
-
     ```json
     {
         "package": {
@@ -108,10 +88,6 @@ This field has four potential allowed configurations:
     ```
 
 * `"yarn"`: install using Yarn
-
-    ```shell
-    typestat --packageMissingTypes yarn
-    ```
 
     ```json
     {

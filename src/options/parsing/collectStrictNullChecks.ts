@@ -1,16 +1,9 @@
 import * as ts from "typescript";
 
-import { TypeStatArgv } from "../../index";
 import { RawTypeStatTypeOptions } from "../types";
 
-export const collectStrictNullChecks = (
-    argv: TypeStatArgv,
-    compilerOptions: Readonly<ts.CompilerOptions>,
-    rawOptionTypes: RawTypeStatTypeOptions,
-) => {
-    const typeStrictNullChecks =
-        rawOptionTypes.strictNullChecks === undefined ? argv.typeStrictNullChecks : rawOptionTypes.strictNullChecks;
-
+export const collectStrictNullChecks = (compilerOptions: Readonly<ts.CompilerOptions>, rawOptionTypes: RawTypeStatTypeOptions) => {
+    const typeStrictNullChecks = rawOptionTypes.strictNullChecks;
     const compilerStrictNullChecks = collectCompilerStrictNullChecks(compilerOptions, typeStrictNullChecks);
 
     return { compilerStrictNullChecks, typeStrictNullChecks };
