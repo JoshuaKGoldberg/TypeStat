@@ -32,7 +32,7 @@
         "prefer-switch": false,
         "prefer-template": false,
         "promise-function-async": false,
-        "strict-boolean-expressions": [true, "allow-boolean-or-undefined", "allow-number"],
+        "strict-boolean-expressions": false,
         "strict-comparisons": [true, { "allow-object-equal-comparison": true }],
         "switch-default": false,
         "switch-final-break": false,
