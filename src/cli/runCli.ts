@@ -48,7 +48,7 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
         .option("--typeMatching [...typeMatching]", "regular expression matchers added types must match.")
         .option("--typeStrictNullChecks", "override TypeScript's --strictNullChecks setting for types")
         .option("--typeOnlyPrimitives", "exclude complex types from changes, such as arrays or interfaces");
-    const parsedArgv: TypeStatArgv = {
+    const parsedArgv = {
         ...(command.parse(rawArgv as string[]) as Partial<TypeStatArgv>),
         logger: runtime.logger,
     };
