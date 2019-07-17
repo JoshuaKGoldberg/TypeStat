@@ -7,8 +7,8 @@ import { ProcessLogger } from "../logging/logger";
 import { getQuickErrorSummary } from "../shared/errors";
 
 import { initializeJavaScript } from "./initializeJavaScript";
-import { initializeProject } from "./initializeProject";
 import { initializeTypeScript } from "./initializeTypeScript";
+import { initializeProject } from "./project";
 import { InitializationPurpose } from "./purpose";
 
 const fileName = "typestat.json";
