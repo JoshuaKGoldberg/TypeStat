@@ -77,9 +77,9 @@ typestat ./src/**/*.ts
 
 If a relative project file path is provided, its absolute path will be resolved from `--packageDirectory`.
 
-### Usage
+### Configuration
 
-More advanced flags can be provided for:
+More advanced flags can be provided in your `typestat.json` for:
 
 * [Files](./docs/Files.md)
   * `files.above`

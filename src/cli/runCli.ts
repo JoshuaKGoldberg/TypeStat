@@ -14,6 +14,7 @@ import { processLogger } from "../logging/logger";
 import { captureHelp } from "./captureHelp";
 
 const createDefaultRuntime = () => ({
+    initializationRunner: initialization,
     logger: processLogger,
     mainRunner: typeStat,
 });
@@ -27,7 +28,7 @@ const createDefaultRuntime = () => ({
  */
 export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDefaultRuntime()): Promise<ResultStatus> => {
     if (rawArgv.length === 2) {
-        return initialization(runtime.logger);
+        return runtime.initializationRunner(runtime.logger);
     }
 
     const command = new Command()

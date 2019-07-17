@@ -6,6 +6,7 @@ import { runCli } from "./runCli";
 
 const createTestArgs = (...argv: string[]) => ({
     argv: ["node.exe", "typestat", ...argv],
+    initializationRunner: jest.fn(),
     logger: {
         stderr: new StubWritableStream(),
         stdout: new StubWritableStream(),
@@ -14,12 +15,24 @@ const createTestArgs = (...argv: string[]) => ({
 });
 
 describe("runCli", () => {
-    it("logs the current version when --version is provided", async () => {
+    it("runs initializationRunner when no args are provided", async () => {
         // Arrange
-        const { argv, logger, mainRunner } = createTestArgs("--version");
+        const { argv, initializationRunner, logger, mainRunner } = createTestArgs();
 
         // Act
-        const resultStatus = await runCli(argv, { logger, mainRunner });
+        await runCli(argv, { initializationRunner, logger, mainRunner });
+
+        // Assert
+        expect(initializationRunner).toHaveBeenCalledTimes(1);
+        expect(mainRunner).not.toHaveBeenCalled();
+    });
+
+    it("logs the current version when --version is provided", async () => {
+        // Arrange
+        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--version");
+
+        // Act
+        const resultStatus = await runCli(argv, { initializationRunner, logger, mainRunner });
 
         // Assert
         expect(logger.stdout.write).toHaveBeenLastCalledWith(`${version}\n`);
@@ -28,13 +41,13 @@ describe("runCli", () => {
 
     it("logs an error when the main runner rejects with one", async () => {
         // Arrange
-        const { argv, logger, mainRunner } = createTestArgs();
+        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--config", "typestat.json");
         const message = "Error message";
 
         mainRunner.mockRejectedValue(new Error(message));
 
         // Act
-        const resultStatus = await runCli(argv, { logger, mainRunner });
+        const resultStatus = await runCli(argv, { initializationRunner, logger, mainRunner });
 
         // Assert
         expect(logger.stderr.write).toHaveBeenLastCalledWith(jasmine.stringMatching(message));
@@ -43,7 +56,7 @@ describe("runCli", () => {
 
     it("logs help and the error when a configuration error is reported", async () => {
         // Arrange
-        const { argv, logger, mainRunner } = createTestArgs();
+        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--config", "typestat.json");
         const message = "Error message";
 
         mainRunner.mockResolvedValue({
@@ -52,7 +65,7 @@ describe("runCli", () => {
         });
 
         // Act
-        const resultStatus = await runCli(argv, { logger, mainRunner });
+        const resultStatus = await runCli(argv, { initializationRunner, logger, mainRunner });
 
         // Assert
         expect(logger.stdout.write).toHaveBeenLastCalledWith(jasmine.stringMatching("typestat \\[options\\]"));
