@@ -34,27 +34,8 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
         .option("-c --config [config]", "path to a TypeStat config file")
         .option("-i --init [init]", "run config initialization wizard")
         .option("-m --mutator [...mutator]", "require paths to any custom mutators to run")
-        .option("-p --project [project]", "path to a TypeScript project file")
-        .option("-V --version", "output the package version")
-        .option("--fileAbove", "comment to add above modified files")
-        .option("--fileBelow", "comment to add below modified files")
-        .option("--fileRenameExtensions", "whether to convert .js(x) files to .ts(x)")
-        .option("--filter [...filter]", "tsquery filters to exclude within files")
-        .option("--fixIncompleteTypes", "add missing types to existing, incomplete types")
-        .option("--fixMissingProperties", "add missing properties to classes from usage")
-        .option("--fixNoImplicitAny", "fix TypeScript's --noImplicitAny complaints")
-        .option(
-            "--fixStrictNonNullAssertions",
-            "add missing non-null assertions in nullable property accesses, function-like calls, and return types",
-        )
-        .option("--packageDirectory [packageDirectory]", "working directory (cwd) of the project")
-        .option("--packageFile [packageFile]", "package.json path to consider the project's package")
-        .option("--packageMissingTypes [packageMissingTypes]", "package manager to install missing types, or unspecified to auto-detect")
-        .option("--typeAlias [...typeAlias]", "add a key=value to replace added type names with")
-        .option("--typeMatching [...typeMatching]", "regular expression matchers added types must match.")
-        .option("--typeStrictNullChecks", "override TypeScript's --strictNullChecks setting for types")
-        .option("--typeOnlyPrimitives", "exclude complex types from changes, such as arrays or interfaces");
-    const parsedArgv: TypeStatArgv = {
+        .option("-V --version", "output the package version");
+    const parsedArgv = {
         ...(command.parse(rawArgv as string[]) as Partial<TypeStatArgv>),
         logger: runtime.logger,
     };

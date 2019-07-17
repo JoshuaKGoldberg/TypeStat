@@ -1,4 +1,4 @@
-# `--fixStrictNonNullAssertions`/`strictNonNullAssertions`
+# `strictNonNullAssertions`
 
 Whether to add missing non-null assertions.
 
@@ -12,10 +12,6 @@ You'd like to enable [`--strictNullChecks`](https://basarat.gitbooks.io/typescri
 Note that `strictNullChecks` must be enabled in your `tsconfig.json` and/or TypeStat configuration file.
 
 ## Configuration
-
-```shell
-typestat --fixStrictNonNullAssertions
-```
 
 ```json
 {
