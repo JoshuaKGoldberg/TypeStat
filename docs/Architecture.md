@@ -14,7 +14,7 @@ When the `typestat` command is entered into the CLI, roughly the following happe
 
 1. [bin/typestat](../bin/typestat) calls to the [CLI](../src/cli/index.ts)
 2. [Commander.js](https://github.com/tj/commander.js) parses the CLI's arguments
-3. Settings are filled from settings found with [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig), if any are found
+3. Settings are loaded from the `-c`/`--config` file
 4. An Automutator provider is created for TypeStat with [`createTypeStatMutationsProvider`](../src/runtime/createTypeStatMutationsProvider.ts).
 
 ### Mutation Providers
@@ -103,7 +103,7 @@ We should note two common pieces of terminology used in this directory:
 
 Parsing logic and TypeScript types for raw and parsed options.
 
-[`loadOptions`](../src/options/loadOptions.ts) will use [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig) to find a configuration file if a path isn't provided.
+[`loadOptions`](../src/options/loadOptions.ts) will `require` a `-c`/`--config` file from the path provided.
 Options parsed from that file will be of type `RawTypeStatOptions`,
 and will be filled out into `TypeStatOptions` via [`fillOutRawOptions`](../src/options/fillOutRawOptions.ts).
 

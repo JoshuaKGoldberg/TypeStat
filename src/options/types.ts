@@ -7,7 +7,7 @@ import { Dictionary } from "../shared/maps";
 /**
  * Options listed as JSON in a typestat configuration file.
  *
- * @remarks These are read by Cosmiconfig and parsed into {@link TypeStatOptions}.
+ * @remarks These are read from disk and parsed into {@link TypeStatOptions}.
  */
 export interface RawTypeStatOptions {
     /**

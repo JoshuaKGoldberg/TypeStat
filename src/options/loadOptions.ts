@@ -10,15 +10,22 @@ import { parseRawCompilerOptions } from "./parseRawCompilerOptions";
 import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
 /**
- * Reads TypeStat options using Cosmiconfig or a config path.
+ * Reads TypeStat options using a config path.
  *
  * @param argv   Root arguments passed to TypeStat
  * @returns Promise for filled-out TypeStat options, or a string complaint from failing to make them.
  */
 export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | string> => {
-    const packageDirectory = argv.packageDirectory === undefined ? process.cwd() : argv.packageDirectory;
+    if (argv.config === undefined) {
+        return "-c/--config file must be provided.";
+    }
 
+    const packageDirectory = argv.packageDirectory === undefined ? process.cwd() : argv.packageDirectory;
     const foundRawOptions = await findRawOptions(packageDirectory, argv.config);
+    if (typeof foundRawOptions === "string") {
+        return foundRawOptions;
+    }
+
     const { rawOptions } = foundRawOptions;
     const projectPath = getProjectPath(packageDirectory, argv, foundRawOptions);
     const [compilerOptions, fileNames] = await Promise.all([
