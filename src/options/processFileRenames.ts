@@ -14,7 +14,7 @@ const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyAr
     const newFileNames = new Set(options.fileNames);
 
     const filesToRename = (await Promise.all(
-        fileNames.map(async (fileName) => ({
+        fileNames.filter(canBeRenamed).map(async (fileName) => ({
             newFileName: await getNewFileName(options, fileName),
             oldFileName: fileName,
         })),
@@ -37,6 +37,14 @@ const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyAr
         ...options,
         fileNames: Array.from(newFileNames),
     };
+};
+
+const validRenameExtensions = new Set([".js", ".jsx"]);
+
+const canBeRenamed = (oldFileName: string): boolean => {
+    const oldExtension = oldFileName.substring(oldFileName.lastIndexOf("."));
+
+    return validRenameExtensions.has(oldExtension);
 };
 
 const getNewFileName = async (options: TypeStatOptions, oldFileName: string): Promise<string> => {
