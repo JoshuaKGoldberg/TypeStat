@@ -2,11 +2,11 @@ import { prompt } from "enquirer";
 
 export const initializeTests = async () => {
     const choices = [
-        `lib/**/__tests__/*.test.ts(x)`,
-        `lib/**/*.test.ts(x)`,
-        `src/**/__tests__/*.test.ts(x)`,
-        `src/**/*.test.ts(x)`,
-        `test/**/*.ts(x)`,
+        `lib/**/__tests__/*.test.{ts,tsx}`,
+        `lib/**/*.test.{ts,tsx}`,
+        `src/**/__tests__/*.test.{ts,tsx}`,
+        `src/**/*.test.{ts,tsx}`,
+        `test/**/*.{ts,tsx}`,
     ];
 
     const { testFiles } = await prompt([

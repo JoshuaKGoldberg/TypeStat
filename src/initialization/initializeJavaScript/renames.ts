@@ -1,9 +1,9 @@
 import { prompt } from "enquirer";
 
 export enum InitializationRenames {
-    Auto = "Rename .js files with React logic to .tsx and others to .ts",
-    TS = "Rename all .js files to .ts",
-    TSX = "Rename all .js files to .tsx",
+    Auto = "Rename files containing JSX to .tsx and others to .ts",
+    TS = "Rename all files to .ts",
+    TSX = "Rename all files to .tsx",
 }
 
 export const initializeRenames = async () => {

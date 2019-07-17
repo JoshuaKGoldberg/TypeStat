@@ -4,15 +4,17 @@ export interface InitializeSourcesSettings {
     fromJavaScript: boolean;
 }
 
-export const initializeSources = async (settings: InitializeSourcesSettings) => {
-    const originalExtension = settings.fromJavaScript ? "js" : "ts";
+const other = "other";
 
-    const choices = [
-        `lib/**/*.${originalExtension}`,
-        `lib/**/*.${originalExtension}(x)`,
-        `src/**/*.${originalExtension}`,
-        `src/**/*.${originalExtension}(x)`,
-    ];
+export const initializeSources = async (settings: InitializeSourcesSettings) => {
+    const completion = settings.fromJavaScript ? "/**/*.{js,jsx}" : "/**/*.{ts,tsx}";
+    const builtIn = await initializeBuiltInSources(completion);
+
+    return builtIn === other ? getCustomSources(completion) : builtIn;
+};
+
+const initializeBuiltInSources = async (completion: string) => {
+    const choices = [`lib${completion}`, `src${completion}`, other];
 
     const { sourceFiles } = await prompt([
         {
@@ -25,4 +27,17 @@ export const initializeSources = async (settings: InitializeSourcesSettings) => 
     ]);
 
     return sourceFiles as string;
+};
+
+const getCustomSources = async (completion: string): Promise<string> => {
+    const { sourceFiles } = await prompt([
+        {
+            initial: `src${completion}`,
+            message: "Where are your source files?",
+            name: "sourceFiles",
+            type: "text",
+        },
+    ]);
+
+    return !`${sourceFiles}` ? getCustomSources(completion) : (sourceFiles as string);
 };
