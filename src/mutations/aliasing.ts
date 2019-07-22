@@ -1,3 +1,4 @@
+import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
@@ -132,7 +133,7 @@ export const createTypeName = (request: FileMutationsRequest, ...types: ts.Type[
     return undefined;
 };
 
-export const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
+const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
     // If the type isn't a function, we can generally print it directly by name
     // Note that the type given to this function shouldn't be union or intersection types
     const callSignatures = type.getCallSignatures();
