@@ -20,7 +20,7 @@ const initializeBuiltInSources = async (completion: string) => {
         {
             choices,
             initial: choices[choices.length - 1],
-            message: "Which glob matches your source files?",
+            message: "Which glob matches files you'd like to convert?",
             name: "sourceFiles",
             type: "select",
         },
@@ -33,7 +33,7 @@ const getCustomSources = async (completion: string) => {
     const { sourceFiles } = await prompt([
         {
             initial: `src${completion}`,
-            message: "Where are your source files?",
+            message: "Which files would you like to convert?",
             name: "sourceFiles",
             type: "text",
         },

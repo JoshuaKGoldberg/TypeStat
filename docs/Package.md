@@ -1,6 +1,6 @@
 # Package
 
-An optional set of CLI flags and/or configuration object fields containing package-level changes to make outside of mutations.
+An optional set of configuration fields containing package-level changes to make outside of mutations.
 
 ```json
 {
