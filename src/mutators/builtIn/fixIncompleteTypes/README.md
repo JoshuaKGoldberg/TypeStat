@@ -96,7 +96,7 @@ React components can have types their props filled in using:
 
 Component classes will generate `interface`s, while functional components will generate `type`s.
 
-#### Examples: Incomplete React Classes
+#### Example: Incomplete Component Classes
 
 Adding in a props interface to an existing component class:
 
@@ -117,8 +117,20 @@ Adding in a props interface to an existing component class:
 }
 ```
 
-> So far, only class components are implemented, not functional components.
-> See [#129](https://github.com/JoshuaKGoldberg/TypeStat/pull/129) for tracking on more!
+### Example: Incomplete Function Components
+
+Adding in a props type to an existing function component:
+
+```diff
++ type NamedGreeterProps = {
++     name: string;
++ }
+
+- const NamedGreeter = ({ name }) => {
++ const NamedGreeter: React.FC = ({ name }) => {
+    return `Hello, ${this.props.name}!`;
+};
+```
 
 ### Incomplete Return Types
 
