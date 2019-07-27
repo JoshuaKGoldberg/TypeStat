@@ -5,6 +5,9 @@ import { FileMutationsRequest } from "../../../../fileMutator";
 
 import { VariableWithImplicitGeneric } from "./implicitGenericTypes";
 
+/**
+ * For a generic type, its type parameter names and member functions that use them.
+ */
 export interface GenericClassDetails {
     /**
      * Type of the underlying class (often an interface).
@@ -58,6 +61,7 @@ export const getGenericClassDetails = (request: FileMutationsRequest, node: Vari
         return undefined;
     }
 
+    // Create the summary of type parameter names with relevant member functions
     return fillMembersWithGenericParameters(
         containerType,
         containerType.localTypeParameters.map((typeParameter) => typeParameter.symbol.name),
@@ -65,6 +69,9 @@ export const getGenericClassDetails = (request: FileMutationsRequest, node: Vari
     );
 };
 
+/**
+ * @returns For the container type, type parameter names with member functions that use them
+ */
 const fillMembersWithGenericParameters = (
     containerType: ts.InterfaceType,
     typeParameterNames: ReadonlyArray<string>,

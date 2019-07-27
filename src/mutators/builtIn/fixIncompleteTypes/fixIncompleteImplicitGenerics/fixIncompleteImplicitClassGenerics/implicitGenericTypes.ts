@@ -1,19 +1,11 @@
-import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 export type VariableWithImplicitGeneric = ts.VariableDeclaration & {
-    initializer: ts.Expression;
+    initializer: GenericCapableInitializer;
     type: undefined;
 };
 
-const ignoredTypes = new Set([
-    ts.SyntaxKind.ArrowFunction,
-    ts.SyntaxKind.BigIntLiteral,
-    ts.SyntaxKind.FunctionExpression,
-    ts.SyntaxKind.NumericLiteral,
-    ts.SyntaxKind.ObjectLiteralExpression,
-    ts.SyntaxKind.StringLiteral,
-]);
+type GenericCapableInitializer = ts.ArrayLiteralExpression | ts.NewExpression;
 
 export const isVariableWithImplicitGeneric = (node: ts.Node): node is VariableWithImplicitGeneric =>
     // We'll be looking at variable declarations...
@@ -22,5 +14,20 @@ export const isVariableWithImplicitGeneric = (node: ts.Node): node is VariableWi
     node.type === undefined &&
     // ...but with an initially declared value...
     node.initializer !== undefined &&
-    // ...that isn't a keyword or otherwise ignored type (one that doesn't have *type* generics)
-    !(tsutils.isKeywordKind(node.initializer.kind) || ignoredTypes.has(node.initializer.kind));
+    // ...that's a value we know can have a generic added
+    isGenericCapableInitializer(node.initializer);
+
+const isGenericCapableInitializer = (initializer: ts.Expression): initializer is GenericCapableInitializer => {
+    // Array literals can always be generic
+    if (ts.isArrayLiteralExpression(initializer)) {
+        return true;
+    }
+
+    // New expressions are only valid if they don't already declare generics
+    if (ts.isNewExpression(initializer)) {
+        return initializer.typeArguments === undefined;
+    }
+
+    // So far, no other initializers are known to be generic capable
+    return false;
+};

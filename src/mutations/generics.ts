@@ -1,16 +1,20 @@
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
+import { isTypeBuiltIn } from "../shared/types";
 
 import { createTypeName } from "./aliasing";
 
+/**
+ * Creates a type like "string[]" or "Map<boolean | number>" from a container and type arguments.
+ */
 export const joinIntoGenericType = (request: FileMutationsRequest, containerType: ts.Type, allTypeArgumentTypes: ts.Type[][]) => {
     const containerTypeName = createTypeName(request, containerType);
     if (containerTypeName === undefined) {
         return undefined;
     }
 
-    // tslint:disable-next-line: no-non-null-assertion
+    // tslint:disable-next-line:no-non-null-assertion
     const genericTypeNames = allTypeArgumentTypes.map((genericTypes) => createTypeName(request, ...genericTypes)!);
 
     if (containerTypeName === "Array" && isTypeBuiltIn(containerType)) {
@@ -18,17 +22,6 @@ export const joinIntoGenericType = (request: FileMutationsRequest, containerType
     }
 
     return `${containerTypeName}<${genericTypeNames.join(", ")}>`;
-};
-
-const isTypeBuiltIn = (type: ts.Type) => {
-    const symbol = type.getSymbol();
-    if (symbol === undefined) {
-        return false;
-    }
-
-    const sourceFile = symbol.valueDeclaration.getSourceFile();
-
-    return sourceFile.hasNoDefaultLib && sourceFile.isDeclarationFile && sourceFile.fileName.includes("node_modules/typescript/lib/");
 };
 
 const constructArrayShorthand = (genericTypeNames: string[]) => {

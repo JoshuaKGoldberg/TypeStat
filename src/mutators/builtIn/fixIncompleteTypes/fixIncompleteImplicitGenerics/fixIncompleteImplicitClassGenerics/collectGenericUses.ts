@@ -5,11 +5,14 @@ import { FileMutationsRequest } from "../../../../fileMutator";
 import { GenericClassDetails } from "./getGenericClassDetails";
 import { VariableWithImplicitGeneric } from "./implicitGenericTypes";
 
+/**
+ * @returns Map of the names of a class' generic template types to the types passed to them.
+ */
 export const collectGenericUses = (
     request: FileMutationsRequest,
     node: VariableWithImplicitGeneric,
     genericClassDetails: GenericClassDetails,
-) => {
+): Map<string, ts.Type[]> | undefined => {
     const references = request.fileInfoCache.getNodeReferencesAsNodes(node);
     if (references === undefined) {
         return undefined;
@@ -28,6 +31,7 @@ export const collectGenericUses = (
         }
     };
 
+    // Each reference might contain a call expression to a member of the generic container
     for (const reference of references) {
         if (!ts.isExpressionStatement(reference)) {
             continue;
@@ -48,6 +52,7 @@ export const collectGenericUses = (
             continue;
         }
 
+        // Only look at members that are known to have the generic parameters, like `indexOf(item: T)`
         const memberName = propertyAccessExpression.name.text;
         const memberDetails = genericClassDetails.membersWithGenericParameters.get(memberName);
         if (memberDetails === undefined) {
@@ -59,6 +64,7 @@ export const collectGenericUses = (
                 continue;
             }
 
+            // For each parameter passed to the generic use, we'll record its assignment type
             addAssignmentToTypeParameter(parameterName, typeChecker.getTypeAtLocation(callArguments[parameterIndex]));
 
             // If the parameter is a rest parameter, also add assignment types for any following arguments
