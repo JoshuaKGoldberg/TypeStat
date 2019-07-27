@@ -6,7 +6,7 @@ export interface JavaScriptConfigSettings {
     fileName: string;
     project: string;
     renames: InitializationRenames;
-    sourceFiles: string;
+    sourceFiles?: string;
 }
 
 export const writeJavaScriptConfig = async ({ fileName, project, sourceFiles, renames }: JavaScriptConfigSettings) => {
@@ -22,7 +22,7 @@ export const writeJavaScriptConfig = async ({ fileName, project, sourceFiles, re
                     missingProperties: true,
                     noImplicitAny: true,
                 },
-                include: [sourceFiles],
+                ...(sourceFiles && { include: [sourceFiles] }),
                 project,
             },
             undefined,
