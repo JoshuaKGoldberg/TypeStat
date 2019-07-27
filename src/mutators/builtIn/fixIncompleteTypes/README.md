@@ -21,6 +21,45 @@ Note that `strictNullChecks` must be enabled in your `tsconfig.json` and/or Type
 
 ## Mutations
 
+### Incomplete Implicit Generics
+
+If a class variable is declared that should have a templated ("generic") type declared but doesn't, this will add it in.
+
+#### Example: Incomplete Class Generics
+
+If a class is extended that needs its generic type explicitly stated:
+
+```diff
+class OneTypeParameter<TFirst> {
+    first: TFirst;
+}
+
++ type ExtendingWithAddedFirst = {
++     added?: boolean;
++ };
+
+- class ExtendingWithAdded extends OneTypeParameter {
++ class ExtendingWithAdded extends OneTypeParameter<ExtendingWithAddedFirst> {
+    constructor() {
+        super();
+        this.first = {
+            added: true,
+        };
+    }
+}
+```
+
+#### Example: Incomplete Variable Generics
+
+If an array is created but the type isn't inferrable:
+
+```diff
+- const names = [];
++ const names: string[] = [];
+
+names.push("Josh");
+```
+
 ### Incomplete Parameter Types
 
 If a function-like's parameter is declared with a type but other types are passed in, this will add to the declared type.
