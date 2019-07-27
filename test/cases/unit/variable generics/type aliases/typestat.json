@@ -1,0 +1,11 @@
+{
+    "fixes": {
+        "incompleteTypes": true
+    },
+    "types": {
+        "aliases": {
+            "string": "string /* hello! */",
+            "SomeClass": "SomeClass /* world! */"
+        }
+    }
+}
