@@ -1,10 +1,11 @@
 # Fixes
 
-A set of CLI flags and/or configuration object fields containing which fixes (type additions) are enabled.
-These all default to `false` but can be enabled by being set to `true`.
-
 TypeStat will apply mutations ("fixes") to files as it finds them.
 These mutations are all purely additive and limited to the type system, meaning they will _not_ change your JavaScript output.
+
+Each classifiation of fix can be individually configured in your `typestat.json` file.
+These all default to `false` but can be enabled by being set to `true`.
+
 
 ```json
 {
@@ -31,13 +32,13 @@ Whether to apply TypeScript's fixer for missing properties on classes.
 
 See [fixMisingProperties/README.md](../src/mutators/builtIn/fixMissingProperties/README.md).
 
-## `noImplicitAny`
+### `noImplicitAny`
 
 Whether to add type annotations to declarations that don't yet have them.
 
 See [fixNoImplicitAny/README.md](../src/mutators/builtIn/fixNoImplicitAny/README.md).
 
-## `strictNonNullAssertions`
+### `strictNonNullAssertions`
 
 Whether to add missing non-null assertions.
 

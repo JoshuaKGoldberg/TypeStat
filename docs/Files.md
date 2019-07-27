@@ -1,6 +1,6 @@
 # Files
 
-An optional set of CLI flags and/or configuration object fields containing file-level changes to make outside of mutations.
+An optional set of configuration fields containing file-level changes to make outside of mutations.
 
 ```json
 {
