@@ -4,17 +4,35 @@ export interface InitializeSourcesSettings {
     fromJavaScript: boolean;
 }
 
+const everything = "everything";
 const other = "other";
 
 export const initializeSources = async (settings: InitializeSourcesSettings) => {
     const completion = settings.fromJavaScript ? "/**/*.{js,jsx}" : "/**/*.{ts,tsx}";
     const builtIn = await initializeBuiltInSources(completion);
 
-    return builtIn === other ? getCustomSources(completion) : builtIn;
+    if (builtIn === other) {
+        return await getCustomSources(completion);
+    }
+
+    if (builtIn === everything) {
+        return undefined;
+    }
+
+    return builtIn;
 };
 
 const initializeBuiltInSources = async (completion: string) => {
-    const choices = [`lib${completion}`, `src${completion}`, other];
+    // https://github.com/enquirer/enquirer/issues/202
+    const choices: string[] = [
+        {
+            message: "everything in my tsconfig.json",
+            name: everything,
+        } as any,
+        `lib${completion}`,
+        `src${completion}`,
+        other,
+    ];
 
     const { sourceFiles } = await prompt([
         {

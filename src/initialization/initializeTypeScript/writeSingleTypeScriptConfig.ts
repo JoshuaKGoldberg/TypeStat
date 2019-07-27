@@ -6,7 +6,7 @@ export interface SingleTypeScriptConfigSettings {
     fileName: string;
     project: string;
     improvements: ReadonlySet<InitializationImprovement>;
-    sourceFiles: string;
+    sourceFiles?: string;
 }
 
 export const writeSingleTypeScriptConfig = async ({ fileName, project, sourceFiles, improvements }: SingleTypeScriptConfigSettings) => {
@@ -15,7 +15,7 @@ export const writeSingleTypeScriptConfig = async ({ fileName, project, sourceFil
         JSON.stringify(
             {
                 fixes: printImprovements(improvements),
-                include: [sourceFiles],
+                ...(sourceFiles && { include: [sourceFiles] }),
                 projectPath: project,
             },
             undefined,
