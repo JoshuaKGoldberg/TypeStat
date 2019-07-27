@@ -17,10 +17,7 @@ import { findMutationsInFile } from "../findMutationsInFile";
  * @param allModifiedFileNames   Set to mark names of all files that were modified.
  */
 export const createCoreMutationsProvider = (options: TypeStatOptions, allModifiedFiles: Set<string>) => {
-    const fileNamesAndServicesCache = new LazyCache(() => {
-        options.logger.stdout.write(chalk.grey("Preparing language services to visit files...\n"));
-        return createFileNamesAndServices(options);
-    });
+    const fileNamesAndServicesCache = createFileNamesAndServicesCache(options);
     let lastFileIndex = -1;
 
     return async (): Promise<IMutationsWave> => {
@@ -80,4 +77,15 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
                     : (convertMapToObject(fileMutations) as Dictionary<IMutation[]>),
         };
     };
+};
+
+const createFileNamesAndServicesCache = (options: TypeStatOptions) => {
+    return new LazyCache(() => {
+        options.logger.stdout.write(chalk.grey("Preparing language services to visit files...\n"));
+
+        const { fileNames, services } = createFileNamesAndServices(options);
+        options.logger.stdout.write(chalk.grey(`Prepared language services for ${fileNames.length} files...\n`));
+
+        return { fileNames, services };
+    });
 };
