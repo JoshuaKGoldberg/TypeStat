@@ -28,14 +28,19 @@ const createDefaultRuntime = () => ({
  */
 export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDefaultRuntime()): Promise<ResultStatus> => {
     if (rawArgv.length === 2) {
-        return runtime.initializationRunner(runtime.logger);
+        const initialized = await runtime.initializationRunner(runtime.logger);
+        if (initialized.status !== ResultStatus.Succeeded || !initialized.skipped) {
+            return initialized.status;
+        }
+
+        rawArgv = [...rawArgv, "--config", "typestat.json"];
     }
 
     const command = new Command()
         .option("-c --config [config]", "path to a TypeStat config file")
-        .option("-i --init [init]", "run config initialization wizard")
         .option("-m --mutator [...mutator]", "require paths to any custom mutators to run")
         .option("-V --version", "output the package version");
+
     const parsedArgv = {
         ...(command.parse(rawArgv as string[]) as Partial<TypeStatArgv>),
         logger: runtime.logger,
@@ -44,10 +49,6 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
     if ({}.hasOwnProperty.call(parsedArgv, "version")) {
         runtime.logger.stdout.write(`${await getPackageVersion()}\n`);
         return ResultStatus.Succeeded;
-    }
-
-    if ({}.hasOwnProperty.call(parsedArgv, "init")) {
-        return initialization(runtime.logger);
     }
 
     let result: TypeStatResult;
