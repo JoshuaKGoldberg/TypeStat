@@ -6,7 +6,9 @@ import { runCli } from "./runCli";
 
 const createTestArgs = (...argv: string[]) => ({
     argv: ["node.exe", "typestat", ...argv],
-    initializationRunner: jest.fn(),
+    initializationRunner: jest.fn().mockResolvedValueOnce({
+        status: ResultStatus.ConfigurationError,
+    }),
     logger: {
         stderr: new StubWritableStream(),
         stdout: new StubWritableStream(),
