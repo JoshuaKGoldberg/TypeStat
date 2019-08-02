@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import { prompt } from "enquirer";
 import { EOL } from "os";
 
 import { ResultStatus } from "..";
@@ -13,20 +12,15 @@ import { initializeTypeScript } from "./initializeTypeScript";
 
 const fileName = "typestat.json";
 
-export type InitializationResults = FailedInitialization | SkippedInitialization | SuccessfulInitialization;
+export type InitializationResults = FailedInitialization | RanInitializationResults;
 
 export interface FailedInitialization {
     status: ResultStatus.ConfigurationError;
 }
 
-export interface SkippedInitialization {
-    status: ResultStatus.Succeeded;
-    skipped: true;
-}
-
-export interface SuccessfulInitialization {
-    status: ResultStatus.Succeeded;
-    skipped: false;
+export interface RanInitializationResults {
+    status: ResultStatus.Failed | ResultStatus.Succeeded;
+    skipped: boolean;
 }
 
 export const initialization = async (logger: ProcessLogger): Promise<InitializationResults> => {
