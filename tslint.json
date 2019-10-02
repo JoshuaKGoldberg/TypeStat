@@ -37,6 +37,7 @@
         "strict-comparisons": [true, { "allow-object-equal-comparison": true }],
         "switch-default": false,
         "switch-final-break": false,
+        "strict-string-expressions": false,
         "typedef": false
     }
 }
