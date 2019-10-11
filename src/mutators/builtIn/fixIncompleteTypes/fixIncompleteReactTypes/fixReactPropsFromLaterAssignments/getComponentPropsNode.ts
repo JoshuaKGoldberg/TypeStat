@@ -16,44 +16,42 @@ export const getComponentPropsNode = (request: FileMutationsRequest, node: React
 };
 
 const getClassComponentPropsNode = (request: FileMutationsRequest, node: ReactClassComponentNode): ReactComponentPropsNode | undefined => {
-    const extendsType = getClassExtendsType(node);
-    if (extendsType === undefined || extendsType.typeArguments === undefined || extendsType.typeArguments.length === 0) {
-        return undefined;
-    }
+        const extendsType = getClassExtendsType(node);
+        if (extendsType === undefined || extendsType.typeArguments === undefined || extendsType.typeArguments.length === 0) {
+            return undefined;
+        }
 
-    const [rawPropsNode] = extendsType.typeArguments;
-    const propsNodeType = request.services.program.getTypeChecker().getTypeAtLocation(rawPropsNode);
-    const propsNodeSymbol = propsNodeType.getSymbol();
-    if (propsNodeSymbol === undefined) {
-        return undefined;
-    }
+        const [rawPropsNode] = extendsType.typeArguments,
+            propsNodeType = request.services.program.getTypeChecker().getTypeAtLocation(rawPropsNode),
+            propsNodeSymbol = propsNodeType.getSymbol();
+        if (propsNodeSymbol === undefined) {
+            return undefined;
+        }
 
-    const symbolDeclarations = propsNodeSymbol.getDeclarations();
-    const declaration = symbolDeclarations === undefined || symbolDeclarations.length === 0 ? undefined : symbolDeclarations[0];
+        const symbolDeclarations = propsNodeSymbol.getDeclarations(),
+            declaration = symbolDeclarations === undefined || symbolDeclarations.length === 0 ? undefined : symbolDeclarations[0];
 
-    return declaration !== undefined && isReactComponentPropsNode(declaration) ? declaration : undefined;
-};
+        return declaration !== undefined && isReactComponentPropsNode(declaration) ? declaration : undefined;
+    },
+    getFunctionalComponentPropsNode = (
+        request: FileMutationsRequest,
+        node: ReactFunctionalComponentNode,
+    ): ReactComponentPropsNode | undefined => {
+        const { parameters } = node;
+        if (parameters.length !== 1) {
+            return undefined;
+        }
 
-const getFunctionalComponentPropsNode = (
-    request: FileMutationsRequest,
-    node: ReactFunctionalComponentNode,
-): ReactComponentPropsNode | undefined => {
-    const { parameters } = node;
-    if (parameters.length !== 1) {
-        return undefined;
-    }
+        const [parameter] = parameters,
+            type = request.services.program.getTypeChecker().getTypeAtLocation(parameter),
+            symbol = type.getSymbol();
+        if (symbol === undefined || symbol.declarations.length === 0) {
+            return undefined;
+        }
 
-    const [parameter] = parameters;
-    const type = request.services.program.getTypeChecker().getTypeAtLocation(parameter);
-    const symbol = type.getSymbol();
-    if (symbol === undefined || symbol.declarations.length === 0) {
-        return undefined;
-    }
+        const [declaration] = symbol.declarations;
 
-    const [declaration] = symbol.declarations;
-
-    return isReactComponentPropsNode(declaration) ? declaration : undefined;
-};
-
-const isReactComponentPropsNode = (node: ts.Node): node is ReactComponentPropsNode =>
-    ts.isInterfaceDeclaration(node) || ts.isTypeLiteralNode(node);
+        return isReactComponentPropsNode(declaration) ? declaration : undefined;
+    },
+    isReactComponentPropsNode = (node: ts.Node): node is ReactComponentPropsNode =>
+        ts.isInterfaceDeclaration(node) || ts.isTypeLiteralNode(node);

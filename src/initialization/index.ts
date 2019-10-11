@@ -1,7 +1,6 @@
-import chalk from "chalk";
 import { EOL } from "os";
+import chalk from "chalk";
 
-import { ResultStatus } from "..";
 import { ProcessLogger } from "../logging/logger";
 import { getQuickErrorSummary } from "../shared/errors";
 
@@ -9,6 +8,7 @@ import { initializeJavaScript } from "./initializeJavaScript";
 import { initializeProject } from "./initializeProject";
 import { InitializationPurpose, initializePurpose } from "./initializePurpose";
 import { initializeTypeScript } from "./initializeTypeScript";
+import { ResultStatus } from "..";
 
 const fileName = "typestat.json";
 

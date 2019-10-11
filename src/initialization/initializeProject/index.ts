@@ -1,8 +1,7 @@
 import { prompt } from "enquirer";
 
-const custom = "custom";
-
-const choices = ["./tsconfig.json", "./src/tsconfig.json", custom];
+const custom = "custom",
+    choices = ["./tsconfig.json", "./src/tsconfig.json", custom];
 
 export const initializeProject = async () => {
     const project = await initializeBuiltInProject();
@@ -11,28 +10,27 @@ export const initializeProject = async () => {
 };
 
 const initializeBuiltInProject = async () => {
-    const { project } = await prompt([
-        {
-            choices,
-            initial: choices[choices.length - 1],
-            message: "Where is your tsconfig.json?",
-            name: "project",
-            type: "select",
-        },
-    ]);
+        const { project } = await prompt([
+            {
+                choices,
+                initial: choices[choices.length - 1],
+                message: "Where is your tsconfig.json?",
+                name: "project",
+                type: "select",
+            },
+        ]);
 
-    return project as string;
-};
+        return project as string;
+    },
+    initializeCustomProject = async () => {
+        const { project } = await prompt([
+            {
+                initial: "./tsconfig.json",
+                message: "Where is your tsconfig.json?",
+                name: "project",
+                type: "text",
+            },
+        ]);
 
-const initializeCustomProject = async () => {
-    const { project } = await prompt([
-        {
-            initial: "./tsconfig.json",
-            message: "Where is your tsconfig.json?",
-            name: "project",
-            type: "text",
-        },
-    ]);
-
-    return project as string;
-};
+        return project as string;
+    };

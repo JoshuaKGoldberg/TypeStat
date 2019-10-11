@@ -46,97 +46,99 @@ export const findMissingTemplateTypes = (
 };
 
 const collectMissingParameterTypes = (
-    request: FileMutationsRequest,
-    childClass: ts.ClassLikeDeclaration,
-    baseTypeParameter: ts.TypeParameterDeclaration,
-): AssignedTypesByName | undefined => {
-    // Each usage of the base type parameter might introduce new assigned types
-    const typeParameterReferences = collectTypeParameterReferences(request, baseTypeParameter);
-    if (typeParameterReferences === undefined) {
-        return undefined;
-    }
+        request: FileMutationsRequest,
+        childClass: ts.ClassLikeDeclaration,
+        baseTypeParameter: ts.TypeParameterDeclaration,
+    ): AssignedTypesByName | undefined => {
+        // Each usage of the base type parameter might introduce new assigned types
+        const typeParameterReferences = collectTypeParameterReferences(request, baseTypeParameter);
+        if (typeParameterReferences === undefined) {
+            return undefined;
+        }
 
-    // Collect all types assigned by those uses that don't already exist on the template's default
-    const missingAssignedTypeValues = collectMissingAssignedParameterTypes(request, childClass, baseTypeParameter, typeParameterReferences);
-
-    // If we've found nothing, the parameter checks out and shouldn't be filled in
-    if (missingAssignedTypeValues.length === 0) {
-        return undefined;
-    }
-
-    // If we've found missing types, return them to indicate they should be filled in
-    return joinAssignedTypesByName(request, missingAssignedTypeValues);
-};
-
-const collectMissingAssignedParameterTypes = (
-    request: FileMutationsRequest,
-    childClass: ts.ClassLikeDeclaration,
-    baseTypeParameter: ts.TypeParameterDeclaration,
-    typeParameterReferences: ts.Node[],
-) => {
-    const assignedTypeValues: AssignedTypeValue[] = [];
-    const typeChecker = request.services.program.getTypeChecker();
-    const childClassType = typeChecker.getTypeAtLocation(childClass);
-    const defaultTypeParameterType =
-        baseTypeParameter.default === undefined ? undefined : typeChecker.getTypeAtLocation(baseTypeParameter.default);
-
-    for (const typeParameterReference of typeParameterReferences) {
-        const discoveredAssignedTypes = collectMissingAssignedTypesOnChildClassNode(
-            typeChecker,
-            childClassType,
-            defaultTypeParameterType,
-            typeParameterReference,
+        // Collect all types assigned by those uses that don't already exist on the template's default
+        const missingAssignedTypeValues = collectMissingAssignedParameterTypes(
+            request,
+            childClass,
+            baseTypeParameter,
+            typeParameterReferences,
         );
 
-        if (discoveredAssignedTypes !== undefined) {
-            assignedTypeValues.push(discoveredAssignedTypes);
+        // If we've found nothing, the parameter checks out and shouldn't be filled in
+        if (missingAssignedTypeValues.length === 0) {
+            return undefined;
         }
-    }
 
-    return assignedTypeValues;
-};
+        // If we've found missing types, return them to indicate they should be filled in
+        return joinAssignedTypesByName(request, missingAssignedTypeValues);
+    },
+    collectMissingAssignedParameterTypes = (
+        request: FileMutationsRequest,
+        childClass: ts.ClassLikeDeclaration,
+        baseTypeParameter: ts.TypeParameterDeclaration,
+        typeParameterReferences: ts.Node[],
+    ) => {
+        const assignedTypeValues: AssignedTypeValue[] = [],
+            typeChecker = request.services.program.getTypeChecker(),
+            childClassType = typeChecker.getTypeAtLocation(childClass),
+            defaultTypeParameterType =
+                baseTypeParameter.default === undefined ? undefined : typeChecker.getTypeAtLocation(baseTypeParameter.default);
 
-const collectMissingAssignedTypesOnChildClassNode = (
-    typeChecker: ExposedTypeChecker,
-    childClassType: ts.Type,
-    defaultTypeParameterType: ts.Type | undefined,
-    typeParameterReference: ts.Node,
-) => {
-    const parentPropertyAccess = typeParameterReference.parent;
-    // For now, we'll only look at references that directly access the property on some container
-    if (!ts.isPropertyAccessExpression(parentPropertyAccess)) {
+        for (const typeParameterReference of typeParameterReferences) {
+            const discoveredAssignedTypes = collectMissingAssignedTypesOnChildClassNode(
+                typeChecker,
+                childClassType,
+                defaultTypeParameterType,
+                typeParameterReference,
+            );
+
+            if (discoveredAssignedTypes !== undefined) {
+                assignedTypeValues.push(discoveredAssignedTypes);
+            }
+        }
+
+        return assignedTypeValues;
+    },
+    collectMissingAssignedTypesOnChildClassNode = (
+        typeChecker: ExposedTypeChecker,
+        childClassType: ts.Type,
+        defaultTypeParameterType: ts.Type | undefined,
+        typeParameterReference: ts.Node,
+    ) => {
+        const parentPropertyAccess = typeParameterReference.parent;
+        // For now, we'll only look at references that directly access the property on some container
+        if (!ts.isPropertyAccessExpression(parentPropertyAccess)) {
+            return undefined;
+        }
+
+        // We only care about this node if the instance it's referencing is (or generally is a subtype of) the child class
+        const expressionType = typeChecker.getTypeAtLocation(parentPropertyAccess.expression);
+        if (!typeChecker.isTypeAssignableTo(expressionType, childClassType)) {
+            return undefined;
+        }
+
+        // If the grandparent is an assigning binary expression, add the right side as a full new type
+        if (isNodeAssigningBinaryExpression(parentPropertyAccess.parent)) {
+            return getMissingAssignedType(typeChecker, defaultTypeParameterType, parentPropertyAccess.parent.right);
+        }
+
+        // Otherwise we ignore any other types
+        // Eventually this will likely expand to types like property access expressions and captured identifier references
         return undefined;
-    }
+    },
+    getMissingAssignedType = (
+        typeChecker: ExposedTypeChecker,
+        defaultTypeParameterType: ts.Type | undefined,
+        rightExpression: ts.Expression,
+    ) => {
+        const rightExpressionType = typeChecker.getTypeAtLocation(rightExpression);
 
-    // We only care about this node if the instance it's referencing is (or generally is a subtype of) the child class
-    const expressionType = typeChecker.getTypeAtLocation(parentPropertyAccess.expression);
-    if (!typeChecker.isTypeAssignableTo(expressionType, childClassType)) {
-        return undefined;
-    }
+        // If the type parameter came with a default, ignore types already assignable to it
+        if (defaultTypeParameterType !== undefined && typeChecker.isTypeAssignableTo(rightExpressionType, defaultTypeParameterType)) {
+            return undefined;
+        }
 
-    // If the grandparent is an assigning binary expression, add the right side as a full new type
-    if (isNodeAssigningBinaryExpression(parentPropertyAccess.parent)) {
-        return getMissingAssignedType(typeChecker, defaultTypeParameterType, parentPropertyAccess.parent.right);
-    }
-
-    // Otherwise we ignore any other types
-    // Eventually this will likely expand to types like property access expressions and captured identifier references
-    return undefined;
-};
-
-const getMissingAssignedType = (
-    typeChecker: ExposedTypeChecker,
-    defaultTypeParameterType: ts.Type | undefined,
-    rightExpression: ts.Expression,
-) => {
-    const rightExpressionType = typeChecker.getTypeAtLocation(rightExpression);
-
-    // If the type parameter came with a default, ignore types already assignable to it
-    if (defaultTypeParameterType !== undefined && typeChecker.isTypeAssignableTo(rightExpressionType, defaultTypeParameterType)) {
-        return undefined;
-    }
-
-    return {
-        type: rightExpressionType,
+        return {
+            type: rightExpressionType,
+        };
     };
-};

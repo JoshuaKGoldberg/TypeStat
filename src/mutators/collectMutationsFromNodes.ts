@@ -13,23 +13,22 @@ export const collectMutationsFromNodes = <TNode extends ts.Node>(
     selector: NodeSelector<TNode>,
     visitor: NodeVisitor<TNode>,
 ) => {
-    const mutations: IMutation[] = [];
-
-    const visitNode = (node: ts.Node) => {
-        if (request.filteredNodes.has(node)) {
-            return;
-        }
-
-        if (selector(node)) {
-            const mutation = tryGetMutation(request, node, visitor);
-
-            if (mutation !== undefined) {
-                mutations.push(mutation);
+    const mutations: IMutation[] = [],
+        visitNode = (node: ts.Node) => {
+            if (request.filteredNodes.has(node)) {
+                return;
             }
-        }
 
-        ts.forEachChild(node, visitNode);
-    };
+            if (selector(node)) {
+                const mutation = tryGetMutation(request, node, visitor);
+
+                if (mutation !== undefined) {
+                    mutations.push(mutation);
+                }
+            }
+
+            ts.forEachChild(node, visitNode);
+        };
 
     ts.forEachChild(request.sourceFile, visitNode);
 

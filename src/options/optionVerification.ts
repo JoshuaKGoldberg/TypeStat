@@ -17,11 +17,10 @@ export const findComplaintForOptions = (options: TypeStatOptions | string): stri
 };
 
 const noFixesSpecified = (options: TypeStatOptions): boolean =>
-    options.mutators.length === 0 &&
-    !options.fixes.incompleteTypes &&
-    !options.fixes.missingProperties &&
-    !options.fixes.noImplicitAny &&
-    !options.fixes.strictNonNullAssertions;
-
-const strictNonNullAssertionsInNonStrictMode = (options: TypeStatOptions): boolean =>
-    options.fixes.strictNonNullAssertions && !options.types.strictNullChecks;
+        options.mutators.length === 0 &&
+        !options.fixes.incompleteTypes &&
+        !options.fixes.missingProperties &&
+        !options.fixes.noImplicitAny &&
+        !options.fixes.strictNonNullAssertions,
+    strictNonNullAssertionsInNonStrictMode = (options: TypeStatOptions): boolean =>
+        options.fixes.strictNonNullAssertions && !options.types.strictNullChecks;

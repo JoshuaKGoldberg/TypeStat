@@ -19,7 +19,7 @@ export type AssignedTypesByName = Map<string, ts.Type>;
 /**
  * Joins a set of assigned type values into a single mapping by name.
  */
-export const joinAssignedTypesByName = (request: FileMutationsRequest, assignedTypeValues: ReadonlyArray<AssignedTypeValue>) => {
+export const joinAssignedTypesByName = (request: FileMutationsRequest, assignedTypeValues: readonly AssignedTypeValue[]) => {
     const assignedTypesByName = new Map<string, ts.Type>();
 
     for (const { name, type } of assignedTypeValues) {
@@ -31,8 +31,8 @@ export const joinAssignedTypesByName = (request: FileMutationsRequest, assignedT
 
         // Types without names are spread to convey multiple properties
         for (const property of type.getProperties()) {
-            const declarations = property.getDeclarations();
-            const relevantDeclaration = declarations === undefined ? property.valueDeclaration : declarations[0];
+            const declarations = property.getDeclarations(),
+                relevantDeclaration = declarations === undefined ? property.valueDeclaration : declarations[0];
             if ((relevantDeclaration as ts.Declaration | undefined) === undefined) {
                 continue;
             }

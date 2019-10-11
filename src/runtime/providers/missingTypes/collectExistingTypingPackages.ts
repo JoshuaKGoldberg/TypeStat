@@ -18,26 +18,24 @@ export const collectExistingTypingPackages = async (options: TypeStatOptions, pa
 };
 
 const tryCollectAllDependencies = async (packagePath: string) => {
-    try {
-        return collectAllDependencies(packagePath);
-    } catch (error) {
-        return getQuickErrorSummary(error);
-    }
-};
-
-const collectAllDependencies = async (packagePath: string) => {
-    const rawContents = (await fs.readFile(packagePath)).toString();
-    const parsedContents = JSON.parse(rawContents) as { [i: string]: { [i: string]: string } | undefined };
-
-    const allDependencies: string[] = [];
-
-    for (const groupName of ["dependencies", "devDependencies", "peerDependencies"]) {
-        const packageObject = parsedContents[groupName];
-
-        if (packageObject !== undefined) {
-            allDependencies.push(...Object.keys(packageObject));
+        try {
+            return collectAllDependencies(packagePath);
+        } catch (error) {
+            return getQuickErrorSummary(error);
         }
-    }
+    },
+    collectAllDependencies = async (packagePath: string) => {
+        const rawContents = (await fs.readFile(packagePath)).toString(),
+            parsedContents = JSON.parse(rawContents) as { [i: string]: { [i: string]: string } | undefined },
+            allDependencies: string[] = [];
 
-    return new Set(allDependencies);
-};
+        for (const groupName of ["dependencies", "devDependencies", "peerDependencies"]) {
+            const packageObject = parsedContents[groupName];
+
+            if (packageObject !== undefined) {
+                allDependencies.push(...Object.keys(packageObject));
+            }
+        }
+
+        return new Set(allDependencies);
+    };

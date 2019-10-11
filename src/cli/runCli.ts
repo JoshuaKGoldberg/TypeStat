@@ -2,10 +2,10 @@
 // tslint:disable-next-line
 require("../mutations/createExposedTypeScript").requireExposedTypeScript();
 
+import * as path from "path";
 import chalk from "chalk";
 import { Command } from "commander";
 import * as fs from "mz/fs";
-import * as path from "path";
 
 import { ResultStatus, typeStat, TypeStatArgv, TypeStatResult } from "../index";
 import { initialization } from "../initialization";
@@ -26,7 +26,7 @@ const createDefaultRuntime = () => ({
  * @param mainRunner   Method to run with parsed arguments: generally `typeStat`.
  * @returns Promise for the result of running TypeStat.
  */
-export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDefaultRuntime()): Promise<ResultStatus> => {
+export const runCli = async (rawArgv: readonly string[], runtime = createDefaultRuntime()): Promise<ResultStatus> => {
     if (rawArgv.length === 2) {
         const initialized = await runtime.initializationRunner(runtime.logger);
         if (initialized.status !== ResultStatus.Succeeded || !initialized.skipped) {
@@ -37,14 +37,13 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
     }
 
     const command = new Command()
-        .option("-c --config [config]", "path to a TypeStat config file")
-        .option("-m --mutator [...mutator]", "require paths to any custom mutators to run")
-        .option("-V --version", "output the package version");
-
-    const parsedArgv = {
-        ...(command.parse(rawArgv as string[]) as Partial<TypeStatArgv>),
-        logger: runtime.logger,
-    };
+            .option("-c --config [config]", "path to a TypeStat config file")
+            .option("-m --mutator [...mutator]", "require paths to any custom mutators to run")
+            .option("-V --version", "output the package version"),
+        parsedArgv = {
+            ...(command.parse(rawArgv as string[]) as Partial<TypeStatArgv>),
+            logger: runtime.logger,
+        };
 
     if ({}.hasOwnProperty.call(parsedArgv, "version")) {
         runtime.logger.stdout.write(`${await getPackageVersion()}\n`);
@@ -78,8 +77,8 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
 };
 
 const getPackageVersion = async (): Promise<string> => {
-    const packagePath = path.join(__dirname, "../../package.json");
-    const rawText = (await fs.readFile(packagePath)).toString();
+    const packagePath = path.join(__dirname, "../../package.json"),
+        rawText = (await fs.readFile(packagePath)).toString();
 
     return (JSON.parse(rawText) as { version: string }).version;
 };

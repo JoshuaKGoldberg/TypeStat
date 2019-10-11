@@ -20,7 +20,7 @@ export const createTypeAdditionMutation = (
     request: FileMutationsRequest,
     node: NodeWithAddableType,
     declaredType: ts.Type,
-    allAssignedTypes: ReadonlyArray<ts.Type>,
+    allAssignedTypes: readonly ts.Type[],
 ): ITextInsertMutation | undefined => {
     // Find any missing flags and symbols (a.k.a. types)
     const { missingFlags, missingTypes } = collectUsageFlagsAndSymbols(request, declaredType, allAssignedTypes);
@@ -59,7 +59,7 @@ export const createTypeCreationMutation = (
     request: FileMutationsRequest,
     node: NodeWithCreatableType,
     declaredType: ts.Type,
-    allAssignedTypes: ReadonlyArray<ts.Type>,
+    allAssignedTypes: readonly ts.Type[],
 ): ITextInsertMutation | undefined => {
     // Find the already assigned flags and symbols, as well as any missing ones
     const { assignedFlags, assignedTypes, missingFlags, missingTypes } = collectUsageFlagsAndSymbols(

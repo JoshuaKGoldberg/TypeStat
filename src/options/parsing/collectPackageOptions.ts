@@ -4,10 +4,9 @@ import { normalizeAndSlashify } from "../../shared/paths";
 import { Package, RawTypeStatOptions } from "../types";
 
 export const collectPackageOptions = (cwd: string, rawOptions: RawTypeStatOptions): Package => {
-    const rawPackageOptions = rawOptions.package === undefined ? {} : rawOptions.package;
-    const rawPackageFile = rawPackageOptions.file;
-
-    const file = collectRawPackageFile(cwd, rawPackageFile);
+    const rawPackageOptions = rawOptions.package === undefined ? {} : rawOptions.package,
+        rawPackageFile = rawPackageOptions.file,
+        file = collectRawPackageFile(cwd, rawPackageFile);
 
     return {
         directory: cwd,

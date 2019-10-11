@@ -1,4 +1,4 @@
-export const arrayify = <T>(items: T | ReadonlyArray<T> | undefined): T[] => {
+export const arrayify = <T>(items: T | readonly T[] | undefined): T[] => {
     if (items === undefined) {
         return [];
     }
@@ -10,7 +10,7 @@ export const arrayify = <T>(items: T | ReadonlyArray<T> | undefined): T[] => {
     return [items as T];
 };
 
-export const collectOptionals = <T>(...arrays: (ReadonlyArray<T> | undefined)[]): T[] => {
+export const collectOptionals = <T>(...arrays: (readonly T[] | undefined)[]): T[] => {
     const results: T[] = [];
 
     for (const array of arrays) {

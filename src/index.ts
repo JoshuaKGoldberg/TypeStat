@@ -15,7 +15,7 @@ import { createTypeStatProvider } from "./runtime/createTypeStatProvider";
  * Root arguments to pass to TypeStat.
  */
 export interface TypeStatArgv {
-    readonly args?: ReadonlyArray<string>;
+    readonly args?: readonly string[];
     readonly config?: string;
 
     /**

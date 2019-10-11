@@ -13,9 +13,9 @@ export const fillInMissingTemplateTypes = (
     baseTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration>,
     templateTypeLists: (AssignedTypesByName | undefined)[],
 ) => {
-    const createdTypes: string[] = [];
-    const templateTypeNames: string[] = [];
-    const childClassName = getPerceivedNameOfClass(request, childClass);
+    const createdTypes: string[] = [],
+        templateTypeNames: string[] = [],
+        childClassName = getPerceivedNameOfClass(request, childClass);
 
     // Template types will be marked on the node up through the last missing type
     for (let i = 0; i < templateTypeLists.length; i += 1) {
@@ -30,16 +30,15 @@ export const fillInMissingTemplateTypes = (
 
         // In this case, the template type is missing: create a new type to fill the missing template type
         // That new type will need a name, which we'll generate from the class and relevant type parameter
-        const newTemplateTypeName = createTemplateTypeName(childClassName, baseTypeParameters, baseTypeParameters[i]);
-
-        // Properties on that template type are collected from uses of the type in the node
-        const assignedTypeValues = Array.from(templateTypes).map(([name, type]) => ({ name, type }));
-        const allAssignedTypes = joinAssignedTypesByName(request, assignedTypeValues);
-        const newType = createDeclarationForTypeSummaries(
-            request,
-            newTemplateTypeName,
-            summarizeAllAssignedTypes(request, [allAssignedTypes]),
-        );
+        const newTemplateTypeName = createTemplateTypeName(childClassName, baseTypeParameters, baseTypeParameters[i]),
+            // Properties on that template type are collected from uses of the type in the node
+            assignedTypeValues = Array.from(templateTypes).map(([name, type]) => ({ name, type })),
+            allAssignedTypes = joinAssignedTypesByName(request, assignedTypeValues),
+            newType = createDeclarationForTypeSummaries(
+                request,
+                newTemplateTypeName,
+                summarizeAllAssignedTypes(request, [allAssignedTypes]),
+            );
 
         createdTypes.push(newType);
         templateTypeNames.push(newTemplateTypeName);
@@ -49,22 +48,21 @@ export const fillInMissingTemplateTypes = (
 };
 
 const findDefaultTemplateValue = (request: FileMutationsRequest, baseTypeParameter: ts.TypeParameterDeclaration) => {
-    if (baseTypeParameter.default === undefined) {
-        return "{}";
-    }
+        if (baseTypeParameter.default === undefined) {
+            return "{}";
+        }
 
-    const baseTypeDefault = request.services.program.getTypeChecker().getTypeAtLocation(baseTypeParameter.default);
-    const typeName = createTypeName(request, baseTypeDefault);
+        const baseTypeDefault = request.services.program.getTypeChecker().getTypeAtLocation(baseTypeParameter.default),
+            typeName = createTypeName(request, baseTypeDefault);
 
-    return typeName === undefined ? "{}" : typeName;
-};
+        return typeName === undefined ? "{}" : typeName;
+    },
+    createTemplateTypeName = (
+        childClassName: string,
+        baseTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration>,
+        baseTypeParameter: ts.TypeParameterDeclaration,
+    ) => {
+        const friendlyName = getFriendlyTypeParameterDeclarationName(baseTypeParameters, baseTypeParameter);
 
-const createTemplateTypeName = (
-    childClassName: string,
-    baseTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration>,
-    baseTypeParameter: ts.TypeParameterDeclaration,
-) => {
-    const friendlyName = getFriendlyTypeParameterDeclarationName(baseTypeParameters, baseTypeParameter);
-
-    return childClassName + friendlyName[0].toUpperCase() + friendlyName.slice(1);
-};
+        return childClassName + friendlyName[0].toUpperCase() + friendlyName.slice(1);
+    };

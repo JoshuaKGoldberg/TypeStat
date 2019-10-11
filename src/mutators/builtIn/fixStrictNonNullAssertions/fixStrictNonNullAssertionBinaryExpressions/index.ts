@@ -7,15 +7,15 @@ import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixStrictNonNullAssertionBinaryExpressions: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+export const fixStrictNonNullAssertionBinaryExpressions: FileMutator = (request: FileMutationsRequest): readonly IMutation[] => {
     return collectMutationsFromNodes(request, isNodeAssigningBinaryExpression, visitBinaryExpression);
 };
 
 const visitBinaryExpression = (node: ts.BinaryExpression, request: FileMutationsRequest): IMutation | undefined => {
     // Grab the types of the declared and assigned nodes
-    const typeChecker = request.services.program.getTypeChecker();
-    const assignedType = typeChecker.getTypeAtLocation(node.right);
-    const declaredType = typeChecker.getTypeAtLocation(node.left);
+    const typeChecker = request.services.program.getTypeChecker(),
+        assignedType = typeChecker.getTypeAtLocation(node.right),
+        declaredType = typeChecker.getTypeAtLocation(node.left);
 
     // We only care if the assigned type contains a strict flag the declared type doesn't
     if (

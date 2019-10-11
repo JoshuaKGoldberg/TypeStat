@@ -5,7 +5,7 @@ import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../..
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixNoImplicitAnyVariableDeclarations: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+export const fixNoImplicitAnyVariableDeclarations: FileMutator = (request: FileMutationsRequest): readonly IMutation[] => {
     // This mutator fixes only for --noImplicitAny
     if (!request.options.fixes.noImplicitAny) {
         return [];
@@ -15,18 +15,17 @@ export const fixNoImplicitAnyVariableDeclarations: FileMutator = (request: FileM
 };
 
 const isNodeVisitableVariableDeclaration = (node: ts.Node): node is ts.VariableDeclaration =>
-    ts.isVariableDeclaration(node) &&
-    // Binding patterns are all implicitly typed, so ignore them
-    !(ts.isArrayBindingPattern(node.name) || ts.isObjectBindingPattern(node.name)) &&
-    // For-in and for-of loop varibles cannot have types, so don't bother trying to add them
-    !ts.isForInStatement(node.parent.parent) &&
-    !ts.isForOfStatement(node.parent.parent);
+        ts.isVariableDeclaration(node) &&
+        // Binding patterns are all implicitly typed, so ignore them
+        !(ts.isArrayBindingPattern(node.name) || ts.isObjectBindingPattern(node.name)) &&
+        // For-in and for-of loop varibles cannot have types, so don't bother trying to add them
+        !ts.isForInStatement(node.parent.parent) &&
+        !ts.isForOfStatement(node.parent.parent),
+    visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+        // If the variable violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
+        if (canNodeBeFixedForNoImplicitAny(node)) {
+            return getNoImplicitAnyMutations(node, request);
+        }
 
-const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
-    // If the variable violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
-    if (canNodeBeFixedForNoImplicitAny(node)) {
-        return getNoImplicitAnyMutations(node, request);
-    }
-
-    return undefined;
-};
+        return undefined;
+    };

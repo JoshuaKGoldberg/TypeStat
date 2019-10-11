@@ -32,12 +32,11 @@ export const createInstallMissingTypesProvider = (options: TypeStatOptions) => {
         }
 
         // Collect every package name referenced by every file in the project
-        const { services } = createFileNamesAndServices(options);
-        const referencedPackageNames = collectReferencedPackageNames(services);
-
-        // Ignore package names already referenced in package.json or that don't exist in DefinitelyTyped
-        const missingPackageNames = setSubtract(referencedPackageNames, new Set(existingPackageNames), uniqueBuiltinModules);
-        const missingTypedPackageNames = await filterTypedPackageNames(Array.from(missingPackageNames));
+        const { services } = createFileNamesAndServices(options),
+            referencedPackageNames = collectReferencedPackageNames(services),
+            // Ignore package names already referenced in package.json or that don't exist in DefinitelyTyped
+            missingPackageNames = setSubtract(referencedPackageNames, new Set(existingPackageNames), uniqueBuiltinModules),
+            missingTypedPackageNames = await filterTypedPackageNames(Array.from(missingPackageNames));
         if (missingTypedPackageNames.length === 0) {
             return;
         }

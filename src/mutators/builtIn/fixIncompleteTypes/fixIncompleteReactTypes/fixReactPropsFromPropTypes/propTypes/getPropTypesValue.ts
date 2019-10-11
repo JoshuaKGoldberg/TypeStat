@@ -15,51 +15,49 @@ type PropTypesMember = ts.PropertyDeclaration & {
  * @returns Whether a node is a `propTypes` class member with an object literal value.
  */
 const getStaticPropTypes = (node: ts.ClassElement): node is PropTypesMember =>
-    ts.isPropertyDeclaration(node) &&
-    tsutils.hasModifier(node.modifiers, ts.SyntaxKind.StaticKeyword) &&
-    ts.isIdentifier(node.name) &&
-    node.name.text === "propTypes" &&
-    node.initializer !== undefined &&
-    ts.isObjectLiteralExpression(node.initializer);
+        ts.isPropertyDeclaration(node) &&
+        tsutils.hasModifier(node.modifiers, ts.SyntaxKind.StaticKeyword) &&
+        ts.isIdentifier(node.name) &&
+        node.name.text === "propTypes" &&
+        node.initializer !== undefined &&
+        ts.isObjectLiteralExpression(node.initializer),
+    getPropTypesChildFromParent = (parent: ts.Node, className: string) => {
+        let result: ts.ObjectLiteralExpression | undefined;
 
-const getPropTypesChildFromParent = (parent: ts.Node, className: string) => {
-    let result: ts.ObjectLiteralExpression | undefined;
+        parent.forEachChild((child: ts.Node) => {
+            const propTypes = isPropTypesStatement(child, className);
+            if (propTypes !== undefined) {
+                result = propTypes;
+                return true;
+            }
 
-    parent.forEachChild((child: ts.Node) => {
-        const propTypes = isPropTypesStatement(child, className);
-        if (propTypes !== undefined) {
-            result = propTypes;
-            return true;
+            return false;
+        });
+
+        return result;
+    },
+    /**
+     * @returns Object literal `propTypes` assigned to the class, if it exists in a sibling property setter.
+     */
+    isPropTypesStatement = (node: ts.Node, className: string) => {
+        if (!ts.isExpressionStatement(node) || !ts.isBinaryExpression(node.expression)) {
+            return undefined;
         }
 
-        return false;
-    });
+        const { left, right } = node.expression;
+        if (
+            !ts.isPropertyAccessExpression(left) ||
+            !ts.isIdentifier(left.expression) ||
+            left.expression.text !== className ||
+            !ts.isIdentifier(left.name) ||
+            left.name.text !== "propTypes" ||
+            !ts.isObjectLiteralExpression(right)
+        ) {
+            return undefined;
+        }
 
-    return result;
-};
-
-/**
- * @returns Object literal `propTypes` assigned to the class, if it exists in a sibling property setter.
- */
-const isPropTypesStatement = (node: ts.Node, className: string) => {
-    if (!ts.isExpressionStatement(node) || !ts.isBinaryExpression(node.expression)) {
-        return undefined;
-    }
-
-    const { left, right } = node.expression;
-    if (
-        !ts.isPropertyAccessExpression(left) ||
-        !ts.isIdentifier(left.expression) ||
-        left.expression.text !== className ||
-        !ts.isIdentifier(left.name) ||
-        left.name.text !== "propTypes" ||
-        !ts.isObjectLiteralExpression(right)
-    ) {
-        return undefined;
-    }
-
-    return right;
-};
+        return right;
+    };
 
 /**
  * Finds the equivalent `propTypes` object literal for a class, if it exists.

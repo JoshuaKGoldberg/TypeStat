@@ -49,38 +49,37 @@ export const findRelevantNodeReferencesAsNodes = (
 };
 
 const referenceIsFilteredOut = (filteredNodes: ReadonlySet<ts.Node>, sourceFile: ts.SourceFile, reference: ts.ReferenceEntry): boolean => {
-    return isNodeFilteredOut(filteredNodes, findNodeByStartingPosition(sourceFile, reference.textSpan.start));
-};
+        return isNodeFilteredOut(filteredNodes, findNodeByStartingPosition(sourceFile, reference.textSpan.start));
+    },
+    findRelevantNodeReferences = (
+        filteredNodes: ReadonlySet<ts.Node>,
+        services: LanguageServices,
+        sourceFile: ts.SourceFile,
+        node: ts.Node,
+    ): ts.ReferenceEntry[] | undefined => {
+        // Find all locations the node is referenced
+        const referencedSymbols = services.languageService.findReferences(sourceFile.fileName, node.getStart(sourceFile));
+        if (referencedSymbols === undefined) {
+            return undefined;
+        }
 
-const findRelevantNodeReferences = (
-    filteredNodes: ReadonlySet<ts.Node>,
-    services: LanguageServices,
-    sourceFile: ts.SourceFile,
-    node: ts.Node,
-): ts.ReferenceEntry[] | undefined => {
-    // Find all locations the node is referenced
-    const referencedSymbols = services.languageService.findReferences(sourceFile.fileName, node.getStart(sourceFile));
-    if (referencedSymbols === undefined) {
-        return undefined;
-    }
+        const references = new Set<ts.ReferenceEntry>();
 
-    const references = new Set<ts.ReferenceEntry>();
+        // For each reference within the referencing symbols, add it if it's not the child of a filtered node or a .d.ts file
+        for (const referenceSymbol of referencedSymbols) {
+            for (const reference of referenceSymbol.references) {
+                // Grab the source file containing the reference
+                const referencingSourceFile = services.program.getSourceFile(reference.fileName);
+                if (referencingSourceFile === undefined || referencingSourceFile.isDeclarationFile) {
+                    continue;
+                }
 
-    // For each reference within the referencing symbols, add it if it's not the child of a filtered node or a .d.ts file
-    for (const referenceSymbol of referencedSymbols) {
-        for (const reference of referenceSymbol.references) {
-            // Grab the source file containing the reference
-            const referencingSourceFile = services.program.getSourceFile(reference.fileName);
-            if (referencingSourceFile === undefined || referencingSourceFile.isDeclarationFile) {
-                continue;
-            }
-
-            // Add the reference if it's not a child of nodes we filter out
-            if (!referenceIsFilteredOut(filteredNodes, referencingSourceFile, reference)) {
-                references.add(reference);
+                // Add the reference if it's not a child of nodes we filter out
+                if (!referenceIsFilteredOut(filteredNodes, referencingSourceFile, reference)) {
+                    references.add(reference);
+                }
             }
         }
-    }
 
-    return Array.from(references);
-};
+        return Array.from(references);
+    };

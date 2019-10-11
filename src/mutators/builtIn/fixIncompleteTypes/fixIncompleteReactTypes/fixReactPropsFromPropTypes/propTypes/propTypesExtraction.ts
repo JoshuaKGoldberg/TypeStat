@@ -61,65 +61,62 @@ export const getPropTypesMember = (node: ts.Expression): PropTypesMembers | unde
  * Must be like `PropTypes.shape({})`, as `.isRequired` would make this a property access expression.
  */
 const getPropTypesMemberFromCallExpression = (node: ts.CallExpression): PropTypesMembers | undefined => {
-    const accessNode = node.expression;
-    if (!ts.isPropertyAccessExpression(accessNode)) {
-        return undefined;
-    }
+        const accessNode = node.expression;
+        if (!ts.isPropertyAccessExpression(accessNode)) {
+            return undefined;
+        }
 
-    const nameNode = accessNode.name;
+        const nameNode = accessNode.name;
 
-    return { accessNode, nameNode };
-};
+        return { accessNode, nameNode };
+    },
+    /**
+     * @remarks
+     * Must be like `PropTypes.number`, `PropTypes.number.isRequired`, or `PropTypes.shape({}).isRequired`.
+     */
+    getPropTypesMemberFromPropertyAccessExpression = (node: ts.PropertyAccessExpression): PropTypesMembers | undefined => {
+        const isRequired = node.name.text === "isRequired" ? node.name : undefined;
 
-/**
- * @remarks
- * Must be like `PropTypes.number`, `PropTypes.number.isRequired`, or `PropTypes.shape({}).isRequired`.
- */
-const getPropTypesMemberFromPropertyAccessExpression = (node: ts.PropertyAccessExpression): PropTypesMembers | undefined => {
-    const isRequired = node.name.text === "isRequired" ? node.name : undefined;
+        return isRequired === undefined
+            ? getPropTypesMemberFromPropertyAccessExpressionOptional(node)
+            : getPropTypesMemberFromPropertyAccessExpressionRequired(node, isRequired);
+    },
+    /**
+     * @remarks
+     * Must be like `PropTypes.number`.
+     */
+    getPropTypesMemberFromPropertyAccessExpressionOptional = (node: ts.PropertyAccessExpression): PropTypesMembers | undefined => {
+        return { accessNode: node, nameNode: node.name };
+    },
+    /**
+     * @remarks
+     * Must be like `PropTypes.shape({}).isRequired` or `PropTypes.number.isRequired`.
+     */
+    getPropTypesMemberFromPropertyAccessExpressionRequired = (
+        node: ts.PropertyAccessExpression,
+        isRequired: ts.Identifier,
+    ): PropTypesMembers | undefined => {
+        const { expression } = node;
 
-    return isRequired === undefined
-        ? getPropTypesMemberFromPropertyAccessExpressionOptional(node)
-        : getPropTypesMemberFromPropertyAccessExpressionRequired(node, isRequired);
-};
+        if (ts.isCallExpression(expression)) {
+            const callExpressionTypesMember = getPropTypesMemberFromCallExpression(expression);
+            if (callExpressionTypesMember === undefined) {
+                return undefined;
+            }
 
-/**
- * @remarks
- * Must be like `PropTypes.number`.
- */
-const getPropTypesMemberFromPropertyAccessExpressionOptional = (node: ts.PropertyAccessExpression): PropTypesMembers | undefined => {
-    return { accessNode: node, nameNode: node.name };
-};
+            return {
+                ...callExpressionTypesMember,
+                isRequired,
+            };
+        }
 
-/**
- * @remarks
- * Must be like `PropTypes.shape({}).isRequired` or `PropTypes.number.isRequired`.
- */
-const getPropTypesMemberFromPropertyAccessExpressionRequired = (
-    node: ts.PropertyAccessExpression,
-    isRequired: ts.Identifier,
-): PropTypesMembers | undefined => {
-    const { expression } = node;
-
-    if (ts.isCallExpression(expression)) {
-        const callExpressionTypesMember = getPropTypesMemberFromCallExpression(expression);
-        if (callExpressionTypesMember === undefined) {
+        if (!ts.isPropertyAccessExpression(expression)) {
             return undefined;
         }
 
         return {
-            ...callExpressionTypesMember,
+            accessNode: expression,
             isRequired,
+            nameNode: expression.name,
         };
-    }
-
-    if (!ts.isPropertyAccessExpression(expression)) {
-        return undefined;
-    }
-
-    return {
-        accessNode: expression,
-        isRequired,
-        nameNode: expression.name,
     };
-};

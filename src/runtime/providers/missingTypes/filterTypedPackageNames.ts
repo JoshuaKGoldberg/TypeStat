@@ -6,7 +6,7 @@ import * as https from "https";
  * @param packageNames   Package names to filter.
  * @returns Promise for just the package names with a corresponding DefinitelyTyped package.
  */
-export const filterTypedPackageNames = async (packageNames: ReadonlyArray<string>) => {
+export const filterTypedPackageNames = async (packageNames: readonly string[]) => {
     const processedPackageNames = await Promise.all(packageNames.map(filterTypedPackageName));
 
     return processedPackageNames.filter((packageName) => packageName !== undefined) as string[];

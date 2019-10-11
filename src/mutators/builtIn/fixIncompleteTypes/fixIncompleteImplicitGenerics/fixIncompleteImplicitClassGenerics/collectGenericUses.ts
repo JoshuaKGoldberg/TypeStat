@@ -18,18 +18,17 @@ export const collectGenericUses = (
         return undefined;
     }
 
-    const typeChecker = request.services.program.getTypeChecker();
-    const assignedParameterTypes = new Map<string, ts.Type[]>();
+    const typeChecker = request.services.program.getTypeChecker(),
+        assignedParameterTypes = new Map<string, ts.Type[]>(),
+        addAssignmentToTypeParameter = (typeParameterName: string, argumentType: ts.Type) => {
+            const existing = assignedParameterTypes.get(typeParameterName);
 
-    const addAssignmentToTypeParameter = (typeParameterName: string, argumentType: ts.Type) => {
-        const existing = assignedParameterTypes.get(typeParameterName);
-
-        if (existing === undefined) {
-            assignedParameterTypes.set(typeParameterName, [argumentType]);
-        } else {
-            existing.push(argumentType);
-        }
-    };
+            if (existing === undefined) {
+                assignedParameterTypes.set(typeParameterName, [argumentType]);
+            } else {
+                existing.push(argumentType);
+            }
+        };
 
     // Each reference might contain a call expression to a member of the generic container
     for (const reference of references) {
@@ -53,8 +52,8 @@ export const collectGenericUses = (
         }
 
         // Only look at members that are known to have the generic parameters, like `indexOf(item: T)`
-        const memberName = propertyAccessExpression.name.text;
-        const memberDetails = genericClassDetails.membersWithGenericParameters.get(memberName);
+        const memberName = propertyAccessExpression.name.text,
+            memberDetails = genericClassDetails.membersWithGenericParameters.get(memberName);
         if (memberDetails === undefined) {
             continue;
         }

@@ -1,8 +1,8 @@
 import glob from "glob";
 
-export const globAsync = async (include: string, options: glob.IOptions = {}): Promise<ReadonlyArray<string>> =>
-    new Promise<ReadonlyArray<string>>((resolve, reject) => {
-        glob(include, options, (error: Error | null, matches: ReadonlyArray<string>) => {
+export const globAsync = async (include: string, options: glob.IOptions = {}): Promise<readonly string[]> =>
+    new Promise<readonly string[]>((resolve, reject) => {
+        glob(include, options, (error: Error | null, matches: readonly string[]) => {
             if (error !== null) {
                 reject(error);
                 return;
@@ -12,8 +12,8 @@ export const globAsync = async (include: string, options: glob.IOptions = {}): P
         });
     });
 
-export const globAllAsync = async (includes: ReadonlyArray<string>, options: glob.IOptions = {}) =>
+export const globAllAsync = async (includes: readonly string[], options: glob.IOptions = {}) =>
     (await Promise.all(includes.map(async (include: string) => globAsync(include, options)))).reduce(
-        (allResults: ReadonlyArray<string>, nextResults: ReadonlyArray<string>) => allResults.concat(nextResults),
+        (allResults: readonly string[], nextResults: readonly string[]) => allResults.concat(nextResults),
         [],
     );

@@ -8,7 +8,7 @@ import { findFirstMutations } from "../shared/runtime";
 /**
  * Collects all mutations that should apply to a file.
  */
-export const findMutationsInFile = async (request: FileMutationsRequest): Promise<ReadonlyArray<IMutation> | undefined> => {
+export const findMutationsInFile = async (request: FileMutationsRequest): Promise<readonly IMutation[] | undefined> => {
     const checkMessage = chalk.grey(`Checking ${chalk.bold(request.sourceFile.fileName)}...`);
     request.options.logger.stdout.write(`${checkMessage}\n`);
 

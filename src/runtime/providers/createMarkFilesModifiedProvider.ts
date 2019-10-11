@@ -33,51 +33,50 @@ export const createMarkFilesModifiedProvider = (options: TypeStatOptions, allMod
 };
 
 const createFileMutations = async (options: TypeStatOptions, fileName: string): Promise<ITextInsertMutation[]> => {
-    const mutations: ITextInsertMutation[] = [];
-    const fileContents = (await fs.readFile(fileName)).toString();
-    const fileContentsTrimmed = fileContents.trim();
-    const newLine = printNewLine(options.compilerOptions);
+        const mutations: ITextInsertMutation[] = [],
+            fileContents = (await fs.readFile(fileName)).toString(),
+            fileContentsTrimmed = fileContents.trim(),
+            newLine = printNewLine(options.compilerOptions);
 
-    if (options.files.above !== "" && !fileContentsTrimmed.startsWith(options.files.above)) {
-        mutations.push({
-            insertion: `${options.files.above}${newLine}`,
-            range: {
-                begin: 0,
-                end: 0,
-            },
-            type: "text-insert",
-        });
-    }
+        if (options.files.above !== "" && !fileContentsTrimmed.startsWith(options.files.above)) {
+            mutations.push({
+                insertion: `${options.files.above}${newLine}`,
+                range: {
+                    begin: 0,
+                    end: 0,
+                },
+                type: "text-insert",
+            });
+        }
 
-    if (options.files.below !== "" && !fileContentsTrimmed.endsWith(options.files.below)) {
-        mutations.push({
-            insertion: `${newLine}${options.files.below}`,
-            range: {
-                begin: getInsertionIndexBeforeLastEndline(fileContents),
-            },
-            type: "text-insert",
-        });
-    }
+        if (options.files.below !== "" && !fileContentsTrimmed.endsWith(options.files.below)) {
+            mutations.push({
+                insertion: `${newLine}${options.files.below}`,
+                range: {
+                    begin: getInsertionIndexBeforeLastEndline(fileContents),
+                },
+                type: "text-insert",
+            });
+        }
 
-    return mutations;
-};
+        return mutations;
+    },
+    getInsertionIndexBeforeLastEndline = (fileContents: string): number => {
+        if (fileContents.length === 0) {
+            return 0;
+        }
 
-const getInsertionIndexBeforeLastEndline = (fileContents: string): number => {
-    if (fileContents.length === 0) {
-        return 0;
-    }
+        let index = fileContents.length - 1;
 
-    let index = fileContents.length - 1;
+        for (const character of ["\n", "\r"]) {
+            if (fileContents[index] === character) {
+                index -= 1;
 
-    for (const character of ["\n", "\r"]) {
-        if (fileContents[index] === character) {
-            index -= 1;
-
-            if (index === 0) {
-                return 0;
+                if (index === 0) {
+                    return 0;
+                }
             }
         }
-    }
 
-    return index + 1;
-};
+        return index + 1;
+    };

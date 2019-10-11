@@ -3,8 +3,8 @@ import * as ts from "typescript";
 import { RawTypeStatTypeOptions } from "../types";
 
 export const collectStrictNullChecks = (compilerOptions: Readonly<ts.CompilerOptions>, rawOptionTypes: RawTypeStatTypeOptions) => {
-    const typeStrictNullChecks = rawOptionTypes.strictNullChecks;
-    const compilerStrictNullChecks = collectCompilerStrictNullChecks(compilerOptions, typeStrictNullChecks);
+    const typeStrictNullChecks = rawOptionTypes.strictNullChecks,
+        compilerStrictNullChecks = collectCompilerStrictNullChecks(compilerOptions, typeStrictNullChecks);
 
     return { compilerStrictNullChecks, typeStrictNullChecks };
 };

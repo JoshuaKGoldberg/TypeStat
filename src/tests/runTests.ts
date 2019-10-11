@@ -1,7 +1,7 @@
-import { describeMutationTestCases } from "automutate-tests";
-import { Command } from "commander";
 import * as fs from "fs";
 import * as path from "path";
+import { describeMutationTestCases } from "automutate-tests";
+import { Command } from "commander";
 
 import { requireExposedTypeScript } from "../mutations/createExposedTypeScript";
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
@@ -17,15 +17,14 @@ interface ParsedTestArgv {
 }
 
 const parsed = new Command()
-    // Allow unknown options for the case of IDE debuggers who directly write to process.argv
-    // If this line is removed, VS Code debugging will break 😲
-    .allowUnknownOption(true)
-    .option("-i, --include [include]", "path to a TypeScript project file")
-    .option("-a, --accept", "override existing expected results instead of asserting")
-    .parse(process.argv) as ParsedTestArgv;
-
-// Modify TypeScript here so that no tests incur the performance penalty of doing it themselves
-const ts = requireExposedTypeScript();
+        // Allow unknown options for the case of IDE debuggers who directly write to process.argv
+        // If this line is removed, VS Code debugging will break 😲
+        .allowUnknownOption(true)
+        .option("-i, --include [include]", "path to a TypeScript project file")
+        .option("-a, --accept", "override existing expected results instead of asserting")
+        .parse(process.argv) as ParsedTestArgv,
+    // Modify TypeScript here so that no tests incur the performance penalty of doing it themselves
+    ts = requireExposedTypeScript();
 
 describeMutationTestCases(
     path.join(__dirname, "../../test"),
@@ -34,16 +33,15 @@ describeMutationTestCases(
             throw new Error(`Could not find typestat.json for ${fileName}.`);
         }
 
-        const projectDirectory = path.dirname(typeStatPath);
-        const rawOptions = JSON.parse(fs.readFileSync(typeStatPath).toString()) as RawTypeStatOptions;
-
-        const projectPath = path.join(projectDirectory, "tsconfig.json");
-        const rawCompilerOptions = fs.readFileSync(typeStatPath).toString();
-        const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config as {};
-        const logger = {
-            stderr: process.stderr,
-            stdout: new FakeWritableStream(),
-        };
+        const projectDirectory = path.dirname(typeStatPath),
+            rawOptions = JSON.parse(fs.readFileSync(typeStatPath).toString()) as RawTypeStatOptions,
+            projectPath = path.join(projectDirectory, "tsconfig.json"),
+            rawCompilerOptions = fs.readFileSync(typeStatPath).toString(),
+            compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config as {},
+            logger = {
+                stderr: process.stderr,
+                stdout: new FakeWritableStream(),
+            };
 
         return createTypeStatProvider({
             ...(fillOutRawOptions({

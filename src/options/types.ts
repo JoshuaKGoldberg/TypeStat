@@ -18,7 +18,7 @@ export interface RawTypeStatOptions {
     /**
      * Any tsquery filters to exclude within files.
      */
-    readonly filters?: ReadonlyArray<string>;
+    readonly filters?: readonly string[];
 
     /**
      * Which fixes (type mutations) are enabled, with fields defaulting to `true`.
@@ -28,12 +28,12 @@ export interface RawTypeStatOptions {
     /**
      * Globs of files to run on, if not everything in the TypeScript project.
      */
-    readonly include?: ReadonlyArray<string>;
+    readonly include?: readonly string[];
 
     /**
      * Any user-defined mutators to apply after the built-in mutators.
      */
-    readonly mutators?: ReadonlyArray<string>;
+    readonly mutators?: readonly string[];
 
     /**
      * Directives for project-level changes.
@@ -68,7 +68,7 @@ export interface RawTypeStatTypeOptions {
     /**
      * Regular expression matchers added types must match, if provided.
      */
-    matching?: ReadonlyArray<string>;
+    matching?: readonly string[];
 
     /**
      * Whether to exclude rich types from changes, such as arrays or interfaces.
@@ -93,7 +93,7 @@ export interface TypeStatOptions {
     /**
      * File names to run, if not everything in the TypeScript project.
      */
-    readonly fileNames?: ReadonlyArray<string>;
+    readonly fileNames?: readonly string[];
 
     /**
      * Directives for file-level changes.
@@ -103,7 +103,7 @@ export interface TypeStatOptions {
     /**
      * Any tsquery filters to exclude within files.
      */
-    readonly filters?: ReadonlyArray<string>;
+    readonly filters?: readonly string[];
 
     /**
      * Whether each fix (type mutation) is enabled.
@@ -118,7 +118,7 @@ export interface TypeStatOptions {
     /**
      * Mutators to run, as either the built-in mutators or custom mutators specified by the user.
      */
-    readonly mutators: ReadonlyArray<[string, FileMutator]>;
+    readonly mutators: readonly [string, FileMutator][];
 
     /**
      * Directives for project-level changes.
@@ -221,7 +221,7 @@ export interface PostProcess {
     /**
      * Shell commands to execute in order after mutations on mutated file paths.
      */
-    shell: ReadonlyArray<ReadonlyArray<string>>;
+    shell: readonly (readonly string[])[];
 }
 
 /**
@@ -236,7 +236,7 @@ export interface TypeStatTypeOptions {
     /**
      * Glob matchers added types must match, if provided.
      */
-    matching?: ReadonlyArray<string>;
+    matching?: readonly string[];
 
     /**
      * Whether to exclude complex types from changes, such as arrays or interfaces.

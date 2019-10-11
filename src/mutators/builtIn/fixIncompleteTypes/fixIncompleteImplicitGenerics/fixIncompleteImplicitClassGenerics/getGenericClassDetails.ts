@@ -23,7 +23,7 @@ export interface GenericClassDetails {
     /**
      * Ordered names of (local) type parameters on the type.
      */
-    typeParameterNames: ReadonlyArray<string>;
+    typeParameterNames: readonly string[];
 }
 
 export type ParameterTypeNode = ts.TypeNode & {
@@ -36,11 +36,10 @@ export interface ParameterTypeNodeSummary {
 }
 
 export const getGenericClassDetails = (request: FileMutationsRequest, node: VariableWithImplicitGeneric) => {
-    const typeChecker = request.services.program.getTypeChecker();
-
-    // Get the backing type of the variable's initializer
-    const initializerType = typeChecker.getTypeAtLocation(node.initializer);
-    const initializerSymbol = initializerType.getSymbol();
+    const typeChecker = request.services.program.getTypeChecker(),
+        // Get the backing type of the variable's initializer
+        initializerType = typeChecker.getTypeAtLocation(node.initializer),
+        initializerSymbol = initializerType.getSymbol();
     if (initializerSymbol === undefined) {
         return undefined;
     }
@@ -74,39 +73,38 @@ export const getGenericClassDetails = (request: FileMutationsRequest, node: Vari
  */
 const fillMembersWithGenericParameters = (
     containerType: ts.InterfaceType,
-    typeParameterNames: ReadonlyArray<string>,
+    typeParameterNames: readonly string[],
     initializerMembers: ts.UnderscoreEscapedMap<ts.Symbol>,
 ): GenericClassDetails => {
-    const membersWithGenericParameters = new Map<string, Map<number, ParameterTypeNodeSummary>>();
-    const typeParameterNamesSet = new Set(typeParameterNames);
+    const membersWithGenericParameters = new Map<string, Map<number, ParameterTypeNodeSummary>>(),
+        typeParameterNamesSet = new Set(typeParameterNames),
+        /**
+         * If a parameter's type name is a reference to a local parameter, adds it to the mapping.
+         */
+        setMemberWithGenericParameterIfMatched = (
+            memberName: string,
+            parameterIndex: number,
+            typeName: ts.Node,
+            parameterType: ParameterTypeNode,
+        ) => {
+            if (!ts.isIdentifier(typeName)) {
+                return;
+            }
 
-    /**
-     * If a parameter's type name is a reference to a local parameter, adds it to the mapping.
-     */
-    const setMemberWithGenericParameterIfMatched = (
-        memberName: string,
-        parameterIndex: number,
-        typeName: ts.Node,
-        parameterType: ParameterTypeNode,
-    ) => {
-        if (!ts.isIdentifier(typeName)) {
-            return;
-        }
+            const parameterName = typeName.text;
+            if (!typeParameterNamesSet.has(parameterName)) {
+                return;
+            }
 
-        const parameterName = typeName.text;
-        if (!typeParameterNamesSet.has(parameterName)) {
-            return;
-        }
+            const existing = membersWithGenericParameters.get(memberName),
+                summary = { parameterName, parameterType };
 
-        const existing = membersWithGenericParameters.get(memberName);
-        const summary = { parameterName, parameterType };
-
-        if (existing === undefined) {
-            membersWithGenericParameters.set(memberName, new Map([[parameterIndex, summary]]));
-        } else {
-            existing.set(parameterIndex, summary);
-        }
-    };
+            if (existing === undefined) {
+                membersWithGenericParameters.set(memberName, new Map([[parameterIndex, summary]]));
+            } else {
+                existing.set(parameterIndex, summary);
+            }
+        };
 
     // We'll be looking through all members declared on the backing initializer's type
     initializerMembers.forEach((memberSymbol) => {
@@ -123,8 +121,8 @@ const fillMembersWithGenericParameters = (
         }
 
         for (let i = 0; i < valueDeclaration.parameters.length; i += 1) {
-            const parameter = valueDeclaration.parameters[i];
-            const parameterType = parameter.type as ParameterTypeNode | undefined;
+            const parameter = valueDeclaration.parameters[i],
+                parameterType = parameter.type as ParameterTypeNode | undefined;
             if (parameterType === undefined) {
                 continue;
             }

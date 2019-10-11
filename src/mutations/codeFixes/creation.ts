@@ -14,7 +14,7 @@ const knownBlankTypes = new Set([": {}", ": any", ": never", ": null", ": Object
  * @returns Equivalent mutation, if possible.
  */
 export const createCodeFixCreationMutation = (
-    codeFixes: ReadonlyArray<ts.CodeFixAction>,
+    codeFixes: readonly ts.CodeFixAction[],
     preferences: CodeFixCreationPreferences = {},
 ): IMultipleMutations | undefined => {
     if (codeFixes.length === 0) {

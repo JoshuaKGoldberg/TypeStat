@@ -15,80 +15,74 @@ export const collectReferencedPackageNames = (services: LanguageServices) => {
 };
 
 const collectFileReferencedPackageNames = (sourceFile: ts.SourceFile) => {
-    const packageNames = new Set<string>();
+        const packageNames = new Set<string>(),
+            visitNode = (node: ts.Node) => {
+                const packageName = parsePackageNameFromNode(node);
 
-    const visitNode = (node: ts.Node) => {
-        const packageName = parsePackageNameFromNode(node);
+                if (packageName !== undefined) {
+                    packageNames.add(packageName);
+                }
 
-        if (packageName !== undefined) {
-            packageNames.add(packageName);
+                ts.forEachChild(node, visitNode);
+            };
+
+        ts.forEachChild(sourceFile, visitNode);
+
+        return packageNames;
+    },
+    parsePackageNameFromNode = (node: ts.Node) => {
+        if (ts.isIdentifier(node) && (node.text === "module" || node.text === "process")) {
+            return "node";
         }
 
-        ts.forEachChild(node, visitNode);
+        if (ts.isImportDeclaration(node)) {
+            return parseImportDeclarationPackageName(node);
+        }
+
+        if (ts.isImportEqualsDeclaration(node)) {
+            return parseImportEqualsDeclarationPackageName(node);
+        }
+
+        if (ts.isCallExpression(node)) {
+            return parseCallExpressionPackageName(node);
+        }
+
+        return undefined;
+    },
+    parseImportDeclarationPackageName = (node: ts.ImportDeclaration) => parseModuleSpecifier(node.moduleSpecifier),
+    parseImportEqualsDeclarationPackageName = (node: ts.ImportEqualsDeclaration) => {
+        const { moduleReference } = node;
+        if (!ts.isExternalModuleReference(moduleReference)) {
+            return undefined;
+        }
+
+        return parseModuleSpecifier(moduleReference.expression);
+    },
+    parseCallExpressionPackageName = (node: ts.CallExpression) => {
+        if (
+            !ts.isIdentifier(node.expression) ||
+            (node.expression.text !== "import" && node.expression.text !== "require") ||
+            node.arguments.length !== 1
+        ) {
+            return undefined;
+        }
+
+        const firstArgument = node.arguments[0];
+        if (!ts.isStringLiteral(firstArgument)) {
+            return undefined;
+        }
+
+        return parseModuleSpecifier(firstArgument);
+    },
+    parseModuleSpecifier = (node: ts.Expression) => {
+        if (!ts.isStringLiteral(node)) {
+            return undefined;
+        }
+
+        const { text } = node;
+        if (text[0].match(/[aZ]/) === null) {
+            return undefined;
+        }
+
+        return text.split("/")[0];
     };
-
-    ts.forEachChild(sourceFile, visitNode);
-
-    return packageNames;
-};
-
-const parsePackageNameFromNode = (node: ts.Node) => {
-    if (ts.isIdentifier(node) && (node.text === "module" || node.text === "process")) {
-        return "node";
-    }
-
-    if (ts.isImportDeclaration(node)) {
-        return parseImportDeclarationPackageName(node);
-    }
-
-    if (ts.isImportEqualsDeclaration(node)) {
-        return parseImportEqualsDeclarationPackageName(node);
-    }
-
-    if (ts.isCallExpression(node)) {
-        return parseCallExpressionPackageName(node);
-    }
-
-    return undefined;
-};
-
-const parseImportDeclarationPackageName = (node: ts.ImportDeclaration) => parseModuleSpecifier(node.moduleSpecifier);
-
-const parseImportEqualsDeclarationPackageName = (node: ts.ImportEqualsDeclaration) => {
-    const { moduleReference } = node;
-    if (!ts.isExternalModuleReference(moduleReference)) {
-        return undefined;
-    }
-
-    return parseModuleSpecifier(moduleReference.expression);
-};
-
-const parseCallExpressionPackageName = (node: ts.CallExpression) => {
-    if (
-        !ts.isIdentifier(node.expression) ||
-        (node.expression.text !== "import" && node.expression.text !== "require") ||
-        node.arguments.length !== 1
-    ) {
-        return undefined;
-    }
-
-    const firstArgument = node.arguments[0];
-    if (!ts.isStringLiteral(firstArgument)) {
-        return undefined;
-    }
-
-    return parseModuleSpecifier(firstArgument);
-};
-
-const parseModuleSpecifier = (node: ts.Expression) => {
-    if (!ts.isStringLiteral(node)) {
-        return undefined;
-    }
-
-    const { text } = node;
-    if (text[0].match(/[aZ]/) === null) {
-        return undefined;
-    }
-
-    return text.split("/")[0];
-};

@@ -1,5 +1,5 @@
-import { prompt } from "enquirer";
 import * as fs from "fs";
+import { prompt } from "enquirer";
 
 export enum InitializationPurpose {
     ConvertJavaScript = "Convert my JavaScript files to TypeScript",

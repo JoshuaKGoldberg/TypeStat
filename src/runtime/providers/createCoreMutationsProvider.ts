@@ -21,30 +21,29 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
     let lastFileIndex = -1;
 
     return async (): Promise<IMutationsWave> => {
-        const startTime = Date.now();
-        const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
-        const { fileNames, services } = fileNamesAndServicesCache.get();
-        const waveStartedFromBeginning = lastFileIndex <= 0;
+        const startTime = Date.now(),
+            fileMutations = new Map<string, readonly IMutation[]>(),
+            { fileNames, services } = fileNamesAndServicesCache.get(),
+            waveStartedFromBeginning = lastFileIndex <= 0;
         let addedMutations = 0;
 
         for (lastFileIndex = lastFileIndex + 1; lastFileIndex < fileNames.length; lastFileIndex += 1) {
-            const fileName = fileNames[lastFileIndex];
-
-            const sourceFile = services.program.getSourceFile(fileName);
+            const fileName = fileNames[lastFileIndex],
+                sourceFile = services.program.getSourceFile(fileName);
             if (sourceFile === undefined) {
                 options.logger.stderr.write(`Could not find TypeScript source file for '${fileName}'.\n`);
                 continue;
             }
 
-            const filteredNodes = collectFilteredNodes(options, sourceFile);
-            const foundMutations = await findMutationsInFile({
-                fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
-                filteredNodes,
-                nameGenerator: new NameGenerator(sourceFile.fileName),
-                options,
-                services,
-                sourceFile,
-            });
+            const filteredNodes = collectFilteredNodes(options, sourceFile),
+                foundMutations = await findMutationsInFile({
+                    fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
+                    filteredNodes,
+                    nameGenerator: new NameGenerator(sourceFile.fileName),
+                    options,
+                    services,
+                    sourceFile,
+                });
 
             if (foundMutations !== undefined && foundMutations.length !== 0) {
                 addedMutations += foundMutations.length;

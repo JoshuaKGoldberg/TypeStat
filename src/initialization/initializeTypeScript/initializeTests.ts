@@ -9,36 +9,34 @@ export const initializeTests = async () => {
 };
 
 const initializeBuiltInTests = async () => {
-    const choices = [
-        "lib/**/__tests__/*.test.{ts,tsx}",
-        "lib/**/*.test.{ts,tsx}",
-        "src/**/__tests__/*.test.{ts,tsx}",
-        "src/**/*.test.{ts,tsx}",
-        "test/**/*.{ts,tsx}",
-    ];
+        const choices = [
+                "lib/**/__tests__/*.test.{ts,tsx}",
+                "lib/**/*.test.{ts,tsx}",
+                "src/**/__tests__/*.test.{ts,tsx}",
+                "src/**/*.test.{ts,tsx}",
+                "test/**/*.{ts,tsx}",
+            ],
+            { testFiles } = await prompt([
+                {
+                    choices,
+                    initial: choices[choices.length - 1],
+                    message: "Which glob matches your test files?",
+                    name: "testFiles",
+                    type: "select",
+                },
+            ]);
 
-    const { testFiles } = await prompt([
-        {
-            choices,
-            initial: choices[choices.length - 1],
-            message: "Which glob matches your test files?",
-            name: "testFiles",
-            type: "select",
-        },
-    ]);
+        return testFiles as string;
+    },
+    getCustomTests = async () => {
+        const { testFiles } = await prompt([
+            {
+                initial: "test/**/*.{ts,tsx}",
+                message: "Where are your test files?",
+                name: "testFiles",
+                type: "text",
+            },
+        ]);
 
-    return testFiles as string;
-};
-
-const getCustomTests = async () => {
-    const { testFiles } = await prompt([
-        {
-            initial: "test/**/*.{ts,tsx}",
-            message: "Where are your test files?",
-            name: "testFiles",
-            type: "text",
-        },
-    ]);
-
-    return testFiles as string;
-};
+        return testFiles as string;
+    };

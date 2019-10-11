@@ -18,8 +18,8 @@ This file finds `typescript.js` on disk and writes a change to expose the functi
 💩.
 */
 
-import { fs } from "mz";
 import { EOL } from "os";
+import { fs } from "mz";
 import { Type } from "typescript";
 
 import { readCharactersOfFile } from "./readCharactersOfFile";
@@ -31,7 +31,7 @@ type ArgumentTypes<TFunction> = TFunction extends (...args: infer TArgs) => any 
 type ReplaceReturnType<TOriginalType, TReturnType> = (...args: ArgumentTypes<TOriginalType>) => TReturnType;
 
 type Replace<TOriginalType, TReplacements extends any> = {
-    [Property in keyof TOriginalType]: Property extends keyof TReplacements ? TReplacements[Property] : TOriginalType[Property]
+    [Property in keyof TOriginalType]: Property extends keyof TReplacements ? TReplacements[Property] : TOriginalType[Property];
 };
 
 export type ExposedTypeScript = Replace<
@@ -61,11 +61,10 @@ export const requireExposedTypeScript = (): ExposedTypeScript => {
     }
 
     // Find where the file should be required from
-    const localRequireFile = require.resolve("typescript");
-
-    // Grab the existing first characters of the file: arbitrarily, 256 of them
-    // We read more than just the first line in case other tools have modified it
-    const originalContentStart = readCharactersOfFile(localRequireFile, 256);
+    const localRequireFile = require.resolve("typescript"),
+        // Grab the existing first characters of the file: arbitrarily, 256 of them
+        // We read more than just the first line in case other tools have modified it
+        originalContentStart = readCharactersOfFile(localRequireFile, 256);
 
     // If the file already has a /* TypeStat! */ in there, there's nothing to change
     if (originalContentStart.includes("/* TypeStat! */")) {
@@ -73,10 +72,9 @@ export const requireExposedTypeScript = (): ExposedTypeScript => {
         return previouslyExposedTypeScript;
     }
 
-    const originalContent = fs.readFileSync(localRequireFile).toString();
-
-    // Save and clear any existing "typescript" module from the require cache
-    const originalLocalRequireFile = require.cache[localRequireFile];
+    const originalContent = fs.readFileSync(localRequireFile).toString(),
+        // Save and clear any existing "typescript" module from the require cache
+        originalLocalRequireFile = require.cache[localRequireFile];
     delete require.cache[localRequireFile];
 
     // Write an export blurb to add `isTypeAssignableTo` to created `checker`s

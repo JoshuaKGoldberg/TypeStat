@@ -20,10 +20,10 @@ export const createTypeExpansionMutation = (
     node: InterfaceOrTypeLiteral,
     allAssignedTypes: AssignedTypesByName[],
 ): IMutation | undefined => {
-    const originalPropertiesByName = groupPropertyDeclarationsByName(node);
-    const summarizedAssignedTypes = summarizeAllAssignedTypes(request, allAssignedTypes);
-    const incompleteTypes: TypeSummariesPerNodeByName = new Map();
-    const missingTypes: TypeSummariesByName = new Map();
+    const originalPropertiesByName = groupPropertyDeclarationsByName(node),
+        summarizedAssignedTypes = summarizeAllAssignedTypes(request, allAssignedTypes),
+        incompleteTypes: TypeSummariesPerNodeByName = new Map(),
+        missingTypes: TypeSummariesByName = new Map();
 
     for (const [name, summary] of summarizedAssignedTypes) {
         // If the original type doesn't have the name at all, we'll need to add it in
@@ -40,9 +40,9 @@ export const createTypeExpansionMutation = (
         }
     }
 
-    const incompleteTypesMutations = addIncompleteTypesToType(request, incompleteTypes);
-    const missingTypesMutations = addMissingTypesToType(request, node, missingTypes);
-    const mutations = [incompleteTypesMutations, missingTypesMutations].filter(isNotUndefined);
+    const incompleteTypesMutations = addIncompleteTypesToType(request, incompleteTypes),
+        missingTypesMutations = addMissingTypesToType(request, node, missingTypes),
+        mutations = [incompleteTypesMutations, missingTypesMutations].filter(isNotUndefined);
 
     return mutations.length === 0 ? undefined : combineMutations(...mutations);
 };

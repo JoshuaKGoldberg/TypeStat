@@ -1,8 +1,8 @@
-import { ResultStatus } from "..";
 import { version } from "../../package.json";
 
 import { StubWritableStream } from "./index.stubs";
 import { runCli } from "./runCli";
+import { ResultStatus } from "..";
 
 const createTestArgs = (...argv: string[]) => ({
     argv: ["node.exe", "typestat", ...argv],
@@ -31,10 +31,9 @@ describe("runCli", () => {
 
     it("logs the current version when --version is provided", async () => {
         // Arrange
-        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--version");
-
-        // Act
-        const resultStatus = await runCli(argv, { initializationRunner, logger, mainRunner });
+        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--version"),
+            // Act
+            resultStatus = await runCli(argv, { initializationRunner, logger, mainRunner });
 
         // Assert
         expect(logger.stdout.write).toHaveBeenLastCalledWith(`${version}\n`);
@@ -43,8 +42,8 @@ describe("runCli", () => {
 
     it("logs an error when the main runner rejects with one", async () => {
         // Arrange
-        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--config", "typestat.json");
-        const message = "Error message";
+        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--config", "typestat.json"),
+            message = "Error message";
 
         mainRunner.mockRejectedValue(new Error(message));
 
@@ -58,8 +57,8 @@ describe("runCli", () => {
 
     it("logs help and the error when a configuration error is reported", async () => {
         // Arrange
-        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--config", "typestat.json");
-        const message = "Error message";
+        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--config", "typestat.json"),
+            message = "Error message";
 
         mainRunner.mockResolvedValue({
             error: message,

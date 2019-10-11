@@ -8,27 +8,22 @@ import { collectFlagsAndTypesFromTypes } from "./collecting";
  * Type flags and aliases to check when --strictNullChecks is not enabled.
  */
 const nonStrictTypeFlagAliases = new Map([
-    [ts.TypeFlags.Boolean, "boolean"],
-    [ts.TypeFlags.BooleanLiteral, "boolean"],
-    [ts.TypeFlags.Number, "number"],
-    [ts.TypeFlags.NumberLiteral, "number"],
-    [ts.TypeFlags.String, "string"],
-    [ts.TypeFlags.StringLiteral, "string"],
-]);
-
-/**
- * Type flags and aliases to check when --strictNullChecks is enabled.
- */
-const strictTypeFlagsWithAliases = new Map([
-    ...nonStrictTypeFlagAliases,
-    [ts.TypeFlags.Null, "null"],
-    [ts.TypeFlags.Undefined, "undefined"],
-]);
+        [ts.TypeFlags.Boolean, "boolean"],
+        [ts.TypeFlags.BooleanLiteral, "boolean"],
+        [ts.TypeFlags.Number, "number"],
+        [ts.TypeFlags.NumberLiteral, "number"],
+        [ts.TypeFlags.String, "string"],
+        [ts.TypeFlags.StringLiteral, "string"],
+    ]),
+    /**
+     * Type flags and aliases to check when --strictNullChecks is enabled.
+     */
+    strictTypeFlagsWithAliases = new Map([...nonStrictTypeFlagAliases, [ts.TypeFlags.Null, "null"], [ts.TypeFlags.Undefined, "undefined"]]);
 
 /**
  * @returns Built-in type flags and aliases per overall request strictNullChecks setting.
  */
-export const getApplicableTypeAliases = (request: FileMutationsRequest, alwaysAllowStrictNullCheckAliases: boolean = false) =>
+export const getApplicableTypeAliases = (request: FileMutationsRequest, alwaysAllowStrictNullCheckAliases = false) =>
     alwaysAllowStrictNullCheckAliases ||
     request.options.types.strictNullChecks ||
     request.services.program.getCompilerOptions().strictNullChecks
@@ -89,10 +84,9 @@ export const joinIntoType = (
     return unionNames.join(" | ");
 };
 
-const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);
-
-const filterMatchingTypeNames = (unionNames: ReadonlyArray<string>, matching: ReadonlyArray<string>): string[] =>
-    unionNames.filter((name) => matching.some((matcher) => name.match(matcher) !== null));
+const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral),
+    filterMatchingTypeNames = (unionNames: readonly string[], matching: readonly string[]): string[] =>
+        unionNames.filter((name) => matching.some((matcher) => name.match(matcher) !== null));
 
 /**
  * Given a type name, returns its matched alias if one is found, or the type otherwise.
@@ -119,11 +113,10 @@ export const createTypeName = (request: FileMutationsRequest, ...types: ts.Type[
     // If nothing is found then we know types is just an array of null and/or undefined
     for (const allowStrictNullCheckAliases of [false, true]) {
         // Find the flags and nested types from the declared type
-        const [typeFlags, allTypes] = collectFlagsAndTypesFromTypes(request, types, allowStrictNullCheckAliases);
-
-        // Join the missing types into a type string
-        // Most of the time, flags and/or type names will be found on the types
-        const joinedType = joinIntoType(typeFlags, allTypes, request, allowStrictNullCheckAliases);
+        const [typeFlags, allTypes] = collectFlagsAndTypesFromTypes(request, types, allowStrictNullCheckAliases),
+            // Join the missing types into a type string
+            // Most of the time, flags and/or type names will be found on the types
+            joinedType = joinIntoType(typeFlags, allTypes, request, allowStrictNullCheckAliases);
         if (joinedType !== undefined) {
             return joinedType;
         }
@@ -133,44 +126,42 @@ export const createTypeName = (request: FileMutationsRequest, ...types: ts.Type[
 };
 
 const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
-    // If the type isn't a function, we can generally print it directly by name
-    // Note that the type given to this function shouldn't be union or intersection types
-    const callSignatures = type.getCallSignatures();
-    if (callSignatures.length === 0) {
-        return type.symbol.name;
-    }
+        // If the type isn't a function, we can generally print it directly by name
+        // Note that the type given to this function shouldn't be union or intersection types
+        const callSignatures = type.getCallSignatures();
+        if (callSignatures.length === 0) {
+            return type.symbol.name;
+        }
 
-    // If there's only one type signature, use the happy () => ... shorthand
-    if (callSignatures.length === 1) {
-        return printShorthandCallSignature(request, callSignatures[0]);
-    }
+        // If there's only one type signature, use the happy () => ... shorthand
+        if (callSignatures.length === 1) {
+            return printShorthandCallSignature(request, callSignatures[0]);
+        }
 
-    // Looks like we'd have to print a { (): ...; (): ...; } multiple call signatures object
-    // ...but this is such a rare case in TypeStat usage, that for now, let's just use Function (lol)
-    return "Function";
-};
+        // Looks like we'd have to print a { (): ...; (): ...; } multiple call signatures object
+        // ...but this is such a rare case in TypeStat usage, that for now, let's just use Function (lol)
+        return "Function";
+    },
+    printShorthandCallSignature = (request: FileMutationsRequest, callSignature: ts.Signature): string => {
+        const parameters = callSignature.parameters.map((parameter) => printSignatureParameter(request, parameter)),
+            returnType = createTypeName(request, callSignature.getReturnType()),
+            typeParameters =
+                callSignature.typeParameters === undefined || callSignature.typeParameters.length === 0
+                    ? undefined
+                    : callSignature.typeParameters.map((typeParameter) => createTypeName(request, typeParameter));
 
-const printShorthandCallSignature = (request: FileMutationsRequest, callSignature: ts.Signature): string => {
-    const parameters = callSignature.parameters.map((parameter) => printSignatureParameter(request, parameter));
-    const returnType = createTypeName(request, callSignature.getReturnType());
-    const typeParameters =
-        callSignature.typeParameters === undefined || callSignature.typeParameters.length === 0
-            ? undefined
-            : callSignature.typeParameters.map((typeParameter) => createTypeName(request, typeParameter));
+        let text = `(${parameters.join(", ")}) => ${returnType === undefined ? `void` : returnType}`;
 
-    let text = `(${parameters.join(", ")}) => ${returnType === undefined ? `void` : returnType}`;
+        if (typeParameters !== undefined) {
+            text = `<${typeParameters.join(", ")}>` + text;
+        }
 
-    if (typeParameters !== undefined) {
-        text = `<${typeParameters.join(", ")}>` + text;
-    }
+        return text;
+    },
+    printSignatureParameter = (request: FileMutationsRequest, parameter: ts.Symbol) => {
+        const valueDeclaration = parameter.valueDeclaration as ts.ParameterDeclaration,
+            { name } = valueDeclaration,
+            type = request.services.program.getTypeChecker().getTypeAtLocation(valueDeclaration);
 
-    return text;
-};
-
-const printSignatureParameter = (request: FileMutationsRequest, parameter: ts.Symbol) => {
-    const valueDeclaration = parameter.valueDeclaration as ts.ParameterDeclaration;
-    const { name } = valueDeclaration;
-    const type = request.services.program.getTypeChecker().getTypeAtLocation(valueDeclaration);
-
-    return `${name}: ${createTypeName(request, type)}`;
-};
+        return `${name}: ${createTypeName(request, type)}`;
+    };

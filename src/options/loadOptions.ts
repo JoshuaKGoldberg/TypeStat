@@ -20,41 +20,36 @@ export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions |
         return "-c/--config file must be provided.";
     }
 
-    const cwd = process.cwd();
-    const foundRawOptions = await findRawOptions(cwd, argv.config);
+    const cwd = process.cwd(),
+        foundRawOptions = await findRawOptions(cwd, argv.config);
     if (typeof foundRawOptions === "string") {
         return foundRawOptions;
     }
 
-    const { rawOptions } = foundRawOptions;
-    const projectPath = getProjectPath(cwd, foundRawOptions);
-    const [compilerOptions, fileNames] = await Promise.all([parseRawCompilerOptions(projectPath), collectFileNames(argv, cwd, rawOptions)]);
+    const { rawOptions } = foundRawOptions,
+        projectPath = getProjectPath(cwd, foundRawOptions),
+        [compilerOptions, fileNames] = await Promise.all([parseRawCompilerOptions(projectPath), collectFileNames(argv, cwd, rawOptions)]);
 
     return fillOutRawOptions({ argv, compilerOptions, cwd, fileNames, projectPath, rawOptions });
 };
 
 const getProjectPath = (cwd: string, foundOptions: FoundRawOptions): string => {
-    // If the TypeStat configuration file has a projectPath field, use that relative to the file
-    if (foundOptions.filePath !== undefined && foundOptions.rawOptions.projectPath !== undefined) {
-        return normalizeAndSlashify(path.join(path.dirname(foundOptions.filePath), foundOptions.rawOptions.projectPath));
-    }
+        // If the TypeStat configuration file has a projectPath field, use that relative to the file
+        if (foundOptions.filePath !== undefined && foundOptions.rawOptions.projectPath !== undefined) {
+            return normalizeAndSlashify(path.join(path.dirname(foundOptions.filePath), foundOptions.rawOptions.projectPath));
+        }
 
-    // Otherwise give up and try a ./tsconfig.json relative to the package directory
-    return normalizeAndSlashify(path.join(cwd, "tsconfig.json"));
-};
+        // Otherwise give up and try a ./tsconfig.json relative to the package directory
+        return normalizeAndSlashify(path.join(cwd, "tsconfig.json"));
+    },
+    collectFileNames = async (argv: TypeStatArgv, cwd: string, rawOptions: RawTypeStatOptions): Promise<readonly string[] | undefined> => {
+        if (argv.args !== undefined && argv.args.length !== 0) {
+            return globAllAsync(argv.args);
+        }
 
-const collectFileNames = async (
-    argv: TypeStatArgv,
-    cwd: string,
-    rawOptions: RawTypeStatOptions,
-): Promise<ReadonlyArray<string> | undefined> => {
-    if (argv.args !== undefined && argv.args.length !== 0) {
-        return globAllAsync(argv.args);
-    }
+        if (rawOptions.include === undefined) {
+            return undefined;
+        }
 
-    if (rawOptions.include === undefined) {
-        return undefined;
-    }
-
-    return globAllAsync(rawOptions.include.map((include) => path.join(cwd, include)));
-};
+        return globAllAsync(rawOptions.include.map((include) => path.join(cwd, include)));
+    };

@@ -12,29 +12,28 @@ export const collectTypeParameterReferences = (request: FileMutationsRequest, ba
 };
 
 const expandReferencesForParameterTypes = (request: FileMutationsRequest, referencingNodes: readonly ts.Node[]) => {
-    const expandedReferences: ts.Node[] = [];
+        const expandedReferences: ts.Node[] = [];
 
-    for (const referencingNode of referencingNodes) {
-        const { parent } = referencingNode;
-        const expandedParentReferences = findParentExpandedReferences(request, parent);
-        if (expandedParentReferences !== undefined) {
-            expandedReferences.push(...expandedParentReferences);
-            break;
+        for (const referencingNode of referencingNodes) {
+            const { parent } = referencingNode,
+                expandedParentReferences = findParentExpandedReferences(request, parent);
+            if (expandedParentReferences !== undefined) {
+                expandedReferences.push(...expandedParentReferences);
+                break;
+            }
         }
-    }
 
-    return expandedReferences;
-};
+        return expandedReferences;
+    },
+    findParentExpandedReferences = (request: FileMutationsRequest, parent: ts.Node) => {
+        if (
+            ts.isPropertyDeclaration(parent) ||
+            ts.isVariableDeclaration(parent) ||
+            ts.isPropertyDeclaration(parent) ||
+            ts.isParameterPropertyDeclaration(parent)
+        ) {
+            return request.fileInfoCache.getNodeReferencesAsNodes(parent);
+        }
 
-const findParentExpandedReferences = (request: FileMutationsRequest, parent: ts.Node) => {
-    if (
-        ts.isPropertyDeclaration(parent) ||
-        ts.isVariableDeclaration(parent) ||
-        ts.isPropertyDeclaration(parent) ||
-        ts.isParameterPropertyDeclaration(parent)
-    ) {
-        return request.fileInfoCache.getNodeReferencesAsNodes(parent);
-    }
-
-    return undefined;
-};
+        return undefined;
+    };

@@ -11,28 +11,27 @@ export const createInterfaceUsageMutation = (node: ReactComponentNode, interface
 };
 
 const createClassInterfaceUsageMutation = (node: ReactClassComponentNode, interfaceName: string): ITextInsertMutation | undefined => {
-    const extension = getClassExtendsType(node);
-    if (extension === undefined) {
-        return undefined;
-    }
+        const extension = getClassExtendsType(node);
+        if (extension === undefined) {
+            return undefined;
+        }
 
-    return {
-        insertion: `<${interfaceName}>`,
-        range: {
-            begin: extension.end,
-        },
-        type: "text-insert",
+        return {
+            insertion: `<${interfaceName}>`,
+            range: {
+                begin: extension.end,
+            },
+            type: "text-insert",
+        };
+    },
+    createFunctionLikeInterfaceUsageMutation = (node: ReactFunctionalComponentNode, interfaceName: string): ITextInsertMutation => {
+        const propsArgument = node.parameters[0];
+
+        return {
+            insertion: `: ${interfaceName}`,
+            range: {
+                begin: propsArgument.end,
+            },
+            type: "text-insert",
+        };
     };
-};
-
-const createFunctionLikeInterfaceUsageMutation = (node: ReactFunctionalComponentNode, interfaceName: string): ITextInsertMutation => {
-    const propsArgument = node.parameters[0];
-
-    return {
-        insertion: `: ${interfaceName}`,
-        range: {
-            begin: propsArgument.end,
-        },
-        type: "text-insert",
-    };
-};

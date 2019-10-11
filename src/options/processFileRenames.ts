@@ -10,74 +10,69 @@ export const processFileRenames = async (options: TypeStatOptions): Promise<Type
     return options.files.renameExtensions ? renameOptionFiles(options, options.fileNames) : ensureNoJsFiles(options, options.fileNames);
 };
 
-const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions> => {
-    const newFileNames = new Set(options.fileNames);
+const renameOptionFiles = async (options: TypeStatOptions, fileNames: readonly string[]): Promise<TypeStatOptions> => {
+        const newFileNames = new Set(options.fileNames),
+            filesToRename = (await Promise.all(
+                fileNames.filter(canBeRenamed).map(async (fileName) => ({
+                    newFileName: await getNewFileName(options, fileName),
+                    oldFileName: fileName,
+                })),
+            )).filter(({ newFileName, oldFileName }) => newFileName !== oldFileName);
 
-    const filesToRename = (await Promise.all(
-        fileNames.filter(canBeRenamed).map(async (fileName) => ({
-            newFileName: await getNewFileName(options, fileName),
-            oldFileName: fileName,
-        })),
-    )).filter(({ newFileName, oldFileName }) => newFileName !== oldFileName);
+        if (filesToRename.length === 0) {
+            return options;
+        }
 
-    if (filesToRename.length === 0) {
-        return options;
-    }
+        options.logger.stdout.write(`Renaming ${filesToRename.length} files...\n`);
 
-    options.logger.stdout.write(`Renaming ${filesToRename.length} files...\n`);
+        for (const { oldFileName, newFileName } of filesToRename) {
+            await fs.rename(oldFileName, newFileName);
 
-    for (const { oldFileName, newFileName } of filesToRename) {
-        await fs.rename(oldFileName, newFileName);
+            newFileNames.delete(oldFileName);
+            newFileNames.add(newFileName);
+        }
 
-        newFileNames.delete(oldFileName);
-        newFileNames.add(newFileName);
-    }
+        return {
+            ...options,
+            fileNames: Array.from(newFileNames),
+        };
+    },
+    validRenameExtensions = new Set([".js", ".jsx"]),
+    canBeRenamed = (oldFileName: string): boolean => {
+        const oldExtension = oldFileName.substring(oldFileName.lastIndexOf("."));
 
-    return {
-        ...options,
-        fileNames: Array.from(newFileNames),
-    };
-};
+        return validRenameExtensions.has(oldExtension);
+    },
+    getNewFileName = async (options: TypeStatOptions, oldFileName: string): Promise<string> => {
+        const oldExtension = oldFileName.substring(oldFileName.lastIndexOf(".")),
+            beforeExtension = oldFileName.substring(0, oldFileName.length - oldExtension.length);
 
-const validRenameExtensions = new Set([".js", ".jsx"]);
+        if (options.files.renameExtensions === "tsx" || oldExtension === ".jsx") {
+            return `${beforeExtension}.tsx`;
+        }
 
-const canBeRenamed = (oldFileName: string): boolean => {
-    const oldExtension = oldFileName.substring(oldFileName.lastIndexOf("."));
+        if (options.files.renameExtensions === "ts") {
+            return `${beforeExtension}.ts`;
+        }
 
-    return validRenameExtensions.has(oldExtension);
-};
+        const fileContents = (await fs.readFile(oldFileName)).toString(),
+            fileContentsJoined = fileContents.replace(/ /g, "").replace(/"/g, "'");
 
-const getNewFileName = async (options: TypeStatOptions, oldFileName: string): Promise<string> => {
-    const oldExtension = oldFileName.substring(oldFileName.lastIndexOf("."));
-    const beforeExtension = oldFileName.substring(0, oldFileName.length - oldExtension.length);
+        if (fileContentsJoined.includes(`require('react')`) || fileContentsJoined.includes(`from'react'`)) {
+            return `${beforeExtension}.tsx`;
+        }
 
-    if (options.files.renameExtensions === "tsx" || oldExtension === ".jsx") {
-        return `${beforeExtension}.tsx`;
-    }
-
-    if (options.files.renameExtensions === "ts") {
         return `${beforeExtension}.ts`;
-    }
+    },
+    ensureNoJsFiles = async (options: TypeStatOptions, fileNames: readonly string[]): Promise<TypeStatOptions | string> => {
+        const jsFileNames = fileNames.filter((fileName) => fileName.endsWith(".js") || fileName.endsWith(".jsx"));
+        if (jsFileNames.length === 0) {
+            return options;
+        }
 
-    const fileContents = (await fs.readFile(oldFileName)).toString();
-    const fileContentsJoined = fileContents.replace(/ /g, "").replace(/"/g, "'");
-
-    if (fileContentsJoined.includes(`require('react')`) || fileContentsJoined.includes(`from'react'`)) {
-        return `${beforeExtension}.tsx`;
-    }
-
-    return `${beforeExtension}.ts`;
-};
-
-const ensureNoJsFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions | string> => {
-    const jsFileNames = fileNames.filter((fileName) => fileName.endsWith(".js") || fileName.endsWith(".jsx"));
-    if (jsFileNames.length === 0) {
-        return options;
-    }
-
-    return [
-        "The following JavaScript files were included in the project but --fileRenameExtensions is not enabled.",
-        "TypeStat does not yet support annotating JavaScript files.",
-        ...jsFileNames.map((fileName) => `\t${fileName}`),
-    ].join("\n");
-};
+        return [
+            "The following JavaScript files were included in the project but --fileRenameExtensions is not enabled.",
+            "TypeStat does not yet support annotating JavaScript files.",
+            ...jsFileNames.map((fileName) => `\t${fileName}`),
+        ].join("\n");
+    };

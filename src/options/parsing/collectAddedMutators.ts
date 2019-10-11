@@ -23,7 +23,7 @@ export const collectAddedMutators = (
     rawOptions: RawTypeStatOptions,
     packageDirectory: string,
     logger: ProcessLogger,
-): ReadonlyArray<[string, FileMutator]> => {
+): readonly [string, FileMutator][] => {
     const addedMutators = collectOptionals(rawOptions.mutators);
     if (addedMutators.length === 0) {
         return builtInFileMutators;
@@ -47,36 +47,35 @@ export const collectAddedMutators = (
 };
 
 const collectAddedMutator = (packageDirectory: string, rawAddedMutator: string, logger: ProcessLogger): FileMutator | undefined => {
-    const requiringPath = path.join(packageDirectory, rawAddedMutator);
-    const resolvedImport = tryRequireResolve(requiringPath);
-    if (resolvedImport === undefined) {
-        logger.stderr.write(`Could not require ${rawAddedMutator} at ${requiringPath} from ${packageDirectory}.\n`);
-        logger.stderr.write("It doesn't seem to exist? :(\n");
-        return undefined;
-    }
-
-    const result = require(requiringPath) as Partial<ImportedFileMutator>;
-
-    if (typeof result.fileMutator !== "function") {
-        logger.stderr.write(`Could not require ${rawAddedMutator} from ${packageDirectory}.\n`);
-
-        // tslint:disable-next-line:strict-type-predicates
-        if (result.fileMutator === undefined) {
-            logger.stderr.write(`It doesn't have an exported .fileMutator, which must be a function.\n`);
-        } else {
-            logger.stderr.write(`Its exported .fileMutator is ${typeof result.fileMutator} intead of function.\n`);
+        const requiringPath = path.join(packageDirectory, rawAddedMutator),
+            resolvedImport = tryRequireResolve(requiringPath);
+        if (resolvedImport === undefined) {
+            logger.stderr.write(`Could not require ${rawAddedMutator} at ${requiringPath} from ${packageDirectory}.\n`);
+            logger.stderr.write("It doesn't seem to exist? :(\n");
+            return undefined;
         }
 
-        return undefined;
-    }
+        const result = require(requiringPath) as Partial<ImportedFileMutator>;
 
-    return result.fileMutator;
-};
+        if (typeof result.fileMutator !== "function") {
+            logger.stderr.write(`Could not require ${rawAddedMutator} from ${packageDirectory}.\n`);
 
-const tryRequireResolve = (requiringPath: string): string | undefined => {
-    try {
-        return require.resolve(requiringPath);
-    } catch (error) {
-        return undefined;
-    }
-};
+            // tslint:disable-next-line:strict-type-predicates
+            if (result.fileMutator === undefined) {
+                logger.stderr.write(`It doesn't have an exported .fileMutator, which must be a function.\n`);
+            } else {
+                logger.stderr.write(`Its exported .fileMutator is ${typeof result.fileMutator} intead of function.\n`);
+            }
+
+            return undefined;
+        }
+
+        return result.fileMutator;
+    },
+    tryRequireResolve = (requiringPath: string): string | undefined => {
+        try {
+            return require.resolve(requiringPath);
+        } catch (error) {
+            return undefined;
+        }
+    };

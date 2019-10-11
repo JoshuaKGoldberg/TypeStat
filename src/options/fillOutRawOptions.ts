@@ -17,7 +17,7 @@ export interface OptionsFromRawOptionsSettings {
     argv: TypeStatArgv;
     compilerOptions: Readonly<ts.CompilerOptions>;
     cwd: string;
-    fileNames?: ReadonlyArray<string>;
+    fileNames?: readonly string[];
     projectPath: string;
     rawOptions: RawTypeStatOptions;
 }
@@ -35,18 +35,16 @@ export const fillOutRawOptions = ({
     projectPath,
     rawOptions,
 }: OptionsFromRawOptionsSettings): TypeStatOptions | string => {
-    const rawOptionTypes = rawOptions.types === undefined ? {} : rawOptions.types;
-    const noImplicitAny = collectNoImplicitAny(compilerOptions, rawOptions);
-    const { compilerStrictNullChecks, typeStrictNullChecks } = collectStrictNullChecks(compilerOptions, rawOptionTypes);
-
-    const typeAliases = collectTypeAliases(rawOptionTypes);
+    const rawOptionTypes = rawOptions.types === undefined ? {} : rawOptions.types,
+        noImplicitAny = collectNoImplicitAny(compilerOptions, rawOptions),
+        { compilerStrictNullChecks, typeStrictNullChecks } = collectStrictNullChecks(compilerOptions, rawOptionTypes),
+        typeAliases = collectTypeAliases(rawOptionTypes);
     if (typeof typeAliases === "string") {
         return typeAliases;
     }
 
-    const packageOptions = collectPackageOptions(cwd, rawOptions);
-
-    const shell: ReadonlyArray<string>[] = [];
+    const packageOptions = collectPackageOptions(cwd, rawOptions),
+        shell: readonly string[][] = [];
     if (rawOptions.postProcess !== undefined && rawOptions.postProcess.shell !== undefined) {
         shell.push(...rawOptions.postProcess.shell);
     }

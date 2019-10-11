@@ -29,24 +29,23 @@ export const getMissingPropertyMutations = (request: FileMutationsRequest, node:
  * @returns Whether a property access is setting a 'this' member.
  */
 const nodeIsSettingThisMember = (node: ts.PropertyAccessExpression): boolean =>
-    ts.isBinaryExpression(node.parent) &&
-    node.parent.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
-    node.expression.kind === ts.SyntaxKind.ThisKeyword;
-
-/**
- * Uses a requesting language service to get missing property code fixes for a type of node.
- */
-const getMissingPropertyCodeFixes = (node: ts.PropertyAccessExpression, request: FileMutationsRequest) =>
-    processCodeFixActions(
-        request,
-        request.services.languageService.getCodeFixesAtPosition(
-            request.sourceFile.fileName,
-            node.name.getStart(request.sourceFile),
-            node.end,
-            [fixMissingPropertyErrorCode],
-            {
-                insertSpaceBeforeAndAfterBinaryOperators: true,
-            },
-            {},
-        ),
-    );
+        ts.isBinaryExpression(node.parent) &&
+        node.parent.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
+        node.expression.kind === ts.SyntaxKind.ThisKeyword,
+    /**
+     * Uses a requesting language service to get missing property code fixes for a type of node.
+     */
+    getMissingPropertyCodeFixes = (node: ts.PropertyAccessExpression, request: FileMutationsRequest) =>
+        processCodeFixActions(
+            request,
+            request.services.languageService.getCodeFixesAtPosition(
+                request.sourceFile.fileName,
+                node.name.getStart(request.sourceFile),
+                node.end,
+                [fixMissingPropertyErrorCode],
+                {
+                    insertSpaceBeforeAndAfterBinaryOperators: true,
+                },
+                {},
+            ),
+        );

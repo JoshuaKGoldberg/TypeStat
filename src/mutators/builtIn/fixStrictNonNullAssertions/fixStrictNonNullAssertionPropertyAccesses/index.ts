@@ -6,7 +6,7 @@ import { createNonNullAssertion } from "../../../../mutations/typeMutating/creat
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixStrictNonNullAssertionPropertyAccesses: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+export const fixStrictNonNullAssertionPropertyAccesses: FileMutator = (request: FileMutationsRequest): readonly IMutation[] => {
     const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression): IMutation | undefined => {
         return getStrictPropertyAccessFix(request, node);
     };

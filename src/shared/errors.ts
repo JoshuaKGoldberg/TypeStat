@@ -1,4 +1,4 @@
-export const getQuickErrorSummary = (error: any, stackTraceLimit: number = Infinity): string => {
+export const getQuickErrorSummary = (error: any, stackTraceLimit = Infinity): string => {
     if (!(error instanceof Error) || error.stack === undefined) {
         return `${error}`;
     }

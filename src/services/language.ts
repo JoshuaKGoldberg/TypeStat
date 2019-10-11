@@ -21,33 +21,31 @@ export interface LanguageServices {
  */
 export const createLanguageServices = (options: TypeStatOptions): LanguageServices => {
     // Collect file names and parse raw options into a TypeScript program with its configuration settings
-    const { fileNames, parsedConfiguration, program } = createProgramConfiguration(options);
-
-    // Create a TypeScript language service using the compiler host
-    const servicesHost: ts.LanguageServiceHost = {
-        fileExists: ts.sys.fileExists,
-        getCompilationSettings: () => options.compilerOptions,
-        getCurrentDirectory: () => options.package.directory,
-        getDefaultLibFileName: ts.getDefaultLibFilePath,
-        getScriptFileNames: () => fileNames,
-        getScriptSnapshot: (fileName) =>
-            fs.existsSync(fileName) ? ts.ScriptSnapshot.fromString(fs.readFileSync(fileName).toString()) : undefined,
-        getScriptVersion: () => "0",
-        readDirectory: ts.sys.readDirectory,
-        readFile: ts.sys.readFile,
-    };
-    const languageService = ts.createLanguageService(servicesHost, ts.createDocumentRegistry());
-
-    // This printer will later come in handy for emitting raw ASTs to text
-    const printer = ts.createPrinter({
-        newLine: options.compilerOptions.newLine,
-    });
-    const treePrinter = (node: ts.Node) =>
-        printer.printNode(
-            ts.EmitHint.Unspecified,
-            node,
-            ts.createSourceFile("temp.ts", "", ts.ScriptTarget.Latest, false, ts.ScriptKind.TSX),
-        );
+    const { fileNames, parsedConfiguration, program } = createProgramConfiguration(options),
+        // Create a TypeScript language service using the compiler host
+        servicesHost: ts.LanguageServiceHost = {
+            fileExists: ts.sys.fileExists,
+            getCompilationSettings: () => options.compilerOptions,
+            getCurrentDirectory: () => options.package.directory,
+            getDefaultLibFileName: ts.getDefaultLibFilePath,
+            getScriptFileNames: () => fileNames,
+            getScriptSnapshot: (fileName) =>
+                fs.existsSync(fileName) ? ts.ScriptSnapshot.fromString(fs.readFileSync(fileName).toString()) : undefined,
+            getScriptVersion: () => "0",
+            readDirectory: ts.sys.readDirectory,
+            readFile: ts.sys.readFile,
+        },
+        languageService = ts.createLanguageService(servicesHost, ts.createDocumentRegistry()),
+        // This printer will later come in handy for emitting raw ASTs to text
+        printer = ts.createPrinter({
+            newLine: options.compilerOptions.newLine,
+        }),
+        treePrinter = (node: ts.Node) =>
+            printer.printNode(
+                ts.EmitHint.Unspecified,
+                node,
+                ts.createSourceFile("temp.ts", "", ts.ScriptTarget.Latest, false, ts.ScriptKind.TSX),
+            );
 
     return { languageService, parsedConfiguration, program, printNode: treePrinter };
 };

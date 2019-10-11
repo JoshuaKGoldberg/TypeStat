@@ -5,7 +5,7 @@ import { fixMissingProperties } from "./fixMissingProperties";
 import { fixNoImplicitAny } from "./fixNoImplicitAny";
 import { fixStrictNonNullAssertions } from "./fixStrictNonNullAssertions";
 
-export const builtInFileMutators: ReadonlyArray<[string, FileMutator]> = [
+export const builtInFileMutators: readonly [string, FileMutator][] = [
     ["fixIncompleteTypes", fixIncompleteTypes],
     ["fixMissingProperties", fixMissingProperties],
     ["fixNoImplicitAny", fixNoImplicitAny],

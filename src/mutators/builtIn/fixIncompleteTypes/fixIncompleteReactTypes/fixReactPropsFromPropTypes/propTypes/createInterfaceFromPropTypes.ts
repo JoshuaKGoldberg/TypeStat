@@ -21,16 +21,15 @@ export const createInterfaceFromPropTypes = (
         }
     }
 
-    const interfaceName = `${getApparentNameOfComponent(request, node)}Props`;
-
-    const interfaceNode = ts.createInterfaceDeclaration(
-        undefined /* decorators */,
-        undefined /* modifiers */,
-        interfaceName,
-        undefined /* typeParameters */,
-        undefined /* heritageClauses */,
-        members,
-    );
+    const interfaceName = `${getApparentNameOfComponent(request, node)}Props`,
+        interfaceNode = ts.createInterfaceDeclaration(
+            undefined /* decorators */,
+            undefined /* modifiers */,
+            interfaceName,
+            undefined /* typeParameters */,
+            undefined /* heritageClauses */,
+            members,
+        );
 
     return { interfaceName, interfaceNode };
 };

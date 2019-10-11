@@ -9,8 +9,8 @@ export interface InitializeJavaScriptSettings {
 }
 
 export const initializeJavaScript = async ({ fileName, project }: InitializeJavaScriptSettings) => {
-    const sourceFiles = await initializeSources({ fromJavaScript: true });
-    const renames = await initializeRenames();
+    const sourceFiles = await initializeSources({ fromJavaScript: true }),
+        renames = await initializeRenames();
 
     await writeJavaScriptConfig({ fileName, project, sourceFiles, renames });
 };

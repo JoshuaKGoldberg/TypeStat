@@ -5,8 +5,8 @@
  * @returns Non-extension part of the path, such as `"MyFile"`.
  */
 export const getFriendlyFileName = (fullFilePath: string): string => {
-    const lastSlashOrStart = fullFilePath.lastIndexOf("/") + 1;
-    const firstDotAfterLastSlash = fullFilePath.indexOf(".", lastSlashOrStart);
+    const lastSlashOrStart = fullFilePath.lastIndexOf("/") + 1,
+        firstDotAfterLastSlash = fullFilePath.indexOf(".", lastSlashOrStart);
 
     return fullFilePath[lastSlashOrStart].toUpperCase() + fullFilePath.substring(lastSlashOrStart + 1, firstDotAfterLastSlash);
 };

@@ -13,18 +13,18 @@ export interface RequireRenameRequest {
 }
 
 export const findRequireRenameMutationsInFile = (request: RequireRenameRequest) => {
-    const mutations: IMutation[] = [];
-    const visitNode = (node: ts.Node) => {
-        if (isRequireToJsFile(node)) {
-            const mutation = createRequireMutation(request, node);
+    const mutations: IMutation[] = [],
+        visitNode = (node: ts.Node) => {
+            if (isRequireToJsFile(node)) {
+                const mutation = createRequireMutation(request, node);
 
-            if (mutation !== undefined) {
-                mutations.push(mutation);
+                if (mutation !== undefined) {
+                    mutations.push(mutation);
+                }
             }
-        }
 
-        ts.forEachChild(node, visitNode);
-    };
+            ts.forEachChild(node, visitNode);
+        };
 
     visitNode(request.sourceFile);
 
