@@ -30,7 +30,7 @@
         "automutate-tests": "0.3.5",
         "babel-jest": "24.9.0",
         "chai": "4.2.0",
-        "husky": "3.0.8",
+        "husky": "3.0.9",
         "jest": "24.9.0",
         "markdownlint": "0.17.0",
         "markdownlint-cli": "0.18.0",
