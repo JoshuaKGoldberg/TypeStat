@@ -22,7 +22,7 @@
         "@babel/preset-typescript": "7.6.0",
         "@types/builtin-modules": "3.1.1",
         "@types/glob": "7.1.1",
-        "@types/jest": "24.0.18",
+        "@types/jest": "24.0.19",
         "@types/mz": "0.0.32",
         "@types/node": "12.7.12",
         "@types/prop-types": "15.7.3",
