@@ -26,7 +26,7 @@
         "@types/mz": "0.0.32",
         "@types/node": "12.11.1",
         "@types/prop-types": "15.7.3",
-        "@types/react": "16.9.7",
+        "@types/react": "16.9.9",
         "automutate-tests": "0.3.5",
         "babel-jest": "24.9.0",
         "chai": "4.2.0",
