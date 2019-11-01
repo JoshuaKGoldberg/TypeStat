@@ -8,7 +8,7 @@
         "automutate": "^0.7.3",
         "builtin-modules": "^3.0.0",
         "chalk": "^2.4.2",
-        "commander": "^3.0.2",
+        "commander": "^4.0.0",
         "enquirer": "^2.3.2",
         "glob": "^7.1.4",
         "mz": "^2.7.0",
