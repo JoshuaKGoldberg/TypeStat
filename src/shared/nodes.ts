@@ -25,6 +25,7 @@ export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: num
         return ts.forEachChild(node, visitNode);
     };
 
+    // This function will throw an error if the node doesn't exist
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return ts.forEachChild(sourceFile, visitNode)!;
 };

@@ -30,6 +30,8 @@ export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions |
     const projectPath = getProjectPath(cwd, foundRawOptions);
     const [compilerOptions, fileNames] = await Promise.all([parseRawCompilerOptions(projectPath), collectFileNames(argv, cwd, rawOptions)]);
 
+    // For some reason, Promise.all is adding `| undefined` to the `compilerOptions` type...
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return fillOutRawOptions({ argv, compilerOptions: compilerOptions!, cwd, fileNames, projectPath, rawOptions });
 };
 
