@@ -66,7 +66,6 @@ export const joinIntoType = (
             .map((type) => printFriendlyNameOfType(request, type))
             // If the type is aliased to a () => lambda, it should probably be wrapped in ()
             .map((type) => (type.includes(") =>") ? `(${type})` : type)),
-        // tslint:disable-next-line:no-non-null-assertion
         ...Array.from(flags).map((type) => typeAliases.get(type)!),
     ];
 

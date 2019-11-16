@@ -25,7 +25,6 @@ export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: num
         return ts.forEachChild(node, visitNode);
     };
 
-    // tslint:disable-next-line:no-non-null-assertion
     return ts.forEachChild(sourceFile, visitNode)!;
 };
 

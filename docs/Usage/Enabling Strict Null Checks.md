@@ -53,5 +53,5 @@ This configuration will add those with:
 Many more places will need `!` assertions after parameters and properties are given the new nullable types.
 Consider running the earlier `!` fixes on your test files first, _then_ running this on your source files.
 
-> To clean up code after this set is applied, consider using the [`no-non-null-assertion` TSLint rule](http://palantir.github.io/tslint/rules/no-non-null-assertion)
+> To clean up code after this set is applied, consider using the [`no-non-null-assertion` ESLint rule](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-non-null-assertion.md)
 > and its auto-fixer over time.
