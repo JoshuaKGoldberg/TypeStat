@@ -41,9 +41,6 @@
         "tslint": "5.20.1",
         "tslint-config-prettier": "1.18.0"
     },
-    "engines": {
-        "node": "^8 || ^9 || ^10 || ^11 || ^12"
-    },
     "husky": {
         "hooks": {
             "pre-commit": "pretty-quick --staged --write"
