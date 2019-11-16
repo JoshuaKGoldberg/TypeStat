@@ -60,7 +60,6 @@ const collectAddedMutator = (packageDirectory: string, rawAddedMutator: string, 
     if (typeof result.fileMutator !== "function") {
         logger.stderr.write(`Could not require ${rawAddedMutator} from ${packageDirectory}.\n`);
 
-        // tslint:disable-next-line:strict-type-predicates
         if (result.fileMutator === undefined) {
             logger.stderr.write(`It doesn't have an exported .fileMutator, which must be a function.\n`);
         } else {

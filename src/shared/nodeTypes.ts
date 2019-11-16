@@ -80,7 +80,6 @@ export const getValueDeclarationOfType = (request: FileMutationsRequest, node: t
 
     // Despite the type definition, valueDeclaration itself is sometimes undefined
     const valueDeclaration: ts.Declaration | undefined = symbol.valueDeclaration;
-    // tslint:disable-next-line:strict-type-predicates
     if (valueDeclaration !== undefined) {
         return valueDeclaration;
     }

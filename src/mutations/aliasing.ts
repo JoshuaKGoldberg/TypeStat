@@ -28,7 +28,7 @@ const strictTypeFlagsWithAliases = new Map([
 /**
  * @returns Built-in type flags and aliases per overall request strictNullChecks setting.
  */
-export const getApplicableTypeAliases = (request: FileMutationsRequest, alwaysAllowStrictNullCheckAliases: boolean = false) =>
+export const getApplicableTypeAliases = (request: FileMutationsRequest, alwaysAllowStrictNullCheckAliases = false) =>
     alwaysAllowStrictNullCheckAliases ||
     request.options.types.strictNullChecks ||
     request.services.program.getCompilerOptions().strictNullChecks
@@ -66,7 +66,8 @@ export const joinIntoType = (
             .map((type) => printFriendlyNameOfType(request, type))
             // If the type is aliased to a () => lambda, it should probably be wrapped in ()
             .map((type) => (type.includes(") =>") ? `(${type})` : type)),
-        // tslint:disable-next-line:no-non-null-assertion
+        // At this point we can be sure the type exists in type aliases
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         ...Array.from(flags).map((type) => typeAliases.get(type)!),
     ];
 

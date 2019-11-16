@@ -43,7 +43,7 @@ jobs:
 
             - run: yarn run lint:markdownlint
 
-    lint-tslint:
+    lint-eslint:
         docker:
             - image: circleci/node:latest
 
@@ -55,7 +55,7 @@ jobs:
             - attach_workspace:
                   at: "."
 
-            - run: yarn run lint:tslint
+            - run: yarn run lint:eslint
 
     test-mutation:
         docker:
@@ -114,7 +114,7 @@ workflows:
             - lint-markdownlint:
                   requires:
                       - dependencies
-            - lint-tslint:
+            - lint-eslint:
                   requires:
                       - dependencies
             - test-mutation:

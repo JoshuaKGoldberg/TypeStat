@@ -1,6 +1,6 @@
 # Custom Mutators
 
-TypeStat allows using custom mutators instead of the built-in mutators, similar to [custom TSLint rules](https://palantir.github.io/tslint/develop/custom-rules).
+TypeStat allows using custom mutators instead of the built-in mutators, similar to [custom ESLint rules](https://eslint.org/docs/developer-guide/working-with-rules).
 Built-in mutators will be disabled if you provide any custom ones.
 
 ## Usage
@@ -44,14 +44,14 @@ For example, this mutator will add a `/* foo */` mutation at the beginning of ea
 const prefix = "/* foo */ ";
 
 module.exports.fileMutator = (request) => {
-    return request.sourceFile.getText().indexOf(prefix) === -1
-        ? [{
+    return request.sourceFile.getText().startsWith(prefix)
+        ? []
+        : [{
             insertion: prefix,
             range: {
                 begin: 0,
             },
             type: "text-insert",
-        }]
-        : [];
+        }];
 };
 ```

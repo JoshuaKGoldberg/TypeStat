@@ -14,7 +14,8 @@ export const joinIntoGenericType = (request: FileMutationsRequest, containerType
         return undefined;
     }
 
-    // tslint:disable-next-line:no-non-null-assertion
+    // By now we're assuming the generic types can all be named
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const genericTypeNames = allTypeArgumentTypes.map((genericTypes) => createTypeName(request, ...genericTypes)!);
 
     if (containerTypeName === "Array" && isTypeBuiltIn(containerType)) {
