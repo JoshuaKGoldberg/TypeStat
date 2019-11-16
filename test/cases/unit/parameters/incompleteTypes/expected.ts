@@ -58,4 +58,10 @@
     ['notGivenInferableTypes'].forEach((char, index) => {
         console.log(char, index);
     })
+
+    const needsWrapping = count => `${count}lbs`;
+    needsWrapping(1.234567);
+
+    const needsNoWrapping = (count) => `${count}lbs`;
+    needsNoWrapping(1.234567);
 })();
