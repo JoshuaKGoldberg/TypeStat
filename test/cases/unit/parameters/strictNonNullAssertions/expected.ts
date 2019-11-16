@@ -52,4 +52,10 @@
     }
 
     givenObjectTypeLater({} as Object);
+
+    ['notGivenInferableType'].filter(char => console.log(char));
+    
+    ['notGivenInferableTypes'].forEach((char, index) => {
+        console.log(char, index);
+    })
 })();
