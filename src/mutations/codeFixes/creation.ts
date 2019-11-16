@@ -49,5 +49,5 @@ export const createCodeFixCreationMutation = (
     );
 };
 
-const isOnlyParenthesis = (textChanges: ts.TextChange[]) =>
+const isOnlyParenthesis = (textChanges: readonly ts.TextChange[]) =>
     textChanges.length === 2 && textChanges[0].newText === "(" && textChanges[1].newText === ")";

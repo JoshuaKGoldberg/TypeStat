@@ -30,7 +30,7 @@ export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions |
     const projectPath = getProjectPath(cwd, foundRawOptions);
     const [compilerOptions, fileNames] = await Promise.all([parseRawCompilerOptions(projectPath), collectFileNames(argv, cwd, rawOptions)]);
 
-    return fillOutRawOptions({ argv, compilerOptions, cwd, fileNames, projectPath, rawOptions });
+    return fillOutRawOptions({ argv, compilerOptions: compilerOptions!, cwd, fileNames, projectPath, rawOptions });
 };
 
 const getProjectPath = (cwd: string, foundOptions: FoundRawOptions): string => {

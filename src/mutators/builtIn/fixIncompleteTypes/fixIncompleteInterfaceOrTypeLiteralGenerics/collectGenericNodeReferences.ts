@@ -125,7 +125,7 @@ const collectGenericReferencesOfType = (
         }
 
         // If the is a parameter, try all objects passed into its containing signature
-        if (ts.isParameter(parent) || ts.isParameterPropertyDeclaration(parent)) {
+        if (ts.isParameter(parent) || ts.isParameterPropertyDeclaration(parent, parent.parent)) {
             genericNodeReferences.push(...findProvidedTypesForParameter(request, interfaceOrTypeLiteral, parent.parent, parent));
         }
     }
