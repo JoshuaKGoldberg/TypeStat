@@ -203,7 +203,7 @@ const expressionRefersToOriginalType = (
     // If the expression node's type already has type arguments, do they match the original type?
     // This is more likely with classes that are instantiated with a type
     // This can go wrong easily: e.g. with multiple type arguments that have intermixed usages
-    if (isTypeArgumentsTypeNode(expressionNodeType) && expressionNodeType.typeArguments.includes(originalType)) {
+    if (isTypeArgumentsTypeNode(expressionNodeType) && expressionNodeType.typeArguments?.includes(originalType)) {
         return true;
     }
 
