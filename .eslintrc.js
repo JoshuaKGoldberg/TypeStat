@@ -4,8 +4,6 @@ module.exports = {
         node: true,
     },
     extends: [
-        "plugin:import/errors",
-        "plugin:import/typescript",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
         "prettier",
@@ -16,7 +14,7 @@ module.exports = {
         project: "tsconfig.json",
         sourceType: "module",
     },
-    plugins: ["import", "no-only-tests"],
+    plugins: ["no-only-tests"],
     rules: {
         // These rules might eventually be useful, but haven't been tried out in TypeStat
         "@typescript-eslint/prefer-regexp-exec": "off",
