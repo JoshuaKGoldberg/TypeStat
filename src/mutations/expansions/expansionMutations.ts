@@ -1,10 +1,11 @@
 import { combineMutations, IMutation } from "automutate";
 import * as ts from "typescript";
 
+import { AssignedTypesByName } from "../assignments";
 import { InterfaceOrTypeLiteral } from "../../mutators/builtIn/fixIncompleteTypes/fixIncompleteInterfaceOrTypeLiteralGenerics/collectGenericNodeReferences";
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { isNotUndefined } from "../../shared/arrays";
-import { AssignedTypesByName } from "../assignments";
+import { getStaticNameOfProperty } from "../../shared/names";
 
 import { addIncompleteTypesToType, TypeSummariesPerNodeByName } from "./addIncompleteTypesToType";
 import { addMissingTypesToType } from "./addMissingTypesToType";
@@ -51,15 +52,18 @@ const groupPropertyDeclarationsByName = (node: ts.InterfaceDeclaration | ts.Type
     const propertiesByName: Map<string, ts.PropertySignature> = new Map();
 
     for (const member of node.members) {
-        if (
-            !ts.isPropertySignature(member) ||
-            !(ts.isIdentifier(member.name) || ts.isNumericLiteral(member.name) || ts.isStringLiteral(member.name)) ||
-            member.type === undefined
-        ) {
+        // Ignore non-existent or implicitly typed members
+        if (!ts.isPropertySignature(member) || member.type === undefined) {
             continue;
         }
 
-        propertiesByName.set(member.name.text, member);
+        // Ignore any property with a name that's not immediately convertable to a string
+        const name = getStaticNameOfProperty(member.name);
+        if (name === undefined) {
+            continue;
+        }
+
+        propertiesByName.set(name, member);
     }
 
     return propertiesByName;

@@ -70,7 +70,8 @@ export const getVariableInitializerForExpression = (
         return undefined;
     }
 
-    const valueDeclaration = getValueDeclarationOfType(request, expression);
+    const typeChecker = request.services.program.getTypeChecker();
+    const valueDeclaration = getValueDeclarationOfType(typeChecker, expression);
     if (
         valueDeclaration === undefined ||
         (parentFunctionLike !== undefined && !isNodeWithinNode(request.sourceFile, valueDeclaration, parentFunctionLike))
