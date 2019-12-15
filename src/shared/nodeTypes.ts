@@ -1,7 +1,6 @@
 import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../mutations/collecting/flags";
-import { FileMutationsRequest } from "../mutators/fileMutator";
 
 export type NodeSelector<TNode extends ts.Node> = (node: ts.Node) => node is TNode;
 
@@ -65,13 +64,13 @@ export const isNodeWithDefinedTypeParameters = (node: ts.Node): node is NodeWith
     return "typeParameters" in node;
 };
 
-export const getValueDeclarationOfType = (request: FileMutationsRequest, node: ts.Node): ts.Node | undefined => {
+export const getValueDeclarationOfType = (typeChecker: ts.TypeChecker, node: ts.Node): ts.Node | undefined => {
     // Try getting the symbol at the location, which sometimes only works in the latter form
-    const nodeType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+    const nodeType = typeChecker.getTypeAtLocation(node);
     let symbol = nodeType.getSymbol();
 
     if (symbol === undefined) {
-        symbol = request.services.program.getTypeChecker().getSymbolAtLocation(node);
+        symbol = typeChecker.getSymbolAtLocation(node);
     }
 
     if (symbol === undefined) {
@@ -89,10 +88,19 @@ export const getValueDeclarationOfType = (request: FileMutationsRequest, node: t
 };
 
 /**
- * @returns Whether a type is in the argument but not in the parameter.
+ * @returns Whether a type is missing in a passed type compared to its declared type.
  */
-export const isTypeMissingBetween = (typeFlag: ts.TypeFlags, typeOfArgument: ts.Type, typeOfParameter: ts.Type): boolean =>
-    isTypeFlagSetRecursively(typeOfArgument, typeFlag) && !isTypeFlagSetRecursively(typeOfParameter, typeFlag);
+export const isTypeMissingBetween = (typeFlag: ts.TypeFlags, passedType: ts.Type, declaredType: ts.Type) =>
+    isTypeFlagSetRecursively(passedType, typeFlag) && !isTypeFlagSetRecursively(declaredType, typeFlag);
+
+// If either null or undefined is missing in the argument, we'll need a ! mutation
+
+/**
+ * @returns Whether null or undefined is missing in a passed type compared to its declared type.
+ */
+export const isNullOrUndefinedMissingBetween = (passedType: ts.Type, declaredType: ts.Type) =>
+    isTypeMissingBetween(ts.TypeFlags.Null, passedType, declaredType) ||
+    isTypeMissingBetween(ts.TypeFlags.Undefined, passedType, declaredType);
 
 export const getIdentifyingTypeLiteralParent = (node: ts.TypeLiteralNode) => {
     const { parent } = node;

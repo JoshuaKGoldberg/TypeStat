@@ -3,6 +3,7 @@ import { FileMutationsRequest } from "../../fileMutator";
 
 import { fixStrictNonNullAssertionBinaryExpressions } from "./fixStrictNonNullAssertionBinaryExpressions";
 import { fixStrictNonNullAssertionCallExpressions } from "./fixStrictNonNullAssertionCallExpressions";
+import { fixStrictNonNullAssertionObjectLiterals } from "./fixStrictNonNullAssertionObjectLiterals";
 import { fixStrictNonNullAssertionPropertyAccesses } from "./fixStrictNonNullAssertionPropertyAccesses";
 import { fixStrictNonNullAssertionReturnTypes } from "./fixStrictNonNullAssertionReturnTypes";
 
@@ -11,6 +12,7 @@ export const fixStrictNonNullAssertions = (request: FileMutationsRequest) =>
         ? findFirstMutations(request, [
               ["fixStrictNonNullAssertionBinaryExpressions", fixStrictNonNullAssertionBinaryExpressions],
               ["fixStrictNonNullAssertionCallExpressions", fixStrictNonNullAssertionCallExpressions],
+              ["fixStrictNonNullAssertionObjectLiterals", fixStrictNonNullAssertionObjectLiterals],
               ["fixStrictNonNullAssertionPropertyAccesses", fixStrictNonNullAssertionPropertyAccesses],
               ["fixStrictNonNullAssertionReturnTypes", fixStrictNonNullAssertionReturnTypes],
           ])

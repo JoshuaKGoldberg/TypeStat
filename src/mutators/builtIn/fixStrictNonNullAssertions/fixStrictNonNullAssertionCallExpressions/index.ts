@@ -3,8 +3,9 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion";
+import { getValueDeclarationOfFunction } from "../../../../shared/functionTypes";
 import { getParentOfKind, getVariableInitializerForExpression } from "../../../../shared/nodes";
-import { getValueDeclarationOfType, isTypeMissingBetween } from "../../../../shared/nodeTypes";
+import { isNullOrUndefinedMissingBetween } from "../../../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
@@ -18,12 +19,13 @@ const isVisitableCallExpression = (node: ts.Node): node is ts.CallExpression =>
     node.arguments.length !== 0;
 
 const visitCallExpression = (node: ts.CallExpression, request: FileMutationsRequest): IMultipleMutations | undefined => {
+    const typeChecker = request.services.program.getTypeChecker();
+
     // Collect the declared type of the function-like being called
-    const functionLikeValueDeclaration = getValueDeclarationOfType(request, node.expression);
-    if (functionLikeValueDeclaration === undefined || !tsutils.isFunctionWithBody(functionLikeValueDeclaration)) {
+    const functionLikeValueDeclaration = getValueDeclarationOfFunction(typeChecker, node.expression);
+    if (functionLikeValueDeclaration === undefined) {
         return undefined;
     }
-
     // Collect mutations for each argument as needed
     const argumentMutations = collectArgumentMutations(request, node, functionLikeValueDeclaration);
     if (argumentMutations.length === 0) {
@@ -48,10 +50,7 @@ const collectArgumentMutations = (
         const typeOfParameter = typeChecker.getTypeAtLocation(functionLikeValueDeclaration.parameters[i]);
 
         // If either null or undefined is missing in the argument, we'll need a ! mutation
-        if (
-            isTypeMissingBetween(ts.TypeFlags.Null, typeOfArgument, typeOfParameter) ||
-            isTypeMissingBetween(ts.TypeFlags.Undefined, typeOfArgument, typeOfParameter)
-        ) {
+        if (isNullOrUndefinedMissingBetween(typeOfArgument, typeOfParameter)) {
             mutations.push(collectArgumentMutation(request, callingNode.arguments[i]));
         }
     }
