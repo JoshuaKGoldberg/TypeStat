@@ -1,5 +1,6 @@
 import * as ts from "typescript";
 
+import { createTypeName } from "../../../../../mutations/aliasing";
 import { joinIntoGenericType } from "../../../../../mutations/generics";
 import { FileMutationsRequest } from "../../../../fileMutator";
 
