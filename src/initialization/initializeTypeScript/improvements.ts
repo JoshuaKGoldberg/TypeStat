@@ -1,17 +1,17 @@
 import { prompt } from "enquirer";
 
 export enum InitializationImprovement {
-    ExtraneousTypes = "Remove extraneous (unnecessary) types",
     NoImplicitAny = "Enable the --noImplicitAny compiler flag",
     NoImplicitThis = "Enable the --noImplicitThis compiler flag",
+    NoInferableTypes = "Remove type annotations that don't change the meaning of code",
     StrictNullChecks = "Enable the --strictNullChecks compiler flag",
 }
 
 export const initializeImprovements = async () => {
     const choices = [
-        InitializationImprovement.ExtraneousTypes,
         InitializationImprovement.NoImplicitAny,
         InitializationImprovement.NoImplicitThis,
+        InitializationImprovement.NoInferableTypes,
         InitializationImprovement.StrictNullChecks,
     ];
 

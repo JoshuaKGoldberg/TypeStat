@@ -22,6 +22,8 @@ export type NodeWithIdentifierName = ts.Node & {
     name: ts.Identifier;
 };
 
+export type ParameterDeclarationWithType = ts.ParameterDeclaration & NodeWithType;
+
 /**
  * Node types TypeStat may attempt to create a type declaration on.
  */

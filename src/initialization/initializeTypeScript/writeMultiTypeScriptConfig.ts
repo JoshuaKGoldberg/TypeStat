@@ -50,8 +50,8 @@ export const writeMultiTypeScriptConfig = async ({
 const printImprovements = (improvements: ReadonlySet<InitializationImprovement>) => {
     return {
         incompleteTypes: true,
-        ...(improvements.has(InitializationImprovement.ExtraneousTypes) && { extraneousTypes: true }),
         ...(improvements.has(InitializationImprovement.NoImplicitAny) && { noImplicitAny: true }),
+        ...(improvements.has(InitializationImprovement.NoInferableTypes) && { inferableTypes: true }),
         ...(improvements.has(InitializationImprovement.NoImplicitThis) && { noImplicitThis: true }),
     };
 };

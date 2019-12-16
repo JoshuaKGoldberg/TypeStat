@@ -189,6 +189,11 @@ export interface Fixes {
     noImplicitAny: boolean;
 
     /**
+     * Whether to remove type annotations that don't change the meaning of code.
+     */
+    noInferableTypes: boolean;
+
+    /**
      * Whether to add missing non-null assertions in nullable property accesses, function-like calls, and return types.
      */
     strictNonNullAssertions: boolean;

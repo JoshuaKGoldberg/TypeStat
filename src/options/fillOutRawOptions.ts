@@ -64,6 +64,7 @@ export const fillOutRawOptions = ({
             incompleteTypes: false,
             missingProperties: false,
             noImplicitAny: false,
+            noInferableTypes: false,
             strictNonNullAssertions: false,
             ...rawOptions.fixes,
         },
