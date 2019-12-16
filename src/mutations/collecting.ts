@@ -84,7 +84,7 @@ export const collectFlagsAndTypesFromTypes = (
     return [foundFlags, foundTypes];
 };
 
-const recursivelyCollectSubTypes = (type: ts.UnionType): ts.Type[] => {
+export const recursivelyCollectSubTypes = (type: ts.UnionType): ts.Type[] => {
     const subTypes: ts.Type[] = [];
 
     for (const subType of type.types) {

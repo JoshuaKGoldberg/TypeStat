@@ -38,6 +38,12 @@ Whether to add type annotations to declarations that don't yet have them.
 
 See [fixNoImplicitAny/README.md](../src/mutators/builtIn/fixNoImplicitAny/README.md).
 
+### `noInferableTypes`
+
+Whether to remove type annotations that don't change the meaning of code.
+
+See [noInferableTypes/README.md](../src/mutators/builtIn/fixNoInferableTypes/README.md).
+
 ### `strictNonNullAssertions`
 
 Whether to add missing non-null assertions.
