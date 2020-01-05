@@ -2832,7 +2832,7 @@ ignore@^4.0.6:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-ignore@^5.1.4:
+ignore@^5.1.4, ignore@~5.1.4:
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.4.tgz#84b7b3dbe64552b6ef0eca99f6743dbec6d97adf"
   integrity sha512-MzbUSahkTW1u7JpKKjY7LCARd1fU5W2rLdxlM4kdkayuCwZImjkpluF9CM1aLewYJguPDqewLam18Y6AU69A8A==
@@ -3819,15 +3819,16 @@ markdown-it@8.4.2:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-markdownlint-cli@0.20.0:
-  version "0.20.0"
-  resolved "https://registry.yarnpkg.com/markdownlint-cli/-/markdownlint-cli-0.20.0.tgz#838c61bf43a3bce4dcde1a32acd80e31116bba9a"
-  integrity sha512-5VCGS+9w/mVMVDHrKOciq+ZXYdFEypyuCvCdNjHdji8itqcryWMr7V2NdpxQ/KeJmMNoRYsdc2R+88lSc+2gpA==
+markdownlint-cli@0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/markdownlint-cli/-/markdownlint-cli-0.21.0.tgz#d792b157e9de63ce1d6b6e13d7cf83d5e552d5e8"
+  integrity sha512-gvnczz3W3Wgex851/cIQ/2y8GNhY+EVK8Ael8kRd8hoSQ0ps9xjhtwPwMyJPoiYbAoPxG6vSBFISiysaAbCEZg==
   dependencies:
     commander "~2.9.0"
     deep-extend "~0.5.1"
     get-stdin "~5.0.1"
     glob "~7.1.2"
+    ignore "~5.1.4"
     js-yaml "~3.13.1"
     jsonc-parser "~2.2.0"
     lodash.differencewith "~4.5.0"
