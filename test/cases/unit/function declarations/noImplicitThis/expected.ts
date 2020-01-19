@@ -1,10 +1,18 @@
-(function() {
-    const returnThisMember = function (this: Container) {
-        return this.member;
-    }
+// These would normally be wrapped in an IIFE, but:
+// https://github.com/microsoft/TypeScript/issues/36309
 
-    class Container {
-        member = "sample";
-        returnThisMember = returnThisMember;
-    };
-})();
+export interface NoImplicitThisContainer {
+    member: string;
+    returnThisMember: () => string;
+}
+
+function returnThisMember(this: NoImplicitThisContainer) {
+    return this.member;
+}
+
+const container: NoImplicitThisContainer = {
+    member: "sample",
+    returnThisMember: returnThisMember,
+};
+
+container.returnThisMember();
