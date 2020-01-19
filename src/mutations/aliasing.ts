@@ -28,7 +28,7 @@ const strictTypeFlagsWithAliases = new Map([
 /**
  * @returns Built-in type flags and aliases per overall request strictNullChecks setting.
  */
-export const getApplicableTypeAliases = (request: FileMutationsRequest, alwaysAllowStrictNullCheckAliases: boolean = false) =>
+export const getApplicableTypeAliases = (request: FileMutationsRequest, alwaysAllowStrictNullCheckAliases = false) =>
     alwaysAllowStrictNullCheckAliases ||
     request.options.types.strictNullChecks ||
     request.services.program.getCompilerOptions().strictNullChecks
@@ -66,7 +66,8 @@ export const joinIntoType = (
             .map((type) => printFriendlyNameOfType(request, type))
             // If the type is aliased to a () => lambda, it should probably be wrapped in ()
             .map((type) => (type.includes(") =>") ? `(${type})` : type)),
-        // tslint:disable-next-line:no-non-null-assertion
+        // At this point we can be sure the type exists in type aliases
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         ...Array.from(flags).map((type) => typeAliases.get(type)!),
     ];
 
@@ -132,7 +133,7 @@ export const createTypeName = (request: FileMutationsRequest, ...types: ts.Type[
     return undefined;
 };
 
-export const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
+const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
     // If the type isn't a function, we can generally print it directly by name
     // Note that the type given to this function shouldn't be union or intersection types
     const callSignatures = type.getCallSignatures();

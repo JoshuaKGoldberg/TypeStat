@@ -31,7 +31,7 @@ const findParentExpandedReferences = (request: FileMutationsRequest, parent: ts.
         ts.isPropertyDeclaration(parent) ||
         ts.isVariableDeclaration(parent) ||
         ts.isPropertyDeclaration(parent) ||
-        ts.isParameterPropertyDeclaration(parent)
+        ts.isParameterPropertyDeclaration(parent, parent.parent)
     ) {
         return request.fileInfoCache.getNodeReferencesAsNodes(parent);
     }

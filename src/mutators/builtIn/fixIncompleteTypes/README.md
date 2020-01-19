@@ -1,4 +1,4 @@
-# `--fixIncompleteTypes`/`incompleteTypes`
+# `incompleteTypes`
 
 Whether to augment type annotations that don't capture all values constructs can be set to.
 
@@ -11,10 +11,6 @@ Note that `strictNullChecks` must be enabled in your `tsconfig.json` and/or Type
 
 ## Configuration
 
-```shell
-typestat --fixIncompleteTypes
-```
-
 ```json
 {
     "fixes": {
@@ -24,6 +20,45 @@ typestat --fixIncompleteTypes
 ```
 
 ## Mutations
+
+### Incomplete Implicit Generics
+
+If a class variable is declared that should have a templated ("generic") type declared but doesn't, this will add it in.
+
+#### Example: Incomplete Class Generics
+
+If a class is extended that needs its generic type explicitly stated:
+
+```diff
+class OneTypeParameter<TFirst> {
+    first: TFirst;
+}
+
++ type ExtendingWithAddedFirst = {
++     added?: boolean;
++ };
+
+- class ExtendingWithAdded extends OneTypeParameter {
++ class ExtendingWithAdded extends OneTypeParameter<ExtendingWithAddedFirst> {
+    constructor() {
+        super();
+        this.first = {
+            added: true,
+        };
+    }
+}
+```
+
+#### Example: Incomplete Variable Generics
+
+If an array is created but the type isn't inferrable:
+
+```diff
+- const names = [];
++ const names: string[] = [];
+
+names.push("Josh");
+```
 
 ### Incomplete Parameter Types
 
@@ -100,7 +135,7 @@ React components can have types their props filled in using:
 
 Component classes will generate `interface`s, while functional components will generate `type`s.
 
-#### Examples: Incomplete React Classes
+#### Example: Incomplete Component Classes
 
 Adding in a props interface to an existing component class:
 
@@ -121,8 +156,20 @@ Adding in a props interface to an existing component class:
 }
 ```
 
-> So far, only class components are implemented, not functional components.
-> See [#129](https://github.com/JoshuaKGoldberg/TypeStat/pull/129) for tracking on more!
+### Example: Incomplete Function Components
+
+Adding in a props type to an existing function component:
+
+```diff
++ type NamedGreeterProps = {
++     name: string;
++ }
+
+- const NamedGreeter = ({ name }) => {
++ const NamedGreeter: React.FC = ({ name }) => {
+    return `Hello, ${this.props.name}!`;
+};
+```
 
 ### Incomplete Return Types
 

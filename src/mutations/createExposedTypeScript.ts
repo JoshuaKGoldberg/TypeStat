@@ -24,20 +24,18 @@ import { Type } from "typescript";
 
 import { readCharactersOfFile } from "./readCharactersOfFile";
 
-/* tslint:disable no-dynamic-delete no-unsafe-any no-require-imports */
-
 type ArgumentTypes<TFunction> = TFunction extends (...args: infer TArgs) => any ? TArgs : never;
 
 type ReplaceReturnType<TOriginalType, TReturnType> = (...args: ArgumentTypes<TOriginalType>) => TReturnType;
 
 type Replace<TOriginalType, TReplacements extends any> = {
-    [Property in keyof TOriginalType]: Property extends keyof TReplacements ? TReplacements[Property] : TOriginalType[Property]
+    [Property in keyof TOriginalType]: Property extends keyof TReplacements ? TReplacements[Property] : TOriginalType[Property];
 };
 
 export type ExposedTypeScript = Replace<
     typeof import("typescript"),
     {
-        createProgram: ReplaceReturnType<(typeof import("typescript"))["createProgram"], ExposedProgram>;
+        createProgram: ReplaceReturnType<typeof import("typescript")["createProgram"], ExposedProgram>;
     }
 >;
 

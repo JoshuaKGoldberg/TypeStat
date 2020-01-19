@@ -28,7 +28,7 @@ export const getFriendlyTypeParameterDeclarationName = (
 ) => {
     const typeNameRaw = typeParameter.name.text;
     const typeNameFriendly =
-        typeNameRaw.length > 1 && typeNameRaw[0] === "T" && isUpperCaseLetter(typeNameRaw[1]) ? typeNameRaw.slice(1) : typeNameRaw;
+        typeNameRaw.length > 1 && typeNameRaw.startsWith("T") && isUpperCaseLetter(typeNameRaw[1]) ? typeNameRaw.slice(1) : typeNameRaw;
 
     // If any sibling parameter actually happens to match the friendly name, use the raw instead
     for (const siblingParameter of baseTypeParameters) {

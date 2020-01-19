@@ -20,6 +20,7 @@ const wrappedKinds = new Set([
 export const createNonNullAssertion = (request: FileMutationsRequest, node: ts.Node): ITextInsertMutation | ITextSwapMutation => {
     const assertion = findAliasOfType("!", request.options.types.aliases);
 
+    // If the node must be wrapped in parenthesis, replace all of it
     if (wrappedKinds.has(node.kind)) {
         return {
             insertion: `(${node.getText(request.sourceFile)})${assertion}`,
@@ -31,8 +32,11 @@ export const createNonNullAssertion = (request: FileMutationsRequest, node: ts.N
         };
     }
 
+    // Shorthand assignments (`{ value }`) must be converted to non-shorthand (`{ value: value ! }`)
+    const insertion = ts.isShorthandPropertyAssignment(node) ? `: ${node.getText(request.sourceFile)}${assertion}` : assertion;
+
     return {
-        insertion: assertion,
+        insertion,
         range: {
             begin: node.end,
         },

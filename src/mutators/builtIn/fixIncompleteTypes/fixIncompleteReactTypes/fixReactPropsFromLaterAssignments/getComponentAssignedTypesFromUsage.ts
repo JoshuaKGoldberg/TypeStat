@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 
 import { AssignedTypesByName } from "../../../../../mutations/assignments";
+import { getStaticNameOfProperty } from "../../../../../shared/names";
 import { FileMutationsRequest } from "../../../../fileMutator";
 import { ReactComponentNode } from "../reactFiltering/isReactComponentNode";
 
@@ -52,16 +53,19 @@ const updateAssignedTypesForReference = (
     const assignedTypes: AssignedTypesByName = new Map();
 
     for (const property of jsxElement.attributes.properties) {
+        // Ignore properties that aren't directly JSX attributes
+        if (!ts.isJsxAttribute(property)) {
+            continue;
+        }
+
         // For now, ignore any property with a name that's not immediately convertable to a string
-        if (
-            !ts.isJsxAttribute(property) ||
-            !(ts.isIdentifier(property.name) || ts.isStringLiteral(property.name) || ts.isNumericLiteral(property.name))
-        ) {
+        const name = getStaticNameOfProperty(property.name);
+        if (name === undefined) {
             continue;
         }
 
         // TypeScript stores the type of the property's value on the property itself
-        assignedTypes.set(property.name.text, request.services.program.getTypeChecker().getTypeAtLocation(property));
+        assignedTypes.set(name, request.services.program.getTypeChecker().getTypeAtLocation(property));
     }
 
     componentAssignedTypes.push(assignedTypes);

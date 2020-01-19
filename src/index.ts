@@ -1,5 +1,4 @@
 // Ensure TypeScript is exposed before any files import it
-// tslint:disable-next-line
 require("./mutations/createExposedTypeScript").requireExposedTypeScript();
 
 import { runMutations } from "automutate";
@@ -17,30 +16,11 @@ import { createTypeStatProvider } from "./runtime/createTypeStatProvider";
 export interface TypeStatArgv {
     readonly args?: ReadonlyArray<string>;
     readonly config?: string;
-    readonly fileAbove?: string;
-    readonly fileBelow?: string;
-    readonly fileRenameExtensions?: boolean | "ts" | "tsx";
-    readonly filter?: string | ReadonlyArray<string>;
-    readonly fixIncompleteTypes?: boolean;
-    readonly fixMissingProperties?: boolean;
-    readonly fixNoImplicitAny?: boolean;
-    readonly fixNoImplicitThis?: boolean;
-    readonly fixStrictNonNullAssertions?: boolean;
-    readonly mutator?: string | ReadonlyArray<string>;
 
     /**
      * Wraps process.stderr and process.stdout.
      */
     readonly logger: ProcessLogger;
-
-    readonly packageDirectory?: string;
-    readonly packageFile?: string;
-    readonly packageMissingTypes?: true | "npm" | "yarn";
-    readonly project?: string;
-    readonly typeAlias?: string | ReadonlyArray<string>;
-    readonly typeMatching?: ReadonlyArray<string>;
-    readonly typeOnlyPrimitives?: boolean;
-    readonly typeStrictNullChecks?: boolean;
 }
 
 export enum ResultStatus {
@@ -93,7 +73,7 @@ export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
 const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | Error | string> => {
     let options: TypeStatOptions | string;
 
-    // First try loading options from the CLI and/or config file
+    // First try loading options from a config file
     try {
         options = await loadOptions(argv);
     } catch (error) {

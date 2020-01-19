@@ -7,7 +7,7 @@ import { Dictionary } from "../shared/maps";
 /**
  * Options listed as JSON in a typestat configuration file.
  *
- * @remarks These are read by Cosmiconfig and parsed into {@link TypeStatOptions}.
+ * @remarks These are read from disk and parsed into {@link TypeStatOptions}.
  */
 export interface RawTypeStatOptions {
     /**
@@ -193,6 +193,11 @@ export interface Fixes {
      * Whether to add type annotations to functions that don't yet have them per TypeScript's --noImplicitThis.
      */
     noImplicitThis: boolean;
+
+    /**
+     * Whether to remove type annotations that don't change the meaning of code.
+     */
+    noInferableTypes: boolean;
 
     /**
      * Whether to add missing non-null assertions in nullable property accesses, function-like calls, and return types.

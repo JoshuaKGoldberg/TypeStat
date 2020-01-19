@@ -52,4 +52,16 @@
     }
 
     givenObjectTypeLater({} as Object);
+
+    ['notGivenInferableType'].filter(char => console.log(char));
+    
+    ['notGivenInferableTypes'].forEach((char, index) => {
+        console.log(char, index);
+    })
+
+    const needsWrapping = (count: number) => `${count}lbs`;
+    needsWrapping(1.234567);
+
+    const needsNoWrapping = (count: number) => `${count}lbs`;
+    needsNoWrapping(1.234567);
 })();

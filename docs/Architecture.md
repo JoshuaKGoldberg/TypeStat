@@ -14,20 +14,20 @@ When the `typestat` command is entered into the CLI, roughly the following happe
 
 1. [bin/typestat](../bin/typestat) calls to the [CLI](../src/cli/index.ts)
 2. [Commander.js](https://github.com/tj/commander.js) parses the CLI's arguments
-3. Settings are filled from settings found with [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig), if any are found
+3. Settings are loaded from the `-c`/`--config` file
 4. An Automutator provider is created for TypeStat with [`createTypeStatMutationsProvider`](../src/runtime/createTypeStatMutationsProvider.ts).
 
 ### Mutation Providers
 
 There are three mutation providers that are run in order by [`createTypeStatMutationsProvider`](src/runtime/createTypeStatMutationsProvider.ts):
 
-1. **Require renames**: changes to `import` and `require` statements from `--fileRenameExtensions`
+1. **Require renames**: changes to `import` and `require` statements from `files.renameExtensions`
 2. **Core mutations**: changes to type annotations in provided files
-3. **Files modified**: adds annotations to the top (`--fileAbove`) and/or bottom (`--fileBelow`) of files if enabled
+3. **Files modified**: adds annotations to the top (`files.above`) and/or bottom (`files.below`) of mutated files if enabled
 
 #### Require Renames
 
-If any `require` to a file including the extension is stored as a variable, and `--fileRenameExtensions` is enabled,
+If any `require` to a file including the extension is stored as a variable, and `files.renameExtensions` is enabled,
 that variable will be given a type equivalent to the extensionless equivalent.
 This is done as a separate mutation provider before the core mutations to ensure these mutations are applied before core mutations.
 
@@ -104,7 +104,7 @@ We should note two common pieces of terminology used in this directory:
 
 Parsing logic and TypeScript types for raw and parsed options.
 
-[`loadOptions`](../src/options/loadOptions.ts) will use [Cosmiconfig](https://github.com/davidtheclark/cosmiconfig) to find a configuration file if a path isn't provided.
+[`loadOptions`](../src/options/loadOptions.ts) will `require` a `-c`/`--config` file from the path provided.
 Options parsed from that file will be of type `RawTypeStatOptions`,
 and will be filled out into `TypeStatOptions` via [`fillOutRawOptions`](../src/options/fillOutRawOptions.ts).
 
@@ -133,15 +133,3 @@ Now it does.
 Maybe this should be converted?
 
 See [#20](https://github.com/JoshuaKGoldberg/TypeStat/issues/20).
-
-## Why Not [TSLint](https://github.com/palantir/tslint)?
-
-Or: why isn't this implemented as a set of [TSLint](https://github.com/palantir/tslint) rules?
-
-Great question!
-TSLint rules, even with [type checking](https://palantir.github.io/tslint/usage/type-checking), don't have access to the full [TypeScript language service](https://github.com/Microsoft/TypeScript/wiki/Using-the-Language-Service-API).
-This is by design for performance and reliability reasons.
-TypeStat needs that service.
-
-TSLint also has a [relatively unstable `--fix`](https://github.com/palantir/tslint/issues/2556) that can't handle multiple rounds of mutations.
-TypeStat is built on [Automutate](https://github.com/automutate/automutate), which is more stable and allows multiple rounds.

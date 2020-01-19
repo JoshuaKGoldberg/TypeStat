@@ -29,13 +29,11 @@ export const getBaseClassDeclaration = (
     // Try the base constructor of the child class instead
     // This is an internal member, but ah well...
     if (extensionSymbol === undefined) {
-        // tslint:disable:no-unsafe-any
         const { resolvedBaseConstructorType } = typeChecker.getTypeAtLocation(extension.parent.parent) as any;
 
         if (resolvedBaseConstructorType !== undefined) {
             extensionSymbol = resolvedBaseConstructorType.symbol;
         }
-        // tslint:enable:no-unsafe-any
     }
 
     if (extensionSymbol === undefined) {

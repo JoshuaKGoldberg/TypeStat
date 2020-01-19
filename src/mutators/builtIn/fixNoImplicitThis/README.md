@@ -1,6 +1,6 @@
-# `--fixNoImplicitThis`/`noImplicitThis`
+# `noImplicitThis`
 
-Whether to add type annotations to declarations that don't yet have them.
+Whether to add `this` type annotations to functions that don't yet have them.
 
 This entirely relies on TypeScript's suggested fixes to infer types from usage.
 
@@ -9,11 +9,9 @@ This entirely relies on TypeScript's suggested fixes to infer types from usage.
 * You're converting from JavaScript to TypeScript and want type coverage where possible
 * You'd like to enable [`--noImplicitThis`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitThis.html) but have a lot of existing violations
 
-## Configuration
+Functions that already have a known scope or don't refer to `this` won't have them added.
 
-```shell
-typestat --fixNoImplicitThis
-```
+## Configuration
 
 ```json
 {

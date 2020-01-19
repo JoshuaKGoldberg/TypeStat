@@ -1,10 +1,11 @@
 # Fixes
 
-A set of CLI flags and/or configuration object fields containing which fixes (type additions) are enabled.
-These all default to `false` but can be enabled by being set to `true`.
-
 TypeStat will apply mutations ("fixes") to files as it finds them.
 These mutations are all purely additive and limited to the type system, meaning they will _not_ change your JavaScript output.
+
+Each classifiation of fix can be individually configured in your `typestat.json` file.
+These all default to `false` but can be enabled by being set to `true`.
+
 
 ```json
 {
@@ -20,31 +21,37 @@ These mutations are all purely additive and limited to the type system, meaning 
 
 ## Fixers
 
-### `--fixIncompleteTypes`/`incompleteTypes`
+### `incompleteTypes`
 
 Whether to augment type annotations that don't capture all values constructs can be set to.
 
 See [fixIncompleteTypes/README.md](../src/mutators/builtIn/fixIncompleteTypes/README.md).
 
-### `--fixMissingProperties`/`missingProperties`
+### `missingProperties`
 
 Whether to apply TypeScript's fixer for missing properties on classes.
 
 See [fixMisingProperties/README.md](../src/mutators/builtIn/fixMissingProperties/README.md).
 
-## `--fixNoImplicitAny`/`noImplicitAny`
+### `noImplicitAny`
 
 Whether to add type annotations to declarations that don't yet have them.
 
 See [fixNoImplicitAny/README.md](../src/mutators/builtIn/fixNoImplicitAny/README.md).
 
-## `--fixNoImplicitThis`/`noImplicitThis`
+### `noImplicitThis`
 
-Whether to add type annotations for `this` types on functions that don't yet have them.
+Whether to add `this` type annotations to functions that don't yet have them.
 
 See [fixNoImplicitThis/README.md](../src/mutators/builtIn/fixNoImplicitThis/README.md).
 
-## `--fixStrictNonNullAssertions`/`strictNonNullAssertions`
+### `noInferableTypes`
+
+Whether to remove type annotations that don't change the meaning of code.
+
+See [noInferableTypes/README.md](../src/mutators/builtIn/fixNoInferableTypes/README.md).
+
+### `strictNonNullAssertions`
 
 Whether to add missing non-null assertions.
 

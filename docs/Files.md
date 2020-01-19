@@ -1,6 +1,6 @@
 # Files
 
-An optional set of CLI flags and/or configuration object fields containing file-level changes to make outside of mutations.
+An optional set of configuration fields containing file-level changes to make outside of mutations.
 
 ```json
 {
@@ -12,11 +12,7 @@ An optional set of CLI flags and/or configuration object fields containing file-
 }
 ```
 
-## `--fileAbove`/`above`
-
-```shell
-typestat --fileAbove "/* Above file */"
-```
+## `above`
 
 ```json
 {
@@ -32,11 +28,7 @@ If provided, any modified file will have the text inserted as a new first line.
 The default is `""`, for no action to take.
 If a value is provided on the CLI, it will override a configuration file value (including `""`).
 
-## `--fileBelow`/`below`
-
-```shell
-typestat --fileBelow "/* Below file */"
-```
+## `below`
 
 ```json
 {
@@ -52,11 +44,7 @@ If provided, any modified file will have the text inserted as a new last line.
 The default is `""`, for no action to take.
 If a value is provided on the CLI, it will override a configuration file value (including `""`).
 
-## `--fileRenameExtensions`/`renameExtensions`
-
-```shell
-typestat --fileRenameExtensions
-```
+## `renameExtensions`
 
 ```json
 {
@@ -77,10 +65,6 @@ This field has four potential allowed configurations:
 * `false` _(default)_: skip renaming file extensions
 * `true`: auto-detect whether a file should be `.ts` or `.tsx`
 
-    ```shell
-    typestat --fileRenameExtensions
-    ```
-
     ```json
     {
         "files": {
@@ -91,10 +75,6 @@ This field has four potential allowed configurations:
 
 * `"ts"`: always convert to `.ts`
 
-    ```shell
-    typestat --fileRenameExtensions ts
-    ```
-
     ```json
     {
         "files": {
@@ -104,10 +84,6 @@ This field has four potential allowed configurations:
     ```
 
 * `"tsx"`: always convert to `.tsx`
-
-    ```shell
-    typestat --fileRenameExtensions tsx
-    ```
 
     ```json
     {
