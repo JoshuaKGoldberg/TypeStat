@@ -8,6 +8,7 @@ import { collectAsConfiguration } from "../shared/booleans";
 import { collectAddedMutators } from "./parsing/collectAddedMutators";
 import { collectFileOptions } from "./parsing/collectFileOptions";
 import { collectNoImplicitAny } from "./parsing/collectNoImplicitAny";
+import { collectNoImplicitThis } from "./parsing/collectNoImplicitThis";
 import { collectPackageOptions } from "./parsing/collectPackageOptions";
 import { collectStrictNullChecks } from "./parsing/collectStrictNullChecks";
 import { collectTypeAliases } from "./parsing/collectTypeAliases";
@@ -37,6 +38,7 @@ export const fillOutRawOptions = ({
 }: OptionsFromRawOptionsSettings): TypeStatOptions | string => {
     const rawOptionTypes = rawOptions.types === undefined ? {} : rawOptions.types;
     const noImplicitAny = collectNoImplicitAny(compilerOptions, rawOptions);
+    const noImplicitThis = collectNoImplicitThis(compilerOptions, rawOptions);
     const { compilerStrictNullChecks, typeStrictNullChecks } = collectStrictNullChecks(compilerOptions, rawOptionTypes);
 
     const typeAliases = collectTypeAliases(rawOptionTypes);
@@ -55,6 +57,7 @@ export const fillOutRawOptions = ({
         compilerOptions: {
             ...compilerOptions,
             noImplicitAny,
+            noImplicitThis,
             strictNullChecks: compilerStrictNullChecks,
         },
         fileNames,
@@ -64,6 +67,7 @@ export const fillOutRawOptions = ({
             incompleteTypes: false,
             missingProperties: false,
             noImplicitAny: false,
+            noImplicitThis: false,
             noInferableTypes: false,
             strictNonNullAssertions: false,
             ...rawOptions.fixes,

@@ -13,6 +13,7 @@ These all default to `false` but can be enabled by being set to `true`.
         "incompleteTypes": true,
         "missingProperties": true,
         "noImplicitAny": true,
+        "noImplicitThis": true,
         "strictNonNullAssertions": true
     }
 }
@@ -37,6 +38,12 @@ See [fixMisingProperties/README.md](../src/mutators/builtIn/fixMissingProperties
 Whether to add type annotations to declarations that don't yet have them.
 
 See [fixNoImplicitAny/README.md](../src/mutators/builtIn/fixNoImplicitAny/README.md).
+
+### `noImplicitThis`
+
+Whether to add `this` type annotations to functions that don't yet have them.
+
+See [fixNoImplicitThis/README.md](../src/mutators/builtIn/fixNoImplicitThis/README.md).
 
 ### `noInferableTypes`
 

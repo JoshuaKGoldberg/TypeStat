@@ -13,12 +13,14 @@ export const processFileRenames = async (options: TypeStatOptions): Promise<Type
 const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions> => {
     const newFileNames = new Set(options.fileNames);
 
-    const filesToRename = (await Promise.all(
-        fileNames.filter(canBeRenamed).map(async (fileName) => ({
-            newFileName: await getNewFileName(options, fileName),
-            oldFileName: fileName,
-        })),
-    )).filter(({ newFileName, oldFileName }) => newFileName !== oldFileName);
+    const filesToRename = (
+        await Promise.all(
+            fileNames.filter(canBeRenamed).map(async (fileName) => ({
+                newFileName: await getNewFileName(options, fileName),
+                oldFileName: fileName,
+            })),
+        )
+    ).filter(({ newFileName, oldFileName }) => newFileName !== oldFileName);
 
     if (filesToRename.length === 0) {
         return options;

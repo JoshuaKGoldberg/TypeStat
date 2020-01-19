@@ -11,15 +11,7 @@ import { processCodeFixActions } from "./processCodeFixActions";
  */
 const noImplicitThisErrorCode = 2683;
 
-export const canNodeBeFixedForNoImplicitThis = (node: ts.FunctionDeclaration, sourceFile: ts.SourceFile) =>
-    node.parameters.length !== 0 && node.parameters[0].getText(sourceFile) === "this";
-
-export const getNoImplicitThisMutations = (node: ts.FunctionDeclaration, request: FileMutationsRequest): IMutation | undefined => {
-    // If we the node can't be given --noImplicitThis fixes, that's easier: bail out early
-    if (!canNodeBeFixedForNoImplicitThis(node, request.sourceFile)) {
-        return undefined;
-    }
-
+export const getNoImplicitThisMutations = (node: ts.ThisExpression, request: FileMutationsRequest): IMutation | undefined => {
     // Create a mutation for the code fixes if anything is available
     const codeFixes = getNoImplicitThisCodeFixes(node, request);
 
@@ -31,9 +23,8 @@ export const getNoImplicitThisMutations = (node: ts.FunctionDeclaration, request
  *
  * @param node   Requesting node to retrieve fixes on.
  * @param request   Source file, metadata, and settings to collect mutations in the file.
- * @param errorCode   Corresponding error code for the node type to retrieve fixes for.
  */
-const getNoImplicitThisCodeFixes = (node: ts.FunctionDeclaration, request: FileMutationsRequest) =>
+const getNoImplicitThisCodeFixes = (node: ts.ThisExpression, request: FileMutationsRequest) =>
     processCodeFixActions(
         request,
         request.services.languageService.getCodeFixesAtPosition(
@@ -41,9 +32,7 @@ const getNoImplicitThisCodeFixes = (node: ts.FunctionDeclaration, request: FileM
             node.getStart(request.sourceFile),
             node.end,
             [noImplicitThisErrorCode],
-            {
-                insertSpaceBeforeAndAfterBinaryOperators: true,
-            },
+            {},
             {},
         ),
     );
