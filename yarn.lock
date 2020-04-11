@@ -4168,10 +4168,10 @@ markdownlint-rule-helpers@~0.7.0:
   resolved "https://registry.yarnpkg.com/markdownlint-rule-helpers/-/markdownlint-rule-helpers-0.7.0.tgz#66476c373fcad6727ac5b64cb662e900cbe46bfe"
   integrity sha512-xZByWJNBaCMHo7nYPv/5aO8Jt68YcMvyouFXhuXmJzbqCsQy8rfCj0kYcv22kdK5PwAgMdbHg0hyTdURbUZtJw==
 
-markdownlint@0.19.0, markdownlint@~0.19.0:
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.19.0.tgz#a692c7b5c077874d4ee8b74e188d6c464ccce81e"
-  integrity sha512-+MsWOnYVUH4klcKM7iRx5cno9FQMDAb6FC6mWlZkeXPwIaK6Z5Vd9VkXkykPidRqmLHU2wI+MNyfUMnUCBw3pQ==
+markdownlint@0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.20.0.tgz#b8c200ebfe5f31708e1303ae422645a3c025e61b"
+  integrity sha512-EtRN3zfVoYlP+ymGM+F0ZKPKzBZl2eUj+LoSXI8e6POz97vD767Dpz8ETlYxLyFIzgsdfsnSLK5pTbAgFi78jw==
   dependencies:
     markdown-it "10.0.0"
 
@@ -4181,6 +4181,13 @@ markdownlint@^0.11.0:
   integrity sha512-wE5WdKD6zW2DQaPQ5TFBTXh5j76DnWd/IFffnDQgHmi6Y61DJXBDfLftZ/suJHuv6cwPjM6gKw2GaRLJMOR+Mg==
   dependencies:
     markdown-it "8.4.2"
+
+markdownlint@~0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.19.0.tgz#a692c7b5c077874d4ee8b74e188d6c464ccce81e"
+  integrity sha512-+MsWOnYVUH4klcKM7iRx5cno9FQMDAb6FC6mWlZkeXPwIaK6Z5Vd9VkXkykPidRqmLHU2wI+MNyfUMnUCBw3pQ==
+  dependencies:
+    markdown-it "10.0.0"
 
 mdurl@^1.0.1:
   version "1.0.1"
