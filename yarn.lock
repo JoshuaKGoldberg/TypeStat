@@ -4176,10 +4176,10 @@ markdownlint-rule-helpers@~0.7.0:
   resolved "https://registry.yarnpkg.com/markdownlint-rule-helpers/-/markdownlint-rule-helpers-0.7.0.tgz#66476c373fcad6727ac5b64cb662e900cbe46bfe"
   integrity sha512-xZByWJNBaCMHo7nYPv/5aO8Jt68YcMvyouFXhuXmJzbqCsQy8rfCj0kYcv22kdK5PwAgMdbHg0hyTdURbUZtJw==
 
-markdownlint@0.20.1:
-  version "0.20.1"
-  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.20.1.tgz#c22609b37422d19cbb38e84fb11c7bae789ba6f0"
-  integrity sha512-jq1qt0QkzY6AiN6O3tq+8SmUlvKfhx9GRKBn/IWEuN6RM5xBZG47rfW9Fn0eRvuozf5Xc59dRaLUZEO0XiyGOg==
+markdownlint@0.20.2:
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.20.2.tgz#fecd591da64f3c6ee39cc0a7294560c9c14cf299"
+  integrity sha512-TU/SgsylEzp9oAj9dGGZ6009yJq48GpEAeYIsREje5NuvadzO12qvl4wV21vHIerdPy/aSEyM2e9c+CzWq6Reg==
   dependencies:
     markdown-it "10.0.0"
 
