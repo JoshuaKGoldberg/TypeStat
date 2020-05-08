@@ -35,7 +35,7 @@
         "chai": "4.2.0",
         "eslint-config-prettier": "6.11.0",
         "eslint-plugin-no-only-tests": "2.4.0",
-        "eslint": "6.8.0",
+        "eslint": "7.0.0",
         "husky": "4.2.5",
         "jest": "26.0.1",
         "markdownlint-cli": "0.23.0",
