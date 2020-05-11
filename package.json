@@ -27,7 +27,7 @@
         "@types/mz": "2.7.0",
         "@types/node": "12.12.31",
         "@types/prop-types": "15.7.3",
-        "@types/react": "16.9.34",
+        "@types/react": "16.9.35",
         "@typescript-eslint/eslint-plugin": "2.31.0",
         "@typescript-eslint/parser": "2.31.0",
         "automutate-tests": "0.3.5",
