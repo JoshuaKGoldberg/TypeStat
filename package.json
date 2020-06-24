@@ -23,7 +23,7 @@
         "@babel/preset-env": "7.10.3",
         "@babel/preset-typescript": "7.10.1",
         "@types/glob": "7.1.2",
-        "@types/jest": "26.0.2",
+        "@types/jest": "26.0.3",
         "@types/mz": "2.7.1",
         "@types/node": "12.12.31",
         "@types/prop-types": "15.7.3",
