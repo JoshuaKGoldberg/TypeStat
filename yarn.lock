@@ -1729,10 +1729,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
-"@types/react@16.9.39":
-  version "16.9.39"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.39.tgz#d400fd57cef4cdd6c3a6286506e230e0b2995bba"
-  integrity sha512-kpdbGez6hqN9Ihcoi6flShP+ka9XxSBPes1UOBPLmbH6oRiBLkrh2VrtWosTy/l5LKGYSGoWf2WPFRCU4gdRmg==
+"@types/react@16.9.40":
+  version "16.9.40"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.40.tgz#10d53b61bb364af0f04eecfa9da31e9962844ee9"
+  integrity sha512-OCkF5au6H5tn7JCMq7fuutYeawzFezrpHaRvI+Zq+n386lkU0fGrQMAB5YP/WzBiQa8tAe1IXA61+lYCqLfMZg==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
