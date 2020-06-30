@@ -38,7 +38,7 @@
         "eslint": "7.3.1",
         "husky": "4.2.5",
         "jest": "26.1.0",
-        "markdownlint-cli": "0.23.1",
+        "markdownlint-cli": "0.23.2",
         "markdownlint": "0.20.3",
         "mocha": "8.0.1",
         "npm-run-all": "4.1.5",
