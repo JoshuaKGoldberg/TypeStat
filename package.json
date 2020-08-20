@@ -37,7 +37,7 @@
         "eslint-plugin-no-only-tests": "2.4.0",
         "eslint": "7.7.0",
         "husky": "4.2.5",
-        "jest": "26.4.0",
+        "jest": "26.4.1",
         "markdownlint-cli": "0.23.2",
         "markdownlint": "0.20.4",
         "mocha": "8.1.1",
