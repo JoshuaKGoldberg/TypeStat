@@ -36,7 +36,7 @@
         "eslint-config-prettier": "6.11.0",
         "eslint-plugin-no-only-tests": "2.4.0",
         "eslint": "7.8.1",
-        "husky": "4.2.5",
+        "husky": "4.3.0",
         "jest": "26.4.2",
         "markdownlint-cli": "0.23.2",
         "markdownlint": "0.20.4",
