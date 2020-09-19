@@ -6376,10 +6376,10 @@ tr46@^2.0.0:
   dependencies:
     punycode "^2.1.1"
 
-ts-simple-type@^0.2.28:
-  version "0.2.28"
-  resolved "https://registry.yarnpkg.com/ts-simple-type/-/ts-simple-type-0.2.28.tgz#0c5905fabf24a6d99132b5bae66afb88a9da5273"
-  integrity sha512-4ul6oWyqXHqUe70Vr8kABSThaUN+EhNArBSVyRbbhY0xuVs/fxaSkbZ06W+h1F7jqTq55gWjdh2M5owsomRs/Q==
+ts-simple-type@1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/ts-simple-type/-/ts-simple-type-1.0.7.tgz#03930af557528dd40eaa121913c7035a0baaacf8"
+  integrity sha512-zKmsCQs4dZaeSKjEA7pLFDv7FHHqAFLPd0Mr//OIJvu8M+4p4bgSFJwZSEBEg3ec9W7RzRz1vi8giiX0+mheBQ==
 
 tslib@^1.8.1:
   version "1.10.0"
