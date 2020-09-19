@@ -1,4 +1,4 @@
-# `--fixMissingProperties`/`missingProperties`
+# `missingProperties`
 
 Whether to apply TypeScript's fixer for missing properties on classes.
 
@@ -9,10 +9,6 @@ This entirely relies on TypeScript's suggested fixes to infer types from usage.
 * You're converting from JavaScript to TypeScript and have classes that contain properties
 
 ## Configuration
-
-```shell
-typestat --fixMissingProperties
-```
 
 ```json
 {

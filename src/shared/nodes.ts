@@ -25,7 +25,8 @@ export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: num
         return ts.forEachChild(node, visitNode);
     };
 
-    // tslint:disable-next-line:no-non-null-assertion
+    // This function will throw an error if the node doesn't exist
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return ts.forEachChild(sourceFile, visitNode)!;
 };
 
@@ -69,7 +70,8 @@ export const getVariableInitializerForExpression = (
         return undefined;
     }
 
-    const valueDeclaration = getValueDeclarationOfType(request, expression);
+    const typeChecker = request.services.program.getTypeChecker();
+    const valueDeclaration = getValueDeclarationOfType(typeChecker, expression);
     if (
         valueDeclaration === undefined ||
         (parentFunctionLike !== undefined && !isNodeWithinNode(request.sourceFile, valueDeclaration, parentFunctionLike))
@@ -84,7 +86,7 @@ export const getVariableInitializerForExpression = (
     return valueDeclaration.initializer;
 };
 
-export const getClassExtendsType = (node: ts.ClassDeclaration): ts.ExpressionWithTypeArguments | undefined => {
+export const getClassExtendsType = (node: ts.ClassLikeDeclaration): ts.ExpressionWithTypeArguments | undefined => {
     const { heritageClauses } = node;
     if (heritageClauses === undefined) {
         return undefined;

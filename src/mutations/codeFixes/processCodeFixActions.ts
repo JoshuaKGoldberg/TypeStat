@@ -39,6 +39,11 @@ export const processCodeFixActions = (
     };
 
     const processTextChange = (textChange: ts.TextChange): ts.TextChange | undefined => {
+        // Triva text changes, such as "(" and ")", don't need to be checked for codefixes
+        if (!/[a-z0-9]/i.test(textChange.newText)) {
+            return textChange;
+        }
+
         const processedUnionTypes = extractRawCodefixUnionTypes(request, textChange.newText);
         if (processedUnionTypes === undefined || processedUnionTypes.length === 0) {
             return undefined;

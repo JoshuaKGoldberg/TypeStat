@@ -166,45 +166,6 @@
     let numberExplicitTemplated: Array<number> = [1];
     numberExplicitTemplated = ([1] as Array<number>)!;
 
-    // Array pushes
-
-    let numberEmptyImplicit = [];
-    numberImplicit.push(1);
-
-    let numberEmptyExplicit: number[] = [];
-    numberEmptyExplicit.push(1);
-
-    let numberFilledImplicit = [1];
-    numberFilledImplicit.push(1);
-
-    let numberFilledExplicit: (number | string)[] = [1];
-    numberFilledExplicit.push(1);
-    numberFilledExplicit.push("");
-
-    let numberFilledExplicitAddedString: number[] = [1];
-    numberFilledExplicitAddedString.push(1);
-    numberFilledExplicitAddedString.push("");
-
-    let numberOrStringEmptyImplicit = [];
-    numberOrStringEmptyImplicit.push(1);
-    numberOrStringEmptyImplicit.push("");
-
-    let numberOrStringEmptyExplicit: number[] = [];
-    numberOrStringEmptyExplicit.push(1);
-    numberOrStringEmptyExplicit.push("");
-
-    let numberOrStringFilledImplicit = [1];
-    numberOrStringFilledImplicit.push(1);
-    numberOrStringFilledImplicit.push("");
-
-    let numberOrStringFilledExplicit: (number | string)[] = [1];
-    numberOrStringFilledExplicit.push(1);
-    numberOrStringFilledExplicit.push("");
-
-    let numberOrStringFilledExplicitAddedString: number[] = [1];
-    numberOrStringFilledExplicitAddedString.push(1);
-    numberOrStringFilledExplicitAddedString.push("");
-
     // Array Iteration
 
     const iterableStrings = ["abc", "def", "ghi"];

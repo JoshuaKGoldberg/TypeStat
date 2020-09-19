@@ -1,8 +1,4 @@
-// tslint:disable-next-line:no-require-imports
-import cosmiconfig = require("cosmiconfig");
 import * as path from "path";
-
-import { normalizeAndSlashify } from "../shared/paths";
 
 import { RawTypeStatOptions } from "./types";
 
@@ -22,38 +18,36 @@ export interface FoundRawOptions {
 }
 
 /**
- * Parses raw options from a configuration file, using Cosmiconfig to find it if necessary.
+ * Parses raw options from a configuration file.
  *
- * @param packageDirectory   Base directory to resolve paths from.
+ * @param cwd   Base directory to resolve paths from.
  * @param configPath   Suggested path to load from, instead of searching.
  * @returns Promise for parsed raw options from a configuration file.
- * @remarks This defaults to tsconfig.json in the local directory.
  */
-export const findRawOptions = async (packageDirectory: string, configPath?: string): Promise<FoundRawOptions> => {
-    const explorer = cosmiconfig("typestat");
-    const cosmiconfigResult = configPath === undefined ? await explorer.search() : await explorer.load(configPath);
+export const findRawOptions = async (cwd: string, configPath: string): Promise<FoundRawOptions | string> => {
+    const resolutionPath = path.join(cwd, configPath);
 
-    return cosmiconfigResult === null
-        ? {
-              rawOptions: {
-                  projectPath: normalizeAndSlashify(path.join(packageDirectory, "tsconfig.json")),
-              },
-          }
-        : {
-              filePath: cosmiconfigResult.filepath,
-              rawOptions: extractConfigAsRelative(cosmiconfigResult),
-          };
+    let filePath: string;
+    try {
+        filePath = require.resolve(resolutionPath);
+    } catch {
+        return configPath === resolutionPath
+            ? `Could not find config file at '${configPath}'.`
+            : `Could not find config file at '${configPath}' (resolved to '${resolutionPath}').`;
+    }
+
+    const rawOptions = extractConfigAsRelative(filePath, require(filePath) as RawTypeStatOptions);
+
+    return { filePath, rawOptions };
 };
 
-const extractConfigAsRelative = (cosmiconfigResult: NonNullable<cosmiconfig.CosmiconfigResult>): RawTypeStatOptions => {
-    let config = cosmiconfigResult.config as RawTypeStatOptions;
-
+const extractConfigAsRelative = (filePath: string, config: RawTypeStatOptions): RawTypeStatOptions => {
     if (config.package !== undefined && config.package.directory !== undefined && !path.isAbsolute(config.package.directory)) {
         config = {
             ...config,
             package: {
                 ...config.package,
-                directory: path.join(cosmiconfigResult.filepath, config.package.directory),
+                directory: path.join(filePath, config.package.directory),
             },
         };
     }

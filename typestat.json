@@ -1,0 +1,31 @@
+[
+    {
+        "fixes": {
+            "incompleteTypes": true,
+            "extraneousTypes": true,
+            "noImplicitAny": true,
+            "noImplicitThis": true,
+            "strictNonNullAssertions": true
+        },
+        "include": ["src/**/*.test.ts(x)"]
+    },
+    {
+        "exclude": ["src/**/*.test.ts(x)"],
+        "fixes": {
+            "incompleteTypes": true,
+            "extraneousTypes": true,
+            "noImplicitAny": true,
+            "noImplicitThis": true
+        },
+        "include": ["src/**/*.ts(x)"]
+    },
+    {
+        "fixes": {
+            "incompleteTypes": true,
+            "extraneousTypes": true,
+            "noImplicitAny": true,
+            "noImplicitThis": true
+        },
+        "include": ["src/**/*.test.ts(x)", "src/**/*.ts(x)"]
+    }
+]

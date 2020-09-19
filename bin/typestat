@@ -1,15 +1,14 @@
 #!/usr/bin/env node
-// tslint:disable
 
-var runCli = require("../src/cli/runCli").runCli;
+const { runCli } = require("../src/cli/runCli");
 
 runCli(process.argv)
-    .then(function (resultStatus) {
+    .then((resultStatus) => {
         if (resultStatus !== 0) {
             process.exitCode = 1;
         }
     })
-    .catch(function (error) {
+    .catch((error) => {
         console.error("Error in TypeStat: " + error);
         process.exitCode = 1;
     });

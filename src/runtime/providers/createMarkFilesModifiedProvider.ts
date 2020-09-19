@@ -2,7 +2,7 @@ import { IFileMutations, IMutationsWave, ITextInsertMutation } from "automutate"
 import * as fs from "mz/fs";
 
 import { TypeStatOptions } from "../../options/types";
-import { printNewLine } from "../../shared/printing";
+import { printNewLine } from "../../shared/printing/newlines";
 import { createSingleUseProvider } from "../createSingleUserProvider";
 
 /**

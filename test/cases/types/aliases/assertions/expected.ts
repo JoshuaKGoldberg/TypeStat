@@ -16,4 +16,16 @@
     function stringOrFunction(): string {
         return () => {};
     }
+
+    function stringOrFunctionReturningString(): string {
+        return () => {
+            return "";
+        };
+    }
+
+    function multipleFunctionTypes(): () => void {
+        return Math.random() > 0.5
+            ? ((() => {}) as (() => void))
+            : ((() => {}) as (() => undefined))
+    }
 })();

@@ -7,7 +7,7 @@ import { Dictionary } from "../shared/maps";
 /**
  * Options listed as JSON in a typestat configuration file.
  *
- * @remarks These are read by Cosmiconfig and parsed into {@link TypeStatOptions}.
+ * @remarks These are read from disk and parsed into {@link TypeStatOptions}.
  */
 export interface RawTypeStatOptions {
     /**
@@ -39,6 +39,11 @@ export interface RawTypeStatOptions {
      * Directives for project-level changes.
      */
     readonly package?: Readonly<Partial<Package>>;
+
+    /**
+     * Hooks to run after mutations are complete.
+     */
+    readonly postProcess?: Readonly<Partial<PostProcess>>;
 
     /**
      * Path to a TypeScript configuration file, if not "tsconfig.json".
@@ -121,6 +126,11 @@ export interface TypeStatOptions {
     readonly package: Readonly<Package>;
 
     /**
+     * Hooks to run after mutations are complete.
+     */
+    readonly postProcess: Readonly<PostProcess>;
+
+    /**
      * Path to a tsconfig.json file.
      */
     readonly projectPath: string;
@@ -136,6 +146,7 @@ export interface TypeStatOptions {
  */
 export type TypeStatCompilerOptions = ts.CompilerOptions & {
     noImplicitAny: boolean;
+    noImplicitThis: boolean;
     strictNullChecks: boolean;
 };
 
@@ -179,6 +190,16 @@ export interface Fixes {
     noImplicitAny: boolean;
 
     /**
+     * Whether to add type annotations to functions that don't yet have them per TypeScript's --noImplicitThis.
+     */
+    noImplicitThis: boolean;
+
+    /**
+     * Whether to remove type annotations that don't change the meaning of code.
+     */
+    noInferableTypes: boolean;
+
+    /**
      * Whether to add missing non-null assertions in nullable property accesses, function-like calls, and return types.
      */
     strictNonNullAssertions: boolean;
@@ -202,6 +223,16 @@ export interface Package {
      * Package manager to install missing types, if not `true` to auto-detect or `undefined` to not.
      */
     missingTypes: true | "npm" | "yarn" | undefined;
+}
+
+/**
+ * Hooks to run after mutations are complete.
+ */
+export interface PostProcess {
+    /**
+     * Shell commands to execute in order after mutations on mutated file paths.
+     */
+    shell: ReadonlyArray<ReadonlyArray<string>>;
 }
 
 /**

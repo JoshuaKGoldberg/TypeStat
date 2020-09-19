@@ -21,10 +21,10 @@ export const collectUsageFlagsAndSymbols = (
     allAssignedTypes: ReadonlyArray<ts.Type>,
 ) => {
     // Collect which flags and types are declared (as a type annotation)...
-    const [declaredFlags, declaredTypes] = collectFlagsAndTypesFromTypes(request, declaredType);
+    const [declaredFlags, declaredTypes] = collectFlagsAndTypesFromTypes(request, [declaredType]);
 
     // ...and which are later assigned
-    const [assignedFlags, assignedTypes] = collectFlagsAndTypesFromTypes(request, ...allAssignedTypes);
+    const [assignedFlags, assignedTypes] = collectFlagsAndTypesFromTypes(request, allAssignedTypes);
 
     // Subtract the above to find any flags or types assigned but not declared
     return {
@@ -36,19 +36,21 @@ export const collectUsageFlagsAndSymbols = (
 };
 
 /**
- * Separates raw type nodes into their contained flags and types.
+ * Separates raw type node(s) into their contained flags and types.
  *
  * @param options   Source file, metadata, and settings to collect mutations in the file.
  * @param allTypes   Any number of raw type nodes.
+ * @param allowStrictNullCheckAliases   Whether to allow `null` and `undefined` aliases regardless of compiler strictness.
  * @returns Flags and types found within the raw type nodes.
  */
-const collectFlagsAndTypesFromTypes = (
+export const collectFlagsAndTypesFromTypes = (
     request: FileMutationsRequest,
-    ...allTypes: ts.Type[]
-): [ReadonlySet<ts.TypeFlags>, ReadonlySet<ts.Type>] => {
+    allTypes: ReadonlyArray<ts.Type>,
+    allowStrictNullCheckAliases?: boolean,
+): [Set<ts.TypeFlags>, Set<ts.Type>] => {
     const foundFlags = new Set<ts.TypeFlags>();
     const foundTypes = new Set<ts.Type>();
-    const applicableTypeAliases = getApplicableTypeAliases(request);
+    const applicableTypeAliases = getApplicableTypeAliases(request, allowStrictNullCheckAliases);
 
     // Scan each type for undeclared type additions
     for (const type of allTypes) {
@@ -68,7 +70,7 @@ const collectFlagsAndTypesFromTypes = (
         // If the type is a union, add any flags or types found within it
         if ("types" in type) {
             const subTypes = recursivelyCollectSubTypes(type);
-            const [subFlags, deepSubTypes] = collectFlagsAndTypesFromTypes(request, ...subTypes);
+            const [subFlags, deepSubTypes] = collectFlagsAndTypesFromTypes(request, subTypes);
 
             for (const subFlag of subFlags) {
                 foundFlags.add(subFlag);
@@ -83,7 +85,7 @@ const collectFlagsAndTypesFromTypes = (
     return [foundFlags, foundTypes];
 };
 
-const recursivelyCollectSubTypes = (type: ts.UnionType): ts.Type[] => {
+export const recursivelyCollectSubTypes = (type: ts.UnionType): ts.Type[] => {
     const subTypes: ts.Type[] = [];
 
     for (const subType of type.types) {
@@ -109,9 +111,17 @@ const findMissingTypes = (
         }
     }
 
+    const declaredTypesContainFunction = Array.from(declaredTypes).some(typeContainsFunction);
     const remainingMissingTypes = new Set(assignedTypes);
 
     const isAssignedTypeMissingFromDeclared = (assignedType: ts.Type) => {
+        // We ignore assigned function types when the declared type(s) include function(s).
+        // These non-assigned function types are more likely what users would consider bugs.
+        // For example, covariant functions might not be assignable, but should be fixed manually.
+        if (declaredTypesContainFunction && typeContainsFunction(assignedType)) {
+            return false;
+        }
+
         for (const potentialParentType of declaredTypes) {
             if (isAssignableToType(potentialParentType, assignedType, request.services.program.getTypeChecker())) {
                 return false;
@@ -129,3 +139,5 @@ const findMissingTypes = (
 
     return setSubtract(remainingMissingTypes, declaredTypes);
 };
+
+const typeContainsFunction = (type: ts.Type) => type.getCallSignatures().length !== 0;

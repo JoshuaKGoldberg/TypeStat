@@ -1,22 +1,29 @@
 import * as path from "path";
 
-import { TypeStatArgv } from "../../index";
 import { normalizeAndSlashify } from "../../shared/paths";
 import { Package, RawTypeStatOptions } from "../types";
 
-export const collectPackageOptions = (argv: TypeStatArgv, packageDirectory: string, rawOptions: RawTypeStatOptions): Package => {
+export const collectPackageOptions = (cwd: string, rawOptions: RawTypeStatOptions): Package => {
     const rawPackageOptions = rawOptions.package === undefined ? {} : rawOptions.package;
+    const rawPackageFile = rawPackageOptions.file;
 
-    const rawPackageFile = argv.packageFile === undefined ? rawPackageOptions.file : argv.packageFile;
-
-    const file =
-        rawPackageFile === undefined || path.isAbsolute(rawPackageFile)
-            ? normalizeAndSlashify(path.join(packageDirectory, "package.json"))
-            : normalizeAndSlashify(rawPackageFile);
+    const file = collectRawPackageFile(cwd, rawPackageFile);
 
     return {
-        directory: packageDirectory,
+        directory: cwd,
         file,
-        missingTypes: argv.packageMissingTypes === undefined ? rawPackageOptions.missingTypes : argv.packageMissingTypes,
+        missingTypes: rawPackageOptions.missingTypes,
     };
+};
+
+const collectRawPackageFile = (cwd: string, rawPackageFile: string | undefined) => {
+    if (rawPackageFile === undefined) {
+        return normalizeAndSlashify(path.join(cwd, "package.json"));
+    }
+
+    if (path.isAbsolute(rawPackageFile)) {
+        return normalizeAndSlashify(rawPackageFile);
+    }
+
+    return normalizeAndSlashify(path.join(cwd, rawPackageFile));
 };

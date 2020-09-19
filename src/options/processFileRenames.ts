@@ -1,4 +1,4 @@
-import { fs, readline } from "mz";
+import { fs } from "mz";
 
 import { TypeStatOptions } from "./types";
 
@@ -13,12 +13,14 @@ export const processFileRenames = async (options: TypeStatOptions): Promise<Type
 const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions> => {
     const newFileNames = new Set(options.fileNames);
 
-    const filesToRename = (await Promise.all(
-        fileNames.map(async (fileName) => ({
-            newFileName: await getNewFileName(options, fileName),
-            oldFileName: fileName,
-        })),
-    )).filter(({ newFileName, oldFileName }) => newFileName !== oldFileName);
+    const filesToRename = (
+        await Promise.all(
+            fileNames.filter(canBeRenamed).map(async (fileName) => ({
+                newFileName: await getNewFileName(options, fileName),
+                oldFileName: fileName,
+            })),
+        )
+    ).filter(({ newFileName, oldFileName }) => newFileName !== oldFileName);
 
     if (filesToRename.length === 0) {
         return options;
@@ -33,13 +35,18 @@ const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyAr
         newFileNames.add(newFileName);
     }
 
-    readline.moveCursor(options.logger.stdout, 0, -1);
-    readline.clearLine(options.logger.stdout, 0);
-
     return {
         ...options,
         fileNames: Array.from(newFileNames),
     };
+};
+
+const validRenameExtensions = new Set([".js", ".jsx"]);
+
+const canBeRenamed = (oldFileName: string): boolean => {
+    const oldExtension = oldFileName.substring(oldFileName.lastIndexOf("."));
+
+    return validRenameExtensions.has(oldExtension);
 };
 
 const getNewFileName = async (options: TypeStatOptions, oldFileName: string): Promise<string> => {

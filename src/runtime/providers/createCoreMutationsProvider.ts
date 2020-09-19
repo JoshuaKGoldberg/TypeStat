@@ -1,10 +1,11 @@
 import { IMutation, IMutationsWave } from "automutate";
-import { readline } from "mz";
+import chalk from "chalk";
 
 import { TypeStatOptions } from "../../options/types";
 import { LazyCache } from "../../services/LazyCache";
 import { FileInfoCache } from "../../shared/FileInfoCache";
 import { convertMapToObject, Dictionary } from "../../shared/maps";
+import { NameGenerator } from "../../shared/NameGenerator";
 import { collectFilteredNodes } from "../collectFilteredNodes";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
 import { findMutationsInFile } from "../findMutationsInFile";
@@ -16,9 +17,8 @@ import { findMutationsInFile } from "../findMutationsInFile";
  * @param allModifiedFileNames   Set to mark names of all files that were modified.
  */
 export const createCoreMutationsProvider = (options: TypeStatOptions, allModifiedFiles: Set<string>) => {
-    const fileNamesAndServicesCache = new LazyCache(() => createFileNamesAndServices(options));
+    const fileNamesAndServicesCache = createFileNamesAndServicesCache(options);
     let lastFileIndex = -1;
-    let hasPassedFirstFile = false;
 
     return async (): Promise<IMutationsWave> => {
         const startTime = Date.now();
@@ -40,6 +40,7 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
             const foundMutations = await findMutationsInFile({
                 fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
                 filteredNodes,
+                nameGenerator: new NameGenerator(sourceFile.fileName),
                 options,
                 services,
                 sourceFile,
@@ -57,20 +58,11 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
 
         if (lastFileIndex === fileNames.length) {
             lastFileIndex = 0;
-        }
 
-        if (!hasPassedFirstFile) {
-            hasPassedFirstFile = true;
-        } else {
-            readline.clearLine(options.logger.stdout, 0);
-            readline.moveCursor(options.logger.stdout, 0, -1);
-        }
-
-        // Only recreate the language service once we've visited every file
-        // This way we don't constantly re-scan many of the source files each wave
-        // Eventually it would be nice to support incremental updates
-        // See https://github.com/JoshuaKGoldberg/TypeStat/issues/36
-        if (lastFileIndex === 0) {
+            // Only recreate the language service once we've visited every file
+            // This way we don't constantly re-scan many of the source files each wave
+            // Eventually it would be nice to support incremental updates
+            // See https://github.com/JoshuaKGoldberg/TypeStat/issues/36
             fileNamesAndServicesCache.clear();
         }
 
@@ -85,4 +77,15 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
                     : (convertMapToObject(fileMutations) as Dictionary<IMutation[]>),
         };
     };
+};
+
+const createFileNamesAndServicesCache = (options: TypeStatOptions) => {
+    return new LazyCache(() => {
+        options.logger.stdout.write(chalk.grey("Preparing language services to visit files...\n"));
+
+        const { fileNames, services } = createFileNamesAndServices(options);
+        options.logger.stdout.write(chalk.grey(`Prepared language services for ${fileNames.length} files...\n`));
+
+        return { fileNames, services };
+    });
 };

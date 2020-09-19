@@ -1,5 +1,4 @@
 export interface Dictionary<TValue> {
-    // tslint:disable-next-line:readonly-keyword
     [i: string]: TValue;
 }
 

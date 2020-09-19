@@ -13,7 +13,19 @@
         return new Foo();
     }
 
-    function stringOrFunction(): string | __function {
+    function stringOrFunction(): string | (() => void) {
         return () => {};
+    }
+
+    function stringOrFunctionReturningString(): string | (() => string) {
+        return () => {
+            return "";
+        };
+    }
+
+    function multipleFunctionTypes(): () => void {
+        return Math.random() > 0.5
+            ? ((() => {}) as (() => void))
+            : ((() => {}) as (() => undefined))
     }
 })();

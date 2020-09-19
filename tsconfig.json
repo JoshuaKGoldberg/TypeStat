@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "esModuleInterop": true,
         "lib": ["es2015"],
         "module": "commonjs",
         "moduleResolution": "node",
@@ -7,8 +8,8 @@
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
+        // "noUnusedLocals": true,
+        // "noUnusedParameters": true,
         "pretty": true,
         "resolveJsonModule": true,
         "sourceMap": true,

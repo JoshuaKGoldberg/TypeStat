@@ -4,6 +4,7 @@ import * as ts from "typescript";
 import { TypeStatOptions } from "../options/types";
 import { LanguageServices } from "../services/language";
 import { FileInfoCache } from "../shared/FileInfoCache";
+import { NameGenerator } from "../shared/NameGenerator";
 
 import { MutationsComplaint } from "./complaint";
 
@@ -13,6 +14,7 @@ import { MutationsComplaint } from "./complaint";
 export interface FileMutationsRequest {
     readonly fileInfoCache: FileInfoCache;
     readonly filteredNodes: Set<ts.Node>;
+    readonly nameGenerator: NameGenerator;
     readonly options: TypeStatOptions;
     readonly services: LanguageServices;
     readonly sourceFile: ts.SourceFile;

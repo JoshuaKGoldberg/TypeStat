@@ -1,10 +1,9 @@
 import * as path from "path";
 
-import { TypeStatArgv } from "../../index";
 import { ProcessLogger } from "../../logging/logger";
 import { builtInFileMutators } from "../../mutators/builtIn";
 import { FileMutator } from "../../mutators/fileMutator";
-import { arrayify, collectOptionals } from "../../shared/arrays";
+import { collectOptionals } from "../../shared/arrays";
 import { getQuickErrorSummary } from "../../shared/errors";
 import { RawTypeStatOptions } from "../types";
 
@@ -15,19 +14,17 @@ interface ImportedFileMutator {
 /**
  * Finds mutators to use in runtime, as either the built-in mutators or custom mutators specified by the user.
  *
- * @param argv   Root arguments to pass to TypeStat.
  * @param rawOptions   Options listed as JSON in a typestat configuration file.
  * @param packageDirectory   Base directory to resolve paths from.
  * @param logger   Wraps process.stderr and process.stdout.
  * @returns Mutators to run with their friendly names.
  */
 export const collectAddedMutators = (
-    argv: TypeStatArgv,
     rawOptions: RawTypeStatOptions,
     packageDirectory: string,
     logger: ProcessLogger,
 ): ReadonlyArray<[string, FileMutator]> => {
-    const addedMutators = collectOptionals(arrayify(argv.mutator), rawOptions.mutators);
+    const addedMutators = collectOptionals(rawOptions.mutators);
     if (addedMutators.length === 0) {
         return builtInFileMutators;
     }
@@ -63,7 +60,6 @@ const collectAddedMutator = (packageDirectory: string, rawAddedMutator: string, 
     if (typeof result.fileMutator !== "function") {
         logger.stderr.write(`Could not require ${rawAddedMutator} from ${packageDirectory}.\n`);
 
-        // tslint:disable-next-line:strict-type-predicates
         if (result.fileMutator === undefined) {
             logger.stderr.write(`It doesn't have an exported .fileMutator, which must be a function.\n`);
         } else {

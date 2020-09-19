@@ -2,12 +2,13 @@ import * as ts from "typescript";
 
 import { TypeStatArgv } from "../index";
 import { processLogger } from "../logging/logger";
-import { arrayify, collectOptionals } from "../shared/arrays";
+import { collectOptionals } from "../shared/arrays";
 import { collectAsConfiguration } from "../shared/booleans";
 
 import { collectAddedMutators } from "./parsing/collectAddedMutators";
 import { collectFileOptions } from "./parsing/collectFileOptions";
 import { collectNoImplicitAny } from "./parsing/collectNoImplicitAny";
+import { collectNoImplicitThis } from "./parsing/collectNoImplicitThis";
 import { collectPackageOptions } from "./parsing/collectPackageOptions";
 import { collectStrictNullChecks } from "./parsing/collectStrictNullChecks";
 import { collectTypeAliases } from "./parsing/collectTypeAliases";
@@ -16,8 +17,8 @@ import { RawTypeStatOptions, TypeStatOptions } from "./types";
 export interface OptionsFromRawOptionsSettings {
     argv: TypeStatArgv;
     compilerOptions: Readonly<ts.CompilerOptions>;
+    cwd: string;
     fileNames?: ReadonlyArray<string>;
-    packageDirectory: string;
     projectPath: string;
     rawOptions: RawTypeStatOptions;
 }
@@ -30,65 +31,57 @@ export interface OptionsFromRawOptionsSettings {
 export const fillOutRawOptions = ({
     argv,
     compilerOptions,
+    cwd,
     fileNames,
-    packageDirectory,
     projectPath,
     rawOptions,
 }: OptionsFromRawOptionsSettings): TypeStatOptions | string => {
     const rawOptionTypes = rawOptions.types === undefined ? {} : rawOptions.types;
-    const noImplicitAny = collectNoImplicitAny(argv, compilerOptions, rawOptions);
-    const { compilerStrictNullChecks, typeStrictNullChecks } = collectStrictNullChecks(argv, compilerOptions, rawOptionTypes);
+    const noImplicitAny = collectNoImplicitAny(compilerOptions, rawOptions);
+    const noImplicitThis = collectNoImplicitThis(compilerOptions, rawOptions);
+    const { compilerStrictNullChecks, typeStrictNullChecks } = collectStrictNullChecks(compilerOptions, rawOptionTypes);
 
-    const typeAliases = collectTypeAliases(argv, rawOptionTypes);
+    const typeAliases = collectTypeAliases(rawOptionTypes);
     if (typeof typeAliases === "string") {
         return typeAliases;
     }
 
-    const packageOptions = collectPackageOptions(argv, packageDirectory, rawOptions);
+    const packageOptions = collectPackageOptions(cwd, rawOptions);
 
-    const options = {
+    const shell: ReadonlyArray<string>[] = [];
+    if (rawOptions.postProcess !== undefined && rawOptions.postProcess.shell !== undefined) {
+        shell.push(...rawOptions.postProcess.shell);
+    }
+
+    return {
         compilerOptions: {
             ...compilerOptions,
             noImplicitAny,
+            noImplicitThis,
             strictNullChecks: compilerStrictNullChecks,
         },
         fileNames,
-        files: collectFileOptions(argv, rawOptions),
-        filters: collectOptionals(arrayify(argv.filter), rawOptions.filters),
+        files: collectFileOptions(rawOptions),
+        filters: collectOptionals(rawOptions.filters),
         fixes: {
             incompleteTypes: false,
             missingProperties: false,
             noImplicitAny: false,
+            noImplicitThis: false,
+            noInferableTypes: false,
             strictNonNullAssertions: false,
             ...rawOptions.fixes,
         },
         logger: argv.logger,
-        mutators: collectAddedMutators(argv, rawOptions, packageOptions.directory, processLogger),
+        mutators: collectAddedMutators(rawOptions, packageOptions.directory, processLogger),
         package: packageOptions,
+        postProcess: { shell },
         projectPath,
         types: {
             aliases: typeAliases,
-            matching: argv.typeMatching === undefined ? rawOptionTypes.matching : argv.typeMatching,
-            onlyPrimitives: collectAsConfiguration(argv.typeOnlyPrimitives, rawOptionTypes.onlyPrimitives),
+            matching: rawOptionTypes.matching,
+            onlyPrimitives: collectAsConfiguration(rawOptionTypes.onlyPrimitives),
             strictNullChecks: typeStrictNullChecks,
         },
     };
-
-    if (argv.fixIncompleteTypes !== undefined) {
-        options.fixes.incompleteTypes = argv.fixIncompleteTypes;
-    }
-
-    if (argv.fixMissingProperties !== undefined) {
-        options.fixes.missingProperties = argv.fixMissingProperties;
-    }
-
-    if (argv.fixNoImplicitAny !== undefined) {
-        options.fixes.noImplicitAny = argv.fixNoImplicitAny;
-    }
-
-    if (argv.fixStrictNonNullAssertions !== undefined) {
-        options.fixes.strictNonNullAssertions = argv.fixStrictNonNullAssertions;
-    }
-
-    return options;
 };

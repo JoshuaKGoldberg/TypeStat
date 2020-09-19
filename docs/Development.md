@@ -4,7 +4,6 @@ Thanks for looking at TypeStat!
 It's very new and I very much would appreciate your help.
 
 Any issue marked as [accepting prs](https://github.com/JoshuaKGoldberg/TypeStat/issues?q=is%3Aissue+is%3Aopen+label%3A%22accepting+prs%22) on the issue tracker is fair game to take on.
-
 Please do file issues if you find bugs or lacking features!
 
 ## Local Setup
@@ -22,7 +21,7 @@ Do all three with `yarn run verify`.
 
 ## Mutation Tests
 
-TypeStat tests are built on [`automutate-tests`](https://github.com/automutate/automutate-tests).
+Most TypeStat tests run TypeStat on checked-in files and are built on [`automutate-tests`](https://github.com/automutate/automutate-tests).
 These tests are located under `test/cases`.
 
 `yarn run test:mutation` may take in two parameters:
@@ -70,5 +69,5 @@ Run it with `node --inspect` then visit `chrome://inspect` to use the browser de
 For example:
 
 ```shell
-node --inspect typestat src/**/*.test.ts --config typestat.json --project src/tsconfig.json --fixIncompleteTypes
+node --inspect typestat --config typestat.json
 ```

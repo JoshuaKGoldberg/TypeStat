@@ -3,7 +3,7 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../../mutations/creators";
-import { findNodeByStartingPosition, isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
+import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
 import { isNodeWithType } from "../../../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
@@ -39,7 +39,7 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
     }
 
     // Find everything else referencing the property
-    const references = request.fileInfoCache.getNodeReferences(node);
+    const references = request.fileInfoCache.getNodeReferencesAsNodes(node);
     if (references !== undefined) {
         // For each referencing location, update types if the type is assigned to there
         for (const reference of references) {
@@ -53,19 +53,12 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
 /**
  * Adds missing types for a reference to a property.
  *
- * @param reference   Source code reference to a property.
+ * @param identifier   Node referencing the property.
  * @param assignedTypes   In-progress collection of types assigned to a property.
  * @param request   Metadata and settings to collect mutations in a file.
  */
-const updateAssignedTypesForReference = (reference: ts.ReferenceEntry, assignedTypes: ts.Type[], request: FileMutationsRequest): void => {
-    // Grab the source file containing the reference
-    const referencingSourceFile = request.services.program.getSourceFile(reference.fileName);
-    if (referencingSourceFile === undefined) {
-        return;
-    }
-
+const updateAssignedTypesForReference = (identifier: ts.Node, assignedTypes: ts.Type[], request: FileMutationsRequest): void => {
     // In order to write a new type, the referencing node should be an identifier...
-    const identifier = findNodeByStartingPosition(referencingSourceFile, reference.textSpan.start);
     if (!ts.isIdentifier(identifier)) {
         return;
     }
