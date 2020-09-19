@@ -1,39 +1,10 @@
-import * as ts from "typescript";
+import ts from "typescript";
 
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "../../mutators/fileMutator";
 
-import { collectFlagsAndTypesFromTypes } from "./collecting";
-
-/**
- * Type flags and aliases to check when --strictNullChecks is not enabled.
- */
-const nonStrictTypeFlagAliases = new Map([
-    [ts.TypeFlags.Boolean, "boolean"],
-    [ts.TypeFlags.BooleanLiteral, "boolean"],
-    [ts.TypeFlags.Number, "number"],
-    [ts.TypeFlags.NumberLiteral, "number"],
-    [ts.TypeFlags.String, "string"],
-    [ts.TypeFlags.StringLiteral, "string"],
-]);
-
-/**
- * Type flags and aliases to check when --strictNullChecks is enabled.
- */
-const strictTypeFlagsWithAliases = new Map([
-    ...nonStrictTypeFlagAliases,
-    [ts.TypeFlags.Null, "null"],
-    [ts.TypeFlags.Undefined, "undefined"],
-]);
-
-/**
- * @returns Built-in type flags and aliases per overall request strictNullChecks setting.
- */
-export const getApplicableTypeAliases = (request: FileMutationsRequest, alwaysAllowStrictNullCheckAliases = false) =>
-    alwaysAllowStrictNullCheckAliases ||
-    request.options.types.strictNullChecks ||
-    request.services.program.getCompilerOptions().strictNullChecks
-        ? strictTypeFlagsWithAliases
-        : nonStrictTypeFlagAliases;
+import { getApplicableTypeAliases } from "./aliases";
+import { createTypeName } from "./createTypeName";
+import { findAliasOfType } from "./findAliasOfType";
 
 /**
  * Joins assigning types into a union to be used as a type reference.
@@ -90,49 +61,6 @@ export const joinIntoType = (
     return unionNames.join(" | ");
 };
 
-const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);
-
-const filterMatchingTypeNames = (unionNames: ReadonlyArray<string>, matching: ReadonlyArray<string>): string[] =>
-    unionNames.filter((name) => matching.some((matcher) => name.match(matcher) !== null));
-
-/**
- * Given a type name, returns its matched alias if one is found, or the type otherwise.
- *
- * @remarks
- * It's likely this could become a performance concern for projects with many type aliases.
- * If (and only if) profiling shows this to be the case, consider adding a cache to the request object.
- */
-export const findAliasOfType = (type: string, aliases: ReadonlyMap<RegExp, string>): string => {
-    for (const [matcher, value] of aliases) {
-        if (type.match(matcher) !== null) {
-            return value.replace(/\{0\}/g, type);
-        }
-    }
-
-    return type;
-};
-
-/**
- * Creates a printable type name summarizing existing type(s).
- */
-export const createTypeName = (request: FileMutationsRequest, ...types: ts.Type[]) => {
-    // In non-strict mode, `null` and `undefined` are aliased to "".
-    // If nothing is found then we know types is just an array of null and/or undefined
-    for (const allowStrictNullCheckAliases of [false, true]) {
-        // Find the flags and nested types from the declared type
-        const [typeFlags, allTypes] = collectFlagsAndTypesFromTypes(request, types, allowStrictNullCheckAliases);
-
-        // Join the missing types into a type string
-        // Most of the time, flags and/or type names will be found on the types
-        const joinedType = joinIntoType(typeFlags, allTypes, request, allowStrictNullCheckAliases);
-        if (joinedType !== undefined) {
-            return joinedType;
-        }
-    }
-
-    return undefined;
-};
-
 const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
     // If the type isn't a function, we can generally print it directly by name
     // Note that the type given to this function shouldn't be union or intersection types
@@ -175,3 +103,8 @@ const printSignatureParameter = (request: FileMutationsRequest, parameter: ts.Sy
 
     return `${name}: ${createTypeName(request, type)}`;
 };
+
+const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);
+
+const filterMatchingTypeNames = (unionNames: ReadonlyArray<string>, matching: ReadonlyArray<string>): string[] =>
+    unionNames.filter((name) => matching.some((matcher) => name.match(matcher) !== null));

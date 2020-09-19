@@ -2,7 +2,7 @@ import { combineMutations, IMutation, ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
-import { createTypeName } from "../aliasing";
+import { createTypeName } from "../aliasing/createTypeName";
 
 import { TypeSummary } from "./summarization";
 

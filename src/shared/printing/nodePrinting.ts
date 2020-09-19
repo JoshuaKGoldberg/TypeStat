@@ -1,4 +1,4 @@
-import { createTypeName } from "../../mutations/aliasing";
+import { createTypeName } from "../../mutations/aliasing/createTypeName";
 import { TypeSummariesByName, TypeSummary } from "../../mutations/expansions/summarization";
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 

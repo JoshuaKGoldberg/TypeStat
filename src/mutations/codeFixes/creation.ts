@@ -1,5 +1,6 @@
 import { combineMutations, IMultipleMutations, ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
+import { aliasRawText } from "../aliasing/aliasRawText";
 
 export interface CodeFixCreationPreferences {
     ignoreKnownBlankTypes?: boolean;
@@ -40,7 +41,7 @@ export const createCodeFixCreationMutation = (
     return combineMutations(
         ...simplifiedTextChanges.map(
             (textChange): ITextInsertMutation => ({
-                insertion: textChange.newText,
+                insertion: aliasRawText(textChange.newText) ?? textChange.newText,
                 range: {
                     begin: textChange.span.start,
                 },

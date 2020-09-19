@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { createTypeName } from "../../../../mutations/aliasing";
+import { createTypeName } from "../../../../mutations/aliasing/createTypeName";
 import { AssignedTypesByName, joinAssignedTypesByName } from "../../../../mutations/assignments";
 import { createDeclarationForTypeSummaries } from "../../../../mutations/creations/creationMutations";
 import { summarizeAllAssignedTypes } from "../../../../mutations/expansions/summarization";
