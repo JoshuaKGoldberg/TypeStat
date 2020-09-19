@@ -67,7 +67,7 @@ export const expandReferencesForGenericTypes = (
 
         // The templated declaration is the backing value declaration for the instantiation's symbol
         const templatedDeclaration = templatedDeclarationSymbol.valueDeclaration;
-        if (!isNodeWithDefinedTypeParameters(templatedDeclaration)) {
+        if (!isNodeWithDefinedTypeParameters(templatedDeclaration) || templatedParentInstantiation.typeArguments === undefined) {
             continue;
         }
 
@@ -210,7 +210,7 @@ const expressionRefersToOriginalType = (
     // Alternately, what about functions that themselves have types?
     // Again, this can go wrong: e.g. with multiple type arguments that have intermixed usages
     if (isNodeWithDefinedTypeArguments(potentialCallOrNewExpression)) {
-        for (const typeArgument of potentialCallOrNewExpression.typeArguments) {
+        for (const typeArgument of potentialCallOrNewExpression.typeArguments || []) {
             if (typeChecker.getTypeAtLocation(typeArgument) === originalType) {
                 return true;
             }
