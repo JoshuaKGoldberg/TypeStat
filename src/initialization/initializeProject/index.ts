@@ -11,21 +11,21 @@ export const initializeProject = async () => {
 };
 
 const initializeBuiltInProject = async () => {
-    const { project } = await prompt([
+    const { project } = await prompt<{ project: string }>([
         {
             choices,
-            initial: choices[choices.length - 1],
+            initial: choices.length - 1,
             message: "Where is your tsconfig.json?",
             name: "project",
             type: "select",
         },
     ]);
 
-    return project as string;
+    return project;
 };
 
 const initializeCustomProject = async () => {
-    const { project } = await prompt([
+    const { project } = await prompt<{ project: string }>([
         {
             initial: "./tsconfig.json",
             message: "Where is your tsconfig.json?",
@@ -34,5 +34,5 @@ const initializeCustomProject = async () => {
         },
     ]);
 
-    return project as string;
+    return project;
 };

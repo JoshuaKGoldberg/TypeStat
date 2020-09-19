@@ -17,21 +17,21 @@ const initializeBuiltInTests = async () => {
         "test/**/*.{ts,tsx}",
     ];
 
-    const { testFiles } = await prompt([
+    const { testFiles } = await prompt<{ testFiles: string }>([
         {
             choices,
-            initial: choices[choices.length - 1],
+            initial: choices.length - 1,
             message: "Which glob matches your test files?",
             name: "testFiles",
             type: "select",
         },
     ]);
 
-    return testFiles as string;
+    return testFiles;
 };
 
 const getCustomTests = async () => {
-    const { testFiles } = await prompt([
+    const { testFiles } = await prompt<{ testFiles: string }>([
         {
             initial: "test/**/*.{ts,tsx}",
             message: "Where are your test files?",
@@ -40,5 +40,5 @@ const getCustomTests = async () => {
         },
     ]);
 
-    return testFiles as string;
+    return testFiles;
 };

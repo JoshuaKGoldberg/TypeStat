@@ -12,12 +12,12 @@ export interface PropTypesMembers {
     /**
      * `.isRequired` ending node, if it exists.
      */
-    isRequired?: ts.Identifier;
+    isRequired?: ts.Identifier | ts.PrivateIdentifier;
 
     /**
      * Node representing the name of the type, such as `number` or `shape`.
      */
-    nameNode: ts.Identifier;
+    nameNode: ts.Identifier | ts.PrivateIdentifier;
 }
 
 /**
@@ -97,7 +97,7 @@ const getPropTypesMemberFromPropertyAccessExpressionOptional = (node: ts.Propert
  */
 const getPropTypesMemberFromPropertyAccessExpressionRequired = (
     node: ts.PropertyAccessExpression,
-    isRequired: ts.Identifier,
+    isRequired: ts.Identifier | ts.PrivateIdentifier,
 ): PropTypesMembers | undefined => {
     const { expression } = node;
 
