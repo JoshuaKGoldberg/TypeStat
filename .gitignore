@@ -4,3 +4,4 @@ node_modules/
 npm-debug.log
 src/**/*.js
 test/**/actual.ts
+test/**/actual.tsx
