@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import { recursivelyCollectSubTypes } from "../mutations/collecting";
 
 export type TypeWithTypeArguments = ts.Type & {
     typeArguments: ts.Type[];

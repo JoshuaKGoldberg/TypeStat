@@ -39,7 +39,7 @@ describeMutationTestCases(
 
         const projectPath = path.join(projectDirectory, "tsconfig.json");
         const rawCompilerOptions = fs.readFileSync(typeStatPath).toString();
-        const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config as {};
+        const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config;
         const logger = {
             stderr: process.stderr,
             stdout: new FakeWritableStream(),
