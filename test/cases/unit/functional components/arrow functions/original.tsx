@@ -16,4 +16,10 @@ import React from "react";
     DeclaresPropsWithPropTypes.propTypes = {
         declaredString: PropTypes.string,
     };
+
+    interface NeverUsedComponentProps {
+        value: number;
+    }
+
+    const NeverUsedComponent = (value: NeverUsedComponentProps) => value;
 })();

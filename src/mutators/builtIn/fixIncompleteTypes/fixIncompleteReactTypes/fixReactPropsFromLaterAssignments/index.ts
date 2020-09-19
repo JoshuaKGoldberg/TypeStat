@@ -22,7 +22,7 @@ const visitReactComponentNode = (node: ReactComponentNode, request: FileMutation
 
     // Find all types of props later passed to the node
     const componentAssignedTypes = getComponentAssignedTypesFromUsage(request, node);
-    if (componentAssignedTypes === undefined) {
+    if (componentAssignedTypes === undefined || componentAssignedTypes.length === 0) {
         return undefined;
     }
 
