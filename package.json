@@ -13,7 +13,7 @@
         "glob": "^7.1.6",
         "mz": "^2.7.0",
         "tsutils": "^3.17.1",
-        "typescript": "^3.7.2"
+        "typescript": "^4.0.0"
     },
     "description": "Converts JavaScript to TypeScript and TypeScript to better TypeScript.",
     "devDependencies": {
