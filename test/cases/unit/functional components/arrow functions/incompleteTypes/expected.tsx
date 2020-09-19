@@ -21,4 +21,10 @@ interface DeclaresPropsWithPropTypesProps {
     DeclaresPropsWithPropTypes.propTypes = {
         declaredString: PropTypes.string,
     };
+
+    interface NeverUsedComponentProps {
+        value: number;
+    }
+
+    const NeverUsedComponent = (value: NeverUsedComponentProps) => value;
 })();
