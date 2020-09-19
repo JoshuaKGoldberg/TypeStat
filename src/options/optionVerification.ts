@@ -1,6 +1,6 @@
 import { TypeStatOptions } from "./types";
 
-export const findComplaintForOptions = (options: TypeStatOptions | string): string | undefined => {
+export const findComplaintForOptions = (options: TypeStatOptions | string): TypeStatOptions | string => {
     if (typeof options === "string") {
         return options;
     }
@@ -13,7 +13,7 @@ export const findComplaintForOptions = (options: TypeStatOptions | string): stri
         return "--fixStrictNonNullAssertions specified but not strictNullChecks. Consider enabling --typeStrictNullChecks (see http://github.com/joshuakgoldberg/typestat/blob/master/docs/Fixes.md).";
     }
 
-    return undefined;
+    return options;
 };
 
 const noFixesSpecified = (options: TypeStatOptions): boolean =>
