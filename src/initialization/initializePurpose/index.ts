@@ -14,7 +14,7 @@ export const initializePurpose = async () => {
         choices.unshift(InitializationPurpose.Skipped);
     }
 
-    const { purpose } = await prompt([
+    const { purpose } = await prompt<{ purpose: InitializationPurpose }>([
         {
             choices,
             message: "What are you trying to accomplish?",

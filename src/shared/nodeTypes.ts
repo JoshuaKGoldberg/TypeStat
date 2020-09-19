@@ -43,7 +43,7 @@ export type FunctionLikeDeclarationWithType = ts.FunctionLikeDeclaration & NodeW
 // TODO: make this a more specific type
 // Will have to deal with instantiations (new Container<T>() { ... }) and declarations (class Container<T>() { ... }))
 export type NodeWithDefinedTypeArguments = ts.Node & {
-    typeArguments: ts.NodeArray<ts.TypeNode>;
+    typeArguments?: ts.NodeArray<ts.TypeNode>;
 };
 
 // TODO: make this a more specific type

@@ -15,15 +15,15 @@ export const initializeImprovements = async () => {
         InitializationImprovement.StrictNullChecks,
     ];
 
-    const { improvements } = await prompt([
+    const { improvements } = await prompt<{ improvements: InitializationImprovement[] }>([
         {
             choices,
-            initial: choices,
+            initial: 0,
             message: "Which improvements would you like to make?",
             name: "improvements",
             type: "multiselect",
         },
     ]);
 
-    return improvements as InitializationImprovement[];
+    return improvements;
 };

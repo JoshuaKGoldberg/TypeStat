@@ -34,21 +34,21 @@ const initializeBuiltInSources = async (completion: string) => {
         other,
     ];
 
-    const { sourceFiles } = await prompt([
+    const { sourceFiles } = await prompt<{ sourceFiles: string }>([
         {
             choices,
-            initial: choices[choices.length - 1],
+            initial: choices.length - 1,
             message: "Which glob matches files you'd like to convert?",
             name: "sourceFiles",
             type: "select",
         },
     ]);
 
-    return sourceFiles as string;
+    return sourceFiles;
 };
 
 const getCustomSources = async (completion: string) => {
-    const { sourceFiles } = await prompt([
+    const { sourceFiles } = await prompt<{ sourceFiles: string }>([
         {
             initial: `src${completion}`,
             message: "Which files would you like to convert?",
@@ -57,5 +57,5 @@ const getCustomSources = async (completion: string) => {
         },
     ]);
 
-    return sourceFiles as string;
+    return sourceFiles;
 };

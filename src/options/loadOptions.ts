@@ -40,10 +40,8 @@ export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions[]
             collectFileNames(argv, cwd, rawOptions),
         ]);
 
-        // For some reason, Promise.all is adding `| undefined` to the `compilerOptions` type...
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const filledOutOptions = findComplaintForOptions(
-            fillOutRawOptions({ argv, compilerOptions: compilerOptions!, cwd, fileNames, projectPath, rawOptions }),
+            fillOutRawOptions({ argv, compilerOptions, cwd, fileNames, projectPath, rawOptions }),
         );
         if (typeof filledOutOptions === "string") {
             return `Invalid options at index ${i}: ${filledOutOptions}`;

@@ -3,7 +3,7 @@ import * as ts from "typescript";
 export type KnownTypeLiteralNode =
     | ts.KeywordTypeNode
     | ts.LiteralTypeNode
-    | ts.NullLiteral & ts.Token<ts.SyntaxKind.NullKeyword>
+    // | ts.NullLiteral & ts.Token<ts.SyntaxKind.NullKeyword>
     | ts.TypeQueryNode;
 
 export const transformLiteralToTypeLiteralNode = (node: ts.Node): KnownTypeLiteralNode | undefined => {
@@ -20,7 +20,7 @@ export const transformLiteralToTypeLiteralNode = (node: ts.Node): KnownTypeLiter
     }
 
     if (node.kind === ts.SyntaxKind.NullKeyword) {
-        return ts.createNull();
+        return ts.createLiteralTypeNode(ts.createNull());
     }
 
     if (node.kind === ts.SyntaxKind.UndefinedKeyword) {
