@@ -5,7 +5,8 @@ import { globAllAsync } from "../shared/glob";
 import { normalizeAndSlashify } from "../shared/paths";
 
 import { fillOutRawOptions } from "./fillOutRawOptions";
-import { findRawOptions, FoundRawOptions } from "./findRawOptions";
+import { findRawOptions } from "./findRawOptions";
+import { findComplaintForOptions } from "./optionVerification";
 import { parseRawCompilerOptions } from "./parseRawCompilerOptions";
 import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
@@ -15,7 +16,7 @@ import { RawTypeStatOptions, TypeStatOptions } from "./types";
  * @param argv   Root arguments passed to TypeStat
  * @returns Promise for filled-out TypeStat options, or a string complaint from failing to make them.
  */
-export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | string> => {
+export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions[] | string> => {
     if (argv.config === undefined) {
         return "-c/--config file must be provided.";
     }
@@ -26,19 +27,38 @@ export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions |
         return foundRawOptions;
     }
 
-    const { rawOptions } = foundRawOptions;
-    const projectPath = getProjectPath(cwd, foundRawOptions);
-    const [compilerOptions, fileNames] = await Promise.all([parseRawCompilerOptions(projectPath), collectFileNames(argv, cwd, rawOptions)]);
+    const { allRawOptions, filePath } = foundRawOptions;
+    const results: TypeStatOptions[] = [];
 
-    // For some reason, Promise.all is adding `| undefined` to the `compilerOptions` type...
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return fillOutRawOptions({ argv, compilerOptions: compilerOptions!, cwd, fileNames, projectPath, rawOptions });
+    // Fill out each option in the config with its own separate settings
+    // (or return the first failure string describing which one is incorrect)
+    for (let i = 0; i < allRawOptions.length; i += 1) {
+        const rawOptions = allRawOptions[i];
+        const projectPath = getProjectPath(cwd, filePath, rawOptions);
+        const [compilerOptions, fileNames] = await Promise.all([
+            parseRawCompilerOptions(projectPath),
+            collectFileNames(argv, cwd, rawOptions),
+        ]);
+
+        // For some reason, Promise.all is adding `| undefined` to the `compilerOptions` type...
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const filledOutOptions = findComplaintForOptions(
+            fillOutRawOptions({ argv, compilerOptions: compilerOptions!, cwd, fileNames, projectPath, rawOptions }),
+        );
+        if (typeof filledOutOptions === "string") {
+            return `Invalid options at index ${i}: ${filledOutOptions}`;
+        }
+
+        results.push(filledOutOptions);
+    }
+
+    return results;
 };
 
-const getProjectPath = (cwd: string, foundOptions: FoundRawOptions): string => {
+const getProjectPath = (cwd: string, filePath: string | undefined, rawOptions: RawTypeStatOptions): string => {
     // If the TypeStat configuration file has a projectPath field, use that relative to the file
-    if (foundOptions.filePath !== undefined && foundOptions.rawOptions.projectPath !== undefined) {
-        return normalizeAndSlashify(path.join(path.dirname(foundOptions.filePath), foundOptions.rawOptions.projectPath));
+    if (filePath !== undefined && rawOptions.projectPath !== undefined) {
+        return normalizeAndSlashify(path.join(path.dirname(filePath), rawOptions.projectPath));
     }
 
     // Otherwise give up and try a ./tsconfig.json relative to the package directory

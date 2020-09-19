@@ -2,8 +2,8 @@ import { fs } from "mz";
 
 import { TypeStatOptions } from "./types";
 
-export const processFileRenames = async (options: TypeStatOptions): Promise<TypeStatOptions | string> => {
-    if (options.fileNames === undefined) {
+export const processFileRenames = async (options: TypeStatOptions | string): Promise<TypeStatOptions | string> => {
+    if (typeof options === "string" || options.fileNames === undefined) {
         return options;
     }
 
