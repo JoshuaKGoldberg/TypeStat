@@ -36,6 +36,7 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
     }
 
     const command = new Command()
+        .storeOptionsAsProperties(true)
         .option("-c --config [config]", "path to a TypeStat config file")
         .option("-m --mutator [...mutator]", "require paths to any custom mutators to run")
         .option("-V --version", "output the package version");

@@ -1,11 +1,9 @@
 import { Command } from "commander";
 
-export const captureHelp = async (command: Command): Promise<string> =>
+export const captureHelp = async (command: Pick<Command, "outputHelp">): Promise<string> =>
     new Promise((resolve) => {
-        command.outputHelp(
-            (helpText: string): string => {
-                resolve(helpText);
-                return "";
-            },
-        );
+        command.outputHelp((helpText: string): string => {
+            resolve(helpText);
+            return "";
+        });
     });
