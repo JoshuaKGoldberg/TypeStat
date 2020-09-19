@@ -7,14 +7,14 @@ import { RawTypeStatOptions } from "./types";
  */
 export interface FoundRawOptions {
     /**
+     * Raw configuration options to run in order.
+     */
+    allRawOptions: RawTypeStatOptions[];
+
+    /**
      * Found file path result, if a file on disk was found.
      */
     filePath?: string;
-
-    /**
-     * Raw configuration options.
-     */
-    rawOptions: RawTypeStatOptions;
 }
 
 /**
@@ -22,7 +22,7 @@ export interface FoundRawOptions {
  *
  * @param cwd   Base directory to resolve paths from.
  * @param configPath   Suggested path to load from, instead of searching.
- * @returns Promise for parsed raw options from a configuration file.
+ * @returns Promise for parsed raw options from a configuration file, or an error string.
  */
 export const findRawOptions = async (cwd: string, configPath: string): Promise<FoundRawOptions | string> => {
     const resolutionPath = path.join(cwd, configPath);
@@ -36,12 +36,16 @@ export const findRawOptions = async (cwd: string, configPath: string): Promise<F
             : `Could not find config file at '${configPath}' (resolved to '${resolutionPath}').`;
     }
 
-    const rawOptions = extractConfigAsRelative(filePath, require(filePath) as RawTypeStatOptions);
+    const allRawOptions = extractConfigAsRelative(filePath, require(filePath) as RawTypeStatOptions | RawTypeStatOptions[]);
 
-    return { filePath, rawOptions };
+    return { filePath, allRawOptions };
 };
 
-const extractConfigAsRelative = (filePath: string, config: RawTypeStatOptions): RawTypeStatOptions => {
+const extractConfigAsRelative = (filePath: string, config: RawTypeStatOptions | RawTypeStatOptions[]): RawTypeStatOptions[] => {
+    return config instanceof Array ? config.map((config) => relativizeConfig(filePath, config)) : [relativizeConfig(filePath, config)];
+};
+
+const relativizeConfig = (filePath: string, config: RawTypeStatOptions) => {
     if (config.package !== undefined && config.package.directory !== undefined && !path.isAbsolute(config.package.directory)) {
         config = {
             ...config,

@@ -6,7 +6,6 @@ These mutations are all purely additive and limited to the type system, meaning 
 Each classifiation of fix can be individually configured in your `typestat.json` file.
 These all default to `false` but can be enabled by being set to `true`.
 
-
 ```json
 {
     "fixes": {
@@ -14,6 +13,7 @@ These all default to `false` but can be enabled by being set to `true`.
         "missingProperties": true,
         "noImplicitAny": true,
         "noImplicitThis": true,
+        "noInferableTypes": true,
         "strictNonNullAssertions": true
     }
 }

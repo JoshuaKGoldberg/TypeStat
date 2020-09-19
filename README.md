@@ -22,8 +22,7 @@ TypeStat can:
     </li>
 </ul>
 
-⚡ To start, the `typestat` command will launch an interactive guide to setting up a configuration file.
-_Requires [Node LTS](https://nodejs.org/en/about/releases)._
+⚡ To start, the `typestat` command will launch an interactive guide to setting up a configuration file. ⚡
 
 ```shell
 npx typestat

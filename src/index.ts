@@ -5,7 +5,6 @@ import { runMutations } from "automutate";
 
 import { ProcessLogger } from "./logging/logger";
 import { loadOptions } from "./options/loadOptions";
-import { findComplaintForOptions } from "./options/optionVerification";
 import { processFileRenames } from "./options/processFileRenames";
 import { TypeStatOptions } from "./options/types";
 import { createTypeStatProvider } from "./runtime/createTypeStatProvider";
@@ -46,23 +45,35 @@ export interface SucceededResult {
 }
 
 export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
-    const options = await tryLoadingOptions(argv);
-    if (options instanceof Error || typeof options === "string") {
+    const allOptions = await tryLoadingOptions(argv);
+    if (allOptions instanceof Error || typeof allOptions === "string") {
         return {
-            error: options,
+            error: allOptions,
             status: ResultStatus.ConfigurationError,
         };
     }
 
-    try {
-        await runMutations({
-            mutationsProvider: createTypeStatProvider(options),
-        });
-    } catch (error) {
-        return {
-            error: error as Error,
-            status: ResultStatus.Failed,
-        };
+    for (let i = 0; i < allOptions.length; i += 1) {
+        // First run any any file renames needed as part of project setup
+        const options = await processFileRenames(allOptions[i]);
+        if (typeof options === "string") {
+            return {
+                error: new Error(`Could not run options at index ${i}: ${options}`),
+                status: ResultStatus.Failed,
+            };
+        }
+
+        // Next run the actual core TypeStat mutation logic
+        try {
+            await runMutations({
+                mutationsProvider: createTypeStatProvider(options),
+            });
+        } catch (error) {
+            return {
+                error: error as Error,
+                status: ResultStatus.Failed,
+            };
+        }
     }
 
     return {
@@ -70,22 +81,10 @@ export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
     };
 };
 
-const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions | Error | string> => {
-    let options: TypeStatOptions | string;
-
-    // First try loading options from a config file
+const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions[] | Error | string> => {
     try {
-        options = await loadOptions(argv);
+        return await loadOptions(argv);
     } catch (error) {
         return error instanceof Error ? error : new Error(error as string);
     }
-
-    // If that succeeded, run any file renames needed as part of project setup
-    if (typeof options !== "string") {
-        options = await processFileRenames(options);
-    }
-
-    const optionsComplaint = findComplaintForOptions(options);
-
-    return optionsComplaint === undefined ? options : optionsComplaint;
 };
