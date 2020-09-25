@@ -33,7 +33,7 @@
         "automutate-tests": "0.3.5",
         "babel-jest": "26.3.0",
         "chai": "4.2.0",
-        "eslint-config-prettier": "6.11.0",
+        "eslint-config-prettier": "6.12.0",
         "eslint-plugin-no-only-tests": "2.4.0",
         "eslint": "7.9.0",
         "husky": "4.3.0",
