@@ -2,7 +2,7 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { isNotUndefined } from "../../shared/arrays";
-import { findAliasOfType } from "../aliasing";
+import { findAliasOfType } from "../aliasing/findAliasOfTypes";
 
 /**
  * String equivalents to print for literal node types.

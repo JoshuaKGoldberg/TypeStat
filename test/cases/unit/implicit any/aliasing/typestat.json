@@ -1,0 +1,10 @@
+{
+    "fixes": {
+        "noImplicitAny": true
+    },
+    "types": {
+        "aliases": {
+            "string": "string /* todo */"
+        }
+    }
+}

@@ -22,7 +22,7 @@ export const getMissingPropertyMutations = (request: FileMutationsRequest, node:
         return undefined;
     }
 
-    return createCodeFixCreationMutation(codeFixes);
+    return createCodeFixCreationMutation(request, codeFixes);
 };
 
 /**
