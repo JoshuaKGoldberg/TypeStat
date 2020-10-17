@@ -4,7 +4,7 @@ import { FileMutationsRequest } from "../../mutators/fileMutator";
 
 import { getApplicableTypeAliases } from "./aliases";
 import { createTypeName } from "./createTypeName";
-import { findAliasOfType } from "./findAliasOfType";
+import { findAliasOfType, findAliasOfTypes } from "./findAliasOfTypes";
 
 /**
  * Joins assigning types into a union to be used as a type reference.
@@ -31,7 +31,7 @@ export const joinIntoType = (
     const typeAliases = getApplicableTypeAliases(request, allowStrictNullCheckAliases);
 
     // Convert types to their aliased names per our type aliases
-    let unionNames = [
+    return findAliasOfTypes(request, [
         ...Array.from(types)
             .filter(isTypeNamePrintable)
             .map((type) => printFriendlyNameOfType(request, type))
@@ -40,25 +40,7 @@ export const joinIntoType = (
         // At this point we can be sure the type exists in type aliases
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         ...Array.from(flags).map((type) => typeAliases.get(type)!),
-    ];
-
-    // If we exclude unmatched types, remove those
-    if (request.options.types.matching !== undefined) {
-        unionNames = filterMatchingTypeNames(unionNames, request.options.types.matching);
-    }
-
-    if (unionNames.length === 0) {
-        return undefined;
-    }
-
-    // Remove any duplicate names, since seemingly different flags or types might resolve to the same
-    unionNames = [...new Set(unionNames)];
-
-    // Alias the unioned names into what they'll be printed as
-    // We intentionally don't remove duplicates here, as some aliases might be "TODO" or similar
-    unionNames = unionNames.map((type) => findAliasOfType(type, request.options.types.aliases));
-
-    return unionNames.join(" | ");
+    ]);
 };
 
 const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
@@ -105,6 +87,3 @@ const printSignatureParameter = (request: FileMutationsRequest, parameter: ts.Sy
 };
 
 const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);
-
-const filterMatchingTypeNames = (unionNames: ReadonlyArray<string>, matching: ReadonlyArray<string>): string[] =>
-    unionNames.filter((name) => matching.some((matcher) => name.match(matcher) !== null));

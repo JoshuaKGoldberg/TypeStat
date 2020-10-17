@@ -1,6 +1,6 @@
 import { combineMutations, IMultipleMutations, ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
-import { aliasRawText } from "../aliasing/aliasRawText";
+import { FileMutationsRequest } from "../../mutators/fileMutator";
 
 export interface CodeFixCreationPreferences {
     ignoreKnownBlankTypes?: boolean;
@@ -15,6 +15,7 @@ const knownBlankTypes = new Set([": {}", ": any", ": never", ": null", ": Object
  * @returns Equivalent mutation, if possible.
  */
 export const createCodeFixCreationMutation = (
+    request: FileMutationsRequest,
     codeFixes: ReadonlyArray<ts.CodeFixAction>,
     preferences: CodeFixCreationPreferences = {},
 ): IMultipleMutations | undefined => {
@@ -41,7 +42,7 @@ export const createCodeFixCreationMutation = (
     return combineMutations(
         ...simplifiedTextChanges.map(
             (textChange): ITextInsertMutation => ({
-                insertion: aliasRawText(textChange.newText) ?? textChange.newText,
+                insertion: textChange.newText,
                 range: {
                     begin: textChange.span.start,
                 },

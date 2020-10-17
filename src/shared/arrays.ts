@@ -1,4 +1,4 @@
-export const arrayify = <T>(items: T | ReadonlyArray<T> | undefined): T[] => {
+export const arrayify = <T>(items: T | ReadonlyArray<T> | undefined): ReadonlyArray<T> => {
     if (items === undefined) {
         return [];
     }

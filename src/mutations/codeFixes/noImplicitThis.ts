@@ -15,7 +15,7 @@ export const getNoImplicitThisMutations = (node: ts.ThisExpression, request: Fil
     // Create a mutation for the code fixes if anything is available
     const codeFixes = getNoImplicitThisCodeFixes(node, request);
 
-    return codeFixes.length === 0 ? undefined : createCodeFixCreationMutation(codeFixes);
+    return codeFixes.length === 0 ? undefined : createCodeFixCreationMutation(request, codeFixes);
 };
 
 /**

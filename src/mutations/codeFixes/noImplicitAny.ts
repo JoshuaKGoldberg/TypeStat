@@ -48,7 +48,7 @@ export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, reque
     }
 
     // Convert those code fix suggestions to our own mutations format
-    return createCodeFixCreationMutation(codeFixes, {
+    return createCodeFixCreationMutation(request, codeFixes, {
         ignoreKnownBlankTypes: true,
     });
 };
