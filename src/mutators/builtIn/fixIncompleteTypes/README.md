@@ -7,8 +7,6 @@ Whether to augment type annotations that don't capture all values constructs can
 * You're enabling `strictNullChecks` but existing types don't yet have `| null` or `| undefined` as appropriate
 * You're converting from JavaScript to TypeScript and adding React component types
 
-Note that `strictNullChecks` must be enabled in your `tsconfig.json` and/or TypeStat configuration file to add `| null` and `| undefined`.
-
 ## Configuration
 
 ```json
@@ -18,6 +16,8 @@ Note that `strictNullChecks` must be enabled in your `tsconfig.json` and/or Type
     }
 }
 ```
+
+> Note: if you'd like to add `| null` and `| undefined` to types, `strictNullChecks` must be enabled in your `tsconfig.json` and/or TypeStat configuration file.
 
 ## Mutations
 
