@@ -2380,7 +2380,7 @@ eslint-config-prettier@6.13.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-plugin-deprecation@^1.1.0:
+eslint-plugin-deprecation@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-deprecation/-/eslint-plugin-deprecation-1.1.0.tgz#46793ebbec9555d167d59c851ae3da0a21532189"
   integrity sha512-+oDa6JbdZXyh7Bx2zx7VoDFZvFnV1pZVPVo/bEGVkuXlLih/evX0LQG2/nSuNg83CmwZTcAFZXXpLgsX4ctIDQ==
