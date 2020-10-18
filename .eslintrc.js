@@ -14,8 +14,11 @@ module.exports = {
         project: "tsconfig.json",
         sourceType: "module",
     },
-    plugins: ["no-only-tests"],
+    plugins: ["deprecation", "no-only-tests"],
     rules: {
+        "deprecation/deprecation": "error",
+        "no-only-tests/no-only-tests": "error",
+
         // These rules might eventually be useful, but haven't been tried out in TypeStat
         "@typescript-eslint/prefer-regexp-exec": "off",
 

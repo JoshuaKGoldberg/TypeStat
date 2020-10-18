@@ -1,30 +1,26 @@
 import * as ts from "typescript";
 
-export type KnownTypeLiteralNode =
-    | ts.KeywordTypeNode
-    | ts.LiteralTypeNode
-    // | ts.NullLiteral & ts.Token<ts.SyntaxKind.NullKeyword>
-    | ts.TypeQueryNode;
+export type KnownTypeLiteralNode = ts.KeywordTypeNode | ts.LiteralTypeNode | ts.TypeQueryNode;
 
 export const transformLiteralToTypeLiteralNode = (node: ts.Node): KnownTypeLiteralNode | undefined => {
     if (ts.isIdentifier(node)) {
-        ts.createTypeQueryNode(ts.createIdentifier(node.text));
+        ts.factory.createTypeQueryNode(ts.factory.createIdentifier(node.text));
     }
 
     if (ts.isNumericLiteral(node)) {
-        return ts.createLiteralTypeNode(ts.createNumericLiteral(node.text));
+        return ts.factory.createLiteralTypeNode(ts.factory.createNumericLiteral(node.text));
     }
 
     if (ts.isStringLiteral(node)) {
-        return ts.createLiteralTypeNode(ts.createStringLiteral(node.text));
+        return ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(node.text));
     }
 
     if (node.kind === ts.SyntaxKind.NullKeyword) {
-        return ts.createLiteralTypeNode(ts.createNull());
+        return ts.factory.createLiteralTypeNode(ts.factory.createNull());
     }
 
     if (node.kind === ts.SyntaxKind.UndefinedKeyword) {
-        return ts.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
     }
 
     return undefined;
