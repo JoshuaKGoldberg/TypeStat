@@ -23,7 +23,7 @@ export const createInterfaceFromPropTypes = (
 
     const interfaceName = `${getApparentNameOfComponent(request, node)}Props`;
 
-    const interfaceNode = ts.createInterfaceDeclaration(
+    const interfaceNode = ts.factory.createInterfaceDeclaration(
         undefined /* decorators */,
         undefined /* modifiers */,
         interfaceName,

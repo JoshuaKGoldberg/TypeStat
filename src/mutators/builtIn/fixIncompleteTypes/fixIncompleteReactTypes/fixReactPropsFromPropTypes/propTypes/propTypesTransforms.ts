@@ -8,31 +8,31 @@ import { createPropTypesProperty } from "./propTypesProperties";
 export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropTypesMembers, "isRequired">): ts.TypeNode | undefined => {
     switch (nameNode.text) {
         case "array":
-            return ts.createArrayTypeNode(ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword));
+            return ts.factory.createArrayTypeNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword));
 
         case "arrayOf":
             return createArrayOfTransform(accessNode);
 
         case "bool":
-            return ts.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
+            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
 
         case "func":
-            return ts.createTypeReferenceNode(ts.createIdentifier("Function"), undefined);
+            return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Function"), undefined);
 
         case "element":
-            return ts.createTypeReferenceNode(ts.createIdentifier("React.ReactElement"), undefined);
+            return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("React.ReactElement"), undefined);
 
         case "instanceOf":
             return createInstanceOfTransform(accessNode);
 
         case "number":
-            return ts.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
+            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
 
         case "node":
-            return ts.createTypeReferenceNode(ts.createIdentifier("React.ReactNode"), undefined);
+            return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("React.ReactNode"), undefined);
 
         case "object":
-            return ts.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword);
+            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword);
 
         case "oneOf":
             return createOneOfTransform(accessNode);
@@ -44,10 +44,10 @@ export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropT
             return createShapeTransform(accessNode);
 
         case "string":
-            return ts.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
 
         case "symbol":
-            return ts.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword);
+            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword);
     }
 
     return undefined;
@@ -68,7 +68,7 @@ const createArrayOfTransform = (accessNode: PropTypesAccessNode) => {
         return undefined;
     }
 
-    return ts.createArrayTypeNode(innerTransform);
+    return ts.factory.createArrayTypeNode(innerTransform);
 };
 
 const createInstanceOfTransform = (accessNode: PropTypesAccessNode) => {
@@ -81,7 +81,7 @@ const createInstanceOfTransform = (accessNode: PropTypesAccessNode) => {
         return undefined;
     }
 
-    return ts.createTypeReferenceNode(ts.createIdentifier(className.text), undefined);
+    return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(className.text), undefined);
 };
 
 const createOneOfTransform = (accessNode: PropTypesAccessNode) => {
@@ -101,7 +101,7 @@ const createOneOfTransform = (accessNode: PropTypesAccessNode) => {
         return undefined;
     }
 
-    return ts.createUnionTypeNode(allowedTypes);
+    return ts.factory.createUnionTypeNode(allowedTypes);
 };
 
 const createOneOfTypeTransform = (accessNode: PropTypesAccessNode) => {
@@ -130,7 +130,7 @@ const createOneOfTypeTransform = (accessNode: PropTypesAccessNode) => {
         return undefined;
     }
 
-    return ts.createUnionTypeNode(allowedTypes);
+    return ts.factory.createUnionTypeNode(allowedTypes);
 };
 
 const createShapeTransform = (accessNode: PropTypesAccessNode) => {
@@ -153,5 +153,5 @@ const createShapeTransform = (accessNode: PropTypesAccessNode) => {
         }
     }
 
-    return ts.createTypeLiteralNode(members);
+    return ts.factory.createTypeLiteralNode(members);
 };

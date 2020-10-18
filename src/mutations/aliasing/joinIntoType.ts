@@ -4,7 +4,7 @@ import { FileMutationsRequest } from "../../mutators/fileMutator";
 
 import { getApplicableTypeAliases } from "./aliases";
 import { createTypeName } from "./createTypeName";
-import { findAliasOfType, findAliasOfTypes } from "./findAliasOfTypes";
+import { findAliasOfTypes } from "./findAliasOfTypes";
 
 /**
  * Joins assigning types into a union to be used as a type reference.

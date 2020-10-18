@@ -21,11 +21,10 @@ export const createPropTypesProperty = (rawProperty: ts.ObjectLiteralElementLike
         return undefined;
     }
 
-    return ts.createPropertySignature(
+    return ts.factory.createPropertySignature(
         undefined /* modifiers */,
-        ts.createIdentifier(rawProperty.name.text),
-        propTypesMembers.isRequired === undefined ? ts.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+        ts.factory.createIdentifier(rawProperty.name.text),
+        propTypesMembers.isRequired === undefined ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
         memberTypeNode,
-        undefined /* initializer */,
     );
 };
