@@ -20,7 +20,7 @@ const keywordLiteralEquivalents = new Map([
 ]);
 
 /**
- * Nodes types known to be literals allowed in --typesOnlyPrimitives.
+ * Nodes types known to be literals allowed in types.onlyPrimitives.
  */
 const primitiveNodeKinds = new Set([
     ...keywordLiteralEquivalents.keys(),

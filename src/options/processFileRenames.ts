@@ -78,8 +78,9 @@ const ensureNoJsFiles = async (options: TypeStatOptions, fileNames: ReadonlyArra
     }
 
     return [
-        "The following JavaScript files were included in the project but --fileRenameExtensions is not enabled.",
+        "The following JavaScript files were included in the project but files.renameExtensions is not enabled.",
         "TypeStat does not yet support annotating JavaScript files.",
         ...jsFileNames.map((fileName) => `\t${fileName}`),
+        "See https://github.com/JoshuaKGoldberg/TypeStat/blob/main/docs/Files.md for details.",
     ].join("\n");
 };
