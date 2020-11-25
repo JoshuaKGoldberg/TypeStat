@@ -1605,6 +1605,11 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
+argparse@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
+  integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
+
 arr-diff@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/arr-diff/-/arr-diff-4.0.0.tgz#d6461074febfec71e7e15235761a329a5dc7c520"
@@ -4181,6 +4186,17 @@ markdown-it@11.0.0:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
+markdown-it@12.0.2:
+  version "12.0.2"
+  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.0.2.tgz#4401beae8df8aa2221fc6565a7188e60a06ef0ed"
+  integrity sha512-4Lkvjbv2kK+moL9TbeV+6/NHx+1Q+R/NIdUlFlkqkkzUcTod4uiyTJRiBidKR9qXSdkNFkgv+AELY8KN9vSgVA==
+  dependencies:
+    argparse "^2.0.1"
+    entities "~2.0.0"
+    linkify-it "^3.0.1"
+    mdurl "^1.0.1"
+    uc.micro "^1.0.5"
+
 markdown-it@8.4.2:
   version "8.4.2"
   resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-8.4.2.tgz#386f98998dc15a37722aa7722084f4020bdd9b54"
@@ -4217,12 +4233,12 @@ markdownlint-rule-helpers@~0.12.0:
   resolved "https://registry.yarnpkg.com/markdownlint-rule-helpers/-/markdownlint-rule-helpers-0.12.0.tgz#c41d9b990c50911572e8eb2fba3e6975a5514b7e"
   integrity sha512-Q7qfAk+AJvx82ZY52OByC4yjoQYryOZt6D8TKrZJIwCfhZvcj8vCQNuwDqILushtDBTvGFmUPq+uhOb1KIMi6A==
 
-markdownlint@0.21.1, markdownlint@~0.21.1:
-  version "0.21.1"
-  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.21.1.tgz#9442afcf12bf65ce9d613212028cf85741677421"
-  integrity sha512-8kc88w5dyEzlmOWIElp8J17qBgzouOQfJ0LhCcpBFrwgyYK6JTKvILsk4FCEkiNqHkTxwxopT2RS2DYb/10qqg==
+markdownlint@0.22.0:
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.22.0.tgz#4ed95b61c17ae9f4dfca6a01f038c744846c0a72"
+  integrity sha512-J4B+iMc12pOdp/wfYi03W2qfAfEyiZzq3qvQh/8vOMNU8vXYY6Jg440EY7dWTBCqROhb1i4nAn3BTByJ5kdx1w==
   dependencies:
-    markdown-it "11.0.0"
+    markdown-it "12.0.2"
 
 markdownlint@^0.11.0:
   version "0.11.0"
@@ -4230,6 +4246,13 @@ markdownlint@^0.11.0:
   integrity sha512-wE5WdKD6zW2DQaPQ5TFBTXh5j76DnWd/IFffnDQgHmi6Y61DJXBDfLftZ/suJHuv6cwPjM6gKw2GaRLJMOR+Mg==
   dependencies:
     markdown-it "8.4.2"
+
+markdownlint@~0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.21.1.tgz#9442afcf12bf65ce9d613212028cf85741677421"
+  integrity sha512-8kc88w5dyEzlmOWIElp8J17qBgzouOQfJ0LhCcpBFrwgyYK6JTKvILsk4FCEkiNqHkTxwxopT2RS2DYb/10qqg==
+  dependencies:
+    markdown-it "11.0.0"
 
 mdurl@^1.0.1:
   version "1.0.1"
