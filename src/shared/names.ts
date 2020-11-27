@@ -3,13 +3,13 @@ import * as ts from "typescript";
 /**
  * Gets the name of a property if it's statically computable from text.
  */
-export const getStaticNameOfProperty = (propertyName: ts.PropertyName | undefined) => {
-    if (propertyName === undefined) {
+export const getStaticNameOfProperty = (node: ts.Node | undefined) => {
+    if (node === undefined) {
         return undefined;
     }
 
-    if (ts.isIdentifier(propertyName) || ts.isStringLiteral(propertyName) || ts.isNumericLiteral(propertyName)) {
-        return propertyName.text;
+    if (ts.isIdentifier(node) || ts.isStringLiteral(node) || ts.isNumericLiteral(node)) {
+        return node.text;
     }
 
     return undefined;

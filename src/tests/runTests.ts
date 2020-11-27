@@ -27,6 +27,11 @@ const parsed = new Command()
 // Modify TypeScript here so that no tests incur the performance penalty of doing it themselves
 const ts = requireExposedTypeScript();
 
+const rawPathToRegExp = (rawPath: string) => new RegExp(`.*${rawPath.split(/\\|\//g).slice(-3).join(".*")}.*`, "i");
+
+// The .vscode/launch.json task adds includes via this environment variable
+const includes = [...arrayify(parsed.include ?? []).map(rawPathToRegExp), ...arrayify(process.env.TEST_GLOB).map(rawPathToRegExp)];
+
 describeMutationTestCases(
     path.join(__dirname, "../../test"),
     (fileName: string, typeStatPath: string | undefined) => {
@@ -60,12 +65,12 @@ describeMutationTestCases(
         });
     },
     {
-        accept: parsed.accept,
+        accept: parsed.accept || !!process.env.TEST_ACCEPT,
         actual: (original) => (original.endsWith("x") ? "actual.tsx" : "actual.ts"),
         expected: (original) => (original.endsWith("x") ? "expected.tsx" : "expected.ts"),
-        includes: arrayify(parsed.include).map((include) => new RegExp(`(.*)${include}(.*)`)),
+        includes,
         normalizeEndlines: "\n",
-        original: "../original.*",
+        original: "./original.*",
         settings: "typestat.json",
     },
 );

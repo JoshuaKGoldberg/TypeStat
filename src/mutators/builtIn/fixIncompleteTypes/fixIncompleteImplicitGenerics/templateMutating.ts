@@ -11,7 +11,7 @@ export const fillInMissingTemplateTypes = (
     request: FileMutationsRequest,
     childClass: ts.ClassLikeDeclaration,
     baseTypeParameters: ts.NodeArray<ts.TypeParameterDeclaration>,
-    templateTypeLists: (AssignedTypesByName | undefined)[],
+    templateTypeLists: (string | AssignedTypesByName | undefined)[],
 ) => {
     const createdTypes: string[] = [];
     const templateTypeNames: string[] = [];
@@ -25,6 +25,12 @@ export const fillInMissingTemplateTypes = (
         // Example: a React component's props are {} but its state needs a new type
         if (templateTypes === undefined) {
             templateTypeNames.push(findDefaultTemplateValue(request, baseTypeParameters[i]));
+            continue;
+        }
+
+        // If the template type is already a known name, directly use it
+        if (typeof templateTypes === "string") {
+            templateTypeNames.push(templateTypes);
             continue;
         }
 

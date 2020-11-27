@@ -1,29 +1,41 @@
+import { combineMutations, IMutation } from "automutate";
+import * as ts from "typescript";
+
+import { isNotUndefined } from "../../../../../shared/arrays";
+import { getBaseClassDeclaration, getClassExtendsExpression } from "../../../../../shared/nodeExtensions";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../../fileMutator";
+import { addMissingTemplateTypes, addNewTypeNodes } from "../additions";
+import { findMissingTemplateTypes } from "../templateCollecting";
+import { fillInMissingTemplateTypes } from "../templateMutating";
 
-import { collectGenericUses } from "./collectGenericUses";
-import { createExplicitGenericType } from "./createExplicitGenericType";
-import { getGenericClassDetails } from "./getGenericClassDetails";
-import { isVariableWithImplicitGeneric, VariableWithImplicitGeneric } from "./implicitGenericTypes";
+export const fixIncompleteImplicitClassGenerics: FileMutator = (request: FileMutationsRequest) =>
+    collectMutationsFromNodes(request, ts.isClassLike, visitClassLike);
 
-export const fixIncompleteImplicitVariableGenerics: FileMutator = (request: FileMutationsRequest) =>
-    collectMutationsFromNodes(request, isVariableWithImplicitGeneric, visitVariableWithImplicitGeneric);
-
-const visitVariableWithImplicitGeneric = (node: VariableWithImplicitGeneric, request: FileMutationsRequest) => {
-    // Get the type of class the variable is an instance of, such as [] (Array) or Map
-    // If the variable's class didn't have generics, we can ignore this
-    const genericClassDetails = getGenericClassDetails(request, node);
-    if (genericClassDetails === undefined) {
+const visitClassLike = (node: ts.ClassLikeDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+    // We'll want a class node that extends some base class
+    const extension = getClassExtendsExpression(node);
+    if (extension === undefined) {
         return undefined;
     }
 
-    // Find places where the node was either assigned a known type or its method was called with a type
-    // If the node is never used with a type, there's nothing we can (or would want) to do
-    const assignedGenericTypes = collectGenericUses(request, node, genericClassDetails);
-    if (assignedGenericTypes === undefined || assignedGenericTypes.size === 0) {
+    // If that base class doesn't include type parameters, there's nothing to fill out
+    const baseClass = getBaseClassDeclaration(request, extension);
+    if (baseClass === undefined || baseClass.typeParameters === undefined) {
         return undefined;
     }
 
-    // Combine those type uses into a new explicit generic type on the node
-    return createExplicitGenericType(request, node, genericClassDetails, assignedGenericTypes);
+    // If that class declares any templated types, check the node's types assigned as them
+    const missingTemplateTypes = findMissingTemplateTypes(request, node, baseClass);
+
+    // We can skip performing any mutation if none of the parameter types had missing types
+    if (missingTemplateTypes.length === 0 || !missingTemplateTypes.some(isNotUndefined)) {
+        return undefined;
+    }
+
+    // Collect type names to fill in and their corresponding new type declarations
+    const { createdTypes, templateTypeNames } = fillInMissingTemplateTypes(request, node, baseClass.typeParameters, missingTemplateTypes);
+
+    // Print the new types above the class and fill in the new template types
+    return combineMutations(addNewTypeNodes(request, node, createdTypes), addMissingTemplateTypes(extension, templateTypeNames));
 };

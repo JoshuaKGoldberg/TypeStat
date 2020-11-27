@@ -1,0 +1,8 @@
+{
+    "fixes": {
+        "missingProperties": true
+    },
+    "types": {
+        "strictNullChecks": true
+    }
+}

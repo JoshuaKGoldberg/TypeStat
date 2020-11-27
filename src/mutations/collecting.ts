@@ -19,11 +19,21 @@ export const collectUsageFlagsAndSymbols = (
     declaredType: ts.Type,
     allAssignedTypes: ReadonlyArray<ts.Type>,
 ) => {
-    // Collect which flags and types are declared (as a type annotation)...
-    const [declaredFlags, declaredTypes] = collectFlagsAndTypesFromTypes(request, [declaredType]);
-
-    // ...and which are later assigned
+    // Collect which flags are later assigned to the type
     const [assignedFlags, assignedTypes] = collectFlagsAndTypesFromTypes(request, allAssignedTypes);
+
+    // If the declared type is the general 'any', then we assume all are missing
+    if (declaredType.flags & ts.TypeFlags.Any) {
+        return {
+            assignedFlags,
+            assignedTypes,
+            missingFlags: assignedFlags,
+            missingTypes: assignedTypes,
+        };
+    }
+
+    // Otherwise, collect which flags and types are declared (as a type annotation)...
+    const [declaredFlags, declaredTypes] = collectFlagsAndTypesFromTypes(request, [declaredType]);
 
     // Subtract the above to find any flags or types assigned but not declared
     return {

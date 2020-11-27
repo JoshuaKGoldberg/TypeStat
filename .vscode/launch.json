@@ -1,13 +1,65 @@
 {
-    "version": "0.2.0",
+    "version": "2.0.0",
     "configurations": [
         {
-            "type": "node",
-            "request": "launch",
-            "name": "Debug Mutation Tests",
+            "args": ["--reporter", "spec", "--colors", "--no-timeouts", "${workspaceFolder}/src/tests/runTests.js"],
+            "env": {
+                "TEST_ACCEPT": "true",
+                "TEST_GLOB": "${relativeFileDirname}"
+            },
+            "name": "Accept Current Mutation Test",
             "preLaunchTask": "tsc",
             "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-            "args": ["--reporter", "spec", "--colors", "--no-timeouts", "${workspaceFolder}/src/tests/runTests.js"]
+            "request": "launch",
+            "type": "node"
+        },
+        {
+            "args": [
+                "--reporter",
+                "spec",
+                "--colors",
+                "--no-timeouts",
+                "${workspaceFolder}/src/tests/runTests.js --include \"${include:testGlob}\""
+            ],
+            "name": "Accept Any Mutation Test",
+            "preLaunchTask": "tsc",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "request": "launch",
+            "type": "node"
+        },
+        {
+            "args": ["--reporter", "spec", "--colors", "--no-timeouts", "${workspaceFolder}/src/tests/runTests.js"],
+            "env": {
+                "TEST_ACCEPT": "true",
+                "TEST_GLOB": "${relativeFileDirname}"
+            },
+            "name": "Debug Current Mutation Test",
+            "preLaunchTask": "tsc",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "request": "launch",
+            "type": "node"
+        },
+        {
+            "args": [
+                "--reporter",
+                "spec",
+                "--colors",
+                "--no-timeouts",
+                "${workspaceFolder}/src/tests/runTests.js --include \"${include:testGlob}\""
+            ],
+            "name": "Debug Any Mutation Test",
+            "preLaunchTask": "tsc",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "request": "launch",
+            "type": "node"
+        }
+    ],
+    "inputs": [
+        {
+            "description": "Include glob for tests",
+            "default": "${relativeFileDirname}",
+            "id": "testGlob",
+            "type": "promptString"
         }
     ]
 }

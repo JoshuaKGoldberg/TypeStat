@@ -4,6 +4,7 @@ import { FileMutationsRequest } from "../mutators/fileMutator";
 import { isTypeBuiltIn } from "../shared/types";
 
 import { createTypeName } from "./aliasing/createTypeName";
+import { constructArrayShorthand } from "./arrays";
 
 /**
  * Creates a type like "string[]" or "Map<boolean | number>" from a container and type arguments.
@@ -23,10 +24,4 @@ export const joinIntoGenericType = (request: FileMutationsRequest, containerType
     }
 
     return `${containerTypeName}<${genericTypeNames.join(", ")}>`;
-};
-
-const constructArrayShorthand = (genericTypeNames: string[]) => {
-    const body = genericTypeNames.join(" | ");
-
-    return body.includes(" ") ? `(${body})[]` : `${body}[]`;
 };

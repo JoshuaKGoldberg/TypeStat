@@ -23,7 +23,7 @@ const visitReactComponentNode = (node: ReactComponentNode, request: FileMutation
     if (ts.isClassDeclaration(node)) {
         const extendsType = getClassExtendsType(node);
 
-        if (extendsType !== undefined && extendsType.typeArguments !== undefined && extendsType.typeArguments.length > 0) {
+        if (extendsType?.typeArguments !== undefined && extendsType.typeArguments.length > 0) {
             return undefined;
         }
     }
