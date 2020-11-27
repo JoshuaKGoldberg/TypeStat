@@ -7,7 +7,7 @@ export const arrayify = <T>(items: T | ReadonlyArray<T> | undefined): ReadonlyAr
         return items;
     }
 
-    return [items as T];
+    return [items];
 };
 
 export const collectOptionals = <T>(...arrays: (ReadonlyArray<T> | undefined)[]): T[] => {
