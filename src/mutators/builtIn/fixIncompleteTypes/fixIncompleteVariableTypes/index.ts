@@ -3,21 +3,16 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../../mutations/creators";
-import { isNodeWithType } from "../../../../shared/nodeTypes";
+import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes";
 import { isNodeFilteredOut } from "../../../../shared/references";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
 export const fixIncompleteVariableTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
-    collectMutationsFromNodes(request, isNodeVisitableVariableDeclaration, visitVariableDeclaration);
+    collectMutationsFromNodes(request, isNodeVariableDeclarationWithType, visitVariableDeclaration);
 
-const isNodeVisitableVariableDeclaration = (node: ts.Node): node is ts.VariableDeclaration =>
-    ts.isVariableDeclaration(node) &&
-    // Binding patterns are all implicitly typed, so ignore them
-    !(ts.isArrayBindingPattern(node.name) || ts.isObjectBindingPattern(node.name)) &&
-    // For-in and for-of loop varibles cannot have types, so don't bother trying to add them
-    !ts.isForInStatement(node.parent.parent) &&
-    !ts.isForOfStatement(node.parent.parent);
+const isNodeVariableDeclarationWithType = (node: ts.Node): node is ts.VariableDeclaration & NodeWithType =>
+    ts.isVariableDeclaration(node) && isNodeWithType(node);
 
 const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
     // Collect types later assigned to the variable, and types initially declared by or inferred on the variable

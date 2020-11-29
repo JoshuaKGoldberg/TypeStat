@@ -22,4 +22,14 @@
     function setWithExplicitStringMissingNumber(instance: WithExplicitStringMissingNumber, value: string | number) {
         instance.property = value;
     }
+
+    class WithObjectProperty {
+        member;
+
+        method() {
+            this.member = {
+                key: true,
+            }
+        }
+    }
 })();
