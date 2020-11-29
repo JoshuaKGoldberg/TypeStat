@@ -1,11 +1,11 @@
 (function () {
-    function takesNumber(one: number) { }
+    function takesNumber(one) { }
     takesNumber(1);
 
-    function takesStringThenBoolean(one: string, two: boolean) { }
+    function takesStringThenBoolean(one, two) { }
     takesStringThenBoolean('abc', true);
 
-    function takesStringOrBoolean(one: boolean | string) { }
+    function takesStringOrBoolean(one) { }
     function passesStringOrBoolean(input: string | boolean) {
         takesStringOrBoolean(input);
     }
