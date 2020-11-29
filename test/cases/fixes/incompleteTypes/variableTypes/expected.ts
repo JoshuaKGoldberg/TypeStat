@@ -1,7 +1,7 @@
 (function () {
     // Primitives
 
-    let givenUndefined: string | undefined = "";
+    let givenUndefined = "";
     givenUndefined = undefined;
 
     let givenUndefinedAsString: string | undefined = "";
@@ -14,7 +14,7 @@
     givenNullAndUndefinedHasNull = null;
     givenNullAndUndefinedHasNull = undefined;
 
-    let givenNull: string | null = "";
+    let givenNull = "";
     givenNull = null;
 
     let givenNullAsString: string | null = "";
@@ -27,7 +27,7 @@
     givenNullAndUndefinedHasUndefined = null;
     givenNullHasUndefined = undefined;
 
-    let givenString: string;
+    let givenString;
     givenString = "";
 
     let givenStringAsString: string = "";
@@ -104,13 +104,13 @@
     let onlyClassOneExplicitClass: SampleClassOne = new SampleClassOne();
     let onlyClassOneExplicitInterface: SampleInterface = new SampleClassOne();
 
-    let eitherClassImplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
+    let eitherClassImplicit = new SampleClassOne();
     eitherClassImplicit = new SampleClassTwo();
 
     let eitherClassExplicit: SampleInterface = new SampleClassOne();
     eitherClassExplicit = new SampleClassTwo();
 
-    let eitherClassNeedsUnionImplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsUnionImplicit = new SampleClassOne();
     eitherClassNeedsUnionImplicit = new SampleClassTwo();
 
     let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
@@ -119,7 +119,7 @@
     let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
     eitherClassNeedsUnionExplicitInterface = new SampleClassTwo();
 
-    let eitherClassNeedsNullImplicit: SampleClassOne | SampleClassTwo | null = new SampleClassOne();
+    let eitherClassNeedsNullImplicit = new SampleClassOne();
     eitherClassNeedsNullImplicit = new SampleClassTwo();
     eitherClassNeedsNullImplicit = null;
 

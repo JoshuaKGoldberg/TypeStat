@@ -50,6 +50,15 @@ For example, the following `typestat.json` will:
 ]
 ```
 
+### Verbose Logging
+
+Curious about how fixes are being suggested?
+Run with a `--logfile` to get a detailed, verbose log of the exact fixes applied to each file.
+
+```shell
+npx typestat --logfile typestat.log
+```
+
 ## More Examples
 
 Use these examples as more granular references of how to perform targeted changes with TypeStat.

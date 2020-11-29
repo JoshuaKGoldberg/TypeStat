@@ -20,19 +20,19 @@
     receivesFooOrString(new Foo());
     receivesFooOrString("");
 
-    function stringOrBoolean(): string {
+    function stringOrBoolean(): string | boolean {
         return true;
     }
 
-    function stringOrUndefined(): string {
+    function stringOrUndefined(): string | undefined {
         return undefined;
     }
 
-    function stringOrClass(): string {
+    function stringOrClass(): string | Foo {
         return new Foo();
     }
 
-    function stringOrFunction(): string {
+    function stringOrFunction(): string | (() => void) {
         return () => {};
     }
 
@@ -59,15 +59,15 @@
     instanceEitherOrText = new Bar();
     instanceEitherOrText = "";
 
-    function receivesText(text: string) {}
+    function receivesText(text) {}
     receivesText(text);
 
-    function receivesTextOrInstance(text: string) {}
+    function receivesTextOrInstance(text) {}
     receivesTextOrInstance(text);
 
-    function receivesInstanceEither(either: Bar) {}
+    function receivesInstanceEither(either) {}
     receivesInstanceEither(instanceEither);
 
-    function receivesInstanceEitherOrText(either: Bar) {}
+    function receivesInstanceEitherOrText(either) {}
     receivesInstanceEitherOrText(instanceEither);
 })();

@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { EOL } from "os";
 
 import { ResultStatus } from "..";
-import { ProcessLogger } from "../logging/logger";
+import { ProcessOutput } from "../output";
 import { getQuickErrorSummary } from "../shared/errors";
 
 import { initializeJavaScript } from "./initializeJavaScript";
@@ -23,38 +23,35 @@ export interface RanInitializationResults {
     skipped: boolean;
 }
 
-export const initialization = async (logger: ProcessLogger): Promise<InitializationResults> => {
-    logger.stdout.write(chalk.greenBright("👋"));
-    logger.stdout.write(chalk.green(" Welcome to TypeStat! "));
-    logger.stdout.write(chalk.greenBright("👋"));
-    logger.stdout.write(chalk.reset(EOL));
+export const initialization = async (output: ProcessOutput): Promise<InitializationResults> => {
+    output.stdout([chalk.greenBright("👋"), chalk.green(" Welcome to TypeStat! "), chalk.greenBright("👋"), chalk.reset("")].join(""));
 
-    logger.stdout.write(chalk.reset(`This will create a new `));
-    logger.stdout.write(chalk.yellowBright(fileName));
-    logger.stdout.write(chalk.reset(` for you.${EOL}`));
-    logger.stdout.write(`If you don't know how to answer, that's ok - just select the default answer.${EOL}`);
-    logger.stdout.write(chalk.reset(EOL));
+    output.stdout([chalk.reset(`This will create a new `), chalk.yellowBright(fileName), chalk.reset(` for you.`)].join(""));
+
+    output.stdout(`If you don't know how to answer, that's ok - just select the default answer.`);
+    output.stdout(chalk.reset(""));
 
     let skipped: boolean;
 
     try {
         skipped = await runPrompts();
     } catch (error) {
-        logger.stderr.write(getQuickErrorSummary(error));
+        output.stderr(getQuickErrorSummary(error));
         return {
             status: ResultStatus.ConfigurationError,
         };
     }
 
     if (!skipped) {
-        logger.stdout.write(chalk.reset(`${EOL}Awesome! You're now ready to:${EOL}`));
-        logger.stdout.write(chalk.greenBright(`typestat --config ${fileName}`));
-        logger.stdout.write(chalk.reset(`${EOL}${EOL}Once you run that, TypeStat will start auto-fixing your typings.${EOL}`));
-        logger.stdout.write(chalk.yellow(`Please report any bugs on https://github.com/JoshuaKGoldberg/TypeStat! `));
-        logger.stdout.write(chalk.yellowBright("💖"));
+        output.stdout(chalk.reset(`${EOL}Awesome! You're now ready to:`));
+        output.stdout(chalk.greenBright(`typestat --config ${fileName}`));
+        output.stdout(chalk.reset(`${EOL}Once you run that, TypeStat will start auto-fixing your typings.`));
+        output.stdout(
+            [chalk.yellow(`Please report any bugs on https://github.com/JoshuaKGoldberg/TypeStat! `), chalk.yellowBright("💖")].join(""),
+        );
     }
 
-    logger.stdout.write(chalk.reset(EOL));
+    output.stdout(chalk.reset(""));
 
     return {
         skipped,

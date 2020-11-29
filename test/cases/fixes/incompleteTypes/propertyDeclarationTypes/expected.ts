@@ -1,6 +1,6 @@
 (function () {
     class WithMissingString {
-        property: string;
+        property;
     }
     new WithMissingString().property = "abc";
 
@@ -10,7 +10,7 @@
     new WithMissingString().property = "abc";
 
     class WithMissingStringOrNumber {
-        property: number | string;
+        property;
     }
     function setWithMissingStringOrNumber(instance: WithMissingStringOrNumber, value: string | number) {
         instance.property = value;
@@ -21,5 +21,40 @@
     }
     function setWithExplicitStringMissingNumber(instance: WithExplicitStringMissingNumber, value: string | number) {
         instance.property = value;
+    }
+
+    class WithObjectProperty {
+        member;
+
+        method() {
+            this.member = {
+                key: true,
+            }
+        }
+    }
+
+    class WithIncompleteObjectProperty {
+        member: string | { key: boolean };
+
+        method() {
+            this.member = '';
+            this.member = {
+                key: true,
+            }
+        }
+    }
+
+    class WithIncompleteNestedObjectProperty {
+        member: string | { middle: { deepKey: boolean }, middleKey: number };
+
+        method() {
+            this.member = '';
+            this.member = {
+                middle: {
+                    deepKey: true,
+                },
+                middleKey: 0,
+            }
+        }
     }
 })();

@@ -1,4 +1,5 @@
 import { IMutation } from "automutate";
+import { EOL } from "os";
 import * as ts from "typescript";
 
 import { getQuickErrorSummary } from "../shared/errors";
@@ -40,11 +41,11 @@ const tryGetMutation = <TNode extends ts.Node>(request: FileMutationsRequest, no
     try {
         return visitor(node, request);
     } catch (error) {
-        request.options.logger.stderr.write(
-            `\nError in ${request.sourceFile.fileName} at node '${node.getText(request.sourceFile)}' (position ${node.pos}):\n\t`,
+        request.options.output.stderr(
+            `${EOL}Error in ${request.sourceFile.fileName} at node '${node.getText(request.sourceFile)}' (position ${node.pos}):`,
         );
-        request.options.logger.stderr.write(getQuickErrorSummary(error));
-        request.options.logger.stderr.write("\n\n");
+        request.options.output.stderr(`\t${getQuickErrorSummary(error)}`);
+        request.options.output.stderr(EOL);
     }
 
     return undefined;

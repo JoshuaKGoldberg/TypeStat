@@ -1,7 +1,6 @@
 import { ResultStatus } from "..";
 import { version } from "../../package.json";
 
-import { StubWritableStream } from "./index.stubs";
 import { runCli } from "./runCli";
 
 const createTestArgs = (...argv: string[]) => ({
@@ -9,9 +8,10 @@ const createTestArgs = (...argv: string[]) => ({
     initializationRunner: jest.fn().mockResolvedValueOnce({
         status: ResultStatus.ConfigurationError,
     }),
-    logger: {
-        stderr: new StubWritableStream(),
-        stdout: new StubWritableStream(),
+    output: {
+        log: jest.fn(),
+        stderr: jest.fn(),
+        stdout: jest.fn(),
     },
     mainRunner: jest.fn(),
 });
@@ -19,10 +19,10 @@ const createTestArgs = (...argv: string[]) => ({
 describe("runCli", () => {
     it("runs initializationRunner when no args are provided", async () => {
         // Arrange
-        const { argv, initializationRunner, logger, mainRunner } = createTestArgs();
+        const { argv, initializationRunner, output, mainRunner } = createTestArgs();
 
         // Act
-        await runCli(argv, { initializationRunner, logger, mainRunner });
+        await runCli(argv, { initializationRunner, output, mainRunner });
 
         // Assert
         expect(initializationRunner).toHaveBeenCalledTimes(1);
@@ -31,34 +31,34 @@ describe("runCli", () => {
 
     it("logs the current version when --version is provided", async () => {
         // Arrange
-        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--version");
+        const { argv, initializationRunner, output, mainRunner } = createTestArgs("--version");
 
         // Act
-        const resultStatus = await runCli(argv, { initializationRunner, logger, mainRunner });
+        const resultStatus = await runCli(argv, { initializationRunner, output, mainRunner });
 
         // Assert
-        expect(logger.stdout.write).toHaveBeenLastCalledWith(`${version}\n`);
+        expect(output.stdout).toHaveBeenLastCalledWith(`${version}`);
         expect(resultStatus).toEqual(ResultStatus.Succeeded);
     });
 
     it("logs an error when the main runner rejects with one", async () => {
         // Arrange
-        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--config", "typestat.json");
+        const { argv, initializationRunner, output, mainRunner } = createTestArgs("--config", "typestat.json");
         const message = "Error message";
 
         mainRunner.mockRejectedValue(new Error(message));
 
         // Act
-        const resultStatus = await runCli(argv, { initializationRunner, logger, mainRunner });
+        const resultStatus = await runCli(argv, { initializationRunner, output, mainRunner });
 
         // Assert
-        expect(logger.stderr.write).toHaveBeenLastCalledWith(jasmine.stringMatching(message));
+        expect(output.stderr).toHaveBeenLastCalledWith(jasmine.stringMatching(message));
         expect(resultStatus).toEqual(ResultStatus.Failed);
     });
 
     it("logs help and the error when a configuration error is reported", async () => {
         // Arrange
-        const { argv, initializationRunner, logger, mainRunner } = createTestArgs("--config", "typestat.json");
+        const { argv, initializationRunner, output, mainRunner } = createTestArgs("--config", "typestat.json");
         const message = "Error message";
 
         mainRunner.mockResolvedValue({
@@ -67,11 +67,11 @@ describe("runCli", () => {
         });
 
         // Act
-        const resultStatus = await runCli(argv, { initializationRunner, logger, mainRunner });
+        const resultStatus = await runCli(argv, { initializationRunner, output, mainRunner });
 
         // Assert
-        expect(logger.stdout.write).toHaveBeenLastCalledWith(jasmine.stringMatching("typestat \\[options\\]"));
-        expect(logger.stderr.write).toHaveBeenLastCalledWith(jasmine.stringMatching(message));
+        expect(output.stdout).toHaveBeenLastCalledWith(jasmine.stringMatching("typestat \\[options\\]"));
+        expect(output.stderr).toHaveBeenLastCalledWith(jasmine.stringMatching(message));
         expect(resultStatus).toEqual(ResultStatus.ConfigurationError);
     });
 });

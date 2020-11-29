@@ -4,12 +4,15 @@ import * as ts from "typescript";
 
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../../mutations/creators";
 import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
-import { isNodeWithType } from "../../../../shared/nodeTypes";
+import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
 export const fixIncompletePropertyDeclarationTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
-    collectMutationsFromNodes(request, ts.isPropertyDeclaration, visitPropertyDeclaration);
+    collectMutationsFromNodes(request, isPropertyDeclarationWithType, visitPropertyDeclaration);
+
+const isPropertyDeclarationWithType = (node: ts.Node): node is ts.PropertyDeclaration & NodeWithType =>
+    ts.isPropertyDeclaration(node) && isNodeWithType(node);
 
 const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMutationsRequest): IMutation | undefined => {
     // Collect types later assigned to the property, and types initially declared by or inferred on the property

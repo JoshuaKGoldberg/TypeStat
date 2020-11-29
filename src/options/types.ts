@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { ProcessLogger } from "../logging/logger";
+import { ProcessOutput } from "../output";
 import { FileMutator } from "../mutators/fileMutator";
 import { Dictionary } from "../shared/maps";
 
@@ -111,14 +111,14 @@ export interface TypeStatOptions {
     readonly fixes: Readonly<Fixes>;
 
     /**
-     * Wraps process.stdout.write.
-     */
-    readonly logger: ProcessLogger;
-
-    /**
      * Mutators to run, as either the built-in mutators or custom mutators specified by the user.
      */
     readonly mutators: ReadonlyArray<[string, FileMutator]>;
+
+    /**
+     * Wraps process and logfile output.
+     */
+    readonly output: ProcessOutput;
 
     /**
      * Directives for project-level changes.

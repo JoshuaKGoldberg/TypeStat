@@ -8,15 +8,15 @@ import * as path from "path";
 
 import { ResultStatus, typeStat, TypeStatArgv, TypeStatResult } from "../index";
 import { initialization } from "../initialization";
-import { processLogger } from "../logging/logger";
+import { createProcessOutput, ProcessOutput } from "../output";
 
 import { captureHelp } from "./captureHelp";
 
-const createDefaultRuntime = () => ({
-    initializationRunner: initialization,
-    logger: processLogger,
-    mainRunner: typeStat,
-});
+export interface CliRuntime {
+    initializationRunner: typeof initialization;
+    output: ProcessOutput;
+    mainRunner: typeof typeStat;
+}
 
 /**
  * Parses raw string arguments and, if they're valid, calls to a main method.
@@ -25,36 +25,38 @@ const createDefaultRuntime = () => ({
  * @param mainRunner   Method to run with parsed arguments: generally `typeStat`.
  * @returns Promise for the result of running TypeStat.
  */
-export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDefaultRuntime()): Promise<ResultStatus> => {
+export const runCli = async (rawArgv: ReadonlyArray<string>, runtime?: CliRuntime): Promise<ResultStatus> => {
+    const command = new Command()
+        .storeOptionsAsProperties(true)
+        .option("-c --config [config]", "path to a TypeStat config file")
+        .option("-l --logfile [logfile]", "paths to a logfile to ")
+        .option("-V --version", "output the package version");
+
+    const rawOptions = command.parse(rawArgv as string[]) as TypeStatArgv;
+    runtime ??= {
+        initializationRunner: initialization,
+        output: createProcessOutput(rawOptions.logfile),
+        mainRunner: typeStat,
+    };
+
     if (rawArgv.length === 2) {
-        const initialized = await runtime.initializationRunner(runtime.logger);
+        const initialized = await runtime.initializationRunner(runtime.output);
         if (initialized.status !== ResultStatus.Succeeded || !initialized.skipped) {
             return initialized.status;
         }
 
-        rawArgv = [...rawArgv, "--config", "typestat.json"];
+        rawOptions.config = "typestat.json";
     }
 
-    const command = new Command()
-        .storeOptionsAsProperties(true)
-        .option("-c --config [config]", "path to a TypeStat config file")
-        .option("-m --mutator [...mutator]", "require paths to any custom mutators to run")
-        .option("-V --version", "output the package version");
-
-    const parsedArgv = {
-        ...(command.parse(rawArgv as string[]) as Partial<TypeStatArgv>),
-        logger: runtime.logger,
-    };
-
-    if ({}.hasOwnProperty.call(parsedArgv, "version")) {
-        runtime.logger.stdout.write(`${await getPackageVersion()}\n`);
+    if ({}.hasOwnProperty.call(rawOptions, "version")) {
+        runtime.output.stdout(await getPackageVersion());
         return ResultStatus.Succeeded;
     }
 
     let result: TypeStatResult;
 
     try {
-        result = await runtime.mainRunner(parsedArgv);
+        result = await runtime.mainRunner(rawOptions, runtime.output);
     } catch (error) {
         result = {
             error: error instanceof Error ? error : new Error(error as string),
@@ -65,12 +67,12 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime = createDef
     switch (result.status) {
         case ResultStatus.ConfigurationError:
             const helpText = await captureHelp(command);
-            runtime.logger.stdout.write(`${helpText}\n`);
-            runtime.logger.stderr.write(chalk.yellow(`${result.error}\n`));
+            runtime.output.stdout(helpText);
+            runtime.output.stderr(chalk.yellow(result.error));
             break;
 
         case ResultStatus.Failed:
-            runtime.logger.stderr.write(chalk.yellow(`${result.error}\n`));
+            runtime.output.stderr(chalk.yellow(result.error));
             break;
     }
 

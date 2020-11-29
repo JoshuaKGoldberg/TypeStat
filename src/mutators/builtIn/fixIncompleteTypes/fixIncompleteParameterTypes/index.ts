@@ -2,12 +2,14 @@ import { IMutation } from "automutate";
 import * as ts from "typescript";
 
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../../mutations/creators";
-import { isNodeWithType } from "../../../../shared/nodeTypes";
+import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
 export const fixIncompleteParameterTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
-    collectMutationsFromNodes(request, ts.isParameter, visitParameterDeclaration);
+    collectMutationsFromNodes(request, isParameterWithType, visitParameterDeclaration);
+
+const isParameterWithType = (node: ts.Node): node is ts.ParameterDeclaration & NodeWithType => ts.isParameter(node) && isNodeWithType(node);
 
 const visitParameterDeclaration = (node: ts.ParameterDeclaration, request: FileMutationsRequest): IMutation | undefined => {
     // Collect types initially assigned or later called with as the parameter
