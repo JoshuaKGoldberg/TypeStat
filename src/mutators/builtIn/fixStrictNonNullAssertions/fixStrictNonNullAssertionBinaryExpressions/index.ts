@@ -20,7 +20,7 @@ const visitBinaryExpression = (node: ts.BinaryExpression, request: FileMutations
     // We only care if the assigned type contains a strict flag the declared type doesn't
     if (
         (isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Null) || !isTypeFlagSetRecursively(assignedType, ts.TypeFlags.Null)) &&
-        (isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Undefined) && !isTypeFlagSetRecursively(assignedType, ts.TypeFlags.Undefined))
+        (isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Undefined) || !isTypeFlagSetRecursively(assignedType, ts.TypeFlags.Undefined))
     ) {
         return undefined;
     }

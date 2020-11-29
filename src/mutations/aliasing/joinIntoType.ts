@@ -1,6 +1,9 @@
 import ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { isNotUndefined } from "../../shared/arrays";
+import { isTypeArgumentsTypeNode } from "../../shared/typeNodes";
+import { constructArrayShorthand } from "../arrays";
 
 import { getApplicableTypeAliases } from "./aliases";
 import { createTypeName } from "./createTypeName";
@@ -33,8 +36,9 @@ export const joinIntoType = (
     // Convert types to their aliased names per our type aliases
     return findAliasOfTypes(request, [
         ...Array.from(types)
-            .filter(isTypeNamePrintable)
+            // .filter(isTypeNamePrintable)
             .map((type) => printFriendlyNameOfType(request, type))
+            .filter(isNotUndefined)
             // If the type is aliased to a () => lambda, it should probably be wrapped in ()
             .map((type) => (type.includes(") =>") ? `(${type})` : type)),
         // At this point we can be sure the type exists in type aliases
@@ -44,7 +48,13 @@ export const joinIntoType = (
 };
 
 const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
-    // If the type isn't a function, we can generally print it directly by name
+    // If this is a declared interface or type alias (type MyType = { ... }), use that MyType name
+    const typeLiteralName = printFriendlyNameOfInterfaceOrTypeAlias(type);
+    if (typeLiteralName !== undefined) {
+        return typeLiteralName;
+    }
+
+    // If the type otherwise isn't a function, we can generally print it directly by name
     // Note that the type given to this function shouldn't be union or intersection types
     const callSignatures = type.getCallSignatures();
     if (callSignatures.length === 0) {
@@ -59,6 +69,22 @@ const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): 
     // Looks like we'd have to print a { (): ...; (): ...; } multiple call signatures object
     // ...but this is such a rare case in TypeStat usage, that for now, let's just use Function (lol)
     return "Function";
+};
+
+const printFriendlyNameOfInterfaceOrTypeAlias = (type: ts.Type) => {
+    const declarations = type.getSymbol()?.getDeclarations();
+    if (declarations?.length !== 1) {
+        return undefined;
+    }
+
+    const [declaration] = declarations;
+    const { parent } = declaration;
+
+    if (ts.isInterfaceDeclaration(parent) || ts.isTypeAliasDeclaration(parent)) {
+        return parent.name.text;
+    }
+
+    return undefined;
 };
 
 const printShorthandCallSignature = (request: FileMutationsRequest, callSignature: ts.Signature): string => {
@@ -86,4 +112,4 @@ const printSignatureParameter = (request: FileMutationsRequest, parameter: ts.Sy
     return `${name}: ${createTypeName(request, type)}`;
 };
 
-const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);
+// const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);

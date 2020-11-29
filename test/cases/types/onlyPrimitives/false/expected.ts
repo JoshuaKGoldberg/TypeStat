@@ -59,10 +59,10 @@
     instanceEitherOrText = new Bar();
     instanceEitherOrText = "";
 
-    function receivesText(text) {}
+    function receivesText(text: string) {}
     receivesText(text);
 
-    function receivesTextOrInstance(text) {}
+    function receivesTextOrInstance(text: string) {}
     receivesTextOrInstance(text);
 
     function receivesInstanceEither(either: Bar) {}

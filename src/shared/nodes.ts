@@ -86,6 +86,8 @@ export const getVariableInitializerForExpression = (
     return valueDeclaration.initializer;
 };
 
+export const getExpressionWithin = (node: ts.Node) => (ts.isExpressionStatement(node) ? node.expression : node);
+
 export const getClassExtendsType = (node: ts.ClassLikeDeclaration): ts.ExpressionWithTypeArguments | undefined => {
     const { heritageClauses } = node;
     if (heritageClauses === undefined) {

@@ -1,8 +1,8 @@
 import { findFirstMutations } from "../../../../shared/runtime";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-import { fixIncompleteImplicitVariableGenerics } from "./fixIncompleteImplicitClassGenerics";
-import { fixIncompleteImplicitClassGenerics } from "./fixIncompleteImplicitVariableGenerics";
+import { fixIncompleteImplicitClassGenerics } from "./fixIncompleteImplicitClassGenerics";
+import { fixIncompleteImplicitVariableGenerics } from "./fixIncompleteImplicitVariableGenerics";
 
 export const fixIncompleteImplicitGenerics: FileMutator = (request: FileMutationsRequest) =>
     findFirstMutations(request, [

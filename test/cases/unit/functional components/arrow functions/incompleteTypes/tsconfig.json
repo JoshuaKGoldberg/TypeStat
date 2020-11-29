@@ -1,7 +1,0 @@
-{
-    "compilerOptions": {
-        "jsx": "react",
-        "strictNullChecks": true
-    },
-    "files": ["actual.tsx"]
-}

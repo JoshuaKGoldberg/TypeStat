@@ -1,6 +1,0 @@
-{
-    "compilerOptions": {
-        "noImplicitThis": true
-    },
-    "files": ["actual.ts"]
-}

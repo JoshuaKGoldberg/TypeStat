@@ -20,11 +20,11 @@
     receivesFooOrString(new Foo());
     receivesFooOrString("");
 
-    function stringOrBoolean(): string | boolean {
+    function stringOrBoolean(): string {
         return true;
     }
 
-    function stringOrUndefined(): string | undefined {
+    function stringOrUndefined(): string {
         return undefined;
     }
 
@@ -59,10 +59,10 @@
     instanceEitherOrText = new Bar();
     instanceEitherOrText = "";
 
-    function receivesText(text) {}
+    function receivesText(text: string) {}
     receivesText(text);
 
-    function receivesTextOrInstance(text) {}
+    function receivesTextOrInstance(text: string) {}
     receivesTextOrInstance(text);
 
     function receivesInstanceEither(either) {}
