@@ -49,34 +49,40 @@ export const joinIntoType = (
 const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
     // If this is a declared interface or type alias (type MyType = { ... }), use that MyType name
     // Alternately, also try this as an inline object literal
-    const friendlyTypeName = printFriendlyNameOfInterfaceOrTypeAlias(type) ?? printFriendlyNameOfObjectLiteral(request, type);
+    const friendlyTypeName = printFriendlyNameOfInterfaceOrTypeAlias(type);
     if (friendlyTypeName !== undefined) {
         return friendlyTypeName;
     }
 
     const callSignatures = type.getCallSignatures();
-    const symbol = type.getSymbol();
 
     // If the type otherwise isn't a function, we can generally print it directly by name...
     if (callSignatures.length === 0) {
         // ...assuming it does have a name, which isn't true for literals such as 'boolean'
-        if (symbol !== undefined) {
+        const symbol = type.getSymbol();
+        if (symbol !== undefined && !symbol.name.startsWith("__")) {
             return symbol.name;
-        }
-
-        if (isIntrisinicNameTypeNode(type)) {
-            return type.intrinsicName;
         }
     }
 
-    // If there's only eaxctly type signature, use the happy () => ... shorthand
+    // If there's only exactly one type signature, use the happy () => ... shorthand
     if (callSignatures.length === 1) {
         return printShorthandCallSignature(request, callSignatures[0]);
     }
 
-    // Looks like we'd have to print a { (): ...; (): ...; } multiple call signatures object
-    // ...but this is such a rare case in TypeStat usage, that for now, let's just use Function (lol)
-    return "Function";
+    // If it's a literal type for a user-facing one such as 'boolean', go with that
+    if (isIntrisinicNameTypeNode(type)) {
+        return type.intrinsicName;
+    }
+
+    // Since this isn't a better-known object, it might be an object literal descriptor (i.e. { ... })
+    const objectLiteralDescriptor = printObjectLiteralDescriptor(request, type);
+    if (objectLiteralDescriptor !== undefined) {
+        return objectLiteralDescriptor;
+    }
+
+    // If all else fails, there was no information available, so this is probably just unknown
+    return "unknown";
 };
 
 const printFriendlyNameOfInterfaceOrTypeAlias = (type: ts.Type) => {
@@ -95,7 +101,7 @@ const printFriendlyNameOfInterfaceOrTypeAlias = (type: ts.Type) => {
     return undefined;
 };
 
-const printFriendlyNameOfObjectLiteral = (request: FileMutationsRequest, type: ts.Type) => {
+const printObjectLiteralDescriptor = (request: FileMutationsRequest, type: ts.Type) => {
     if (!(type.flags & ts.TypeFlags.Object)) {
         return undefined;
     }
