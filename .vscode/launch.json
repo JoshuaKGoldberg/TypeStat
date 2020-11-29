@@ -14,20 +14,6 @@
             "type": "node"
         },
         {
-            "args": [
-                "--reporter",
-                "spec",
-                "--colors",
-                "--no-timeouts",
-                "${workspaceFolder}/src/tests/runTests.js --include \"${include:testGlob}\""
-            ],
-            "name": "Accept Any Mutation Test",
-            "preLaunchTask": "tsc",
-            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-            "request": "launch",
-            "type": "node"
-        },
-        {
             "args": ["--reporter", "spec", "--colors", "--no-timeouts", "${workspaceFolder}/src/tests/runTests.js"],
             "env": {
                 "TEST_ACCEPT": "true",
@@ -38,28 +24,6 @@
             "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
             "request": "launch",
             "type": "node"
-        },
-        {
-            "args": [
-                "--reporter",
-                "spec",
-                "--colors",
-                "--no-timeouts",
-                "${workspaceFolder}/src/tests/runTests.js --include \"${include:testGlob}\""
-            ],
-            "name": "Debug Any Mutation Test",
-            "preLaunchTask": "tsc",
-            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-            "request": "launch",
-            "type": "node"
-        }
-    ],
-    "inputs": [
-        {
-            "description": "Include glob for tests",
-            "default": "${relativeFileDirname}",
-            "id": "testGlob",
-            "type": "promptString"
         }
     ]
 }

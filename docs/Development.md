@@ -8,7 +8,7 @@ Please do file issues if you find bugs or lacking features!
 
 ## Local Setup
 
-After installing [Node >=8](https://nodejs.org/en/download) and [yarn](https://yarnpkg.com), clone and install packages locally with:
+After installing [Node >=10](https://nodejs.org/en/download) and [yarn](https://yarnpkg.com), clone and install packages locally with:
 
 ```shell
 git clone https://github.com/joshuakgoldberg/typestat
@@ -43,23 +43,25 @@ If provided, only tests whose name matches one or more include filter will run.
 
 Include filters are always prefixed and suffixed with `(.*)`, so you don't need to explicitly provide full test names.
 
-For example, to run all tests under `variables`:
+For example, to run all tests with `variable` in their name:
 
 ```shell
-yarn run test:mutation --include "variables"
+yarn run test:mutation --include "noImplicitAny"
 ```
 
-To run the `variables/all` tests, either would work:
+To run the `noImplicitAny/variableDeclarations` tests, either would work:
 
 ```shell
-yarn run test:mutation --accept --include "variables/all"
-yarn run test:mutation --accept --include "variables(.*)all"
+yarn run test:mutation --accept --include "noImplicitAny/variableDeclarations"
+yarn run test:mutation --accept --include "mplicitAn.*variableDeclar"
 ```
 
 ### Debugging
 
-A VS Code task to debug test files is shipped that allows directly placing breakpoints in source TypeScript code.
-Modify the `includes` statement in `runTests.ts` to only debug some tests.
+VS Code tasks to debug test files is shipped that allows directly placing breakpoints in source TypeScript code.
+
+* `Accept Current Mutation Test` runs with `--accept` on the test folder of a currently opened test file, such as an `original.ts` or `typestat.json`.
+* `Debug Current Mutation Test` does not run with `--accept`, and thus logs any differences as errors.
 
 #### Performance Debugging Tips
 
