@@ -28,11 +28,11 @@
         return undefined;
     }
 
-    function stringOrClass(): string | {  } {
+    function stringOrClass(): string | Foo {
         return new Foo();
     }
 
-    function stringOrFunction(): string | {  } {
+    function stringOrFunction(): string | (() => void) {
         return () => {};
     }
 

@@ -130,7 +130,7 @@
     let eitherClassNeedsUnionImplicit = new SampleClassOne();
     eitherClassNeedsUnionImplicit = new SampleClassTwo();
 
-    let eitherClassNeedsUnionExplicit: SampleClassOne | { optional: false, required: Function } = new SampleClassOne();
+    let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
     let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
@@ -140,11 +140,11 @@
     eitherClassNeedsNullImplicit = new SampleClassTwo();
     eitherClassNeedsNullImplicit = null;
 
-    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | { optional: false, required: Function } = new SampleClassOne();
+    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsNullAndClassExplicit = new SampleClassTwo();
     eitherClassNeedsNullAndClassExplicit = null;
 
-    let eitherClassNeedsUndefinedExplicit: SampleClassOne | { optional: false, required: Function } | undefined = new SampleClassOne();
+    let eitherClassNeedsUndefinedExplicit: SampleClassOne | SampleClassTwo | undefined = new SampleClassOne();
     eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicit = undefined;
 
@@ -152,7 +152,7 @@
     eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicitInterface = undefined;
 
-    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | { optional: false, required: Function } = new SampleClassOne();
+    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedAndClassExplicit = undefined;
 
