@@ -1,6 +1,7 @@
 import * as path from "path";
 
 import { TypeStatArgv } from "../index";
+import { ProcessOutput } from "../output";
 import { globAllAsync } from "../shared/glob";
 import { normalizeAndSlashify } from "../shared/paths";
 
@@ -13,10 +14,11 @@ import { RawTypeStatOptions, TypeStatOptions } from "./types";
 /**
  * Reads TypeStat options using a config path.
  *
- * @param argv   Root arguments passed to TypeStat
+ * @param argv   Root arguments passed to TypeStat.
+ * @param output   Wraps process and logfile output.
  * @returns Promise for filled-out TypeStat options, or a string complaint from failing to make them.
  */
-export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions[] | string> => {
+export const loadOptions = async (argv: TypeStatArgv, output: ProcessOutput): Promise<TypeStatOptions[] | string> => {
     if (argv.config === undefined) {
         return "-c/--config file must be provided.";
     }
@@ -41,7 +43,7 @@ export const loadOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions[]
         ]);
 
         const filledOutOptions = findComplaintForOptions(
-            fillOutRawOptions({ argv, compilerOptions, cwd, fileNames, projectPath, rawOptions }),
+            fillOutRawOptions({ argv, compilerOptions, cwd, fileNames, output, projectPath, rawOptions }),
         );
         if (typeof filledOutOptions === "string") {
             return `Invalid options at index ${i}: ${filledOutOptions}`;

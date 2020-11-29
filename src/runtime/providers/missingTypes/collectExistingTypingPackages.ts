@@ -1,4 +1,5 @@
 import { fs } from "mz";
+import { EOL } from "os";
 
 import { TypeStatOptions } from "../../../options/types";
 import { getQuickErrorSummary } from "../../../shared/errors";
@@ -6,9 +7,9 @@ import { getQuickErrorSummary } from "../../../shared/errors";
 export const collectExistingTypingPackages = async (options: TypeStatOptions, packagePath: string) => {
     const allDependencies = await tryCollectAllDependencies(packagePath);
     if (typeof allDependencies === "string") {
-        options.logger.stderr.write(`\nError trying to collect existing dependencies for --packageMissingTypes:\n\t`);
-        options.logger.stderr.write(allDependencies);
-        options.logger.stderr.write("\n\n");
+        options.output.stderr(`${EOL}Error trying to collect existing dependencies for --packageMissingTypes:`);
+        options.output.stderr(`\t${allDependencies}`);
+        options.output.stderr(EOL);
         return undefined;
     }
 

@@ -28,7 +28,7 @@ export const createRequireRenameProvider = (options: TypeStatOptions, allModifie
             for (const fileName of fileNames) {
                 const sourceFile = services.program.getSourceFile(fileName);
                 if (sourceFile === undefined) {
-                    options.logger.stderr.write(`Could not find TypeScript source file for '${fileName}'.\n`);
+                    options.output.stderr(`Could not find TypeScript source file for '${fileName}'.`);
                     continue;
                 }
 
