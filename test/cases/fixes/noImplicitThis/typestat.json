@@ -1,5 +1,8 @@
 {
     "fixes": {
-        "incompleteTypes": true
+        "noImplicitThis": true
+    },
+    "types": {
+        "strictNullChecks": true
     }
 }

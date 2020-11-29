@@ -1,5 +1,8 @@
 {
     "fixes": {
-        "incompleteTypes": true
+        "strictNonNullAssertions": true
+    },
+    "types": {
+        "strictNullChecks": true
     }
 }

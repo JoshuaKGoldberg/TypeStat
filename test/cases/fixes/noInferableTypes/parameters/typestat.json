@@ -1,5 +1,8 @@
 {
     "fixes": {
-        "incompleteTypes": true
+        "noInferableTypes": true
+    },
+    "types": {
+        "strictNullChecks": true
     }
 }
