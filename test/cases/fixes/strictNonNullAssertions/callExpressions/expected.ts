@@ -25,6 +25,16 @@
     function twoParametersStringBecomesUndefinedDirect(abc: string, def: string) { }
     twoParametersStringBecomesUndefinedDirect(undefined!, undefined!);
 
+    function takesStringFromAny(value: string) { }
+    function givesAnyToString(maybe: any | undefined) {
+        takesStringFromAny(maybe);
+    }
+
+    function takesAnyFromString(value: any) { }
+    function givesStringToAny(maybe: string | undefined) {
+        takesAnyFromString(maybe);
+    }
+
     function takesString(abc: string) { }
     takesString(null!);
     takesString(undefined!);

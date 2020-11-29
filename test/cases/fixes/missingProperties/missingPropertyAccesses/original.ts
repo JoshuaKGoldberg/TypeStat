@@ -11,5 +11,14 @@
             this.givenTwiceDifferent = 1;
             this.givenTwiceDifferent = undefined;
         }
+
+        set withGetterAndSetter(value: string) {
+            this._withGetterAndSetter = value;
+        }
+
+        get withGetterAndSetter() {
+            return this._withGetterAndSetter;
+        }
+
     }
 })();

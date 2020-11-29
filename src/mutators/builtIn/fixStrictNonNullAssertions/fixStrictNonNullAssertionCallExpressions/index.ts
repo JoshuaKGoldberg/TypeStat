@@ -1,6 +1,7 @@
 import { combineMutations, IMultipleMutations, IMutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
+import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags";
 
 import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion";
 import { getValueDeclarationOfFunction } from "../../../../shared/functionTypes";
@@ -46,8 +47,13 @@ const collectArgumentMutations = (
 
     // Check the types of each argument being passed in against the declared parameter type
     for (let i = 0; i < visitableArguments; i += 1) {
-        const typeOfArgument = typeChecker.getTypeAtLocation(callingNode.arguments[i]);
+        // We can ignore parameters that are 'any'
         const typeOfParameter = typeChecker.getTypeAtLocation(functionLikeValueDeclaration.parameters[i]);
+        if (isTypeFlagSetRecursively(typeOfParameter, ts.TypeFlags.Any)) {
+            continue;
+        }
+
+        const typeOfArgument = typeChecker.getTypeAtLocation(callingNode.arguments[i]);
 
         // If either null or undefined is missing in the argument, we'll need a ! mutation
         if (isNullOrUndefinedMissingBetween(typeOfArgument, typeOfParameter)) {
