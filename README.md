@@ -19,7 +19,6 @@ TypeStat can:
     <li>✨ Add TypeScript types on files freshly converted from JavaScript to TypeScript!</li>
     <li>✨ Infer types to fix <code>--noImplicitAny</code> and <code>--noImplicitThis</code> violations!</li>
     <li>✨ Annotate missing <code>null</code>s and <code>undefined</code>s to get you started with <code>--strictNullChecks</code>!</li>
-    </li>
 </ul>
 
 ⚡ To start, the `typestat` command will launch an interactive guide to setting up a configuration file. ⚡
