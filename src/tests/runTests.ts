@@ -44,9 +44,9 @@ describeMutationTestCases(
         const rawCompilerOptions = fs.readFileSync(typeStatPath).toString();
         const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config;
         const output = {
-            log: jest.fn(),
-            stderr: jest.fn(),
-            stdout: jest.fn(),
+            log: () => {},
+            stderr: () => {},
+            stdout: () => {},
         };
 
         return createTypeStatProvider({
