@@ -21,7 +21,7 @@
 
 
 
-    class ExtendsBaseWithOneInterface extends BaseWithOneGeneric<OneInterface> {
+    class ExtendsBaseWithOneInterface extends BaseWithOneGeneric<{ property: string }> {
         constructor() {
             super(oneInterface)
         }

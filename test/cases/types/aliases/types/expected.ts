@@ -9,15 +9,15 @@
         return undefined;
     }
 
-    function stringOrClass(): string | /* Foo */ Foo {
+    function stringOrClass(): string | {  } {
         return new Foo();
     }
 
-    function stringOrFunction(): string | (() => void) {
+    function stringOrFunction(): string | {  } {
         return () => {};
     }
 
-    function stringOrFunctionReturningString(): string | (() => string) {
+    function stringOrFunctionReturningString(): string | {  } {
         return () => {
             return "";
         };

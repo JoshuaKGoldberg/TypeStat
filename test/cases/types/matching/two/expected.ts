@@ -9,7 +9,7 @@
         return undefined;
     }
 
-    function stringOrClass(): string | Foo {
+    function stringOrClass(): string {
         return new Foo();
     }
 
