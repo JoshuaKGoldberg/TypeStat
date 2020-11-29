@@ -1,8 +1,8 @@
 (function () {
     type Values = {
-        alreadyDeclared: boolean;laterAssigned?: boolean;
+        alreadyDeclared: boolean;
+laterAssigned?: boolean;
 initiallyThere?: boolean;
-
     };
 
     class Container<T> {

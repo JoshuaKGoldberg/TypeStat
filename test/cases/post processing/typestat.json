@@ -3,6 +3,6 @@
         "incompleteTypes": true
     },
     "postProcess": {
-        "shell": [["node", "../postProcess.js"]]
+        "shell": [["node", "./postProcess.js"]]
     }
 }
