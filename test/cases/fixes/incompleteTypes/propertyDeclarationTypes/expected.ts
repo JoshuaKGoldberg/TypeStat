@@ -32,4 +32,29 @@
             }
         }
     }
+
+    class WithIncompleteObjectProperty {
+        member: string | { key: boolean };
+
+        method() {
+            this.member = '';
+            this.member = {
+                key: true,
+            }
+        }
+    }
+
+    class WithIncompleteNestedObjectProperty {
+        member: string | { middle: { deepKey: boolean }, middleKey: number };
+
+        method() {
+            this.member = '';
+            this.member = {
+                middle: {
+                    deepKey: true,
+                },
+                middleKey: 0,
+            }
+        }
+    }
 })();

@@ -2,8 +2,7 @@ import ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { isNotUndefined } from "../../shared/arrays";
-import { isTypeArgumentsTypeNode } from "../../shared/typeNodes";
-import { constructArrayShorthand } from "../arrays";
+import { isIntrisinicNameTypeNode } from "../../shared/typeNodes";
 
 import { getApplicableTypeAliases } from "./aliases";
 import { createTypeName } from "./createTypeName";
@@ -49,26 +48,41 @@ export const joinIntoType = (
 
 const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
     // If this is a declared interface or type alias (type MyType = { ... }), use that MyType name
-    const typeLiteralName = printFriendlyNameOfInterfaceOrTypeAlias(type);
-    if (typeLiteralName !== undefined) {
-        return typeLiteralName;
+    // Alternately, also try this as an inline object literal
+    const friendlyTypeName = printFriendlyNameOfInterfaceOrTypeAlias(type);
+    if (friendlyTypeName !== undefined) {
+        return friendlyTypeName;
     }
 
-    // If the type otherwise isn't a function, we can generally print it directly by name
-    // Note that the type given to this function shouldn't be union or intersection types
     const callSignatures = type.getCallSignatures();
+
+    // If the type otherwise isn't a function, we can generally print it directly by name...
     if (callSignatures.length === 0) {
-        return type.symbol.name;
+        // ...assuming it does have a name, which isn't true for literals such as 'boolean'
+        const symbol = type.getSymbol();
+        if (symbol !== undefined && !symbol.name.startsWith("__")) {
+            return symbol.name;
+        }
     }
 
-    // If there's only one type signature, use the happy () => ... shorthand
+    // If there's only exactly one type signature, use the happy () => ... shorthand
     if (callSignatures.length === 1) {
         return printShorthandCallSignature(request, callSignatures[0]);
     }
 
-    // Looks like we'd have to print a { (): ...; (): ...; } multiple call signatures object
-    // ...but this is such a rare case in TypeStat usage, that for now, let's just use Function (lol)
-    return "Function";
+    // If it's a literal type for a user-facing one such as 'boolean', go with that
+    if (isIntrisinicNameTypeNode(type)) {
+        return type.intrinsicName;
+    }
+
+    // Since this isn't a better-known object, it might be an object literal descriptor (i.e. { ... })
+    const objectLiteralDescriptor = printObjectLiteralDescriptor(request, type);
+    if (objectLiteralDescriptor !== undefined) {
+        return objectLiteralDescriptor;
+    }
+
+    // If all else fails, there was no information available, so this is probably just unknown
+    return "unknown";
 };
 
 const printFriendlyNameOfInterfaceOrTypeAlias = (type: ts.Type) => {
@@ -85,6 +99,25 @@ const printFriendlyNameOfInterfaceOrTypeAlias = (type: ts.Type) => {
     }
 
     return undefined;
+};
+
+const printObjectLiteralDescriptor = (request: FileMutationsRequest, type: ts.Type) => {
+    if (!(type.flags & ts.TypeFlags.Object)) {
+        return undefined;
+    }
+
+    const properties = type.getProperties();
+    const typeChecker = request.services.program.getTypeChecker();
+
+    return [
+        "{",
+        properties
+            .map((property) =>
+                [property.name, printFriendlyNameOfType(request, typeChecker.getTypeAtLocation(property.valueDeclaration))].join(": "),
+            )
+            .join(", "),
+        "}",
+    ].join(" ");
 };
 
 const printShorthandCallSignature = (request: FileMutationsRequest, callSignature: ts.Signature): string => {
