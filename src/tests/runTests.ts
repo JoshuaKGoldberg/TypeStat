@@ -9,8 +9,6 @@ import { RawTypeStatOptions, TypeStatOptions } from "../options/types";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider";
 import { arrayify } from "../shared/arrays";
 
-import { FakeWritableStream } from "./FakeWritableStream";
-
 interface ParsedTestArgv {
     accept?: boolean;
     include?: string;
@@ -45,16 +43,18 @@ describeMutationTestCases(
         const projectPath = path.join(projectDirectory, "tsconfig.json");
         const rawCompilerOptions = fs.readFileSync(typeStatPath).toString();
         const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config;
-        const logger = {
-            stderr: process.stderr,
-            stdout: new FakeWritableStream(),
+        const output = {
+            log: () => {},
+            stderr: () => {},
+            stdout: () => {},
         };
 
         return createTypeStatProvider({
             ...(fillOutRawOptions({
-                argv: { logger },
+                argv: { args: [] },
                 compilerOptions,
                 cwd: path.dirname(projectPath),
+                output,
                 projectPath,
                 rawOptions: {
                     ...rawOptions,

@@ -32,7 +32,7 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
 
             const sourceFile = services.program.getSourceFile(fileName);
             if (sourceFile === undefined) {
-                options.logger.stderr.write(`Could not find TypeScript source file for '${fileName}'.\n`);
+                options.output.stderr(`Could not find TypeScript source file for '${fileName}'.`);
                 continue;
             }
 
@@ -81,10 +81,10 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
 
 const createFileNamesAndServicesCache = (options: TypeStatOptions) => {
     return new LazyCache(() => {
-        options.logger.stdout.write(chalk.grey("Preparing language services to visit files...\n"));
+        options.output.stdout(chalk.grey("Preparing language services to visit files..."));
 
         const { fileNames, services } = createFileNamesAndServices(options);
-        options.logger.stdout.write(chalk.grey(`Prepared language services for ${fileNames.length} files...\n`));
+        options.output.stdout(chalk.grey(`Prepared language services for ${fileNames.length} files...`));
 
         return { fileNames, services };
     });

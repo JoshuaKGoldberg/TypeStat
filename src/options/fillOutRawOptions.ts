@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { TypeStatArgv } from "../index";
-import { processLogger } from "../logging/logger";
+import { ProcessOutput } from "../output";
 import { collectOptionals } from "../shared/arrays";
 import { collectAsConfiguration } from "../shared/booleans";
 
@@ -19,6 +19,7 @@ export interface OptionsFromRawOptionsSettings {
     compilerOptions: Readonly<ts.CompilerOptions>;
     cwd: string;
     fileNames?: ReadonlyArray<string>;
+    output: ProcessOutput;
     projectPath: string;
     rawOptions: RawTypeStatOptions;
 }
@@ -29,10 +30,10 @@ export interface OptionsFromRawOptionsSettings {
  * @returns Parsed TypeStat options, or a string for an error complaint.
  */
 export const fillOutRawOptions = ({
-    argv,
     compilerOptions,
     cwd,
     fileNames,
+    output,
     projectPath,
     rawOptions,
 }: OptionsFromRawOptionsSettings): TypeStatOptions | string => {
@@ -72,8 +73,8 @@ export const fillOutRawOptions = ({
             strictNonNullAssertions: false,
             ...rawOptions.fixes,
         },
-        logger: argv.logger,
-        mutators: collectAddedMutators(rawOptions, packageOptions.directory, processLogger),
+        mutators: collectAddedMutators(rawOptions, packageOptions.directory, output),
+        output,
         package: packageOptions,
         postProcess: { shell },
         projectPath,

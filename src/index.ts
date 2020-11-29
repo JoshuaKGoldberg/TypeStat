@@ -3,23 +3,19 @@ require("./mutations/createExposedTypeScript").requireExposedTypeScript();
 
 import { runMutations } from "automutate";
 
-import { ProcessLogger } from "./logging/logger";
 import { loadOptions } from "./options/loadOptions";
 import { processFileRenames } from "./options/processFileRenames";
 import { TypeStatOptions } from "./options/types";
+import { ProcessOutput } from "./output";
 import { createTypeStatProvider } from "./runtime/createTypeStatProvider";
 
 /**
  * Root arguments to pass to TypeStat.
  */
 export interface TypeStatArgv {
-    readonly args?: ReadonlyArray<string>;
-    readonly config?: string;
-
-    /**
-     * Wraps process.stderr and process.stdout.
-     */
-    readonly logger: ProcessLogger;
+    args: readonly string[];
+    config?: string;
+    logfile?: string;
 }
 
 export enum ResultStatus {
@@ -44,8 +40,8 @@ export interface SucceededResult {
     readonly status: ResultStatus.Succeeded;
 }
 
-export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
-    const allOptions = await tryLoadingOptions(argv);
+export const typeStat = async (argv: TypeStatArgv, output: ProcessOutput): Promise<TypeStatResult> => {
+    const allOptions = await tryLoadingOptions(argv, output);
     if (allOptions instanceof Error || typeof allOptions === "string") {
         return {
             error: allOptions,
@@ -81,9 +77,9 @@ export const typeStat = async (argv: TypeStatArgv): Promise<TypeStatResult> => {
     };
 };
 
-const tryLoadingOptions = async (argv: TypeStatArgv): Promise<TypeStatOptions[] | Error | string> => {
+const tryLoadingOptions = async (argv: TypeStatArgv, output: ProcessOutput): Promise<TypeStatOptions[] | Error | string> => {
     try {
-        return await loadOptions(argv);
+        return await loadOptions(argv, output);
     } catch (error) {
         return error instanceof Error ? error : new Error(error as string);
     }

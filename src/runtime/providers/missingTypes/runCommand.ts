@@ -5,7 +5,10 @@ import { TypeStatOptions } from "../../../options/types";
 
 const isWindows = () => process.platform === "win32";
 
-const commandAliases = new Map([["npm", isWindows() ? "npm.cmd" : undefined], ["yarn", isWindows() ? "yarn.cmd" : undefined]]);
+const commandAliases = new Map([
+    ["npm", isWindows() ? "npm.cmd" : undefined],
+    ["yarn", isWindows() ? "yarn.cmd" : undefined],
+]);
 
 /**
  * Runs a shell command.
@@ -17,19 +20,17 @@ export const runCommand = async (options: TypeStatOptions, fullCommand: string |
     const [command, ...args] = typeof fullCommand === "string" ? fullCommand.split(" ") : fullCommand;
     const commandAlias = getCommandAlias(command);
 
-    options.logger.stdout.write(chalk.grey(`> ${commandAlias} ${args.join(" ")}\n`));
+    options.output.stdout(chalk.grey(`> ${commandAlias} ${args.join(" ")}`));
 
-    return new Promise<number>(
-        (resolve, reject): void => {
-            const childProcess = spawn(commandAlias, args, {
-                cwd: options.package.directory,
-                stdio: "inherit",
-            });
+    return new Promise<number>((resolve, reject): void => {
+        const childProcess = spawn(commandAlias, args, {
+            cwd: options.package.directory,
+            stdio: "inherit",
+        });
 
-            childProcess.on("error", reject);
-            childProcess.on("close", resolve);
-        },
-    );
+        childProcess.on("error", reject);
+        childProcess.on("close", resolve);
+    });
 };
 
 const getCommandAlias = (command: string): string => {

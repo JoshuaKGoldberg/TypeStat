@@ -26,7 +26,7 @@ const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyAr
         return options;
     }
 
-    options.logger.stdout.write(`Renaming ${filesToRename.length} files...\n`);
+    options.output.stdout(`Renaming ${filesToRename.length} files...`);
 
     for (const { oldFileName, newFileName } of filesToRename) {
         await fs.rename(oldFileName, newFileName);
