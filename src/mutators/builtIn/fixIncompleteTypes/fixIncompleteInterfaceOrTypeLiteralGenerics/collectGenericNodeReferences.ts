@@ -67,7 +67,11 @@ export const expandReferencesForGenericTypes = (
 
         // The templated declaration is the backing value declaration for the instantiation's symbol
         const templatedDeclaration = templatedDeclarationSymbol.valueDeclaration;
-        if (!isNodeWithDefinedTypeParameters(templatedDeclaration) || templatedParentInstantiation.typeArguments === undefined) {
+        if (
+            templatedDeclaration === undefined ||
+            !isNodeWithDefinedTypeParameters(templatedDeclaration) ||
+            templatedParentInstantiation.typeArguments === undefined
+        ) {
             continue;
         }
 

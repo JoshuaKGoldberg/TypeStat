@@ -46,7 +46,7 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
     if (references !== undefined) {
         // For each referencing location, update types if the type is assigned to there
         for (const reference of references) {
-            updateAssignedTypesForReference(reference, assignedTypes, request);
+            updateAssignedTypesForReference(node.parent, reference, assignedTypes, request);
         }
     }
 
@@ -60,7 +60,12 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
  * @param assignedTypes   In-progress collection of types assigned to a property.
  * @param request   Metadata and settings to collect mutations in a file.
  */
-const updateAssignedTypesForReference = (identifier: ts.Node, assignedTypes: ts.Type[], request: FileMutationsRequest): void => {
+const updateAssignedTypesForReference = (
+    targetClass: ts.ClassLikeDeclaration,
+    identifier: ts.Node,
+    assignedTypes: ts.Type[],
+    request: FileMutationsRequest,
+): void => {
     // In order to write a new type, the referencing node should be an identifier...
     if (!ts.isIdentifier(identifier)) {
         return;
@@ -72,9 +77,16 @@ const updateAssignedTypesForReference = (identifier: ts.Node, assignedTypes: ts.
         return;
     }
 
-    // ...contained as the left-hand side of an "=" binary expression
+    // ...contained as the left-hand side of an "=" binary expression...
     const binaryExpression = propertyAccess.parent;
     if (!isNodeAssigningBinaryExpression(binaryExpression) || binaryExpression.left !== propertyAccess) {
+        return;
+    }
+
+    // ...and where the original property access expression refers to the target class
+    // (this is important when multiple child classes of a single base class redeclare a member, such as React.Component's state)
+    const assigneeType = request.services.program.getTypeChecker().getTypeAtLocation(propertyAccess.expression);
+    if (assigneeType.getSymbol()?.valueDeclaration !== targetClass) {
         return;
     }
 
