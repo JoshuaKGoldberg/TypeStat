@@ -11,6 +11,7 @@ import { addIncompleteTypesToType, TypeSummariesPerNodeByName } from "./addIncom
 import { addMissingTypesToType } from "./addMissingTypesToType";
 import { originalTypeHasIncompleteType } from "./eliminations";
 import { summarizeAllAssignedTypes, TypeSummariesByName } from "./summarization";
+import { isNodeWithType, PropertySignatureWithType } from "../../shared/nodeTypes";
 
 /**
  * Given an interface or type declaration and a set of later-assigned types,
@@ -37,7 +38,7 @@ export const createTypeExpansionMutation = (
         // If the type matches an existing property in name but not in type, we'll add the new type in there
         const originalPropertyType = request.services.program.getTypeChecker().getTypeAtLocation(originalProperty);
         if (originalTypeHasIncompleteType(request, originalPropertyType, summary.types)) {
-            incompleteTypes.set(name, { originalProperty, summary });
+            incompleteTypes.set(name, { originalProperty, originalPropertyType, summary });
         }
     }
 
@@ -49,11 +50,11 @@ export const createTypeExpansionMutation = (
 };
 
 const groupPropertyDeclarationsByName = (node: ts.InterfaceDeclaration | ts.TypeLiteralNode) => {
-    const propertiesByName: Map<string, ts.PropertySignature> = new Map();
+    const propertiesByName: Map<string, PropertySignatureWithType> = new Map();
 
     for (const member of node.members) {
         // Ignore non-existent or implicitly typed members
-        if (!ts.isPropertySignature(member) || member.type === undefined) {
+        if (!ts.isPropertySignature(member) || !isNodeWithType(member)) {
             continue;
         }
 
