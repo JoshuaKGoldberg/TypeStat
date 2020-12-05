@@ -171,10 +171,10 @@
 
     // Functions
 
-    let resolve: () => void;
-    resolve = () => { };
+    let returnsString: (() => string);
+    returnsString = () => "";
 
-    new Promise<void>((_resolve) => {
-        resolve = _resolve;
-    });
+    let returnsStringOrNumber: (() => string) | (() => number);
+    returnsStringOrNumber = () => "";
+    returnsStringOrNumber = () => 0;
 })();

@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../mutations/collecting/flags";
+import { isIntrisinicNameTypeNode } from "./typeNodes";
 
 export type NodeSelector<TNode extends ts.Node> = (node: ts.Node) => node is TNode;
 
@@ -112,4 +113,15 @@ export const getIdentifyingTypeLiteralParent = (node: ts.TypeLiteralNode) => {
 
     // ???
     return node;
+};
+
+// Todo: eventually, these should expand to object, Object, etc...
+// Those are stored as intrinsicNames on types, and were showing up without missing flags for some reason
+const knownGlobalBaseTypeNames = new Set<string | undefined>(["Function"]);
+
+/**
+ * @returns Whether the type is a known base type such as Function.
+ */
+export const isKnownGlobalBaseType = (type: ts.Type) => {
+    return knownGlobalBaseTypeNames.has(type.getSymbol()?.escapedName.toString());
 };
