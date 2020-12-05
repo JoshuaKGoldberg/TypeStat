@@ -1,7 +1,8 @@
-import { combineMutations, IMutation, ITextInsertMutation } from "automutate";
+import { combineMutations, IMutation, ITextInsertMutation, ITextSwapMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { isKnownGlobalBaseType, PropertySignatureWithType } from "../../shared/nodeTypes";
 import { createTypeName } from "../aliasing/createTypeName";
 
 import { TypeSummary } from "./summarization";
@@ -10,7 +11,8 @@ export type TypeSummariesPerNodeByName = Map<string, TypeSummaryWithNode>;
 
 export interface TypeSummaryWithNode {
     summary: TypeSummary;
-    originalProperty: ts.PropertySignature;
+    originalProperty: PropertySignatureWithType;
+    originalPropertyType: ts.Type;
 }
 
 /**
@@ -20,21 +22,47 @@ export const addIncompleteTypesToType = (
     request: FileMutationsRequest,
     incompleteTypes: TypeSummariesPerNodeByName,
 ): IMutation | undefined => {
-    const mutations: ITextInsertMutation[] = [];
+    const mutations: IMutation[] = [];
 
-    for (const { originalProperty, summary } of incompleteTypes.values()) {
-        mutations.push(fillInIncompleteType(request, originalProperty, summary.types));
+    for (const summaryWithNode of incompleteTypes.values()) {
+        const mutation = fillInIncompleteType(request, summaryWithNode);
+
+        if (mutation !== undefined) {
+            mutations.push(mutation);
+        }
     }
 
     return mutations.length === 0 ? undefined : combineMutations(...mutations);
 };
 
-const fillInIncompleteType = (request: FileMutationsRequest, memberNode: ts.PropertySignature, types: ts.Type[]): ITextInsertMutation => {
-    const begin = memberNode.type === undefined ? memberNode.name.end : memberNode.type.end;
+const fillInIncompleteType = (
+    request: FileMutationsRequest,
+    summaryWithNode: TypeSummaryWithNode,
+): ITextInsertMutation | ITextSwapMutation | undefined => {
+    // Create a new type name to add on that joins the types to be added
+    const createdTypeName = createTypeName(request, ...summaryWithNode.summary.types);
+    if (createdTypeName === undefined) {
+        return undefined;
+    }
 
+    // Similar to createTypeAdditionMutation, if the node is a basic base type, we can just replace it
+    if (summaryWithNode.originalProperty.type !== undefined && isKnownGlobalBaseType(summaryWithNode.originalPropertyType)) {
+        return {
+            insertion: `: ${createdTypeName}`,
+            range: {
+                begin: summaryWithNode.originalProperty.name.end,
+                end: summaryWithNode.originalProperty.type.end,
+            },
+            type: "text-swap",
+        };
+    }
+
+    // Otherwise, add to the original node property's types
     return {
-        insertion: ` | ${createTypeName(request, ...types)}`,
-        range: { begin },
+        insertion: ` | ${createdTypeName}`,
+        range: {
+            begin: summaryWithNode.originalProperty.type.end,
+        },
         type: "text-insert",
     };
 };

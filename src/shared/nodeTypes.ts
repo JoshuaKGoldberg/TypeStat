@@ -25,6 +25,8 @@ export type NodeWithIdentifierName = ts.Node & {
 
 export type ParameterDeclarationWithType = ts.ParameterDeclaration & NodeWithType;
 
+export type PropertySignatureWithType = ts.PropertySignature & NodeWithType;
+
 /**
  * Node types TypeStat may attempt to create a type declaration on.
  */

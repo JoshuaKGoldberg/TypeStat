@@ -1,18 +1,18 @@
 import React from 'react';
 
 (function () {
-    // interface ClassComponentProps {
-    //     other?: boolean;
-    // }
+    interface ClassComponentProps {
+        other?: boolean;
+    }
 
-    // class ClassComponent extends React.Component<ClassComponentProps> {
-    //     render() {
-    //         return this.props.text;    
-    //     }
-    // }
+    class ClassComponent extends React.Component<ClassComponentProps> {
+        render() {
+            return this.props.text;    
+        }
+    }
 
-    // const renderClassComponent = (text: string) =>
-    //     <ClassComponent text={text} />;
+    const renderClassComponent = (text: string) =>
+        <ClassComponent text={text} />;
         
     // TODO: This should be string[] or Array<string>, not Array...
     type FunctionComponentProps =  {
@@ -27,4 +27,16 @@ import React from 'react';
 
     const renderFunctionComponent = (texts: string[]) =>
         <FunctionComponent texts={texts} />;
+
+    type WithFunctionsProps = {
+        returnsBoolean: Function;
+        returnsStringOrNumber: () => string;
+    }
+
+    class WithFunctions extends React.Component<WithFunctionsProps> { }
+
+    const withFunctions = <WithFunctions
+        returnsBoolean={() => false}
+        returnsStringOrNumber={() => 0}
+    />;
 })();
