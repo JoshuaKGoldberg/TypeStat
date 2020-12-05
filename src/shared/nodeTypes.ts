@@ -116,6 +116,7 @@ export const getIdentifyingTypeLiteralParent = (node: ts.TypeLiteralNode) => {
 };
 
 // Todo: eventually, these should expand to object, Object, etc...
+// Those are stored as intrinsicNames on types, and were showing up without missing flags for some reason
 const knownGlobalBaseTypeNames = new Set<string | undefined>(["Function"]);
 
 /**
