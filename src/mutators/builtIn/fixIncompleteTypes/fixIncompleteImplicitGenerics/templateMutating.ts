@@ -5,6 +5,7 @@ import { AssignedTypesByName, joinAssignedTypesByName } from "../../../../mutati
 import { createDeclarationForTypeSummaries } from "../../../../mutations/creations/creationMutations";
 import { summarizeAllAssignedTypes } from "../../../../mutations/expansions/summarization";
 import { getFriendlyTypeParameterDeclarationName, getPerceivedNameOfClass } from "../../../../mutations/naming";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { FileMutationsRequest } from "../../../fileMutator";
 
 export const fillInMissingTemplateTypes = (
@@ -24,7 +25,10 @@ export const fillInMissingTemplateTypes = (
         // If the template type is fine on the node but missing, use the default from the generic
         // Example: a React component's props are {} but its state needs a new type
         if (templateTypes === undefined) {
-            templateTypeNames.push(findDefaultTemplateValue(request, baseTypeParameters[i]));
+            const defaultTemplateValue = findDefaultTemplateValue(request, baseTypeParameters[i]);
+            if (defaultTemplateValue !== undefined) {
+                templateTypeNames.push(defaultTemplateValue);
+            }
             continue;
         }
 
@@ -59,7 +63,11 @@ const findDefaultTemplateValue = (request: FileMutationsRequest, baseTypeParamet
         return "{}";
     }
 
-    const baseTypeDefault = request.services.program.getTypeChecker().getTypeAtLocation(baseTypeParameter.default);
+    const baseTypeDefault = getTypeAtLocationIfNotError(request, baseTypeParameter.default);
+    if (baseTypeDefault === undefined) {
+        return undefined;
+    }
+
     const typeName = createTypeName(request, baseTypeDefault);
 
     return typeName === undefined ? "{}" : typeName;

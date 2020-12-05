@@ -7,6 +7,7 @@ import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 import { getManuallyAssignedTypeOfNode } from "../../../../shared/assignments";
 import { getStaticNameOfProperty } from "../../../../shared/names";
 import { isNullOrUndefinedMissingBetween } from "../../../../shared/nodeTypes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 
 export const fixStrictNonNullAssertionObjectLiterals: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
     const visitObjectLiteralExpression = (node: ts.ObjectLiteralExpression): IMutation | undefined => {
@@ -40,9 +41,10 @@ const getStrictPropertyFix = (request: FileMutationsRequest, node: ts.ObjectLite
             }
 
             // We'll mutate properties that are declared as non-nullable but assigned a nullable value
-            return isNullOrUndefinedMissingBetween(
-                typeChecker.getTypeAtLocation(property),
-                typeChecker.getDeclaredTypeOfSymbol(assignedProperty),
+            const propertyType = getTypeAtLocationIfNotError(typeChecker, property);
+            return (
+                propertyType !== undefined &&
+                isNullOrUndefinedMissingBetween(propertyType, typeChecker.getDeclaredTypeOfSymbol(assignedProperty))
             );
         })
         // Convert each of those properties into an assertion mutation

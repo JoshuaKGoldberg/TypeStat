@@ -3,6 +3,7 @@ import * as ts from "typescript";
 
 import { joinAssignedTypesByName } from "../../../../mutations/assignments";
 import { createTypeExpansionMutation } from "../../../../mutations/expansions/expansionMutations";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
@@ -23,7 +24,10 @@ const visitInterfaceOrTypeLiteral = (node: InterfaceOrTypeLiteral, request: File
     }
 
     // Given all those generic references, find all the types being assigned to those nodes
-    const originalType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+    const originalType = getTypeAtLocationIfNotError(request, node);
+    if (originalType === undefined) {
+        return undefined;
+    }
     const valuesAssignedToReferenceNodes = expandValuesAssignedToReferenceNodes(request, originalType, genericReferenceNodes);
     if (valuesAssignedToReferenceNodes.length === 0) {
         return undefined;

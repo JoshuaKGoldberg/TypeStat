@@ -1,4 +1,6 @@
 import * as ts from "typescript";
+import { FileMutationsRequest } from "../mutators/fileMutator";
+import { isIntrisinicNameTypeNode } from "./typeNodes";
 
 /**
  * @returns Whether the type has `localTypeParameters`, such as the built-in Map and Array definitions.
@@ -18,4 +20,20 @@ export const isTypeBuiltIn = (type: ts.Type) => {
     const sourceFile = symbol.valueDeclaration.getSourceFile();
 
     return sourceFile.hasNoDefaultLib && sourceFile.isDeclarationFile && sourceFile.fileName.includes("node_modules/typescript/lib/");
+};
+
+export const getTypeAtLocationIfNotError = (
+    requestOrTypeChecker: FileMutationsRequest | ts.TypeChecker,
+    node: ts.Node | undefined,
+): ts.Type | undefined => {
+    if (node === undefined) {
+        return undefined;
+    }
+
+    const type =
+        "getTypeAtLocation" in requestOrTypeChecker
+            ? requestOrTypeChecker.getTypeAtLocation(node)
+            : requestOrTypeChecker.services.program.getTypeChecker().getTypeAtLocation(node);
+
+    return isIntrisinicNameTypeNode(type) && type.intrinsicName === "error" ? undefined : type;
 };

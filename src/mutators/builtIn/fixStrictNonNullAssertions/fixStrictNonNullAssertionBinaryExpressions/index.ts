@@ -4,6 +4,7 @@ import * as ts from "typescript";
 import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags";
 import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion";
 import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
@@ -13,9 +14,15 @@ export const fixStrictNonNullAssertionBinaryExpressions: FileMutator = (request:
 
 const visitBinaryExpression = (node: ts.BinaryExpression, request: FileMutationsRequest): IMutation | undefined => {
     // Grab the types of the declared and assigned nodes
-    const typeChecker = request.services.program.getTypeChecker();
-    const assignedType = typeChecker.getTypeAtLocation(node.right);
-    const declaredType = typeChecker.getTypeAtLocation(node.left);
+    const assignedType = getTypeAtLocationIfNotError(request, node.right);
+    if (assignedType === undefined) {
+        return undefined;
+    }
+
+    const declaredType = getTypeAtLocationIfNotError(request, node.left);
+    if (declaredType === undefined) {
+        return undefined;
+    }
 
     // We only care if the assigned type contains a strict flag the declared type doesn't
     if (

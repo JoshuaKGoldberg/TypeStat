@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { typeHasLocalTypeParameters } from "../../../../../shared/types";
+import { getTypeAtLocationIfNotError, typeHasLocalTypeParameters } from "../../../../../shared/types";
 import { FileMutationsRequest } from "../../../../fileMutator";
 
 import { VariableWithImplicitGeneric } from "./implicitGenericTypes";
@@ -36,11 +36,9 @@ export interface ParameterTypeNodeSummary {
 }
 
 export const getGenericClassDetails = (request: FileMutationsRequest, node: VariableWithImplicitGeneric) => {
-    const typeChecker = request.services.program.getTypeChecker();
-
     // Get the backing type of the variable's initializer
-    const initializerType = typeChecker.getTypeAtLocation(node.initializer);
-    const initializerSymbol = initializerType.getSymbol();
+    const initializerType = getTypeAtLocationIfNotError(request, node.initializer);
+    const initializerSymbol = initializerType?.getSymbol();
     if (initializerSymbol === undefined) {
         return undefined;
     }
@@ -52,6 +50,7 @@ export const getGenericClassDetails = (request: FileMutationsRequest, node: Vari
     }
 
     // Only care about types that have at least one (local?) type parameter
+    const typeChecker = request.services.program.getTypeChecker();
     const containerType = typeChecker.getDeclaredTypeOfSymbol(initializerSymbol);
     if (
         !typeHasLocalTypeParameters(containerType) ||

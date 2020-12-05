@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 
 import { getClassExtendsType } from "../../../../../shared/nodes";
+import { getTypeAtLocationIfNotError } from "../../../../../shared/types";
 import { FileMutationsRequest } from "../../../../fileMutator";
 import { ReactClassComponentNode, ReactComponentNode, ReactFunctionalComponentNode } from "../reactFiltering/isReactComponentNode";
 
@@ -22,8 +23,8 @@ const getClassComponentPropsNode = (request: FileMutationsRequest, node: ReactCl
     }
 
     const [rawPropsNode] = extendsType.typeArguments;
-    const propsNodeType = request.services.program.getTypeChecker().getTypeAtLocation(rawPropsNode);
-    const propsNodeSymbol = propsNodeType.getSymbol();
+    const propsNodeType = getTypeAtLocationIfNotError(request, rawPropsNode);
+    const propsNodeSymbol = propsNodeType?.getSymbol();
     if (propsNodeSymbol === undefined) {
         return undefined;
     }
@@ -44,8 +45,8 @@ const getFunctionalComponentPropsNode = (
     }
 
     const [parameter] = parameters;
-    const type = request.services.program.getTypeChecker().getTypeAtLocation(parameter);
-    const symbol = type.getSymbol();
+    const type = getTypeAtLocationIfNotError(request, parameter);
+    const symbol = type?.getSymbol();
     if (symbol === undefined || symbol.declarations.length === 0) {
         return undefined;
     }

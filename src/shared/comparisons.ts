@@ -4,6 +4,7 @@ import * as ts from "typescript";
 import { FileMutationsRequest } from "../mutators/fileMutator";
 import { ExposedTypeChecker } from "../mutations/createExposedTypeScript";
 import { isIntrisinicNameTypeNode, isOptionalTypeArgumentsTypeNode } from "./typeNodes";
+import { getTypeAtLocationIfNotError } from "./types";
 
 export const declaredInitializedTypeNodeIsRedundant = (request: FileMutationsRequest, declaration: ts.TypeNode, initializer: ts.Node) => {
     // Most literals (e.g. `""`) have a corresponding keyword (e.g. `string`)
@@ -34,11 +35,17 @@ export const declaredInitializedTypeNodeIsRedundant = (request: FileMutationsReq
     }
 
     // Other types are complex enough to need the type checker...
-    const typeChecker = request.services.program.getTypeChecker();
-    const declaredType = typeChecker.getTypeAtLocation(declaration);
-    const initializedType = typeChecker.getTypeAtLocation(initializer);
+    const declaredType = getTypeAtLocationIfNotError(request, declaration);
+    if (declaredType === undefined) {
+        return undefined;
+    }
 
-    return declaredTypeIsEquivalent(typeChecker, declaredType, initializedType);
+    const initializedType = getTypeAtLocationIfNotError(request, initializer);
+    if (initializedType === undefined) {
+        return undefined;
+    }
+
+    return declaredTypeIsEquivalent(request.services.program.getTypeChecker(), declaredType, initializedType);
 };
 
 const declaredTypeIsEquivalent = (typeChecker: ExposedTypeChecker, declaredType: ts.Type, initializedType: ts.Type) => {

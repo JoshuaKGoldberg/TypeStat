@@ -6,6 +6,7 @@ import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags
 import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion";
 import { getVariableInitializerForExpression } from "../../../../shared/nodes";
 import { FunctionLikeDeclarationWithType, isNodeWithType } from "../../../../shared/nodeTypes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
@@ -21,10 +22,10 @@ const isNodeVisitableFunctionLikeDeclaration = (node: ts.Node): node is Function
 
 const visitFunctionWithBody = (node: FunctionLikeDeclarationWithType, request: FileMutationsRequest): IMutation | undefined => {
     // Collect the type initially declared as returned and whether it contains null and/or undefined
-    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node.type);
+    const declaredType = getTypeAtLocationIfNotError(request, node.type);
 
     // If the node's explicit return type contains 'any', we can't infer anything
-    if (isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Any)) {
+    if (declaredType === undefined || isTypeFlagSetRecursively(declaredType, ts.TypeFlags.Any)) {
         return undefined;
     }
 
@@ -55,8 +56,8 @@ const collectNonNullMutations = (
 
     for (const expression of expressions) {
         // If the expression doesn't return a type missing from the return, it's already safe
-        const expressionType = request.services.program.getTypeChecker().getTypeAtLocation(expression);
-        if (!isTypeFlagSetRecursively(expressionType, missingReturnTypes)) {
+        const expressionType = getTypeAtLocationIfNotError(request, expression);
+        if (expressionType === undefined || !isTypeFlagSetRecursively(expressionType, missingReturnTypes)) {
             continue;
         }
 

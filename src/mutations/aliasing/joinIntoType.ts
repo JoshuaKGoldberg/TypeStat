@@ -3,6 +3,7 @@ import ts from "typescript";
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { isNotUndefined } from "../../shared/arrays";
 import { isIntrisinicNameTypeNode } from "../../shared/typeNodes";
+import { getTypeAtLocationIfNotError } from "../../shared/types";
 
 import { getApplicableTypeAliases } from "./aliases";
 import { createTypeName } from "./createTypeName";
@@ -107,8 +108,6 @@ const printObjectLiteralDescriptor = (request: FileMutationsRequest, type: ts.Ty
     }
 
     const properties = type.getProperties();
-    const typeChecker = request.services.program.getTypeChecker();
-
     if (properties.length === 0) {
         return "{}";
     }
@@ -116,9 +115,15 @@ const printObjectLiteralDescriptor = (request: FileMutationsRequest, type: ts.Ty
     return [
         "{",
         properties
-            .map((property) =>
-                [property.name, printFriendlyNameOfType(request, typeChecker.getTypeAtLocation(property.valueDeclaration))].join(": "),
-            )
+            .map((property) => {
+                const valueType = getTypeAtLocationIfNotError(request, property.valueDeclaration);
+                if (valueType === undefined) {
+                    return undefined;
+                }
+
+                return [property.name, printFriendlyNameOfType(request, valueType)].join(": ");
+            })
+            .filter(isNotUndefined)
             .join(", "),
         "}",
     ].join(" ");
@@ -144,7 +149,11 @@ const printShorthandCallSignature = (request: FileMutationsRequest, callSignatur
 const printSignatureParameter = (request: FileMutationsRequest, parameter: ts.Symbol, index: number) => {
     const valueDeclaration = parameter.valueDeclaration as ts.ParameterDeclaration;
     const { name } = valueDeclaration;
-    const type = request.services.program.getTypeChecker().getTypeAtLocation(valueDeclaration);
+    const type = getTypeAtLocationIfNotError(request, valueDeclaration);
+    if (type === undefined) {
+        return undefined;
+    }
+
     const nameText = ts.isIdentifier(name) ? name.text : `arg${index}`;
 
     return `${nameText}: ${createTypeName(request, type)}`;

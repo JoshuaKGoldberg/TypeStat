@@ -1,5 +1,6 @@
 import * as ts from "typescript";
 import { getValueDeclarationOfFunction } from "./functionTypes";
+import { getTypeAtLocationIfNotError } from "./types";
 
 /**
  * Given a node passed to a location with a declared, known type,
@@ -51,7 +52,7 @@ const getAssignedTypeOfParameter = (typeChecker: ts.TypeChecker, node: ts.Expres
         return undefined;
     }
 
-    return typeChecker.getTypeAtLocation(functionLikeValueDeclaration.parameters[argumentIndex]);
+    return getTypeAtLocationIfNotError(typeChecker, functionLikeValueDeclaration.parameters[argumentIndex]);
 };
 
 const getAssignedTypeOfVariable = (typeChecker: ts.TypeChecker, node: ts.VariableDeclaration) => {

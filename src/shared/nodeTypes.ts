@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../mutations/collecting/flags";
-import { isIntrisinicNameTypeNode } from "./typeNodes";
+import { getTypeAtLocationIfNotError } from "./types";
 
 export type NodeSelector<TNode extends ts.Node> = (node: ts.Node) => node is TNode;
 
@@ -71,12 +71,8 @@ export const isNodeWithDefinedTypeParameters = (node: ts.Node): node is NodeWith
 
 export const getValueDeclarationOfType = (typeChecker: ts.TypeChecker, node: ts.Node): ts.Node | undefined => {
     // Try getting the symbol at the location, which sometimes only works in the latter form
-    const nodeType = typeChecker.getTypeAtLocation(node);
-    let symbol = nodeType.getSymbol();
-
-    if (symbol === undefined) {
-        symbol = typeChecker.getSymbolAtLocation(node);
-    }
+    const nodeType = getTypeAtLocationIfNotError(typeChecker, node);
+    const symbol = nodeType?.getSymbol() ?? typeChecker.getSymbolAtLocation(node);
 
     if (symbol === undefined) {
         return undefined;

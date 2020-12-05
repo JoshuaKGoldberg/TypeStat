@@ -1,29 +1,31 @@
+import * as React from 'react';
+
 (function () {
     // Primitives
 
     let givenUndefined = "";
     givenUndefined = undefined;
 
-    let givenUndefinedAsString: string = "";
+    let givenUndefinedAsString: string | undefined = "";
     givenUndefinedAsString = undefined;
 
-    let givenUndefinedHasNull: string | null = "";
+    let givenUndefinedHasNull: string | null | undefined = "";
     givenUndefinedHasNull = undefined;
 
-    let givenNullAndUndefinedHasNull: string | null = "";
+    let givenNullAndUndefinedHasNull: string | null | undefined = "";
     givenNullAndUndefinedHasNull = null;
     givenNullAndUndefinedHasNull = undefined;
 
     let givenNull = "";
     givenNull = null;
 
-    let givenNullAsString: string = "";
+    let givenNullAsString: string | null = "";
     givenNullAsString = null;
 
-    let givenNullHasUndefined: string | undefined = "";
+    let givenNullHasUndefined: string | undefined | null = "";
     givenNullHasUndefined = null;
 
-    let givenNullAndUndefinedHasUndefined: string | undefined = "";
+    let givenNullAndUndefinedHasUndefined: string | undefined | null = "";
     givenNullAndUndefinedHasUndefined = null;
     givenNullHasUndefined = undefined;
 
@@ -39,15 +41,15 @@
     let givenStringHasUndefined: string | undefined = "";
     givenStringHasNull = "";
 
-    let setToUndefined: string = undefined;
+    let setToUndefined: string | undefined = undefined;
 
-    let setToUndefinedHasNull: string | null = undefined;
+    let setToUndefinedHasNull: string | null | undefined = undefined;
 
-    let setToNull: string = null;
+    let setToNull: string | null = null;
 
     let setToNullAsNull = null;
 
-    let setToNullHasUndefined: string | undefined = null;
+    let setToNullHasUndefined: string | undefined | null = null;
 
     let setToString = "";
 
@@ -59,12 +61,12 @@
 
     // Any
 
-    let startsAnyWithString: any = "";
+    let startsAnyWithString: any | string = "";
 
-    let startsAnyGivenString: any;
+    let startsAnyGivenString: any | string;
     startsAnyGivenString = "";
 
-    let startsAnyWithStringGivenString: any = "";
+    let startsAnyWithStringGivenString: any | string = "";
     startsAnyWithStringGivenString = "";
 
     let startsStringWithAny: string = {} as any;
@@ -113,7 +115,7 @@
     let eitherClassNeedsUnionImplicit = new SampleClassOne();
     eitherClassNeedsUnionImplicit = new SampleClassTwo();
 
-    let eitherClassNeedsUnionExplicit: SampleClassOne = new SampleClassOne();
+    let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
     let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
@@ -123,19 +125,19 @@
     eitherClassNeedsNullImplicit = new SampleClassTwo();
     eitherClassNeedsNullImplicit = null;
 
-    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null = new SampleClassOne();
+    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsNullAndClassExplicit = new SampleClassTwo();
     eitherClassNeedsNullAndClassExplicit = null;
 
-    let eitherClassNeedsUndefinedExplicit: SampleClassOne = new SampleClassOne();
+    let eitherClassNeedsUndefinedExplicit: SampleClassOne | SampleClassTwo | undefined = new SampleClassOne();
     eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicit = undefined;
 
-    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface = new SampleClassOne();
+    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | undefined = new SampleClassOne();
     eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicitInterface = undefined;
 
-    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined = new SampleClassOne();
+    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedAndClassExplicit = undefined;
 
@@ -171,10 +173,22 @@
 
     // Functions
 
-    let returnsString: Function;
+    let returnsString: (() => string);
     returnsString = () => "";
 
-    let returnsStringOrNumber: Function;
+    let returnsStringOrNumber: (() => string) | (() => number);
     returnsStringOrNumber = () => "";
     returnsStringOrNumber = () => 0;
+
+    // Predeclared functions (React FCs)
+    
+    interface MyComponentProps {
+        text: string;
+    }
+
+    const MyComponent: React.FC<MyComponentProps> = ({
+        text 
+    }) => {
+        return <span>{text}</span>;
+    }
 })();

@@ -3,6 +3,7 @@ import * as ts from "typescript";
 
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../../mutations/creators";
 import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
@@ -16,7 +17,10 @@ const visitParameterDeclaration = (node: ts.ParameterDeclaration, request: FileM
     const callingTypes = getCallingTypesFromReferencedSymbols(node, request);
 
     // Collect the type(s) initially declared on the parameter
-    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+    const declaredType = getTypeAtLocationIfNotError(request, node);
+    if (declaredType === undefined) {
+        return undefined;
+    }
 
     // If the parameter already has a declared type, add assigned types to it if necessary
     if (isNodeWithType(node)) {
@@ -31,8 +35,9 @@ const getCallingTypesFromReferencedSymbols = (node: ts.ParameterDeclaration, req
     const callingTypes: ts.Type[] = [];
 
     // If the parameter has a default, also consider that a calling type
-    if (node.initializer !== undefined) {
-        callingTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(node.initializer));
+    const initializerType = getTypeAtLocationIfNotError(request, node.initializer);
+    if (initializerType !== undefined) {
+        callingTypes.push(initializerType);
     }
 
     // Find all locations the containing method is called
@@ -66,5 +71,8 @@ const updateCallingTypesForReference = (
     }
 
     // Mark the type of parameter at our index as being called with
-    callingTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(callingNode.expression.arguments[parameterIndex]));
+    const callingType = getTypeAtLocationIfNotError(request, callingNode.expression.arguments[parameterIndex]);
+    if (callingType !== undefined) {
+        callingTypes.push();
+    }
 };

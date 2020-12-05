@@ -1,4 +1,5 @@
 import * as ts from "typescript";
+import { getTypeAtLocationIfNotError } from "../../../../../shared/types";
 
 import { FileMutationsRequest } from "../../../../fileMutator";
 
@@ -18,7 +19,6 @@ export const collectGenericUses = (
         return undefined;
     }
 
-    const typeChecker = request.services.program.getTypeChecker();
     const assignedParameterTypes = new Map<string, ts.Type[]>();
 
     const addAssignmentToTypeParameter = (typeParameterName: string, argumentType: ts.Type) => {
@@ -64,13 +64,21 @@ export const collectGenericUses = (
                 continue;
             }
 
+            const parameterIndexType = getTypeAtLocationIfNotError(request, callArguments[parameterIndex]);
+            if (parameterIndexType === undefined) {
+                continue;
+            }
+
             // For each parameter passed to the generic use, we'll record its assignment type
-            addAssignmentToTypeParameter(parameterName, typeChecker.getTypeAtLocation(callArguments[parameterIndex]));
+            addAssignmentToTypeParameter(parameterName, parameterIndexType);
 
             // If the parameter is a rest parameter, also add assignment types for any following arguments
             if (parameterType.parent.dotDotDotToken !== undefined) {
                 for (const callArgument of callArguments.slice(parameterIndex + 1)) {
-                    addAssignmentToTypeParameter(parameterName, typeChecker.getTypeAtLocation(callArgument));
+                    const callArgumentType = getTypeAtLocationIfNotError(request, callArgument);
+                    if (callArgumentType !== undefined) {
+                        addAssignmentToTypeParameter(parameterName, callArgumentType);
+                    }
                 }
             }
         }
