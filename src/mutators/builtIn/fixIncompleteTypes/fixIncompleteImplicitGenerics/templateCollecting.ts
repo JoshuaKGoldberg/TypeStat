@@ -143,9 +143,8 @@ const collectMissingAssignedTypesOnChildClassNode = (
     }
 
     // We only care about this node if the instance it's referencing is (or generally is a subtype of) the child class
-    const typeChecker = request.services.program.getTypeChecker();
-    const expressionType = getTypeAtLocationIfNotError(typeChecker, parentPropertyAccess.expression);
-    if (expressionType === undefined || !typeChecker.isTypeAssignableTo(expressionType, childClassType)) {
+    const expressionType = getTypeAtLocationIfNotError(request, parentPropertyAccess.expression);
+    if (expressionType === undefined || !request.services.program.getTypeChecker().isTypeAssignableTo(expressionType, childClassType)) {
         return undefined;
     }
 
@@ -194,15 +193,17 @@ const getMissingAssignedType = (
     }
 
     // If the type parameter came with a default, ignore types already equivalent to it
-    const typeChecker = request.services.program.getTypeChecker();
-    if (defaultTypeParameterType !== undefined && typeChecker.isTypeAssignableTo(defaultTypeParameterType, assigningType)) {
+    if (
+        defaultTypeParameterType !== undefined &&
+        request.services.program.getTypeChecker().isTypeAssignableTo(defaultTypeParameterType, assigningType)
+    ) {
         return undefined;
     }
 
     // Nodes that reach here are either 'standalone' declarations (the full type) or members thereof...
     // For a full type, go through the normal hoops to figure out its name
     if (asStandaloneProperty) {
-        const standaloneType = getTypeAtLocationIfNotError(typeChecker, assigningNode);
+        const standaloneType = getTypeAtLocationIfNotError(request, assigningNode);
         return standaloneType === undefined ? undefined : createTypeName(request, standaloneType);
     }
 

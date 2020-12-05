@@ -22,18 +22,12 @@ export const isTypeBuiltIn = (type: ts.Type) => {
     return sourceFile.hasNoDefaultLib && sourceFile.isDeclarationFile && sourceFile.fileName.includes("node_modules/typescript/lib/");
 };
 
-export const getTypeAtLocationIfNotError = (
-    requestOrTypeChecker: FileMutationsRequest | ts.TypeChecker,
-    node: ts.Node | undefined,
-): ts.Type | undefined => {
+export const getTypeAtLocationIfNotError = (request: FileMutationsRequest, node: ts.Node | undefined): ts.Type | undefined => {
     if (node === undefined) {
         return undefined;
     }
 
-    const type =
-        "getTypeAtLocation" in requestOrTypeChecker
-            ? requestOrTypeChecker.getTypeAtLocation(node)
-            : requestOrTypeChecker.services.program.getTypeChecker().getTypeAtLocation(node);
+    const type = request.services.program.getTypeChecker().getTypeAtLocation(node);
 
     return isIntrisinicNameTypeNode(type) && type.intrinsicName === "error" ? undefined : type;
 };

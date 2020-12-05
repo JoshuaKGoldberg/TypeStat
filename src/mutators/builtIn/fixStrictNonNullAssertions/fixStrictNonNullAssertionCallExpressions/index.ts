@@ -21,10 +21,8 @@ const isVisitableCallExpression = (node: ts.Node): node is ts.CallExpression =>
     node.arguments.length !== 0;
 
 const visitCallExpression = (node: ts.CallExpression, request: FileMutationsRequest): IMultipleMutations | undefined => {
-    const typeChecker = request.services.program.getTypeChecker();
-
     // Collect the declared type of the function-like being called
-    const functionLikeValueDeclaration = getValueDeclarationOfFunction(typeChecker, node.expression);
+    const functionLikeValueDeclaration = getValueDeclarationOfFunction(request, node.expression);
     if (functionLikeValueDeclaration === undefined) {
         return undefined;
     }
