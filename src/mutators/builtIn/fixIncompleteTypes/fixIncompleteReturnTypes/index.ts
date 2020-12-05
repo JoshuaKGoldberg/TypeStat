@@ -3,7 +3,9 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { createTypeAdditionMutation } from "../../../../mutations/creators";
+import { isNotUndefined } from "../../../../shared/arrays";
 import { FunctionLikeDeclarationWithType, isNodeWithType } from "../../../../shared/nodeTypes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 import { collectReturningNodeExpressions } from "../../fixStrictNonNullAssertions/fixStrictNonNullAssertionReturnTypes/collectReturningNodeExpressions";
@@ -18,10 +20,15 @@ const isNodeVisitableFunctionLikeDeclaration = (node: ts.Node): node is Function
 
 const visitFunctionWithBody = (node: FunctionLikeDeclarationWithType, request: FileMutationsRequest) => {
     // Collect the type initially declared as returned
-    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node.type);
+    const declaredType = getTypeAtLocationIfNotError(request, node.type);
+    if (declaredType === undefined) {
+        return undefined;
+    }
 
     // Collect types of nodes returned by the function
-    const returnedTypes = collectReturningNodeExpressions(node).map(request.services.program.getTypeChecker().getTypeAtLocation);
+    const returnedTypes = collectReturningNodeExpressions(node)
+        .map((node) => getTypeAtLocationIfNotError(request, node))
+        .filter(isNotUndefined);
 
     // Add later-returned types to the node's type declaration if necessary
     return createTypeAdditionMutation(request, node, declaredType, returnedTypes);

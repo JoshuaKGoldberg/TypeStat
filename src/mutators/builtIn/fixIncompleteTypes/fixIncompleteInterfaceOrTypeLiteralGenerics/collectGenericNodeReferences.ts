@@ -7,6 +7,7 @@ import {
     isNodeWithIdentifierName,
 } from "../../../../shared/nodeTypes";
 import { isTypeArgumentsTypeNode } from "../../../../shared/typeNodes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { FileMutationsRequest } from "../../../fileMutator";
 
 export type InterfaceOrTypeLiteral = ts.InterfaceDeclaration | ts.TypeLiteralNode;
@@ -36,7 +37,6 @@ export const expandReferencesForGenericTypes = (
     interfaceOrTypeLiteral: InterfaceOrTypeLiteral,
     referencingNodes: ReadonlyArray<ts.Node>,
 ) => {
-    const typeChecker = request.services.program.getTypeChecker();
     const expandedReferences: ts.Node[] = [];
 
     // For each of the references we'll look at, there are two relevant nodes we need to map together:
@@ -60,7 +60,7 @@ export const expandReferencesForGenericTypes = (
         const relevantNodeWithTypeSignatures = ts.isCallExpression(templatedParentInstantiation)
             ? templatedParentInstantiation.expression
             : templatedParentInstantiation;
-        const templatedDeclarationSymbol = typeChecker.getTypeAtLocation(relevantNodeWithTypeSignatures).getSymbol();
+        const templatedDeclarationSymbol = getTypeAtLocationIfNotError(request, relevantNodeWithTypeSignatures)?.getSymbol();
         if (templatedDeclarationSymbol === undefined) {
             continue;
         }
@@ -94,8 +94,7 @@ const collectGenericReferencesOfType = (
     templateDeclaredTypeNode: ts.TypeNode,
 ) => {
     const genericNodeReferences: ts.Node[] = [];
-    const typeChecker = request.services.program.getTypeChecker();
-    const originalType = typeChecker.getTypeAtLocation(interfaceOrTypeLiteral);
+    const originalType = getTypeAtLocationIfNotError(request, interfaceOrTypeLiteral);
 
     // Find all the references to the declared template type within its declaration
     // For example, in `class Container<T> { member: T; }`, that would be the T in `member: T;`
@@ -122,7 +121,7 @@ const collectGenericReferencesOfType = (
         const allReferencingInstantiationNodes = request.fileInfoCache.getNodeReferencesAsNodes(parent.name);
         if (allReferencingInstantiationNodes !== undefined) {
             for (const referencingInstantiationNode of allReferencingInstantiationNodes) {
-                if (typeChecker.getTypeAtLocation(referencingInstantiationNode) === originalType) {
+                if (getTypeAtLocationIfNotError(request, referencingInstantiationNode) === originalType) {
                     genericNodeReferences.push(referencingInstantiationNode);
                 }
             }
@@ -149,8 +148,11 @@ const findProvidedTypesForParameter = (
         return providedNodes;
     }
 
-    const typeChecker = request.services.program.getTypeChecker();
-    const originalType = typeChecker.getTypeAtLocation(interfaceOrTypeLiteral);
+    const originalType = getTypeAtLocationIfNotError(request, interfaceOrTypeLiteral);
+    if (originalType === undefined) {
+        return providedNodes;
+    }
+
     const parameterIndex = signature.parameters.indexOf(parameter);
 
     for (let referencingNode of allReferencingNodes) {
@@ -201,8 +203,10 @@ const expressionRefersToOriginalType = (
     originalType: ts.Type,
     potentialCallOrNewExpression: ts.CallExpression | ts.NewExpression,
 ) => {
-    const typeChecker = request.services.program.getTypeChecker();
-    const expressionNodeType = typeChecker.getTypeAtLocation(potentialCallOrNewExpression);
+    const expressionNodeType = getTypeAtLocationIfNotError(request, potentialCallOrNewExpression);
+    if (expressionNodeType === undefined) {
+        return false;
+    }
 
     // If the expression node's type already has type arguments, do they match the original type?
     // This is more likely with classes that are instantiated with a type
@@ -215,7 +219,7 @@ const expressionRefersToOriginalType = (
     // Again, this can go wrong: e.g. with multiple type arguments that have intermixed usages
     if (isNodeWithDefinedTypeArguments(potentialCallOrNewExpression)) {
         for (const typeArgument of potentialCallOrNewExpression.typeArguments || []) {
-            if (typeChecker.getTypeAtLocation(typeArgument) === originalType) {
+            if (getTypeAtLocationIfNotError(request, typeArgument) === originalType) {
                 return true;
             }
         }

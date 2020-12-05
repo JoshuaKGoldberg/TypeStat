@@ -5,6 +5,7 @@ import * as ts from "typescript";
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../../mutations/creators";
 import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
 import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
@@ -17,7 +18,10 @@ const isPropertyDeclarationWithType = (node: ts.Node): node is ts.PropertyDeclar
 const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMutationsRequest): IMutation | undefined => {
     // Collect types later assigned to the property, and types initially declared by or inferred on the property
     const assignedTypes = collectPropertyAssignedTypes(node, request);
-    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+    const declaredType = getTypeAtLocationIfNotError(request, node);
+    if (declaredType === undefined) {
+        return undefined;
+    }
 
     // If the property already has a declared type, add assigned types to it if necessary
     if (isNodeWithType(node)) {
@@ -33,7 +37,10 @@ const collectPropertyAssignedTypes = (node: ts.PropertyDeclaration, request: Fil
 
     // If the property has an initial value, consider that an assignment
     if (node.initializer !== undefined) {
-        assignedTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(node.initializer));
+        const initializerType = getTypeAtLocationIfNotError(request, node.initializer);
+        if (initializerType !== undefined) {
+            assignedTypes.push(initializerType);
+        }
     }
 
     // If the property is marked as readonly, don't bother checking for more types
@@ -85,11 +92,14 @@ const updateAssignedTypesForReference = (
 
     // ...and where the original property access expression refers to the target class
     // (this is important when multiple child classes of a single base class redeclare a member, such as React.Component's state)
-    const assigneeType = request.services.program.getTypeChecker().getTypeAtLocation(propertyAccess.expression);
-    if (assigneeType.getSymbol()?.valueDeclaration !== targetClass) {
+    const assigneeType = getTypeAtLocationIfNotError(request, propertyAccess.expression);
+    if (assigneeType?.getSymbol()?.valueDeclaration !== targetClass) {
         return;
     }
 
     // Mark the type of the right-hand side of the "=" expression as being assigned
-    assignedTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(binaryExpression.right));
+    const assignmentType = getTypeAtLocationIfNotError(request, binaryExpression.right);
+    if (assignmentType !== undefined) {
+        assignedTypes.push(assignmentType);
+    }
 };

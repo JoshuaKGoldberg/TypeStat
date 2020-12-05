@@ -5,6 +5,7 @@ import * as ts from "typescript";
 import { createTypeAdditionMutation, createTypeCreationMutation } from "../../../../mutations/creators";
 import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes";
 import { isNodeFilteredOut } from "../../../../shared/references";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
@@ -17,7 +18,10 @@ const isNodeVariableDeclarationWithType = (node: ts.Node): node is ts.VariableDe
 const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
     // Collect types later assigned to the variable, and types initially declared by or inferred on the variable
     const assignedTypes = collectVariableAssignedTypes(node, request);
-    const declaredType = request.services.program.getTypeChecker().getTypeAtLocation(node);
+    const declaredType = getTypeAtLocationIfNotError(request, node);
+    if (declaredType === undefined) {
+        return undefined;
+    }
 
     // If the variable already has a declared type, add assigned types to it if necessary
     if (isNodeWithType(node)) {
@@ -40,7 +44,10 @@ const collectVariableAssignedTypes = (node: ts.VariableDeclaration, request: Fil
 
     // If the variable has an initial value, consider that an assignment
     if (node.initializer !== undefined) {
-        assignedTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(node.initializer));
+        const initializerType = getTypeAtLocationIfNotError(request, node.initializer);
+        if (initializerType !== undefined) {
+            assignedTypes.push(initializerType);
+        }
     }
 
     // If the variable is anonymous or marked as readonly, don't bother checking for more types
@@ -73,7 +80,10 @@ const collectVariableAssignedTypes = (node: ts.VariableDeclaration, request: Fil
         }
 
         // Grab the new type being assigned to the node
-        assignedTypes.push(request.services.program.getTypeChecker().getTypeAtLocation(useExpression.right));
+        const assignmentType = getTypeAtLocationIfNotError(request, useExpression.right);
+        if (assignmentType !== undefined) {
+            assignedTypes.push(assignmentType);
+        }
     }
 
     return assignedTypes;

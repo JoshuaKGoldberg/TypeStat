@@ -2,6 +2,7 @@ import * as ts from "typescript";
 
 import { AssignedTypeValue } from "../../../../mutations/assignments";
 import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { FileMutationsRequest } from "../../../fileMutator";
 
 export const expandValuesAssignedToReferenceNodes = (
@@ -22,8 +23,6 @@ export const expandValuesAssignedToReferenceNodes = (
 };
 
 const getAssignedGenericValue = (request: FileMutationsRequest, originalType: ts.Type, node: ts.Node): AssignedTypeValue | undefined => {
-    const typeChecker = request.services.program.getTypeChecker();
-
     // Case:
     //   function container<T>(values: T) { }
     //   type Values = {};
@@ -37,9 +36,9 @@ const getAssignedGenericValue = (request: FileMutationsRequest, originalType: ts
     //   type Values = {};
     //   new Container<Values>({}).setValues({ laterAssigned: true });
     if (ts.isObjectLiteralExpression(node)) {
-        return {
-            type: typeChecker.getTypeAtLocation(node),
-        };
+        return assignedTypeOrUndefined({
+            type: getTypeAtLocationIfNotError(request, node),
+        });
     }
 
     if (ts.isIdentifier(node) && ts.isPropertyAccessExpression(node.parent)) {
@@ -48,10 +47,10 @@ const getAssignedGenericValue = (request: FileMutationsRequest, originalType: ts
         //   type Values = {};
         //   const container = new Container<Values>({});
         //   container.values = { laterAssigned: true, };
-        if (isNodeAssigningBinaryExpression(node.parent.parent) && typeChecker.getTypeAtLocation(node.parent) === originalType) {
-            return {
-                type: typeChecker.getTypeAtLocation(node.parent.parent.right),
-            };
+        if (isNodeAssigningBinaryExpression(node.parent.parent) && getTypeAtLocationIfNotError(request, node.parent) === originalType) {
+            return assignedTypeOrUndefined({
+                type: getTypeAtLocationIfNotError(request, node.parent.parent.right),
+            });
         }
 
         // Case:
@@ -67,14 +66,17 @@ const getAssignedGenericValue = (request: FileMutationsRequest, originalType: ts
             ts.isPropertyAccessExpression(node.parent.parent) &&
             ts.isIdentifier(node.parent.parent.name) &&
             isNodeAssigningBinaryExpression(node.parent.parent.parent) &&
-            typeChecker.getTypeAtLocation(node.parent) === originalType
+            getTypeAtLocationIfNotError(request, node.parent) === originalType
         ) {
-            return {
+            return assignedTypeOrUndefined({
                 name: node.parent.parent.name.getText(),
-                type: typeChecker.getTypeAtLocation(node.parent.parent.parent.right),
-            };
+                type: getTypeAtLocationIfNotError(request, node.parent.parent.parent.right),
+            });
         }
     }
 
     return undefined;
 };
+
+const assignedTypeOrUndefined = (assignedType: Partial<AssignedTypeValue>): AssignedTypeValue | undefined =>
+    assignedType.type === undefined ? undefined : (assignedType as AssignedTypeValue);

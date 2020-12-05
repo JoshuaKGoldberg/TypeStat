@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
+import { getTypeAtLocationIfNotError } from "../shared/types";
 
 export interface AssignedTypeValue {
     /**
@@ -37,8 +38,10 @@ export const joinAssignedTypesByName = (request: FileMutationsRequest, assignedT
                 continue;
             }
 
-            const propertyType = request.services.program.getTypeChecker().getTypeAtLocation(relevantDeclaration);
-            assignedTypesByName.set(property.name, propertyType);
+            const propertyType = getTypeAtLocationIfNotError(request, relevantDeclaration);
+            if (propertyType !== undefined) {
+                assignedTypesByName.set(property.name, propertyType);
+            }
         }
     }
 

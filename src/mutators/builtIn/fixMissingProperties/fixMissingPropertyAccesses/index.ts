@@ -2,6 +2,7 @@ import { IMutation } from "automutate";
 import * as ts from "typescript";
 
 import { getMissingPropertyMutations } from "../../../../mutations/codeFixes/addMissingProperty";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
@@ -10,8 +11,6 @@ export const fixMissingPropertyAccesses: FileMutator = (request: FileMutationsRe
     // We therefore only suggest each property name once per wave
     // In theory, we could also respect each node name per class, but that's hard, and it's rare to have many classes per file
     const suggestedMissingProperties = new Set<string>();
-
-    const typeChecker = request.services.program.getTypeChecker();
 
     const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression): IMutation | undefined => {
         // If the access should create a missing property, go for that
@@ -28,8 +27,8 @@ export const fixMissingPropertyAccesses: FileMutator = (request: FileMutationsRe
         // Additionally, for some reason, the language service seems suggest the same fixes repeatedly sometimes...
         // To get around this, we ignore any fixes for nodes that already exist on the parent class
         // https://github.com/JoshuaKGoldberg/TypeStat/issues/756
-        const assigneeClassType = typeChecker.getTypeAtLocation(node.expression);
-        if (assigneeClassType.getProperty(node.name.text) !== undefined) {
+        const assigneeClassType = getTypeAtLocationIfNotError(request, node.expression);
+        if (assigneeClassType?.getProperty(node.name.text) !== undefined) {
             return undefined;
         }
 

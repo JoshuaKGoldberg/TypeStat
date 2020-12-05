@@ -7,6 +7,7 @@ import { createNonNullAssertion } from "../../../../mutations/typeMutating/creat
 import { getValueDeclarationOfFunction } from "../../../../shared/functionTypes";
 import { getParentOfKind, getVariableInitializerForExpression } from "../../../../shared/nodes";
 import { isNullOrUndefinedMissingBetween } from "../../../../shared/nodeTypes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
@@ -20,10 +21,8 @@ const isVisitableCallExpression = (node: ts.Node): node is ts.CallExpression =>
     node.arguments.length !== 0;
 
 const visitCallExpression = (node: ts.CallExpression, request: FileMutationsRequest): IMultipleMutations | undefined => {
-    const typeChecker = request.services.program.getTypeChecker();
-
     // Collect the declared type of the function-like being called
-    const functionLikeValueDeclaration = getValueDeclarationOfFunction(typeChecker, node.expression);
+    const functionLikeValueDeclaration = getValueDeclarationOfFunction(request, node.expression);
     if (functionLikeValueDeclaration === undefined) {
         return undefined;
     }
@@ -43,20 +42,19 @@ const collectArgumentMutations = (
 ): ReadonlyArray<IMutation> => {
     const mutations: IMutation[] = [];
     const visitableArguments = Math.min(callingNode.arguments.length, functionLikeValueDeclaration.parameters.length);
-    const typeChecker = request.services.program.getTypeChecker();
 
     // Check the types of each argument being passed in against the declared parameter type
     for (let i = 0; i < visitableArguments; i += 1) {
         // We can ignore parameters that are 'any'
-        const typeOfParameter = typeChecker.getTypeAtLocation(functionLikeValueDeclaration.parameters[i]);
-        if (isTypeFlagSetRecursively(typeOfParameter, ts.TypeFlags.Any)) {
+        const typeOfParameter = getTypeAtLocationIfNotError(request, functionLikeValueDeclaration.parameters[i]);
+        if (typeOfParameter === undefined || isTypeFlagSetRecursively(typeOfParameter, ts.TypeFlags.Any)) {
             continue;
         }
 
-        const typeOfArgument = typeChecker.getTypeAtLocation(callingNode.arguments[i]);
+        const typeOfArgument = getTypeAtLocationIfNotError(request, callingNode.arguments[i]);
 
         // If either null or undefined is missing in the argument, we'll need a ! mutation
-        if (isNullOrUndefinedMissingBetween(typeOfArgument, typeOfParameter)) {
+        if (typeOfArgument !== undefined && isNullOrUndefinedMissingBetween(typeOfArgument, typeOfParameter)) {
             mutations.push(collectArgumentMutation(request, callingNode.arguments[i]));
         }
     }

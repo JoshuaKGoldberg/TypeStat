@@ -2,6 +2,7 @@ import * as ts from "typescript";
 
 import { AssignedTypesByName } from "../../../../../mutations/assignments";
 import { getStaticNameOfProperty } from "../../../../../shared/names";
+import { getTypeAtLocationIfNotError } from "../../../../../shared/types";
 import { FileMutationsRequest } from "../../../../fileMutator";
 import { ReactComponentNode } from "../reactFiltering/isReactComponentNode";
 
@@ -65,7 +66,10 @@ const updateAssignedTypesForReference = (
         }
 
         // TypeScript stores the type of the property's value on the property itself
-        assignedTypes.set(name, request.services.program.getTypeChecker().getTypeAtLocation(property));
+        const propertyType = getTypeAtLocationIfNotError(request, property);
+        if (propertyType !== undefined) {
+            assignedTypes.set(name, propertyType);
+        }
     }
 
     componentAssignedTypes.push(assignedTypes);

@@ -4,6 +4,7 @@ import { createTypeName } from "../../../../mutations/aliasing/createTypeName";
 import { AssignedTypesByName, AssignedTypeValue, joinAssignedTypesByName } from "../../../../mutations/assignments";
 import { getStaticNameOfProperty } from "../../../../shared/names";
 import { isNodeAssigningBinaryExpression, isNodeWithinNode } from "../../../../shared/nodes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { FileMutationsRequest } from "../../../fileMutator";
 
 import { collectTypeParameterReferences } from "./collectTypeParameterReferences";
@@ -83,10 +84,13 @@ const collectMissingAssignedParameterTypes = (
 ) => {
     const knownNames = new Set<string>();
     const assignedTypeValues: AssignedTypeValue[] = [];
-    const typeChecker = request.services.program.getTypeChecker();
-    const childClassType = typeChecker.getTypeAtLocation(childClass);
+    const childClassType = getTypeAtLocationIfNotError(request, childClass);
+    if (childClassType === undefined) {
+        return knownNames;
+    }
+
     const defaultTypeParameterType =
-        baseTypeParameter.default === undefined ? undefined : typeChecker.getTypeAtLocation(baseTypeParameter.default);
+        baseTypeParameter.default === undefined ? undefined : getTypeAtLocationIfNotError(request, baseTypeParameter.default);
 
     for (const typeParameterReference of typeParameterReferences) {
         // For now, we only look at nodes whose usage is declared *within* the child class
@@ -139,9 +143,8 @@ const collectMissingAssignedTypesOnChildClassNode = (
     }
 
     // We only care about this node if the instance it's referencing is (or generally is a subtype of) the child class
-    const typeChecker = request.services.program.getTypeChecker();
-    const expressionType = typeChecker.getTypeAtLocation(parentPropertyAccess.expression);
-    if (!typeChecker.isTypeAssignableTo(expressionType, childClassType)) {
+    const expressionType = getTypeAtLocationIfNotError(request, parentPropertyAccess.expression);
+    if (expressionType === undefined || !request.services.program.getTypeChecker().isTypeAssignableTo(expressionType, childClassType)) {
         return undefined;
     }
 
@@ -184,21 +187,29 @@ const getMissingAssignedType = (
     assigningNode: ts.Node,
     asStandaloneProperty: boolean,
 ) => {
-    const typeChecker = request.services.program.getTypeChecker();
-    const assigningType = typeChecker.getTypeAtLocation(assigningNode);
+    const assigningType = getTypeAtLocationIfNotError(request, assigningNode);
+    if (assigningType === undefined) {
+        return undefined;
+    }
 
     // If the type parameter came with a default, ignore types already equivalent to it
-    if (defaultTypeParameterType !== undefined && typeChecker.isTypeAssignableTo(defaultTypeParameterType, assigningType)) {
+    if (
+        defaultTypeParameterType !== undefined &&
+        request.services.program.getTypeChecker().isTypeAssignableTo(defaultTypeParameterType, assigningType)
+    ) {
         return undefined;
     }
 
     // Nodes that reach here are either 'standalone' declarations (the full type) or members thereof...
-    return asStandaloneProperty
-        ? // For a full type, go through the normal hoops to figure out its name
-          createTypeName(request, typeChecker.getTypeAtLocation(assigningNode))
-        : // For a property, just grab the basic name and type, so we can join them all together later
-          {
-              name: getStaticNameOfProperty(assigningNode),
-              type: assigningType,
-          };
+    // For a full type, go through the normal hoops to figure out its name
+    if (asStandaloneProperty) {
+        const standaloneType = getTypeAtLocationIfNotError(request, assigningNode);
+        return standaloneType === undefined ? undefined : createTypeName(request, standaloneType);
+    }
+
+    // For a property, just grab the basic name and type, so we can join them all together later
+    return {
+        name: getStaticNameOfProperty(assigningNode),
+        type: assigningType,
+    };
 };

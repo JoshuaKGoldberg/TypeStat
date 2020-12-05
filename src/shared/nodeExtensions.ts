@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
+import { getTypeAtLocationIfNotError } from "./types";
 
 export const getClassExtendsExpression = (node: ts.ClassLikeDeclaration): ts.ExpressionWithTypeArguments | undefined => {
     const { heritageClauses } = node;
@@ -20,16 +21,14 @@ export const getBaseClassDeclaration = (
     request: FileMutationsRequest,
     extension: ts.ExpressionWithTypeArguments,
 ): ts.ClassLikeDeclaration | undefined => {
-    const typeChecker = request.services.program.getTypeChecker();
-
     // First try retrieving the base class from the extension itself
-    let extensionSymbol = typeChecker.getTypeAtLocation(extension).getSymbol();
+    let extensionSymbol = getTypeAtLocationIfNotError(request, extension)?.getSymbol();
 
     // If that didn't work, it might be from a type error due to missing type parameters
     // Try the base constructor of the child class instead
     // This is an internal member, but ah well...
     if (extensionSymbol === undefined) {
-        const { resolvedBaseConstructorType } = typeChecker.getTypeAtLocation(extension.parent.parent) as any;
+        const { resolvedBaseConstructorType } = getTypeAtLocationIfNotError(request, extension.parent.parent) as any;
 
         if (resolvedBaseConstructorType !== undefined) {
             extensionSymbol = resolvedBaseConstructorType.symbol;

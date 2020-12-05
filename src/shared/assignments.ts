@@ -1,5 +1,7 @@
 import * as ts from "typescript";
+import { FileMutationsRequest } from "../mutators/fileMutator";
 import { getValueDeclarationOfFunction } from "./functionTypes";
+import { getTypeAtLocationIfNotError } from "./types";
 
 /**
  * Given a node passed to a location with a declared, known type,
@@ -24,23 +26,23 @@ import { getValueDeclarationOfFunction } from "./functionTypes";
  *             // ^
  * ```
  */
-export const getManuallyAssignedTypeOfNode = (typeChecker: ts.TypeChecker, node: ts.Node) => {
+export const getManuallyAssignedTypeOfNode = (request: FileMutationsRequest, node: ts.Node) => {
     const { parent } = node;
 
     if (ts.isCallExpression(parent)) {
-        return getAssignedTypeOfParameter(typeChecker, node as ts.Expression, parent);
+        return getAssignedTypeOfParameter(request, node as ts.Expression, parent);
     }
 
     if (ts.isVariableDeclaration(parent)) {
-        return getAssignedTypeOfVariable(typeChecker, parent);
+        return getAssignedTypeOfVariable(request, parent);
     }
 
     return undefined;
 };
 
-const getAssignedTypeOfParameter = (typeChecker: ts.TypeChecker, node: ts.Expression, parent: ts.CallExpression) => {
+const getAssignedTypeOfParameter = (request: FileMutationsRequest, node: ts.Expression, parent: ts.CallExpression) => {
     // Collect the declared type of the function-like being called
-    const functionLikeValueDeclaration = getValueDeclarationOfFunction(typeChecker, parent.expression);
+    const functionLikeValueDeclaration = getValueDeclarationOfFunction(request, parent.expression);
     if (functionLikeValueDeclaration === undefined) {
         return undefined;
     }
@@ -51,13 +53,13 @@ const getAssignedTypeOfParameter = (typeChecker: ts.TypeChecker, node: ts.Expres
         return undefined;
     }
 
-    return typeChecker.getTypeAtLocation(functionLikeValueDeclaration.parameters[argumentIndex]);
+    return getTypeAtLocationIfNotError(request, functionLikeValueDeclaration.parameters[argumentIndex]);
 };
 
-const getAssignedTypeOfVariable = (typeChecker: ts.TypeChecker, node: ts.VariableDeclaration) => {
+const getAssignedTypeOfVariable = (request: FileMutationsRequest, node: ts.VariableDeclaration) => {
     if (node.type === undefined) {
         return undefined;
     }
 
-    return typeChecker.getTypeFromTypeNode(node.type);
+    return request.services.program.getTypeChecker().getTypeFromTypeNode(node.type);
 };

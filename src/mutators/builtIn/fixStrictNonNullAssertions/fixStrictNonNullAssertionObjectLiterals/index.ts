@@ -7,6 +7,7 @@ import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 import { getManuallyAssignedTypeOfNode } from "../../../../shared/assignments";
 import { getStaticNameOfProperty } from "../../../../shared/names";
 import { isNullOrUndefinedMissingBetween } from "../../../../shared/nodeTypes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 
 export const fixStrictNonNullAssertionObjectLiterals: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
     const visitObjectLiteralExpression = (node: ts.ObjectLiteralExpression): IMutation | undefined => {
@@ -18,8 +19,7 @@ export const fixStrictNonNullAssertionObjectLiterals: FileMutator = (request: Fi
 
 const getStrictPropertyFix = (request: FileMutationsRequest, node: ts.ObjectLiteralExpression): IMutation | undefined => {
     // Find the object type the node's properties are being assigned into
-    const typeChecker = request.services.program.getTypeChecker();
-    const assignedType = getManuallyAssignedTypeOfNode(typeChecker, node);
+    const assignedType = getManuallyAssignedTypeOfNode(request, node);
     if (assignedType === undefined) {
         return undefined;
     }
@@ -40,9 +40,13 @@ const getStrictPropertyFix = (request: FileMutationsRequest, node: ts.ObjectLite
             }
 
             // We'll mutate properties that are declared as non-nullable but assigned a nullable value
-            return isNullOrUndefinedMissingBetween(
-                typeChecker.getTypeAtLocation(property),
-                typeChecker.getDeclaredTypeOfSymbol(assignedProperty),
+            const propertyType = getTypeAtLocationIfNotError(request, property);
+            return (
+                propertyType !== undefined &&
+                isNullOrUndefinedMissingBetween(
+                    propertyType,
+                    request.services.program.getTypeChecker().getDeclaredTypeOfSymbol(assignedProperty),
+                )
             );
         })
         // Convert each of those properties into an assertion mutation

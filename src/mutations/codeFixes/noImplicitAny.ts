@@ -3,6 +3,7 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { getTypeAtLocationIfNotError } from "../../shared/types";
 
 import { createCodeFixCreationMutation } from "./creation";
 import { processCodeFixActions } from "./processCodeFixActions";
@@ -34,11 +35,11 @@ export const canNodeBeFixedForNoImplicitAny = (node: NoImplicitAnyNode): node is
 export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, request: FileMutationsRequest): IMutation | undefined => {
     // If the node is a parameter, make sure it doesn't already have an inferable type
     // (TypeScript will still suggest a codefix to make a reundant inferred type)
-    if (
-        ts.isParameter(node) &&
-        !tsutils.isTypeFlagSet(request.services.program.getTypeChecker().getTypeAtLocation(node), ts.TypeFlags.Any)
-    ) {
-        return undefined;
+    if (ts.isParameter(node)) {
+        const nodeType = getTypeAtLocationIfNotError(request, node);
+        if (nodeType === undefined || !tsutils.isTypeFlagSet(nodeType, ts.TypeFlags.Any)) {
+            return undefined;
+        }
     }
 
     // Retrieve code fix suggestions for --noImplicitAny from the requesting language service
