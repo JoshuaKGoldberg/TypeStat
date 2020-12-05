@@ -1,15 +1,19 @@
-import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { isNotUndefined } from "../../../../shared/arrays";
-import { getExpressionWithin } from "../../../../shared/nodes";
+import { getCloseAncestorCallOrNewExpression, getExpressionWithin } from "../../../../shared/nodes";
 import { FileMutationsRequest } from "../../../fileMutator";
 
 /**
  * Finds all the nodes that could indicate the type of a base type parameter,
  * by finding all references to the class's declaration nodes of that type parameter.
  */
-export const collectTypeParameterReferences = (request: FileMutationsRequest, baseTypeParameter: ts.Node) => {
+export const collectTypeParameterReferences = (
+    request: FileMutationsRequest,
+    childClass: ts.Node,
+    baseClass: ts.Node,
+    baseTypeParameter: ts.Node,
+) => {
     // Find nodes that reference (and therefore indicate type information for) the base type
     const referencingNodes = request.fileInfoCache.getNodeReferencesAsNodes(baseTypeParameter);
     if (referencingNodes === undefined) {
@@ -24,7 +28,6 @@ export const collectTypeParameterReferences = (request: FileMutationsRequest, ba
         const expandedParentReferences = findParentExpandedReferences(request, parent);
         if (expandedParentReferences !== undefined) {
             expandedReferences.push(...expandedParentReferences);
-            // break;
         }
     }
 
@@ -47,7 +50,8 @@ const findParentExpandedReferences = (request: FileMutationsRequest, node: ts.No
         const parentIndex = node.parent.parameters.indexOf(node);
         return calls
             .map(getExpressionWithin)
-            .filter(ts.isCallOrNewExpression)
+            .map(getCloseAncestorCallOrNewExpression)
+            .filter(isNotUndefined)
             .map((call) => call.arguments?.[parentIndex])
             .filter(isNotUndefined);
     }

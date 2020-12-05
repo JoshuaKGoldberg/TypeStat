@@ -109,6 +109,10 @@ const printObjectLiteralDescriptor = (request: FileMutationsRequest, type: ts.Ty
     const properties = type.getProperties();
     const typeChecker = request.services.program.getTypeChecker();
 
+    if (properties.length === 0) {
+        return "{}";
+    }
+
     return [
         "{",
         properties
@@ -121,7 +125,7 @@ const printObjectLiteralDescriptor = (request: FileMutationsRequest, type: ts.Ty
 };
 
 const printShorthandCallSignature = (request: FileMutationsRequest, callSignature: ts.Signature): string => {
-    const parameters = callSignature.parameters.map((parameter) => printSignatureParameter(request, parameter));
+    const parameters = callSignature.parameters.map((parameter, index) => printSignatureParameter(request, parameter, index));
     const returnType = createTypeName(request, callSignature.getReturnType());
     const typeParameters =
         callSignature.typeParameters === undefined || callSignature.typeParameters.length === 0
@@ -137,12 +141,11 @@ const printShorthandCallSignature = (request: FileMutationsRequest, callSignatur
     return text;
 };
 
-const printSignatureParameter = (request: FileMutationsRequest, parameter: ts.Symbol) => {
+const printSignatureParameter = (request: FileMutationsRequest, parameter: ts.Symbol, index: number) => {
     const valueDeclaration = parameter.valueDeclaration as ts.ParameterDeclaration;
     const { name } = valueDeclaration;
     const type = request.services.program.getTypeChecker().getTypeAtLocation(valueDeclaration);
+    const nameText = ts.isIdentifier(name) ? name.text : `arg${index}`;
 
-    return `${name}: ${createTypeName(request, type)}`;
+    return `${nameText}: ${createTypeName(request, type)}`;
 };
-
-// const isTypeNamePrintable = (type: ts.Type): boolean => !(type.symbol.flags & ts.SymbolFlags.ObjectLiteral);

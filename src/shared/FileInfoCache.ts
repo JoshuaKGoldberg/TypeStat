@@ -22,7 +22,7 @@ export class FileInfoCache {
         let references = this.nodeReferences.get(node);
 
         if (references === undefined) {
-            references = findRelevantNodeReferencesAsNodes(this.filteredNodes, this.services, this.sourceFile, node);
+            references = findRelevantNodeReferencesAsNodes(this.filteredNodes, this.services, node);
             this.nodeReferences.set(node, references);
         }
 

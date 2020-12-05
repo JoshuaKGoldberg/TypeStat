@@ -40,7 +40,7 @@ export const findMissingTemplateTypes = (
     // For each remaining base type parameter, collect any extra types not yet declared on it
     // For example, if it defaults to `{ exists: boolean }` but is given `.extra = 1;`, collect `extra: number`
     for (const baseTypeParameter of baseTypeParameters.slice(i)) {
-        missingTemplateTypes.push(collectMissingParameterTypes(request, childClass, baseTypeParameter));
+        missingTemplateTypes.push(collectMissingParameterTypes(request, childClass, baseClass, baseTypeParameter));
     }
 
     return missingTemplateTypes;
@@ -49,10 +49,11 @@ export const findMissingTemplateTypes = (
 const collectMissingParameterTypes = (
     request: FileMutationsRequest,
     childClass: ts.ClassLikeDeclaration,
+    baseClass: ts.ClassLikeDeclaration,
     baseTypeParameter: ts.TypeParameterDeclaration,
 ): string | AssignedTypesByName | undefined => {
     // Each usage of the base type parameter might introduce new assigned types
-    const typeParameterReferences = collectTypeParameterReferences(request, baseTypeParameter);
+    const typeParameterReferences = collectTypeParameterReferences(request, childClass, baseClass, baseTypeParameter);
     if (typeParameterReferences === undefined) {
         return undefined;
     }
@@ -120,7 +121,11 @@ const collectMissingAssignedTypesOnChildClassNode = (
     defaultTypeParameterType: ts.Type | undefined,
     typeParameterReference: ts.Node,
 ) => {
-    const typeChecker = request.services.program.getTypeChecker();
+    // If the reference is a property declaration with an initial type, use that
+    if (ts.isPropertyDeclaration(typeParameterReference)) {
+        return collectMissingAssignedTypeOnPropertyDeclaration(request, defaultTypeParameterType, typeParameterReference);
+    }
+
     const parentPropertyAccess = typeParameterReference.parent;
 
     // If the parent is a call, treat the reference as a parameter, and use its type directly
@@ -134,6 +139,7 @@ const collectMissingAssignedTypesOnChildClassNode = (
     }
 
     // We only care about this node if the instance it's referencing is (or generally is a subtype of) the child class
+    const typeChecker = request.services.program.getTypeChecker();
     const expressionType = typeChecker.getTypeAtLocation(parentPropertyAccess.expression);
     if (!typeChecker.isTypeAssignableTo(expressionType, childClassType)) {
         return undefined;
@@ -154,6 +160,24 @@ const collectMissingAssignedTypesOnChildClassNode = (
     return undefined;
 };
 
+const collectMissingAssignedTypeOnPropertyDeclaration = (
+    request: FileMutationsRequest,
+    defaultTypeParameterType: ts.Type | undefined,
+    typeParameterReference: ts.PropertyDeclaration,
+) => {
+    // Our happiest case is a member that already has a named type
+    if (
+        typeParameterReference.type !== undefined &&
+        ts.isTypeReferenceNode(typeParameterReference.type) &&
+        ts.isIdentifier(typeParameterReference.type.typeName)
+    ) {
+        return typeParameterReference.type.typeName.escapedText.toString();
+    }
+
+    // Otherwise, we'll have to manually craft a type for it
+    return getMissingAssignedType(request, defaultTypeParameterType, typeParameterReference, /* asStandaloneProperty */ true);
+};
+
 const getMissingAssignedType = (
     request: FileMutationsRequest,
     defaultTypeParameterType: ts.Type | undefined,
@@ -163,8 +187,8 @@ const getMissingAssignedType = (
     const typeChecker = request.services.program.getTypeChecker();
     const assigningType = typeChecker.getTypeAtLocation(assigningNode);
 
-    // If the type parameter came with a default, ignore types already assignable to it
-    if (defaultTypeParameterType !== undefined && typeChecker.isTypeAssignableTo(assigningType, defaultTypeParameterType)) {
+    // If the type parameter came with a default, ignore types already equivalent to it
+    if (defaultTypeParameterType !== undefined && typeChecker.isTypeAssignableTo(defaultTypeParameterType, assigningType)) {
         return undefined;
     }
 

@@ -1,3 +1,4 @@
+import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
@@ -7,7 +8,7 @@ import { getValueDeclarationOfType, NodeSelector } from "./nodeTypes";
 /**
  * Finds a node in a source file by its starting position.
  */
-export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: number): ts.Node => {
+export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: number): ts.Node | undefined => {
     if (start >= sourceFile.end) {
         throw new Error(`Cannot request start ${start} outside of source file '${sourceFile.fileName}'.`);
     }
@@ -25,9 +26,7 @@ export const findNodeByStartingPosition = (sourceFile: ts.SourceFile, start: num
         return ts.forEachChild(node, visitNode);
     };
 
-    // This function will throw an error if the node doesn't exist
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return ts.forEachChild(sourceFile, visitNode)!;
+    return ts.forEachChild(sourceFile, visitNode);
 };
 
 /**
@@ -87,6 +86,18 @@ export const getVariableInitializerForExpression = (
 };
 
 export const getExpressionWithin = (node: ts.Node) => (ts.isExpressionStatement(node) ? node.expression : node);
+
+export const getCloseAncestorCallOrNewExpression = (node: ts.Node): ts.CallExpression | ts.NewExpression | undefined => {
+    if (ts.isSourceFile(node.parent) || tsutils.isBlockLike(node)) {
+        return undefined;
+    }
+
+    if (ts.isCallExpression(node) || ts.isNewExpression(node)) {
+        return node;
+    }
+
+    return getCloseAncestorCallOrNewExpression(node.parent);
+};
 
 export const getClassExtendsType = (node: ts.ClassLikeDeclaration): ts.ExpressionWithTypeArguments | undefined => {
     const { heritageClauses } = node;

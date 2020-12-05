@@ -1,4 +1,8 @@
+import { ComponentLike } from './react-like';
+
 (function () {
+    // Straightforward generics
+
     class BaseWithoutGenerics { }
     class BaseWithOneGeneric<T> { constructor(t: T) { } }
     class BaseWithTwoGenerics<T, U> {constructor(t: T, u: U) {} }
@@ -38,5 +42,59 @@
         constructor() {
             super(123, false)
         }
+    }
+
+    // Member object (e.g. for React state)
+
+    class MemberImmediateBase<First = {}, Second = {}> {
+        member: Second;
+
+        setMember(member: Second) {
+            return member;
+        }
+    }
+
+    class MemberImmediate extends MemberImmediateBase {
+        member = {
+            key: false,
+        };
+
+        addToState = () => {
+            this.setMember({ key: true });
+        };
+    }
+
+    class MemberCurriedBase<First = {}> {
+        member: First;
+
+        setMember(getMember: (oldMember: First) => First) {
+            getMember(this.member);
+        }
+    }
+
+    interface MemberAndType {
+        key: boolean;
+    }
+
+    class MemberCurriedWithMemberAndType extends MemberCurriedBase {
+        member: MemberAndType;
+
+        addToState = () => {
+            this.setMember(previousMember => ({
+                key: !previousMember.key,
+            }));
+        };
+    }
+
+    class MemberCurriedWithMember extends MemberCurriedBase {
+        member = {
+            key: false,
+        };
+
+        addToState = () => {
+            this.setMember(previousMember => ({
+                key: !previousMember.key,
+            }));
+        };
     }
 })();
