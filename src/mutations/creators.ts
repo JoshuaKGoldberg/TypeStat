@@ -25,7 +25,7 @@ export const createTypeAdditionMutation = (
     // Find any missing flags and symbols (a.k.a. types)
     const { missingFlags, missingTypes } = collectUsageFlagsAndSymbols(request, declaredType, allAssignedTypes);
 
-    // Otherwise, if nothing is missing, rejoice! The type was already fine.
+    // If nothing is missing, rejoice! The type was already fine.
     if (missingFlags.size === 0 && missingTypes.size === 0) {
         return undefined;
     }

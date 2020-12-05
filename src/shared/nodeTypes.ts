@@ -122,5 +122,5 @@ const knownGlobalBaseTypeNames = new Set<string | undefined>(["Function"]);
  * @returns Whether the type is a known base type such as Function.
  */
 export const isKnownGlobalBaseType = (type: ts.Type) => {
-    return knownGlobalBaseTypeNames.has(isIntrisinicNameTypeNode(type) ? type.intrinsicName : type.getSymbol()?.escapedName.toString());
+    return knownGlobalBaseTypeNames.has(type.getSymbol()?.escapedName.toString());
 };
