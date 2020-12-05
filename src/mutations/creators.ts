@@ -1,8 +1,8 @@
-import { ITextInsertMutation } from "automutate";
+import { ITextInsertMutation, ITextSwapMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
-import { NodeWithAddableType, NodeWithCreatableType } from "../shared/nodeTypes";
+import { isKnownGlobalBaseType, NodeWithAddableType, NodeWithCreatableType } from "../shared/nodeTypes";
 
 import { joinIntoType } from "./aliasing/joinIntoType";
 import { collectUsageFlagsAndSymbols } from "./collecting";
@@ -21,11 +21,11 @@ export const createTypeAdditionMutation = (
     node: NodeWithAddableType,
     declaredType: ts.Type,
     allAssignedTypes: ReadonlyArray<ts.Type>,
-): ITextInsertMutation | undefined => {
+): ITextInsertMutation | ITextSwapMutation | undefined => {
     // Find any missing flags and symbols (a.k.a. types)
     const { missingFlags, missingTypes } = collectUsageFlagsAndSymbols(request, declaredType, allAssignedTypes);
 
-    // If nothing is missing, rejoice! The type was already fine.
+    // Otherwise, if nothing is missing, rejoice! The type was already fine.
     if (missingFlags.size === 0 && missingTypes.size === 0) {
         return undefined;
     }
@@ -34,6 +34,18 @@ export const createTypeAdditionMutation = (
     const newTypeAlias = joinIntoType(missingFlags, missingTypes, request);
     if (newTypeAlias === undefined) {
         return undefined;
+    }
+
+    // If the original type was just something like Function or Object, replace it entirely
+    if (isKnownGlobalBaseType(declaredType)) {
+        return {
+            insertion: ` ${newTypeAlias}`,
+            range: {
+                begin: node.type.pos,
+                end: node.type.end,
+            },
+            type: "text-swap",
+        };
     }
 
     // Create a mutation insertion that adds the missing types in

@@ -2,6 +2,7 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
+import { isKnownGlobalBaseType } from "../shared/nodeTypes";
 import { setSubtract } from "../shared/sets";
 
 import { getApplicableTypeAliases } from "./aliasing/aliases";
@@ -23,7 +24,8 @@ export const collectUsageFlagsAndSymbols = (
     const [assignedFlags, assignedTypes] = collectFlagsAndTypesFromTypes(request, allAssignedTypes);
 
     // If the declared type is the general 'any', then we assume all are missing
-    if (declaredType.flags & ts.TypeFlags.Any) {
+    // Similarly, if it's a plain Function or Object, we'll want to replace its contents
+    if (declaredType.flags & ts.TypeFlags.Any || isKnownGlobalBaseType(declaredType)) {
         return {
             assignedFlags,
             assignedTypes,
