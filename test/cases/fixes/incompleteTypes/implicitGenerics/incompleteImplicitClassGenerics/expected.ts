@@ -1,68 +1,78 @@
 import { ComponentLike } from './react-like';
 
 (function () {
-    // // Straightforward generics
+    // Straightforward generics
 
-    // class BaseWithoutGenerics { }
-    // class BaseWithOneGeneric<T> { constructor(t: T) { } }
-    // class BaseWithTwoGenerics<T, U> {constructor(t: T, u: U) {} }
+    class BaseWithoutGenerics { }
+    class BaseWithOneGeneric<T> { constructor(t: T) { } }
+    class BaseWithTwoGenerics<T, U> {constructor(t: T, u: U) {} }
 
-    // class ExtendsBaseWithout extends BaseWithoutGenerics { }
-    // new ExtendsBaseWithout();
+    class ExtendsBaseWithout extends BaseWithoutGenerics { }
+    new ExtendsBaseWithout();
 
-    // class ExtendsBaseWithOneLiteral extends BaseWithOneGeneric {
-    //     constructor() {
-    //         super('abc')
-    //     }
-    // }
 
-    // interface OneInterface {
-    //     property: string;
-    // }
-    // const oneInterface: OneInterface = { property: 'abc' };
 
-    // class ExtendsBaseWithOneInterface extends BaseWithOneGeneric {
-    //     constructor() {
-    //         super(oneInterface)
-    //     }
-    // }
+    class ExtendsBaseWithOneLiteral extends BaseWithOneGeneric<string> {
+        constructor() {
+            super('abc')
+        }
+    }
 
-    // type OneType = {
-    //     property: string[];
-    // }
-    // const oneType: OneType = { property: ['a', 'b', 'c'] };
+    interface OneInterface {
+        property: string;
+    }
+    const oneInterface: OneInterface = { property: 'abc' };
 
-    // class ExtendsBaseWithOneType extends BaseWithOneGeneric {
-    //     constructor() {
-    //         super(oneType)
-    //     }
-    // }
 
-    // class ExtendsBaseWithTwo extends BaseWithTwoGenerics {
-    //     constructor() {
-    //         super(123, false)
-    //     }
-    // }
 
-    // // Member object (e.g. for React state)
+    class ExtendsBaseWithOneInterface extends BaseWithOneGeneric<OneInterface> {
+        constructor() {
+            super(oneInterface)
+        }
+    }
 
-    // class MemberImmediateBase<First = {}, Second = {}> {
-    //     member: Second;
+    type OneType = {
+        property: string[];
+    }
+    const oneType: OneType = { property: ['a', 'b', 'c'] };
 
-    //     setMember(member: Second) {
-    //         return member;
-    //     }
-    // }
 
-    // class MemberImmediate extends MemberImmediateBase {
-    //     member = {
-    //         key: false,
-    //     };
 
-    //     addToState = () => {
-    //         this.setMember({ key: true });
-    //     };
-    // }
+    class ExtendsBaseWithOneType extends BaseWithOneGeneric<OneType> {
+        constructor() {
+            super(oneType)
+        }
+    }
+
+
+
+    class ExtendsBaseWithTwo extends BaseWithTwoGenerics<number, boolean> {
+        constructor() {
+            super(123, false)
+        }
+    }
+
+    // Member object (e.g. for React state)
+
+    class MemberImmediateBase<First = {}, Second = {}> {
+        member: Second;
+
+        setMember(member: Second) {
+            return member;
+        }
+    }
+
+
+
+    class MemberImmediate extends MemberImmediateBase<{}, { key: boolean }> {
+        member = {
+            key: false,
+        };
+
+        addToState = () => {
+            this.setMember({ key: true });
+        };
+    }
 
     class MemberCurriedBase<First = {}> {
         member: First;
@@ -72,33 +82,15 @@ import { ComponentLike } from './react-like';
         }
     }
 
-    // interface MemberAndType {
-    //     key: boolean;
-    // }
+    interface MemberAndType {
+        key: boolean;
+    }
 
-    // class MemberCurriedWithMemberAndType extends MemberCurriedBase {
-    //     member: MemberAndType;
 
-    //     addToState = () => {
-    //         this.setMember(previousMember => ({
-    //             key: !previousMember.key,
-    //         }));
-    //     };
-    // }
 
-    // class MemberCurriedWithMember extends MemberCurriedBase {
-    //     member = {
-    //         key: false,
-    //     };
+    class MemberCurriedWithMemberAndType extends MemberCurriedBase<MemberAndType> {
+        member: MemberAndType;
 
-    //     addToState = () => {
-    //         this.setMember(previousMember => ({
-    //             key: !previousMember.key,
-    //         }));
-    //     };
-    // }
-
-    class MemberCurriedWithoutMember extends MemberCurriedBase {
         addToState = () => {
             this.setMember(previousMember => ({
                 key: !previousMember.key,
@@ -106,16 +98,17 @@ import { ComponentLike } from './react-like';
         };
     }
 
-    // // External methods much like React
 
-    // class TogglesState extends ComponentLike {
-    //     state = {
-    //         key: false,
-    //     };
 
-    //     toggleMember = () =>
-    //         this.setState({
-    //             key: !this.state.key,
-    //         });
-    // }
+    class MemberCurriedWithMember extends MemberCurriedBase<{ key: boolean }> {
+        member = {
+            key: false,
+        };
+
+        addToState = () => {
+            this.setMember(previousMember => ({
+                key: !previousMember.key,
+            }));
+        };
+    }
 })();
