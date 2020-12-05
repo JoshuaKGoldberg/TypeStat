@@ -121,7 +121,11 @@ const collectMissingAssignedTypesOnChildClassNode = (
     defaultTypeParameterType: ts.Type | undefined,
     typeParameterReference: ts.Node,
 ) => {
-    const typeChecker = request.services.program.getTypeChecker();
+    // If the reference is a property declaration with an initial type, use that
+    if (ts.isPropertyDeclaration(typeParameterReference)) {
+        return collectMissingAssignedTypeOnPropertyDeclaration(request, defaultTypeParameterType, typeParameterReference);
+    }
+
     const parentPropertyAccess = typeParameterReference.parent;
 
     // If the parent is a call, treat the reference as a parameter, and use its type directly
@@ -135,6 +139,7 @@ const collectMissingAssignedTypesOnChildClassNode = (
     }
 
     // We only care about this node if the instance it's referencing is (or generally is a subtype of) the child class
+    const typeChecker = request.services.program.getTypeChecker();
     const expressionType = typeChecker.getTypeAtLocation(parentPropertyAccess.expression);
     if (!typeChecker.isTypeAssignableTo(expressionType, childClassType)) {
         return undefined;
@@ -153,6 +158,24 @@ const collectMissingAssignedTypesOnChildClassNode = (
     // Otherwise we ignore any other types
     // Eventually this will likely expand to types like property access expressions and captured identifier references
     return undefined;
+};
+
+const collectMissingAssignedTypeOnPropertyDeclaration = (
+    request: FileMutationsRequest,
+    defaultTypeParameterType: ts.Type | undefined,
+    typeParameterReference: ts.PropertyDeclaration,
+) => {
+    // Our happiest case is a member that already has a named type
+    if (
+        typeParameterReference.type !== undefined &&
+        ts.isTypeReferenceNode(typeParameterReference.type) &&
+        ts.isIdentifier(typeParameterReference.type.typeName)
+    ) {
+        return typeParameterReference.type.typeName.escapedText.toString();
+    }
+
+    // Otherwise, we'll have to manually craft a type for it
+    return getMissingAssignedType(request, defaultTypeParameterType, typeParameterReference, /* asStandaloneProperty */ true);
 };
 
 const getMissingAssignedType = (

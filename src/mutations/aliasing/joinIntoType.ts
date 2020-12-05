@@ -109,6 +109,10 @@ const printObjectLiteralDescriptor = (request: FileMutationsRequest, type: ts.Ty
     const properties = type.getProperties();
     const typeChecker = request.services.program.getTypeChecker();
 
+    if (properties.length === 0) {
+        return "{}";
+    }
+
     return [
         "{",
         properties
