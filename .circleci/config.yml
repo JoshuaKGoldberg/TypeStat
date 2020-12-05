@@ -57,6 +57,22 @@ jobs:
 
             - run: yarn run lint:eslint
 
+    publish:
+        docker:
+            - image: circleci/node:latest
+
+        working_directory: ~/repo
+
+        steps:
+            - checkout
+
+            - attach_workspace:
+                  at: "."
+
+            - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+
+            - run: npm publish || exit 0
+
     test-mutation:
         docker:
             - image: circleci/node:latest
@@ -117,9 +133,14 @@ workflows:
             - lint-eslint:
                   requires:
                       - dependencies
+            - publish:
+                  filters:
+                      branches:
+                          only: main
+                  requires:
+                      - tsc
             - test-mutation:
                   requires:
-                      - dependencies
                       - tsc
             - test-unit:
                   requires:
