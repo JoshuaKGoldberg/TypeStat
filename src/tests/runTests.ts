@@ -45,7 +45,7 @@ describeMutationTestCases(
         const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config;
         const output = {
             log: () => {},
-            stderr: () => {},
+            stderr: console.error.bind(console),
             stdout: () => {},
         };
 

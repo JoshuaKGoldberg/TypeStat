@@ -40,7 +40,7 @@ export const findMissingTemplateTypes = (
     // For each remaining base type parameter, collect any extra types not yet declared on it
     // For example, if it defaults to `{ exists: boolean }` but is given `.extra = 1;`, collect `extra: number`
     for (const baseTypeParameter of baseTypeParameters.slice(i)) {
-        missingTemplateTypes.push(collectMissingParameterTypes(request, childClass, baseTypeParameter));
+        missingTemplateTypes.push(collectMissingParameterTypes(request, childClass, baseClass, baseTypeParameter));
     }
 
     return missingTemplateTypes;
@@ -49,10 +49,11 @@ export const findMissingTemplateTypes = (
 const collectMissingParameterTypes = (
     request: FileMutationsRequest,
     childClass: ts.ClassLikeDeclaration,
+    baseClass: ts.ClassLikeDeclaration,
     baseTypeParameter: ts.TypeParameterDeclaration,
 ): string | AssignedTypesByName | undefined => {
     // Each usage of the base type parameter might introduce new assigned types
-    const typeParameterReferences = collectTypeParameterReferences(request, baseTypeParameter);
+    const typeParameterReferences = collectTypeParameterReferences(request, childClass, baseClass, baseTypeParameter);
     if (typeParameterReferences === undefined) {
         return undefined;
     }
@@ -163,8 +164,8 @@ const getMissingAssignedType = (
     const typeChecker = request.services.program.getTypeChecker();
     const assigningType = typeChecker.getTypeAtLocation(assigningNode);
 
-    // If the type parameter came with a default, ignore types already assignable to it
-    if (defaultTypeParameterType !== undefined && typeChecker.isTypeAssignableTo(assigningType, defaultTypeParameterType)) {
+    // If the type parameter came with a default, ignore types already equivalent to it
+    if (defaultTypeParameterType !== undefined && typeChecker.isTypeAssignableTo(defaultTypeParameterType, assigningType)) {
         return undefined;
     }
 
