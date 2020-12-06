@@ -7,7 +7,7 @@ import { FileMutationsRequest } from "../../../../fileMutator";
 import { ReactComponentNode } from "../reactFiltering/isReactComponentNode";
 
 /**
- * Finds all assigned types for properties in each JSX usage of a React component.
+ * Finds all assigned types for props in each JSX usage of a React component.
  */
 export const getComponentAssignedTypesFromUsage = (
     request: FileMutationsRequest,

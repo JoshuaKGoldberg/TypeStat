@@ -2,7 +2,6 @@ import { IMutation } from "automutate";
 import * as ts from "typescript";
 
 import { TypeStatOptions } from "../options/types";
-import { ProcessOutput } from "../output";
 import { LanguageServices } from "../services/language";
 import { FileInfoCache } from "../shared/FileInfoCache";
 import { NameGenerator } from "../shared/NameGenerator";

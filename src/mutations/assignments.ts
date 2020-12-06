@@ -15,6 +15,9 @@ export interface AssignedTypeValue {
     type: ts.Type;
 }
 
+/**
+ * For each new member of a type, a string or type representation of what it is known to be assigned.
+ */
 export type AssignedTypesByName = Map<string, ts.Type>;
 
 /**

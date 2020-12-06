@@ -3,7 +3,7 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
 import { ExposedTypeChecker } from "../mutations/createExposedTypeScript";
-import { isIntrisinicNameTypeNode, isOptionalTypeArgumentsTypeNode } from "./typeNodes";
+import { isIntrisinicNameType, isOptionalTypeArgumentsTypeNode } from "./typeNodes";
 import { getTypeAtLocationIfNotError } from "./types";
 
 export const declaredInitializedTypeNodeIsRedundant = (request: FileMutationsRequest, declaration: ts.TypeNode, initializer: ts.Node) => {
@@ -61,7 +61,7 @@ const declaredTypeIsEquivalent = (typeChecker: ExposedTypeChecker, declaredType:
 
     // We have to hackily check for boolean types with intrinsic names...
     // `boolean[]` is really the type `[false, true]`
-    if (isIntrisinicNameTypeNode(declaredType) && isIntrisinicNameTypeNode(initializedType)) {
+    if (isIntrisinicNameType(declaredType) && isIntrisinicNameType(initializedType)) {
         return intrinsicNamesAreEquivalent(declaredType.intrinsicName, initializedType.intrinsicName);
     }
 

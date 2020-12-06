@@ -3,17 +3,38 @@ import * as ts from "typescript";
 
 import { ExposedProgram } from "../mutations/createExposedTypeScript";
 import { TypeStatOptions } from "../options/types";
+import { isIntrisinicNameType } from "../shared/typeNodes";
 
 import { createProgramConfiguration } from "./createProgramConfiguration";
+
+export type WellKnownTypeName =
+    | "any"
+    | "error"
+    | "unknown"
+    | "undefined"
+    | "null"
+    | "string"
+    | "number"
+    | "bigint"
+    | "false"
+    | "true"
+    | "boolean"
+    | "symbol"
+    | "void"
+    | "never"
+    | "object";
+
+export type WellKnownTypes = Readonly<Record<WellKnownTypeName, Readonly<ts.Type>>>;
 
 /**
  * Language service and type information with their backing TypeScript configuration.
  */
 export interface LanguageServices {
-    readonly parsedConfiguration: ts.ParsedCommandLine;
     readonly languageService: ts.LanguageService;
-    readonly program: ExposedProgram;
+    readonly parsedConfiguration: ts.ParsedCommandLine;
     readonly printNode: (node: ts.Node) => string;
+    readonly program: ExposedProgram;
+    readonly wellKnownTypes: WellKnownTypes;
 }
 
 /**
@@ -42,12 +63,28 @@ export const createLanguageServices = (options: TypeStatOptions): LanguageServic
     const printer = ts.createPrinter({
         newLine: options.compilerOptions.newLine,
     });
-    const treePrinter = (node: ts.Node) =>
+    const printNode = (node: ts.Node) =>
         printer.printNode(
             ts.EmitHint.Unspecified,
             node,
             ts.createSourceFile("temp.ts", "", ts.ScriptTarget.Latest, false, ts.ScriptKind.TSX),
         );
 
-    return { languageService, parsedConfiguration, program, printNode: treePrinter };
+    let wellKnownTypes;
+
+    return {
+        languageService,
+        parsedConfiguration,
+        program,
+        printNode,
+        get wellKnownTypes() {
+            return (wellKnownTypes ??= program.getTypeCatalog().reduce<Record<string, ts.Type>>((acc, type) => {
+                if (isIntrisinicNameType(type)) {
+                    acc[type.intrinsicName] = type;
+                }
+
+                return acc;
+            }, {}));
+        },
+    };
 };
