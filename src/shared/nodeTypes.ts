@@ -59,7 +59,7 @@ export type NodeWithDefinedTypeParameters = ts.Node & {
 export const isNodeWithType = (node: NodeWithOptionalType): node is NodeWithType => node.type !== undefined;
 
 export const isNodeWithIdentifierName = (node: ts.Node): node is NodeWithIdentifierName => {
-    return "name" in node;
+    return "name" in node && !!(node as NodeWithIdentifierName).name;
 };
 
 export const isNodeWithDefinedTypeArguments = (node: ts.Node): node is NodeWithDefinedTypeArguments => {

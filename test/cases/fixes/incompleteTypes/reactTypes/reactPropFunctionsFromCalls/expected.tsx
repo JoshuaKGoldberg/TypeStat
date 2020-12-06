@@ -16,7 +16,7 @@ import * as React from 'react';
     }
         
     type FunctionComponentProps =  {
-        other: () => void;
+        other?: boolean;
     }
 
     class FunctionComponent extends React.Component<FunctionComponentProps> {
@@ -26,11 +26,11 @@ import * as React from 'react';
     }
 
     type WithFunctionsProps = {
-        providesNothing: () => void;
-        providesString: (arg0: string) => void;
-        providesNumberThenString: (arg0: number, arg1: string) => void;
-        providesBooleanGivesNumber: (arg0: boolean) => number;
-        returnsString: () => string;
+        providesNothing: Function;
+        providesString: Function;
+        providesNumberThenString: Function;
+        providesBooleanGivesNumber: Function;
+        returnsString: Function;
     }
 
     class WithFunctions extends React.Component<WithFunctionsProps> {
