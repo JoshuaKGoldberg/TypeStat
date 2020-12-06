@@ -73,6 +73,6 @@ const updateCallingTypesForReference = (
     // Mark the type of parameter at our index as being called with
     const callingType = getTypeAtLocationIfNotError(request, callingNode.expression.arguments[parameterIndex]);
     if (callingType !== undefined) {
-        callingTypes.push();
+        callingTypes.push(callingType);
     }
 };
