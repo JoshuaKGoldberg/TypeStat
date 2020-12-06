@@ -21,7 +21,7 @@ export const createFunctionCallTypesMutation = (
         return createFunctionCallTypeMutation(request, member, functionCallTypes);
     });
 
-    return mutations === undefined ? undefined : combineMutations(...mutations);
+    return mutations === undefined || mutations.length === 0 ? undefined : combineMutations(...mutations);
 };
 
 const createFunctionCallTypeMutation = (
