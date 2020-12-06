@@ -70,14 +70,10 @@ export const isNodeWithDefinedTypeParameters = (node: ts.Node): node is NodeWith
     return "typeParameters" in node;
 };
 
-export type TypeElementWithStaticName = ts.TypeElement & {
-    name: {
-        text: string;
-    };
-};
+export type PropertySignatureWithStaticName = ts.PropertySignature & NodeWithIdentifierName;
 
-export const isTypeElementWithStaticName = (node: ts.TypeElement): node is TypeElementWithStaticName => {
-    return node.name !== undefined && "text" in node.name;
+export const isPropertySignatureWithStaticName = (node: ts.Node): node is PropertySignatureWithStaticName => {
+    return ts.isPropertySignature(node) && isNodeWithIdentifierName(node);
 };
 
 export const getValueDeclarationOfType = (request: FileMutationsRequest, node: ts.Node): ts.Node | undefined => {

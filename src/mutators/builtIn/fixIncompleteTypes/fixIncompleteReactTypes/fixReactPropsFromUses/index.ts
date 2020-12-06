@@ -1,15 +1,15 @@
+import { createTypeExpansionMutation } from "../../../../../mutations/expansions/expansionMutations";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../../fileMutator";
 import { isReactComponentNode, ReactComponentNode } from "../reactFiltering/isReactComponentNode";
 
 import { getComponentPropsNode } from "../getComponentPropsNode";
-import { collectAllFunctionCallTypes } from "./collectAllFunctionCallTypes";
-import { createFunctionCallTypesMutation } from "./createFunctionCallTypesMutation";
+import { getPropsUsageTypes } from "./getPropsUsageTypes";
 
 /**
- * Expands a component's props declared as Function to be more specific types.
+ * Expands the existing props type for a component from its external JSX-style declarations.
  */
-export const fixReactPropFunctionsFromCalls: FileMutator = (request) => {
+export const fixReactPropsFromUses: FileMutator = (request) => {
     return collectMutationsFromNodes(request, isReactComponentNode, visitReactComponentNode);
 };
 
@@ -20,11 +20,11 @@ const visitReactComponentNode = (node: ReactComponentNode, request: FileMutation
         return undefined;
     }
 
-    // Find all Function prop calls used internally within the node
-    const allFunctionCallTypes = collectAllFunctionCallTypes(request, propsNode);
-    if (allFunctionCallTypes === undefined) {
+    // Find all types of props later passed to the node
+    const componentAssignedTypes = getPropsUsageTypes(request, node, propsNode);
+    if (componentAssignedTypes === undefined || componentAssignedTypes.length === 0) {
         return undefined;
     }
 
-    return createFunctionCallTypesMutation(request, allFunctionCallTypes);
+    return createTypeExpansionMutation(request, propsNode, componentAssignedTypes);
 };
