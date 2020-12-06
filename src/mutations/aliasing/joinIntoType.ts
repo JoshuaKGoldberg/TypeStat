@@ -2,7 +2,7 @@ import ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { isNotUndefined } from "../../shared/arrays";
-import { isIntrisinicNameTypeNode } from "../../shared/typeNodes";
+import { isIntrisinicNameType, isTypeWithValue } from "../../shared/typeNodes";
 import { getTypeAtLocationIfNotError } from "../../shared/types";
 
 import { getApplicableTypeAliases } from "./aliases";
@@ -47,6 +47,11 @@ export const joinIntoType = (
     ]);
 };
 
+const intrinsicNameAliases = new Map([
+    ["false", "boolean"],
+    ["true", "boolean"],
+]);
+
 const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): string => {
     // If this is a declared interface or type alias (type MyType = { ... }), use that MyType name
     // Alternately, also try this as an inline object literal
@@ -72,8 +77,13 @@ const printFriendlyNameOfType = (request: FileMutationsRequest, type: ts.Type): 
     }
 
     // If it's a literal type for a user-facing one such as 'boolean', go with that
-    if (isIntrisinicNameTypeNode(type)) {
-        return type.intrinsicName;
+    if (isIntrisinicNameType(type)) {
+        return intrinsicNameAliases.get(type.intrinsicName) ?? type.intrinsicName;
+    }
+
+    // If it's a literal type such as '' or 0, print its literal type name
+    if (isTypeWithValue(type)) {
+        return typeof type.value;
     }
 
     // Since this isn't a better-known object, it might be an object literal descriptor (i.e. { ... })

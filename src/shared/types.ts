@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import { FileMutationsRequest } from "../mutators/fileMutator";
-import { isIntrisinicNameTypeNode } from "./typeNodes";
+import { isIntrisinicNameType } from "./typeNodes";
 
 /**
  * @returns Whether the type has `localTypeParameters`, such as the built-in Map and Array definitions.
@@ -29,5 +29,5 @@ export const getTypeAtLocationIfNotError = (request: FileMutationsRequest, node:
 
     const type = request.services.program.getTypeChecker().getTypeAtLocation(node);
 
-    return isIntrisinicNameTypeNode(type) && type.intrinsicName === "error" ? undefined : type;
+    return isIntrisinicNameType(type) && type.intrinsicName === "error" ? undefined : type;
 };

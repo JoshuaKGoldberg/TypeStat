@@ -3,11 +3,11 @@ import { FileMutationsRequest } from "../../../fileMutator";
 
 import { fixReactPropsFromLaterAssignments } from "./fixReactPropsFromLaterAssignments";
 import { fixReactPropsFromPropTypes } from "./fixReactPropsFromPropTypes";
+import { fixReactPropFunctionsFromCalls } from "./fixReactPropFunctionsFromCalls";
 
 export const fixIncompleteReactTypes = (request: FileMutationsRequest) =>
     findFirstMutations(request, [
         ["fixReactPropsFromPropTypes", fixReactPropsFromPropTypes],
         ["fixReactPropsFromLaterAssignments", fixReactPropsFromLaterAssignments],
-        // Todo: also add a fixReactPropsWithoutPropTypes
-        // This would be equivalen to expansionMutations, but like a typeCreationMutation
+        ["fixReactPropFunctionsFromCalls", fixReactPropFunctionsFromCalls],
     ]);

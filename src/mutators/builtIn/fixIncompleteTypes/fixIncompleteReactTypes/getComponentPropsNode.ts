@@ -1,9 +1,9 @@
 import * as ts from "typescript";
 
-import { getClassExtendsType } from "../../../../../shared/nodes";
-import { getTypeAtLocationIfNotError } from "../../../../../shared/types";
-import { FileMutationsRequest } from "../../../../fileMutator";
-import { ReactClassComponentNode, ReactComponentNode, ReactFunctionalComponentNode } from "../reactFiltering/isReactComponentNode";
+import { getClassExtendsType } from "../../../../shared/nodes";
+import { getTypeAtLocationIfNotError } from "../../../../shared/types";
+import { FileMutationsRequest } from "../../../fileMutator";
+import { ReactClassComponentNode, ReactComponentNode, ReactFunctionalComponentNode } from "./reactFiltering/isReactComponentNode";
 
 export type ReactComponentPropsNode = ts.InterfaceDeclaration | ts.TypeLiteralNode;
 

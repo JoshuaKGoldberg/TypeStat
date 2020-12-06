@@ -70,6 +70,16 @@ export const isNodeWithDefinedTypeParameters = (node: ts.Node): node is NodeWith
     return "typeParameters" in node;
 };
 
+export type TypeElementWithStaticName = ts.TypeElement & {
+    name: {
+        text: string;
+    };
+};
+
+export const isTypeElementWithStaticName = (node: ts.TypeElement): node is TypeElementWithStaticName => {
+    return node.name !== undefined && "text" in node.name;
+};
+
 export const getValueDeclarationOfType = (request: FileMutationsRequest, node: ts.Node): ts.Node | undefined => {
     // Try getting the symbol at the location, which sometimes only works in the latter form
     const nodeType = getTypeAtLocationIfNotError(request, node);
