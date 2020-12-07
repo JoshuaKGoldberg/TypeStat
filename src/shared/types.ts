@@ -22,6 +22,16 @@ export const isTypeBuiltIn = (type: ts.Type) => {
     return sourceFile.hasNoDefaultLib && sourceFile.isDeclarationFile && sourceFile.fileName.includes("node_modules/typescript/lib/");
 };
 
+export const getSymbolAtLocationIfNotError = (request: FileMutationsRequest, node: ts.Node | undefined): ts.Symbol | undefined => {
+    if (node === undefined) {
+        return undefined;
+    }
+
+    const symbol = request.services.program.getTypeChecker().getSymbolAtLocation(node);
+
+    return symbol?.declarations.length ? symbol : undefined;
+};
+
 export const getTypeAtLocationIfNotError = (request: FileMutationsRequest, node: ts.Node | undefined): ts.Type | undefined => {
     if (node === undefined) {
         return undefined;

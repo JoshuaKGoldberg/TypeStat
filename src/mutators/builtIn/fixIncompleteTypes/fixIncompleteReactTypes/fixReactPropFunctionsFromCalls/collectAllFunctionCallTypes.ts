@@ -1,9 +1,12 @@
+import * as tsutils from "tsutils";
 import * as ts from "typescript";
-import { isTypeElementWithStaticName, TypeElementWithStaticName } from "../../../../../shared/nodeTypes";
+import { getDeclaredTypesOfArgument } from "../../../../../shared/calls";
+import { isPropertySignatureWithStaticName, PropertySignatureWithStaticName } from "../../../../../shared/nodeTypes";
 import { getTypeAtLocationIfNotError } from "../../../../../shared/types";
 
 import { FileMutationsRequest } from "../../../../fileMutator";
 import { ReactComponentPropsNode } from "../getComponentPropsNode";
+import { getPropNodeFromReference } from "../getPropNodeFromReference";
 
 export type FunctionCallType = {
     parameters?: (ts.Type | undefined)[];
@@ -11,9 +14,20 @@ export type FunctionCallType = {
 };
 
 export const collectAllFunctionCallTypes = (request: FileMutationsRequest, propsNode: ReactComponentPropsNode) => {
-    const allFunctionCallTypes = new Map<TypeElementWithStaticName, FunctionCallType[]>();
+    const allFunctionCallTypes = new Map<PropertySignatureWithStaticName, FunctionCallType[]>();
 
     for (const member of propsNode.members) {
+        // Don't look at properties without obvious names and types explicitly set to Function
+        if (
+            !isPropertySignatureWithStaticName(member) ||
+            member.type === undefined ||
+            !ts.isTypeReferenceNode(member.type) ||
+            !ts.isIdentifier(member.type.typeName) ||
+            member.type.typeName.text !== "Function"
+        ) {
+            continue;
+        }
+
         collectFunctionCallsTypes(request, member, allFunctionCallTypes);
     }
 
@@ -22,13 +36,9 @@ export const collectAllFunctionCallTypes = (request: FileMutationsRequest, props
 
 const collectFunctionCallsTypes = (
     request: FileMutationsRequest,
-    member: ts.TypeElement,
-    allFunctionCallTypes: Map<TypeElementWithStaticName, FunctionCallType[]>,
+    member: PropertySignatureWithStaticName,
+    allFunctionCallTypes: Map<PropertySignatureWithStaticName, FunctionCallType[]>,
 ) => {
-    if (!isTypeElementWithStaticName(member)) {
-        return;
-    }
-
     // Find all references to the name of the type
     const references = request.fileInfoCache.getNodeReferencesAsNodes(member.name);
     if (references === undefined) {
@@ -40,7 +50,7 @@ const collectFunctionCallsTypes = (
     // For each reference, try to infer the type from its usage...
     for (const reference of references) {
         // (except for the original member we're looking around)
-        if (reference === member) {
+        if (reference === member || !tsutils.isExpression(reference)) {
             continue;
         }
 
@@ -53,35 +63,21 @@ const collectFunctionCallsTypes = (
     allFunctionCallTypes.set(member, functionCallTypes);
 };
 
-const getCallForReference = (reference: ts.Node) => {
-    // Case: class-style (e.g. 'this.props.key') or object style 'props.key'
-    if (ts.isPropertyAccessExpression(reference.parent)) {
-        reference = reference.parent;
-    }
+const getCallForReference = (reference: ts.Expression) => {
+    reference = getPropNodeFromReference(reference);
 
     return ts.isCallExpression(reference.parent) ? reference.parent : undefined;
 };
 
 const collectFunctionCallTypes = (request: FileMutationsRequest, functionCallTypes: FunctionCallType[], call: ts.CallExpression) => {
     // Case: the return value is directly passed to a function
-    if ((ts.isCallExpression(call.parent) || ts.isNewExpression(call.parent)) && call.parent.arguments !== undefined) {
-        // Find the corresponding type for the function that's taking in the prop function call
-        const parentCallType = getTypeAtLocationIfNotError(request, call.parent.expression);
-        if (parentCallType !== undefined) {
-            // Get the signatures for that parent call
-            const parentSignatures = ts.isCallExpression(call.parent)
-                ? parentCallType.getCallSignatures()
-                : parentCallType.getConstructSignatures();
-            const parameterIndex = call.parent.arguments.indexOf(call);
+    if (ts.isCallExpression(call.parent) || ts.isNewExpression(call.parent)) {
+        const declaredTypes = getDeclaredTypesOfArgument(request, call.parent, call);
 
-            // For each signature, infer the paramter type that the prop function's return is being passed to
-            for (const parentSignature of parentSignatures) {
-                functionCallTypes.push({
-                    returnValue: request.services.program
-                        .getTypeChecker()
-                        .getTypeOfSymbolAtLocation(parentSignature.parameters[parameterIndex], call.parent.arguments[parameterIndex]),
-                });
-            }
+        for (const declaredType of declaredTypes) {
+            functionCallTypes.push({
+                returnValue: declaredType,
+            });
         }
     }
 

@@ -59,7 +59,7 @@ export type NodeWithDefinedTypeParameters = ts.Node & {
 export const isNodeWithType = (node: NodeWithOptionalType): node is NodeWithType => node.type !== undefined;
 
 export const isNodeWithIdentifierName = (node: ts.Node): node is NodeWithIdentifierName => {
-    return "name" in node;
+    return "name" in node && !!(node as NodeWithIdentifierName).name;
 };
 
 export const isNodeWithDefinedTypeArguments = (node: ts.Node): node is NodeWithDefinedTypeArguments => {
@@ -70,14 +70,10 @@ export const isNodeWithDefinedTypeParameters = (node: ts.Node): node is NodeWith
     return "typeParameters" in node;
 };
 
-export type TypeElementWithStaticName = ts.TypeElement & {
-    name: {
-        text: string;
-    };
-};
+export type PropertySignatureWithStaticName = ts.PropertySignature & NodeWithIdentifierName;
 
-export const isTypeElementWithStaticName = (node: ts.TypeElement): node is TypeElementWithStaticName => {
-    return node.name !== undefined && "text" in node.name;
+export const isPropertySignatureWithStaticName = (node: ts.Node): node is PropertySignatureWithStaticName => {
+    return ts.isPropertySignature(node) && isNodeWithIdentifierName(node);
 };
 
 export const getValueDeclarationOfType = (request: FileMutationsRequest, node: ts.Node): ts.Node | undefined => {
@@ -133,4 +129,15 @@ const knownGlobalBaseTypeNames = new Set<string | undefined>(["Function"]);
  */
 export const isKnownGlobalBaseType = (type: ts.Type) => {
     return knownGlobalBaseTypeNames.has(type.getSymbol()?.escapedName.toString());
+};
+
+const neverAndOrUnknown = [
+    ts.TypeFlags.Never,
+    ts.TypeFlags.Unknown,
+    ts.TypeFlags.Never & ts.TypeFlags.Unknown,
+    ts.TypeFlags.Never | ts.TypeFlags.Unknown,
+];
+
+export const isNeverAndOrUnknownType = (type: ts.Type) => {
+    return neverAndOrUnknown.includes(type.flags);
 };

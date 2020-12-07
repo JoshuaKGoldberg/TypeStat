@@ -3,7 +3,11 @@ import * as ts from "typescript";
 import { getClassExtendsType } from "../../../../shared/nodes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { FileMutationsRequest } from "../../../fileMutator";
-import { ReactClassComponentNode, ReactComponentNode, ReactFunctionalComponentNode } from "./reactFiltering/isReactComponentNode";
+import {
+    ReactClassComponentNode,
+    ReactComponentNode,
+    ReactFunctionalComponentNode as ReactFunctionComponentNode,
+} from "./reactFiltering/isReactComponentNode";
 
 export type ReactComponentPropsNode = ts.InterfaceDeclaration | ts.TypeLiteralNode;
 
@@ -13,12 +17,12 @@ export type ReactComponentPropsNode = ts.InterfaceDeclaration | ts.TypeLiteralNo
 export const getComponentPropsNode = (request: FileMutationsRequest, node: ReactComponentNode): ReactComponentPropsNode | undefined => {
     return ts.isClassDeclaration(node) || ts.isClassExpression(node)
         ? getClassComponentPropsNode(request, node)
-        : getFunctionalComponentPropsNode(request, node);
+        : getFunctionComponentPropsNode(request, node);
 };
 
 const getClassComponentPropsNode = (request: FileMutationsRequest, node: ReactClassComponentNode): ReactComponentPropsNode | undefined => {
     const extendsType = getClassExtendsType(node);
-    if (extendsType === undefined || extendsType.typeArguments === undefined || extendsType.typeArguments.length === 0) {
+    if (extendsType?.typeArguments === undefined || extendsType.typeArguments.length === 0) {
         return undefined;
     }
 
@@ -35,25 +39,30 @@ const getClassComponentPropsNode = (request: FileMutationsRequest, node: ReactCl
     return declaration !== undefined && isReactComponentPropsNode(declaration) ? declaration : undefined;
 };
 
-const getFunctionalComponentPropsNode = (
+const getFunctionComponentPropsNode = (
     request: FileMutationsRequest,
-    node: ReactFunctionalComponentNode,
+    node: ReactFunctionComponentNode,
 ): ReactComponentPropsNode | undefined => {
+    // If the node takes multiple parameters, we assume it's not an FC
+    // TODO: this might not hold true for refs or other fancy things...
     const { parameters } = node;
     if (parameters.length !== 1) {
         return undefined;
     }
 
+    // Try to get the first backing type declaration for the single parameter
     const [parameter] = parameters;
-    const type = getTypeAtLocationIfNotError(request, parameter);
-    const symbol = type?.getSymbol();
+    const symbol = getTypeAtLocationIfNotError(request, parameter)?.getSymbol();
     if (symbol === undefined || symbol.declarations.length === 0) {
         return undefined;
     }
 
     const [declaration] = symbol.declarations;
+    if (isReactComponentPropsNode(declaration)) {
+        return declaration;
+    }
 
-    return isReactComponentPropsNode(declaration) ? declaration : undefined;
+    return undefined;
 };
 
 const isReactComponentPropsNode = (node: ts.Node): node is ReactComponentPropsNode =>

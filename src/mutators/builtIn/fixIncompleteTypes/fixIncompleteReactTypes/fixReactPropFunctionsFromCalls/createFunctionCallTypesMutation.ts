@@ -4,9 +4,8 @@ import { findAliasOfTypes } from "../../../../../mutations/aliasing/findAliasOfT
 import { joinIntoType } from "../../../../../mutations/aliasing/joinIntoType";
 
 import { collectOptionals, isNotUndefined } from "../../../../../shared/arrays";
-import { TypeElementWithStaticName } from "../../../../../shared/nodeTypes";
+import { PropertySignatureWithStaticName } from "../../../../../shared/nodeTypes";
 import { FileMutationsRequest } from "../../../../fileMutator";
-import { ReactComponentPropsNode } from "../getComponentPropsNode";
 import { FunctionCallType } from "./collectAllFunctionCallTypes";
 
 type CombinedFunctionType = {
@@ -16,19 +15,18 @@ type CombinedFunctionType = {
 
 export const createFunctionCallTypesMutation = (
     request: FileMutationsRequest,
-    propsNode: ReactComponentPropsNode,
-    allFunctionCallTypes: Map<TypeElementWithStaticName, FunctionCallType[]>,
+    allFunctionCallTypes: Map<PropertySignatureWithStaticName, FunctionCallType[]>,
 ) => {
     const mutations = Array.from(allFunctionCallTypes).map(([member, functionCallTypes]) => {
         return createFunctionCallTypeMutation(request, member, functionCallTypes);
     });
 
-    return mutations === undefined ? undefined : combineMutations(...mutations);
+    return mutations === undefined || mutations.length === 0 ? undefined : combineMutations(...mutations);
 };
 
 const createFunctionCallTypeMutation = (
     request: FileMutationsRequest,
-    member: TypeElementWithStaticName,
+    member: PropertySignatureWithStaticName,
     functionCallTypes: FunctionCallType[],
 ): ITextSwapMutation => {
     const combinedType = functionCallTypes.reduce<CombinedFunctionType>(

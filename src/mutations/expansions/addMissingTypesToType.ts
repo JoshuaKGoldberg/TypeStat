@@ -20,6 +20,10 @@ export const addMissingTypesToType = (
         insertion += printNamedTypeSummary(request, name, summary);
     }
 
+    if (!insertion) {
+        return undefined;
+    }
+
     return {
         insertion,
         range: {
