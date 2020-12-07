@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
-import { isKnownGlobalBaseType } from "../../shared/nodeTypes";
+import { isKnownGlobalBaseType, isNeverAndOrUnknownType } from "../../shared/nodeTypes";
 
 /**
  * @returns Whether any of the extra types don't yet exist on an original type.
@@ -14,6 +14,11 @@ export const originalTypeHasIncompleteType = (
     // If the original type is something like Function and at least one candidate type isn't,
     // consider the Function to be reporting not enough info (like a base type)
     if (isKnownGlobalBaseType(originalType) && !candidateTypes.every(isKnownGlobalBaseType)) {
+        return true;
+    }
+
+    // If the original type is unknown or never, we can always assume it's missing info
+    if (isNeverAndOrUnknownType(originalType)) {
         return true;
     }
 

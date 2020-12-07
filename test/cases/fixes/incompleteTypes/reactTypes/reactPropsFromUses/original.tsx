@@ -2,9 +2,9 @@ import * as React from 'react';
 
 (function () {
     interface FromUsesComponentProps {
-        returnsBoolean: () => unknown;
-        takesStringCall: () => void;
-        takesStringJsx: () => void;
+        returnsBoolean: unknown;
+        takesStringCall: unknown;
+        takesNumberReturnsStringJsx: unknown;
     }
 
     const useReturnsBoolean = (callback: () => boolean) => {
@@ -12,7 +12,7 @@ import * as React from 'react';
     }
 
     interface ReturnsStringProps {
-        takeReturnsString: (text: string) => string,
+        takeTakesNumberReturnsString: (input: number) => string,
     }
 
     class WithReturnsString extends React.Component<ReturnsStringProps> {}
@@ -23,12 +23,12 @@ import * as React from 'react';
 
     class FromUsesComponent extends React.Component<FromUsesComponentProps> {
         render() {
-            const { returnsBoolean, takesStringCall, takesStringJsx } = this.props;
+            const { returnsBoolean, takesStringCall, takesNumberReturnsStringJsx } = this.props;
 
             useReturnsBoolean(returnsBoolean);
             useTakesString(takesStringCall)
 
-            const withReturnsString = <WithReturnsString takeReturnsString={takesStringJsx} />;
+            const withReturnsString = <WithReturnsString takeTakesNumberReturnsString={takesNumberReturnsStringJsx} />;
 
             return <span />;
         }

@@ -2,7 +2,7 @@ import { combineMutations, IMutation, ITextInsertMutation, ITextSwapMutation } f
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
-import { isKnownGlobalBaseType, PropertySignatureWithType } from "../../shared/nodeTypes";
+import { isKnownGlobalBaseType, isNeverAndOrUnknownType, PropertySignatureWithType } from "../../shared/nodeTypes";
 import { createTypeName } from "../aliasing/createTypeName";
 
 import { TypeSummary } from "./summarization";
@@ -46,7 +46,10 @@ const fillInIncompleteType = (
     }
 
     // Similar to createTypeAdditionMutation, if the node is a basic base type, we can just replace it
-    if (summaryWithNode.originalProperty.type !== undefined && isKnownGlobalBaseType(summaryWithNode.originalPropertyType)) {
+    if (
+        summaryWithNode.originalProperty.type !== undefined &&
+        (isKnownGlobalBaseType(summaryWithNode.originalPropertyType) || isNeverAndOrUnknownType(summaryWithNode.originalPropertyType))
+    ) {
         return {
             insertion: `: ${createdTypeName}`,
             range: {

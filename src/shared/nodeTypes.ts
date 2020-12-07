@@ -130,3 +130,14 @@ const knownGlobalBaseTypeNames = new Set<string | undefined>(["Function"]);
 export const isKnownGlobalBaseType = (type: ts.Type) => {
     return knownGlobalBaseTypeNames.has(type.getSymbol()?.escapedName.toString());
 };
+
+const neverAndOrUnknown = [
+    ts.TypeFlags.Never,
+    ts.TypeFlags.Unknown,
+    ts.TypeFlags.Never & ts.TypeFlags.Unknown,
+    ts.TypeFlags.Never | ts.TypeFlags.Unknown,
+];
+
+export const isNeverAndOrUnknownType = (type: ts.Type) => {
+    return neverAndOrUnknown.includes(type.flags);
+};
