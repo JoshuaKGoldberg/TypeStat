@@ -74,6 +74,10 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime?: CliRuntim
         case ResultStatus.Failed:
             runtime.output.stderr(chalk.yellow(result.error));
             break;
+
+        case ResultStatus.Succeeded:
+            runtime.output.stdout(chalk.blue("All done! ✨"));
+            break;
     }
 
     return result.status;

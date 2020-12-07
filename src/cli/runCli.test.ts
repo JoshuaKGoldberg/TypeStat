@@ -52,7 +52,7 @@ describe("runCli", () => {
         const resultStatus = await runCli(argv, { initializationRunner, output, mainRunner });
 
         // Assert
-        expect(output.stderr).toHaveBeenLastCalledWith(jasmine.stringMatching(message));
+        expect(output.stderr).toHaveBeenLastCalledWith(expect.stringMatching(message));
         expect(resultStatus).toEqual(ResultStatus.Failed);
     });
 
@@ -70,8 +70,24 @@ describe("runCli", () => {
         const resultStatus = await runCli(argv, { initializationRunner, output, mainRunner });
 
         // Assert
-        expect(output.stdout).toHaveBeenLastCalledWith(jasmine.stringMatching("typestat \\[options\\]"));
-        expect(output.stderr).toHaveBeenLastCalledWith(jasmine.stringMatching(message));
+        expect(output.stdout).toHaveBeenLastCalledWith(expect.stringMatching("typestat \\[options\\]"));
+        expect(output.stderr).toHaveBeenLastCalledWith(expect.stringMatching(message));
         expect(resultStatus).toEqual(ResultStatus.ConfigurationError);
+    });
+
+    it("logs a happy message when it finishes succesfully", async () => {
+        // Arrange
+        const { argv, initializationRunner, output, mainRunner } = createTestArgs("--config", "typestat.json");
+
+        mainRunner.mockResolvedValue({
+            status: ResultStatus.Succeeded,
+        });
+
+        // Act
+        const resultStatus = await runCli(argv, { initializationRunner, output, mainRunner });
+
+        // Assert
+        expect(output.stdout).toHaveBeenLastCalledWith(expect.stringMatching("All done!"));
+        expect(resultStatus).toEqual(ResultStatus.Succeeded);
     });
 });
