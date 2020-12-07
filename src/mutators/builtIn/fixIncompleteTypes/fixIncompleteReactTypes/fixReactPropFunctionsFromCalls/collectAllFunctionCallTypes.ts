@@ -1,11 +1,7 @@
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 import { getDeclaredTypesOfArgument } from "../../../../../shared/calls";
-import {
-    isNodeWithIdentifierName,
-    isPropertySignatureWithStaticName,
-    PropertySignatureWithStaticName,
-} from "../../../../../shared/nodeTypes";
+import { isPropertySignatureWithStaticName, PropertySignatureWithStaticName } from "../../../../../shared/nodeTypes";
 import { getTypeAtLocationIfNotError } from "../../../../../shared/types";
 
 import { FileMutationsRequest } from "../../../../fileMutator";
@@ -25,8 +21,9 @@ export const collectAllFunctionCallTypes = (request: FileMutationsRequest, props
         if (
             !isPropertySignatureWithStaticName(member) ||
             member.type === undefined ||
-            !isNodeWithIdentifierName(member.type) ||
-            member.type.name.text !== "Function"
+            !ts.isTypeReferenceNode(member.type) ||
+            !ts.isIdentifier(member.type.typeName) ||
+            member.type.typeName.text !== "Function"
         ) {
             continue;
         }
