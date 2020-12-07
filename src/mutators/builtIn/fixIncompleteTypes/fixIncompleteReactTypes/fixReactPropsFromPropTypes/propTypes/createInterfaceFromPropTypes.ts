@@ -15,7 +15,7 @@ export const createInterfaceFromPropTypes = (
     const members: ts.TypeElement[] = [];
 
     for (const rawProperty of propTypes.properties) {
-        const member = createPropTypesProperty(rawProperty);
+        const member = createPropTypesProperty(request, rawProperty);
         if (member !== undefined) {
             members.push(member);
         }

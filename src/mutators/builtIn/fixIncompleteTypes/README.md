@@ -133,7 +133,7 @@ React components can have types their props filled in using:
 * Functional components: `propTypes` properties
 * Both: regular usage in JSX
 
-Component classes will generate `interface`s, while functional components will generate `type`s.
+Component classes will generate `interface`s, while function components will generate `type`s.
 
 #### Example: Incomplete Component Classes
 
@@ -166,7 +166,7 @@ Adding in a props type to an existing function component:
 + }
 
 - const NamedGreeter = ({ name }) => {
-+ const NamedGreeter: React.FC = ({ name }) => {
++ const NamedGreeter: React.FC<NamedGreeterProps> = ({ name }) => {
     return `Hello, ${this.props.name}!`;
 };
 ```
