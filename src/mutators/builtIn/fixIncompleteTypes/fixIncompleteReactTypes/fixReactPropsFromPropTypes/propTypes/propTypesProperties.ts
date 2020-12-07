@@ -32,7 +32,7 @@ export const createPropTypesProperty = (request: FileMutationsRequest, rawProper
 };
 
 const getQuestionToken = (isRequired: boolean, optionality: ReactPropTypesOptionality) => {
-    return optionality === ReactPropTypesOptionality.AlwaysOptional || (isRequired && optionality === ReactPropTypesOptionality.AsWritten)
+    return optionality === ReactPropTypesOptionality.AlwaysOptional || (!isRequired && optionality === ReactPropTypesOptionality.AsWritten)
         ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
         : undefined;
 };

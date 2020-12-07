@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 (function() {
 
 interface MyComponentProps {
-    boolRequired?: boolean;
+    boolRequired: boolean;
 }
 
     class MyComponent extends React.Component<MyComponentProps> {

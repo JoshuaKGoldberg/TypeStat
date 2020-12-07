@@ -4,54 +4,54 @@ import PropTypes from "prop-types";
 (function() {
 
 interface MyComponentProps {
-    array: any[];
-    arrayRequired?: any[];
-    bool: boolean;
-    boolRequired?: boolean;
-    element: React.ReactElement;
-    elementRequired?: React.ReactElement;
-    func: Function;
-    funcRequired?: Function;
-    instanceOfString: String;
-    instanceOfStringRequired?: String;
-    node: React.ReactNode;
-    nodeRequired?: React.ReactNode;
-    number: number;
-    numberRequired?: number;
-    numbers: number[];
-    numbersRequired?: number[];
-    numbersExact: 1 | 2 | 3;
-    numbersExactRequired?: 1 | 2 | 3;
-    numberType: number;
-    numberOrStringType: number | string;
-    shape: {
-        subShape: {
-            subSubNumber: number;
-            subSubNumberRequired?: number;
+    array?: any[];
+    arrayRequired: any[];
+    bool?: boolean;
+    boolRequired: boolean;
+    element?: React.ReactElement;
+    elementRequired: React.ReactElement;
+    func?: Function;
+    funcRequired: Function;
+    instanceOfString?: String;
+    instanceOfStringRequired: String;
+    node?: React.ReactNode;
+    nodeRequired: React.ReactNode;
+    number?: number;
+    numberRequired: number;
+    numbers?: number[];
+    numbersRequired: number[];
+    numbersExact?: 1 | 2 | 3;
+    numbersExactRequired: 1 | 2 | 3;
+    numberType?: number;
+    numberOrStringType?: number | string;
+    shape?: {
+        subShape?: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
         };
-        subShapeRequired?: {
-            subSubNumber: number;
-            subSubNumberRequired?: number;
-        };
-    };
-    shapeRequired?: {
-        subShape: {
-            subSubNumber: number;
-            subSubNumberRequired?: number;
-        };
-        subShapeRequired?: {
-            subSubNumber: number;
-            subSubNumberRequired?: number;
+        subShapeRequired: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
         };
     };
-    string: string;
-    stringRequired?: string;
-    strings: "a" | "bc" | "def";
-    stringsRequired?: "a" | "bc" | "def";
-    stringsAndNumbers: "a" | 2 | "def" | 4;
-    stringsAndNumbersRequired?: "a" | 2 | "def" | 4;
-    stringsType: string;
-    stringsOrNumbersType: string | number;
+    shapeRequired: {
+        subShape?: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
+        };
+        subShapeRequired: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
+        };
+    };
+    string?: string;
+    stringRequired: string;
+    strings?: "a" | "bc" | "def";
+    stringsRequired: "a" | "bc" | "def";
+    stringsAndNumbers?: "a" | 2 | "def" | 4;
+    stringsAndNumbersRequired: "a" | 2 | "def" | 4;
+    stringsType?: string;
+    stringsOrNumbersType?: string | number;
 }
 
     class MyComponent extends React.Component<MyComponentProps> {
@@ -112,8 +112,8 @@ interface MyComponentProps {
     }
 
 interface LaterAssignedComponentProps {
-    string: string;
-    stringRequired?: string;
+    string?: string;
+    stringRequired: string;
 }
 
 
