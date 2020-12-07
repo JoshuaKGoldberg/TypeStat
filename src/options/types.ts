@@ -3,6 +3,7 @@ import * as ts from "typescript";
 import { ProcessOutput } from "../output";
 import { FileMutator } from "../mutators/fileMutator";
 import { Dictionary } from "../shared/maps";
+import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums";
 
 /**
  * Options listed as JSON in a typestat configuration file.
@@ -24,6 +25,11 @@ export interface RawTypeStatOptions {
      * Which fixes (type mutations) are enabled, with fields defaulting to `true`.
      */
     readonly fixes?: Partial<Fixes>;
+
+    /**
+     * Behavior requests around how to infer types.
+     */
+    readonly hints?: Partial<RuntimeHints>;
 
     /**
      * Globs of files to run on, if not everything in the TypeScript project.
@@ -109,6 +115,11 @@ export interface TypeStatOptions {
      * Whether each fix (type mutation) is enabled.
      */
     readonly fixes: Readonly<Fixes>;
+
+    /**
+     * Behavior requests around how to infer types.
+     */
+    readonly hints: RuntimeHints;
 
     /**
      * Mutators to run, as either the built-in mutators or custom mutators specified by the user.
@@ -203,6 +214,31 @@ export interface Fixes {
      * Whether to add missing non-null assertions in nullable property accesses, function-like calls, and return types.
      */
     strictNonNullAssertions: boolean;
+}
+
+/**
+ * Behavior requests around how to infer types.
+ */
+export interface RuntimeHints {
+    /**
+     * Behavior requests around how to infer React types.
+     */
+    react: RuntimeReactHints;
+}
+
+/**
+ * Behavior requests around how to infer React types.
+ */
+export interface RuntimeReactHints {
+    /**
+     * Whether and how to use components' propTypes for inferences.
+     */
+    propTypes: ReactPropTypesHint;
+
+    /**
+     * Whether to make propType inferences optional and/or required.
+     */
+    propTypesOptionality: ReactPropTypesOptionality;
 }
 
 /**

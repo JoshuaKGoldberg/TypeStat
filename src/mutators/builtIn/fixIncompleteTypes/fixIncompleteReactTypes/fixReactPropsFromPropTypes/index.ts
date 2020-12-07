@@ -1,6 +1,7 @@
 import { combineMutations, IMutation, ITextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
+import { ReactPropTypesHint } from "../../../../../options/enums";
 import { getClassExtendsType } from "../../../../../shared/nodes";
 import { printNewLine } from "../../../../../shared/printing/newlines";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
@@ -15,6 +16,10 @@ import { getPropTypesValue } from "./propTypes/getPropTypesValue";
  * Creates an initial props type for a component from its PropTypes declaration.
  */
 export const fixReactPropsFromPropTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+    if (request.options.hints.react.propTypes === ReactPropTypesHint.Ignore) {
+        return [];
+    }
+
     return collectMutationsFromNodes(request, isReactComponentNode, visitReactComponentNode);
 };
 

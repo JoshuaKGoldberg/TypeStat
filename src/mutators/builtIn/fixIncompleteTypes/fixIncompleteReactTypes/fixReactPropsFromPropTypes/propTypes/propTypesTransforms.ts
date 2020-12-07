@@ -1,17 +1,21 @@
 import * as ts from "typescript";
 
 import { KnownTypeLiteralNode, transformLiteralToTypeLiteralNode } from "../../../../../../shared/transforms";
+import { FileMutationsRequest } from "../../../../../fileMutator";
 
 import { getPropTypesMember, PropTypesAccessNode, PropTypesMembers } from "./propTypesExtraction";
 import { createPropTypesProperty } from "./propTypesProperties";
 
-export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropTypesMembers, "isRequired">): ts.TypeNode | undefined => {
+export const createPropTypesTransform = (
+    request: FileMutationsRequest,
+    { accessNode, nameNode }: Exclude<PropTypesMembers, "isRequired">,
+): ts.TypeNode | undefined => {
     switch (nameNode.text) {
         case "array":
             return ts.factory.createArrayTypeNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword));
 
         case "arrayOf":
-            return createArrayOfTransform(accessNode);
+            return createArrayOfTransform(request, accessNode);
 
         case "bool":
             return ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
@@ -38,10 +42,10 @@ export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropT
             return createOneOfTransform(accessNode);
 
         case "oneOfType":
-            return createOneOfTypeTransform(accessNode);
+            return createOneOfTypeTransform(request, accessNode);
 
         case "shape":
-            return createShapeTransform(accessNode);
+            return createShapeTransform(request, accessNode);
 
         case "string":
             return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
@@ -53,7 +57,7 @@ export const createPropTypesTransform = ({ accessNode, nameNode }: Exclude<PropT
     return undefined;
 };
 
-const createArrayOfTransform = (accessNode: PropTypesAccessNode) => {
+const createArrayOfTransform = (request: FileMutationsRequest, accessNode: PropTypesAccessNode) => {
     if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
         return undefined;
     }
@@ -63,7 +67,7 @@ const createArrayOfTransform = (accessNode: PropTypesAccessNode) => {
         return undefined;
     }
 
-    const innerTransform = createPropTypesTransform(memberTypeNode);
+    const innerTransform = createPropTypesTransform(request, memberTypeNode);
     if (innerTransform === undefined) {
         return undefined;
     }
@@ -104,7 +108,7 @@ const createOneOfTransform = (accessNode: PropTypesAccessNode) => {
     return ts.factory.createUnionTypeNode(allowedTypes);
 };
 
-const createOneOfTypeTransform = (accessNode: PropTypesAccessNode) => {
+const createOneOfTypeTransform = (request: FileMutationsRequest, accessNode: PropTypesAccessNode) => {
     if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
         return undefined;
     }
@@ -120,7 +124,7 @@ const createOneOfTypeTransform = (accessNode: PropTypesAccessNode) => {
                 return undefined;
             }
 
-            return createPropTypesTransform({
+            return createPropTypesTransform(request, {
                 accessNode: element,
                 nameNode: element.name,
             });
@@ -133,7 +137,7 @@ const createOneOfTypeTransform = (accessNode: PropTypesAccessNode) => {
     return ts.factory.createUnionTypeNode(allowedTypes);
 };
 
-const createShapeTransform = (accessNode: PropTypesAccessNode) => {
+const createShapeTransform = (request: FileMutationsRequest, accessNode: PropTypesAccessNode) => {
     if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
         return undefined;
     }
@@ -147,7 +151,7 @@ const createShapeTransform = (accessNode: PropTypesAccessNode) => {
     const members: ts.TypeElement[] = [];
 
     for (const rawProperty of shape.properties) {
-        const member = createPropTypesProperty(rawProperty);
+        const member = createPropTypesProperty(request, rawProperty);
         if (member !== undefined) {
             members.push(member);
         }

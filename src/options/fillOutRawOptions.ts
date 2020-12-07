@@ -4,6 +4,7 @@ import { TypeStatArgv } from "../index";
 import { ProcessOutput } from "../output";
 import { collectOptionals } from "../shared/arrays";
 import { collectAsConfiguration } from "../shared/booleans";
+import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums";
 
 import { collectAddedMutators } from "./parsing/collectAddedMutators";
 import { collectFileOptions } from "./parsing/collectFileOptions";
@@ -72,6 +73,12 @@ export const fillOutRawOptions = ({
             noInferableTypes: false,
             strictNonNullAssertions: false,
             ...rawOptions.fixes,
+        },
+        hints: {
+            react: {
+                propTypes: rawOptions.hints?.react?.propTypes ?? ReactPropTypesHint.WhenRequired,
+                propTypesOptionality: rawOptions.hints?.react?.propTypesOptionality ?? ReactPropTypesOptionality.AsWritten,
+            },
         },
         mutators: collectAddedMutators(rawOptions, packageOptions.directory, output),
         output,
