@@ -186,6 +186,11 @@ export interface Files {
  */
 export interface Fixes {
     /**
+     * Whether to add extensions to export and import declarations that refer to file paths without them.
+     */
+    importExtensions: boolean;
+
+    /**
      * Whether to augment existing type annotations that cause errors when different types are used.
      */
     incompleteTypes: boolean;

@@ -66,6 +66,7 @@ export const fillOutRawOptions = ({
         files: collectFileOptions(rawOptions),
         filters: collectOptionals(rawOptions.filters),
         fixes: {
+            importExtensions: false,
             incompleteTypes: false,
             missingProperties: false,
             noImplicitAny: false,
