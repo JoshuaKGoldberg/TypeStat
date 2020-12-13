@@ -9,6 +9,7 @@ These all default to `false` but can be enabled by being set to `true`.
 ```json
 {
     "fixes": {
+        "importExtensions": true,
         "incompleteTypes": true,
         "missingProperties": true,
         "noImplicitAny": true,
@@ -20,6 +21,12 @@ These all default to `false` but can be enabled by being set to `true`.
 ```
 
 ## Fixers
+
+### `importExtensions`
+
+Whether to add extensions to `export` and `import` declarations that refer to file paths without them.
+
+See [fixImportExtensions/README.md](../src/mutators/builtIn/fixImportExtensions/README.md).
 
 ### `incompleteTypes`
 
