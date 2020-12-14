@@ -2,9 +2,9 @@ import * as React from 'react';
 
 (function () {
     interface FromUsesComponentProps {
-        returnsBoolean: (() => boolean);
-        takesStringCall: ((text: string) => void);
-        takesNumberReturnsStringJsx: ((input: number) => string);
+        returnsBoolean: () => boolean;
+        takesStringCall: (text: string) => void;
+        takesNumberReturnsStringJsx: (input: number) => string;
     }
 
     const useReturnsBoolean = (callback: () => boolean) => {

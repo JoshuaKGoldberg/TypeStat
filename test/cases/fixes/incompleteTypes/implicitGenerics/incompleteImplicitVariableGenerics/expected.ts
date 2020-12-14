@@ -3,23 +3,23 @@
 
     let name = new Name();
 
-    let names: Name[] = [];
+    let names: T[]<Name> = [];
     names.push(new Name());
 
-    let uniqueNames: Set<Name> = new Set();
+    let uniqueNames: Set<T><Name> = new Set();
     uniqueNames.add(name);
 
-    let namesById: Map<string, Name> = new Map();
+    let namesById: Map<K, V><"abc123", Name> = new Map();
     namesById.set('abc123', new Name())
 
-    let idsByName: Map<Name, number> = new Map();
+    let idsByName: Map<K, V><Name, 123> = new Map();
     idsByName.set(new Name(), 123);
 
     // TODO: fix me :)
-    let uniqueMaybeNames: Set<> = new Set();
+    let uniqueMaybeNames: Set<T><any> = new Set();
     uniqueMaybeNames.add(idsByName.get(123));
 
-    let uniqueNamesOrBooleans: Set<Name | boolean> = new Set();
+    let uniqueNamesOrBooleans: Set<T><Name | false> = new Set();
     uniqueNamesOrBooleans.add(name);
     uniqueNamesOrBooleans.add(false);
 })();

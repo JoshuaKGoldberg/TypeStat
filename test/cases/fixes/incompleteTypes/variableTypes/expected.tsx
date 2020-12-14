@@ -6,26 +6,26 @@ import * as React from 'react';
     let givenUndefined = "";
     givenUndefined = undefined;
 
-    let givenUndefinedAsString: string | undefined = "";
+    let givenUndefinedAsString: string | TODO_1_0 = "";
     givenUndefinedAsString = undefined;
 
-    let givenUndefinedHasNull: string | null | undefined = "";
+    let givenUndefinedHasNull: string | null | TODO_1_0 = "";
     givenUndefinedHasNull = undefined;
 
-    let givenNullAndUndefinedHasNull: string | null | undefined = "";
+    let givenNullAndUndefinedHasNull: string | null | TODO_1_0 = "";
     givenNullAndUndefinedHasNull = null;
     givenNullAndUndefinedHasNull = undefined;
 
     let givenNull = "";
     givenNull = null;
 
-    let givenNullAsString: string | null = "";
+    let givenNullAsString: string | TODO_1_0 = "";
     givenNullAsString = null;
 
-    let givenNullHasUndefined: string | undefined | null = "";
+    let givenNullHasUndefined: string | undefined | TODO_1_0 = "";
     givenNullHasUndefined = null;
 
-    let givenNullAndUndefinedHasUndefined: string | undefined | null = "";
+    let givenNullAndUndefinedHasUndefined: string | undefined | TODO_1_0 = "";
     givenNullAndUndefinedHasUndefined = null;
     givenNullHasUndefined = undefined;
 
@@ -41,15 +41,15 @@ import * as React from 'react';
     let givenStringHasUndefined: string | undefined = "";
     givenStringHasNull = "";
 
-    let setToUndefined: string | undefined = undefined;
+    let setToUndefined: string | TODO_1_0 = undefined;
 
-    let setToUndefinedHasNull: string | null | undefined = undefined;
+    let setToUndefinedHasNull: string | null | TODO_1_0 = undefined;
 
-    let setToNull: string | null = null;
+    let setToNull: string | TODO_1_0 = null;
 
     let setToNullAsNull = null;
 
-    let setToNullHasUndefined: string | undefined | null = null;
+    let setToNullHasUndefined: string | undefined | TODO_1_0 = null;
 
     let setToString = "";
 
@@ -61,12 +61,12 @@ import * as React from 'react';
 
     // Any
 
-    let startsAnyWithString: any | string = "";
+    let startsAnyWithString: any | TODO_1_0 = "";
 
-    let startsAnyGivenString: any | string;
+    let startsAnyGivenString: any | TODO_1_0;
     startsAnyGivenString = "";
 
-    let startsAnyWithStringGivenString: any | string = "";
+    let startsAnyWithStringGivenString: any | TODO_1_0 = "";
     startsAnyWithStringGivenString = "";
 
     let startsStringWithAny: string = {} as any;
@@ -115,7 +115,7 @@ import * as React from 'react';
     let eitherClassNeedsUnionImplicit = new SampleClassOne();
     eitherClassNeedsUnionImplicit = new SampleClassTwo();
 
-    let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsUnionExplicit: SampleClassOne | TODO_0_1 = new SampleClassOne();
     eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
     let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
@@ -125,19 +125,19 @@ import * as React from 'react';
     eitherClassNeedsNullImplicit = new SampleClassTwo();
     eitherClassNeedsNullImplicit = null;
 
-    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | TODO_0_1 = new SampleClassOne();
     eitherClassNeedsNullAndClassExplicit = new SampleClassTwo();
     eitherClassNeedsNullAndClassExplicit = null;
 
-    let eitherClassNeedsUndefinedExplicit: SampleClassOne | SampleClassTwo | undefined = new SampleClassOne();
+    let eitherClassNeedsUndefinedExplicit: SampleClassOne | TODO_1_1 = new SampleClassOne();
     eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicit = undefined;
 
-    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | undefined = new SampleClassOne();
+    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | TODO_1_0 = new SampleClassOne();
     eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicitInterface = undefined;
 
-    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo = new SampleClassOne();
+    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | TODO_0_1 = new SampleClassOne();
     eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedAndClassExplicit = undefined;
 
@@ -173,10 +173,10 @@ import * as React from 'react';
 
     // Functions
 
-    let returnsString: (() => string);
+    let returnsString: TODO_0_1;
     returnsString = () => "";
 
-    let returnsStringOrNumber: (() => string) | (() => number);
+    let returnsStringOrNumber: TODO_0_2;
     returnsStringOrNumber = () => "";
     returnsStringOrNumber = () => 0;
 

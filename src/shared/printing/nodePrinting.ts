@@ -1,4 +1,3 @@
-import { createTypeName } from "../../mutations/aliasing/createTypeName";
 import { TypeSummariesByName, TypeSummary } from "../../mutations/expansions/summarization";
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 
@@ -14,7 +13,7 @@ export const printNamedTypeSummary = (request: FileMutationsRequest, name: strin
     return [
         name,
         summary.alwaysProvided ? "?: " : ": ",
-        createTypeName(request, ...summary.types),
+        request.services.printers.type(summary.types),
         ";",
         printNewLine(request.options.compilerOptions),
     ].join("");

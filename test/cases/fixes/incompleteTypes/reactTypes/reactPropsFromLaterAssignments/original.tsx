@@ -14,7 +14,6 @@ import React from 'react';
     const renderClassComponent = (text: string) =>
         <ClassComponent text={text} />;
         
-    // TODO: This should be string[] or Array<string>, not Array...
     type FunctionComponentProps =  {
         other?: boolean;
     }

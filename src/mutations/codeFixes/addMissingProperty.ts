@@ -4,7 +4,6 @@ import * as ts from "typescript";
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 
 import { createCodeFixCreationMutation } from "./creation";
-import { processCodeFixActions } from "./processCodeFixActions";
 
 /**
  * Error code for the TypeScript language service to add a missing property.
@@ -37,16 +36,13 @@ const nodeIsSettingThisMember = (node: ts.PropertyAccessExpression): boolean =>
  * Uses a requesting language service to get missing property code fixes for a type of node.
  */
 const getMissingPropertyCodeFixes = (node: ts.PropertyAccessExpression, request: FileMutationsRequest) =>
-    processCodeFixActions(
-        request,
-        request.services.languageService.getCodeFixesAtPosition(
-            request.sourceFile.fileName,
-            node.name.getStart(request.sourceFile),
-            node.end,
-            [fixMissingPropertyErrorCode],
-            {
-                insertSpaceBeforeAndAfterBinaryOperators: true,
-            },
-            {},
-        ),
+    request.services.languageService.getCodeFixesAtPosition(
+        request.sourceFile.fileName,
+        node.name.getStart(request.sourceFile),
+        node.end,
+        [fixMissingPropertyErrorCode],
+        {
+            insertSpaceBeforeAndAfterBinaryOperators: true,
+        },
+        {},
     );

@@ -1,6 +1,5 @@
 import * as ts from "typescript";
 
-import { createTypeName } from "../../../../mutations/aliasing/createTypeName";
 import { AssignedTypesByName, joinAssignedTypesByName } from "../../../../mutations/assignments";
 import { createDeclarationForTypeSummaries } from "../../../../mutations/creations/creationMutations";
 import { summarizeAllAssignedTypes } from "../../../../mutations/expansions/summarization";
@@ -68,9 +67,7 @@ const findDefaultTemplateValue = (request: FileMutationsRequest, baseTypeParamet
         return undefined;
     }
 
-    const typeName = createTypeName(request, baseTypeDefault);
-
-    return typeName === undefined ? "{}" : typeName;
+    return request.services.printers.type(baseTypeDefault);
 };
 
 const createTemplateTypeName = (

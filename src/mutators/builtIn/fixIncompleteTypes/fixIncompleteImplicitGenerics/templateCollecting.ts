@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import { createTypeName } from "../../../../mutations/aliasing/createTypeName";
 
 import { AssignedTypesByName, AssignedTypeValue, joinAssignedTypesByName } from "../../../../mutations/assignments";
 import { getStaticNameOfProperty } from "../../../../shared/names";
@@ -204,7 +203,7 @@ const getMissingAssignedType = (
     // For a full type, go through the normal hoops to figure out its name
     if (asStandaloneProperty) {
         const standaloneType = getTypeAtLocationIfNotError(request, assigningNode);
-        return standaloneType === undefined ? undefined : createTypeName(request, standaloneType);
+        return standaloneType === undefined ? undefined : request.services.printers.type(standaloneType);
     }
 
     // For a property, just grab the basic name and type, so we can join them all together later

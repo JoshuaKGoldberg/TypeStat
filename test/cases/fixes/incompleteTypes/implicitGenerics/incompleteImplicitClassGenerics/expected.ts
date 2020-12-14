@@ -12,7 +12,7 @@ import { ComponentLike } from './react-like';
 
 
 
-    class ExtendsBaseWithOneLiteral extends BaseWithOneGeneric<string> {
+    class ExtendsBaseWithOneLiteral extends BaseWithOneGeneric<"abc"> {
         constructor() {
             super('abc')
         }
@@ -46,7 +46,7 @@ import { ComponentLike } from './react-like';
 
 
 
-    class ExtendsBaseWithTwo extends BaseWithTwoGenerics<number, boolean> {
+    class ExtendsBaseWithTwo extends BaseWithTwoGenerics<123, false> {
         constructor() {
             super(123, false)
         }
@@ -64,7 +64,7 @@ import { ComponentLike } from './react-like';
 
 
 
-    class MemberImmediate extends MemberImmediateBase<{}, { key: boolean }> {
+    class MemberImmediate extends MemberImmediateBase<{}, { key: boolean; }> {
         member = {
             key: false,
         };
@@ -100,7 +100,7 @@ import { ComponentLike } from './react-like';
 
 
 
-    class MemberCurriedWithMember extends MemberCurriedBase<{ key: boolean }> {
+    class MemberCurriedWithMember extends MemberCurriedBase<{ key: boolean; }> {
         member = {
             key: false,
         };

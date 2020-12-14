@@ -3,7 +3,6 @@ import * as ts from "typescript";
 import { TypeStatArgv } from "../index";
 import { ProcessOutput } from "../output";
 import { collectOptionals } from "../shared/arrays";
-import { collectAsConfiguration } from "../shared/booleans";
 import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums";
 
 import { collectAddedMutators } from "./parsing/collectAddedMutators";
@@ -87,9 +86,6 @@ export const fillOutRawOptions = ({
         postProcess: { shell },
         projectPath,
         types: {
-            aliases: typeAliases,
-            matching: rawOptionTypes.matching,
-            onlyPrimitives: collectAsConfiguration(rawOptionTypes.onlyPrimitives),
             strictNullChecks: typeStrictNullChecks,
         },
     };

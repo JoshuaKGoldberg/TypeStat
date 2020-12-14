@@ -17,7 +17,7 @@
     }
 
     class WithExplicitStringMissingNumber {
-        property: string | number;
+        property: string | TODO_1_0;
     }
     function setWithExplicitStringMissingNumber(instance: WithExplicitStringMissingNumber, value: string | number) {
         instance.property = value;
@@ -34,7 +34,7 @@
     }
 
     class WithIncompleteObjectProperty {
-        member: string | { key: boolean };
+        member: string | TODO_0_1;
 
         method() {
             this.member = '';
@@ -45,7 +45,7 @@
     }
 
     class WithIncompleteNestedObjectProperty {
-        member: string | { middle: { deepKey: boolean }, middleKey: number };
+        member: string | TODO_0_1;
 
         method() {
             this.member = '';

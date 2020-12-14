@@ -3,9 +3,9 @@ import * as React from 'react';
 (function () {
     type WithFunctionsProps = {
         providesNothing: () => void;
-        providesString: (arg0: string) => void;
-        providesNumberThenString: (arg0: number, arg1: string) => void;
-        providesBooleanGivesNumber: (arg0: boolean) => number;
+        providesString: (arg0: "") => void;
+        providesNumberThenString: (arg0: 0, arg1: "") => void;
+        providesBooleanGivesNumber: (arg0: true) => number;
         returnsString: () => string;
     }
 
