@@ -203,7 +203,12 @@ const getMissingAssignedType = (
     // For a full type, go through the normal hoops to figure out its name
     if (asStandaloneProperty) {
         const standaloneType = getTypeAtLocationIfNotError(request, assigningNode);
-        return standaloneType === undefined ? undefined : request.services.printers.type(standaloneType);
+        if (standaloneType === undefined) {
+            return undefined;
+        }
+
+        // If the standalone type is a literal (e.g. "'abc'"), prefer the general base primitive
+        return request.services.printers.type(request.services.program.getTypeChecker().getBaseTypeOfLiteralType(standaloneType));
     }
 
     // For a property, just grab the basic name and type, so we can join them all together later
