@@ -2454,10 +2454,10 @@ eslint-config-prettier@6.15.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-plugin-deprecation@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-deprecation/-/eslint-plugin-deprecation-1.1.0.tgz#46793ebbec9555d167d59c851ae3da0a21532189"
-  integrity sha512-+oDa6JbdZXyh7Bx2zx7VoDFZvFnV1pZVPVo/bEGVkuXlLih/evX0LQG2/nSuNg83CmwZTcAFZXXpLgsX4ctIDQ==
+eslint-plugin-deprecation@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-deprecation/-/eslint-plugin-deprecation-1.2.0.tgz#e12333a857986fc87fa2eff44c7425eba9653070"
+  integrity sha512-SrZqomFYofRbxJ9dlAcu526/tiZoWoZgHdZWKHjrRT/uLfTtTTjdVf0gdy0AZxK8nH5ri0fukgwS28llUueitA==
   dependencies:
     "@typescript-eslint/experimental-utils" "^2.19.2 || ^3.0.0"
     tslib "^1.10.0"

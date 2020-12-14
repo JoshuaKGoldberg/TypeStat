@@ -36,7 +36,7 @@
         "chai": "4.2.0",
         "eslint": "7.15.0",
         "eslint-config-prettier": "6.15.0",
-        "eslint-plugin-deprecation": "1.1.0",
+        "eslint-plugin-deprecation": "1.2.0",
         "eslint-plugin-no-only-tests": "2.4.0",
         "husky": "4.3.5",
         "jest": "26.6.3",
