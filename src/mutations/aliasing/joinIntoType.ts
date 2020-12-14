@@ -9,7 +9,9 @@ export const joinIntoType = (flags: ReadonlySet<ts.TypeFlags>, types: ReadonlySe
 
     return Array.from(
         new Set([
-            ...Array.from(types).map((type) => request.services.printers.type(type)),
+            ...Array.from(types)
+                .map((type) => request.services.printers.type(type))
+                .map((type) => (type.includes("=>") ? `(${type})` : type)),
             ...Array.from(flags)
                 .map((flag) => alias.get(flag))
                 .filter(isNotUndefined),

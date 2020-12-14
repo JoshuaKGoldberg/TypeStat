@@ -173,10 +173,10 @@ import * as React from 'react';
 
     // Functions
 
-    let returnsString: () => string;
+    let returnsString: (() => string);
     returnsString = () => "";
 
-    let returnsStringOrNumber: () => string | () => number;
+    let returnsStringOrNumber: (() => string) | (() => number);
     returnsStringOrNumber = () => "";
     returnsStringOrNumber = () => 0;
 
