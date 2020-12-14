@@ -11,7 +11,6 @@ import { collectNoImplicitAny } from "./parsing/collectNoImplicitAny";
 import { collectNoImplicitThis } from "./parsing/collectNoImplicitThis";
 import { collectPackageOptions } from "./parsing/collectPackageOptions";
 import { collectStrictNullChecks } from "./parsing/collectStrictNullChecks";
-import { collectTypeAliases } from "./parsing/collectTypeAliases";
 import { RawTypeStatOptions, TypeStatOptions } from "./types";
 
 export interface OptionsFromRawOptionsSettings {
@@ -41,11 +40,6 @@ export const fillOutRawOptions = ({
     const noImplicitAny = collectNoImplicitAny(compilerOptions, rawOptions);
     const noImplicitThis = collectNoImplicitThis(compilerOptions, rawOptions);
     const { compilerStrictNullChecks, typeStrictNullChecks } = collectStrictNullChecks(compilerOptions, rawOptionTypes);
-
-    const typeAliases = collectTypeAliases(rawOptionTypes);
-    if (typeof typeAliases === "string") {
-        return typeAliases;
-    }
 
     const packageOptions = collectPackageOptions(cwd, rawOptions);
 
