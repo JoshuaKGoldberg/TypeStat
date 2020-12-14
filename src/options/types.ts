@@ -67,21 +67,6 @@ export interface RawTypeStatOptions {
  */
 export interface RawTypeStatTypeOptions {
     /**
-     * Names of added types mapped to strings to replace them with.
-     */
-    aliases?: Readonly<Dictionary<string>>;
-
-    /**
-     * Regular expression matchers added types must match, if provided.
-     */
-    matching?: ReadonlyArray<string>;
-
-    /**
-     * Whether to exclude rich types from changes, such as arrays or interfaces.
-     */
-    onlyPrimitives?: boolean;
-
-    /**
      * Whether to add `null` and `undefined` as per TypeScript's --strictNullChecks.
      */
     strictNullChecks?: boolean;
