@@ -34,7 +34,7 @@
     }
 
     class WithIncompleteObjectProperty {
-        member: string | { key: boolean };
+        member: string | { key: boolean; };
 
         method() {
             this.member = '';
@@ -45,7 +45,7 @@
     }
 
     class WithIncompleteNestedObjectProperty {
-        member: string | { middle: { deepKey: boolean }, middleKey: number };
+        member: string | { middle: { deepKey: boolean; }; middleKey: number; };
 
         method() {
             this.member = '';

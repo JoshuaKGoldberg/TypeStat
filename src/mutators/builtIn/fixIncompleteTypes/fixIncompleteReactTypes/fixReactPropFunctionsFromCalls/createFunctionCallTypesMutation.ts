@@ -1,7 +1,5 @@
 import { combineMutations, ITextSwapMutation } from "automutate";
 import * as ts from "typescript";
-import { findAliasOfTypes } from "../../../../../mutations/aliasing/findAliasOfTypes";
-import { joinIntoType } from "../../../../../mutations/aliasing/joinIntoType";
 
 import { collectOptionals, isNotUndefined } from "../../../../../shared/arrays";
 import { PropertySignatureWithStaticName } from "../../../../../shared/nodeTypes";
@@ -82,13 +80,9 @@ const combineParameters = (request: FileMutationsRequest, previous: ts.Type[][],
 const printFunctionType = (request: FileMutationsRequest, combinedType: CombinedFunctionType) => {
     return [
         "(",
-        combinedType.parameters
-            ?.map((parameter, index) => `arg${index}: ${joinIntoType(new Set(), new Set(parameter), request)}`)
-            .join(", "),
+        combinedType.parameters?.map((parameter, index) => `arg${index}: ${request.services.printers.type(parameter)}`).join(", "),
         ") => ",
-        combinedType.returnValue?.length
-            ? joinIntoType(new Set(), new Set(combinedType.returnValue), request)
-            : findAliasOfTypes(request, ["void"]),
+        combinedType.returnValue?.length ? request.services.printers.type(combinedType.returnValue) : "void",
         ";",
     ].join("");
 };

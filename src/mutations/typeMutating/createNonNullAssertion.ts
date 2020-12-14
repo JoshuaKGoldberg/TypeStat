@@ -2,7 +2,6 @@ import { ITextInsertMutation, ITextSwapMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
-import { findAliasOfType } from "../aliasing/findAliasOfTypes";
 
 // The following node types need to be wrapped in parenthesis to stop the ! from being applied to the wrong (last) element:
 // As expressions: foo as Bar
@@ -18,12 +17,10 @@ const wrappedKinds = new Set([
 ]);
 
 export const createNonNullAssertion = (request: FileMutationsRequest, node: ts.Node): ITextInsertMutation | ITextSwapMutation => {
-    const assertion = findAliasOfType("!", request.options.types.aliases);
-
     // If the node must be wrapped in parenthesis, replace all of it
     if (wrappedKinds.has(node.kind)) {
         return {
-            insertion: `(${node.getText(request.sourceFile)})${assertion}`,
+            insertion: `(${node.getText(request.sourceFile)})!`,
             range: {
                 begin: node.getStart(request.sourceFile),
                 end: node.end,
@@ -33,7 +30,7 @@ export const createNonNullAssertion = (request: FileMutationsRequest, node: ts.N
     }
 
     // Shorthand assignments (`{ value }`) must be converted to non-shorthand (`{ value: value ! }`)
-    const insertion = ts.isShorthandPropertyAssignment(node) ? `: ${node.getText(request.sourceFile)}${assertion}` : assertion;
+    const insertion = ts.isShorthandPropertyAssignment(node) ? `: ${node.getText(request.sourceFile)}!` : "!";
 
     return {
         insertion,

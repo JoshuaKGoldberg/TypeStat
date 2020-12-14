@@ -3,7 +3,6 @@ import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { isKnownGlobalBaseType, isNeverAndOrUnknownType, PropertySignatureWithType } from "../../shared/nodeTypes";
-import { createTypeName } from "../aliasing/createTypeName";
 
 import { TypeSummary } from "./summarization";
 
@@ -40,9 +39,14 @@ const fillInIncompleteType = (
     summaryWithNode: TypeSummaryWithNode,
 ): ITextInsertMutation | ITextSwapMutation | undefined => {
     // Create a new type name to add on that joins the types to be added
-    const createdTypeName = createTypeName(request, ...summaryWithNode.summary.types);
-    if (createdTypeName === undefined) {
-        return undefined;
+    let createdTypeName = request.services.printers.type(
+        summaryWithNode.summary.types,
+        summaryWithNode.originalProperty.type ?? summaryWithNode.originalProperty,
+    );
+
+    // For some reason, the enclosingNode option of printing isn't always applying...
+    if (createdTypeName.includes("=>")) {
+        createdTypeName = `(${createdTypeName})`;
     }
 
     // Similar to createTypeAdditionMutation, if the node is a basic base type, we can just replace it

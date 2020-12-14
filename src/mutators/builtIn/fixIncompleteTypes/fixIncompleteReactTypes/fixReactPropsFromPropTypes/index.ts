@@ -61,7 +61,7 @@ const createInterfaceCreationMutation = (
     interfaceNode: ts.InterfaceDeclaration,
 ): ITextInsertMutation => {
     const endline = printNewLine(request.options.compilerOptions);
-    const interfaceNodeText = request.services.printNode(interfaceNode);
+    const interfaceNodeText = request.services.printers.node(interfaceNode);
 
     return {
         insertion: [endline, endline, interfaceNodeText, endline].join(""),

@@ -281,21 +281,6 @@ export interface PostProcess {
  */
 export interface TypeStatTypeOptions {
     /**
-     * Names of added type matchers mapped to strings to replace them with.
-     */
-    aliases: ReadonlyMap<RegExp, string>;
-
-    /**
-     * Glob matchers added types must match, if provided.
-     */
-    matching?: ReadonlyArray<string>;
-
-    /**
-     * Whether to exclude complex types from changes, such as arrays or interfaces.
-     */
-    onlyPrimitives?: boolean;
-
-    /**
      * Whether to consider `null` and `undefined` as per TypeScript's --strictNullChecks.
      */
     strictNullChecks?: boolean;

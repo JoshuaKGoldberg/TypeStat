@@ -7,7 +7,7 @@ export const addNewTypeNodes = (request: FileMutationsRequest, node: ts.ClassLik
     const endline = printNewLine(request.options.compilerOptions);
 
     return {
-        insertion: `${endline.repeat(2)}${createdTypes.join(endline)}`,
+        insertion: `${endline}${createdTypes.join(endline)}`,
         range: {
             begin: node.pos,
         },

@@ -3,6 +3,7 @@ import * as ts from "typescript";
 
 import { ExposedProgram } from "../mutations/createExposedTypeScript";
 import { TypeStatOptions } from "../options/types";
+import { arrayify } from "../shared/arrays";
 import { isIntrisinicNameType } from "../shared/typeNodes";
 
 import { createProgramConfiguration } from "./createProgramConfiguration";
@@ -32,9 +33,18 @@ export type WellKnownTypes = Readonly<Record<WellKnownTypeName, Readonly<ts.Type
 export interface LanguageServices {
     readonly languageService: ts.LanguageService;
     readonly parsedConfiguration: ts.ParsedCommandLine;
-    readonly printNode: (node: ts.Node) => string;
+    readonly printers: Printers;
     readonly program: ExposedProgram;
     readonly wellKnownTypes: WellKnownTypes;
+}
+
+export interface Printers {
+    readonly node: (node: ts.Node) => string;
+    readonly type: (
+        types: ts.Type | ReadonlyArray<ts.Type>,
+        enclosingDeclaration?: ts.Node,
+        typeFormatFlags?: ts.TypeFormatFlags,
+    ) => string;
 }
 
 /**
@@ -63,12 +73,31 @@ export const createLanguageServices = (options: TypeStatOptions): LanguageServic
     const printer = ts.createPrinter({
         newLine: options.compilerOptions.newLine,
     });
-    const printNode = (node: ts.Node) =>
-        printer.printNode(
-            ts.EmitHint.Unspecified,
-            node,
-            ts.createSourceFile("temp.ts", "", ts.ScriptTarget.Latest, false, ts.ScriptKind.TSX),
-        );
+    const printers: Printers = {
+        node(node) {
+            return printer.printNode(
+                ts.EmitHint.Unspecified,
+                node,
+                ts.createSourceFile("temp.ts", "", ts.ScriptTarget.Latest, false, ts.ScriptKind.TSX),
+            );
+        },
+        type(types, enclosingDeclaration, typeFormatFlags) {
+            const typeChecker = program.getTypeChecker();
+            return Array.from(
+                new Set(
+                    arrayify(types).map((type) =>
+                        typeChecker.typeToString(
+                            // Our mutations generally always go for base primitives, not literals
+                            // This might need to be revisited for potential future high fidelity types...
+                            typeChecker.getBaseTypeOfLiteralType(type),
+                            enclosingDeclaration,
+                            typeFormatFlags,
+                        ),
+                    ),
+                ),
+            ).join(" | ");
+        },
+    };
 
     let wellKnownTypes;
 
@@ -76,7 +105,7 @@ export const createLanguageServices = (options: TypeStatOptions): LanguageServic
         languageService,
         parsedConfiguration,
         program,
-        printNode,
+        printers,
         get wellKnownTypes() {
             return (wellKnownTypes ??= program.getTypeCatalog().reduce<Record<string, ts.Type>>((acc, type) => {
                 if (isIntrisinicNameType(type)) {

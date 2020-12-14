@@ -15,10 +15,9 @@ text?: string;
     const renderClassComponent = (text: string) =>
         <ClassComponent text={text} />;
         
-    // TODO: This should be string[] or Array<string>, not Array...
     type FunctionComponentProps =  {
         other?: boolean;
-texts?: Array;
+texts?: string[];
     }
 
     class FunctionComponent extends React.Component<FunctionComponentProps> {
