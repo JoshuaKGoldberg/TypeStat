@@ -1,7 +1,7 @@
 (function () {
     type Values = {
         alreadyDeclared: boolean;
-laterAssigned?: true;
+laterAssigned?: boolean;
 initiallyThere?: boolean;
     };
 

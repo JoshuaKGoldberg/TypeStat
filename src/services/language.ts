@@ -82,8 +82,19 @@ export const createLanguageServices = (options: TypeStatOptions): LanguageServic
             );
         },
         type(types, enclosingDeclaration, typeFormatFlags) {
+            const typeChecker = program.getTypeChecker();
             return Array.from(
-                new Set(arrayify(types).map((type) => program.getTypeChecker().typeToString(type, enclosingDeclaration, typeFormatFlags))),
+                new Set(
+                    arrayify(types).map((type) =>
+                        typeChecker.typeToString(
+                            // Our mutations generally always go for base primitives, not literals
+                            // This might need to be revisited for potential future high fidelity types...
+                            typeChecker.getBaseTypeOfLiteralType(type),
+                            enclosingDeclaration,
+                            typeFormatFlags,
+                        ),
+                    ),
+                ),
             ).join(" | ");
         },
     };
