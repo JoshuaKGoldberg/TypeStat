@@ -1,9 +1,9 @@
 (function() {
-    function one(): string | TODO_1_0 {
+    function one(): string | undefined {
         return undefined;
     }
 
-    function two(): string | TODO_1_0 {
+    function two(): string | undefined {
         return undefined;
     }
 })();

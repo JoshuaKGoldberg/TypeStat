@@ -1,5 +1,5 @@
 (function() {
-    let text: string | TODO_1_0;
+    let text: string | number;
     text = 1;
 })();
 /* Below file */

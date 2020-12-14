@@ -3,41 +3,41 @@
         return "";
     }
 
-    function functionReturnsUndefined(): string | TODO_1_0 {
+    function functionReturnsUndefined(): string | undefined {
         return undefined;
     }
 
-    function functionReturnsNull(): string | TODO_1_0 {
+    function functionReturnsNull(): string | null {
         return null;
     }
 
-    function functionGivenNullReturnsUndefined(): string | null | TODO_1_0 {
+    function functionGivenNullReturnsUndefined(): string | null | undefined {
         return undefined;
     }
 
-    function functionGivenUndefinedReturnsNull(): string | undefined | TODO_1_0 {
+    function functionGivenUndefinedReturnsNull(): string | undefined | null {
         return null;
     }
 
-    function functionReturnsUndefinedAsExpression(): string | TODO_1_0 {
+    function functionReturnsUndefinedAsExpression(): string | undefined {
         return undefined as undefined;
     }
 
-    function functionReturnsUndefinedBinaryExpression(): string | TODO_1_0 {
+    function functionReturnsUndefinedBinaryExpression(): string | undefined {
         return true && undefined;
     }
 
-    function functionReturnsUndefinedExpression(): string | TODO_1_0 {
+    function functionReturnsUndefinedExpression(): string | undefined {
         return true ? "" : undefined;
     }
 
-    function functionReturnsUndefinedVariable(): string | TODO_1_0 {
+    function functionReturnsUndefinedVariable(): string | undefined {
         const text: string | undefined = undefined;
 
         return text;
     }
 
-    function functionReturnsVoidExpression(): string | TODO_1_0 {
+    function functionReturnsVoidExpression(): string | undefined {
         return void 0;
     }
 
@@ -51,27 +51,27 @@
         return "";
     }
 
-    function functionReturnsNullAsAny(): any | TODO_1_0 {
+    function functionReturnsNullAsAny(): any | null {
         return null;
     }
 
-    function functionReturnsUndefinedAsAny(): any | TODO_1_0 {
+    function functionReturnsUndefinedAsAny(): any | undefined {
         return undefined;
     }
 
-    const lambdaReturnsUndefined = (): string | TODO_1_0 => {
+    const lambdaReturnsUndefined = (): string | undefined => {
         return undefined;
     };
 
-    const lambdaReturnsNull = (): string | TODO_1_0 => {
+    const lambdaReturnsNull = (): string | null => {
         return null;
     };
 
-    const lambdaGivenNullReturnsUndefined = (): string | null | TODO_1_0 => {
+    const lambdaGivenNullReturnsUndefined = (): string | null | undefined => {
         return undefined;
     };
 
-    const lambdaGivenUndefinedReturnsNull = (): string | undefined | TODO_1_0 => {
+    const lambdaGivenUndefinedReturnsNull = (): string | undefined | null => {
         return null;
     };
 

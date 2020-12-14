@@ -1,7 +1,7 @@
 // Processed!
 
 (function() {
-    let missingNumber: string | TODO_1_0 = "initial";
+    let missingNumber: string | number = "initial";
 
     missingNumber = 7;
 })();

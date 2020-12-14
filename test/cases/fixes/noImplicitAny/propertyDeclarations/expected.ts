@@ -1,12 +1,12 @@
 (function () {
     class Container {
-        givenUndefined: string | TODO_1_0 = "";
+        givenUndefined: string | undefined = "";
 
-        givenUndefinedHasNull: string | null | TODO_1_0 = "";
+        givenUndefinedHasNull: string | null | undefined = "";
 
-        givenNull: string | TODO_1_0 = "";
+        givenNull: string | null = "";
 
-        givenNullHasUndefined: string | undefined | TODO_1_0 = "";
+        givenNullHasUndefined: string | undefined | null = "";
 
         givenString: string = "";
 
@@ -14,13 +14,13 @@
 
         givenStringHasUndefined: string | undefined = "";
 
-        setToUndefined: string | TODO_1_0 = undefined;
+        setToUndefined: string | undefined = undefined;
 
-        setToUndefinedHasNull: string | null | TODO_1_0 = undefined;
+        setToUndefinedHasNull: string | null | undefined = undefined;
 
-        setToNull: string | TODO_1_0 = null;
+        setToNull: string | null = null;
 
-        setToNullHasUndefined: string | undefined | TODO_1_0 = null;
+        setToNullHasUndefined: string | undefined | null = null;
 
         setToString: string = "";
 

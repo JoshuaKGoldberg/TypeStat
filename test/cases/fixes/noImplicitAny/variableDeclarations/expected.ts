@@ -4,26 +4,26 @@
     let givenUndefined = "";
     givenUndefined = undefined;
 
-    let givenUndefinedAsString: string | TODO_1_0 = "";
+    let givenUndefinedAsString: string | undefined = "";
     givenUndefinedAsString = undefined;
 
-    let givenUndefinedHasNull: string | null | TODO_1_0 = "";
+    let givenUndefinedHasNull: string | null | undefined = "";
     givenUndefinedHasNull = undefined;
 
-    let givenNullAndUndefinedHasNull: string | null | TODO_1_0 = "";
+    let givenNullAndUndefinedHasNull: string | null | undefined = "";
     givenNullAndUndefinedHasNull = null;
     givenNullAndUndefinedHasNull = undefined;
 
     let givenNull = "";
     givenNull = null;
 
-    let givenNullAsString: string | TODO_1_0 = "";
+    let givenNullAsString: string | null = "";
     givenNullAsString = null;
 
-    let givenNullHasUndefined: string | undefined | TODO_1_0 = "";
+    let givenNullHasUndefined: string | undefined | null = "";
     givenNullHasUndefined = null;
 
-    let givenNullAndUndefinedHasUndefined: string | undefined | TODO_1_0 = "";
+    let givenNullAndUndefinedHasUndefined: string | undefined | null = "";
     givenNullAndUndefinedHasUndefined = null;
     givenNullHasUndefined = undefined;
 
@@ -39,15 +39,15 @@
     let givenStringHasUndefined: string | undefined = "";
     givenStringHasNull = "";
 
-    let setToUndefined: string | TODO_1_0 = undefined;
+    let setToUndefined: string | undefined = undefined;
 
-    let setToUndefinedHasNull: string | null | TODO_1_0 = undefined;
+    let setToUndefinedHasNull: string | null | undefined = undefined;
 
-    let setToNull: string | TODO_1_0 = null;
+    let setToNull: string | null = null;
 
     let setToNullAsNull = null;
 
-    let setToNullHasUndefined: string | undefined | TODO_1_0 = null;
+    let setToNullHasUndefined: string | undefined | null = null;
 
     let setToString = "";
 
@@ -59,12 +59,12 @@
 
     // Any
 
-    let startsAnyWithString: any | TODO_1_0 = "";
+    let startsAnyWithString: any | string = "";
 
-    let startsAnyGivenString: any | TODO_1_0;
+    let startsAnyGivenString: any | string;
     startsAnyGivenString = "";
 
-    let startsAnyWithStringGivenString: any | TODO_1_0 = "";
+    let startsAnyWithStringGivenString: any | string = "";
     startsAnyWithStringGivenString = "";
 
     let startsStringWithAny: string = {} as any;
@@ -130,7 +130,7 @@
     let eitherClassNeedsUnionImplicit = new SampleClassOne();
     eitherClassNeedsUnionImplicit = new SampleClassTwo();
 
-    let eitherClassNeedsUnionExplicit: SampleClassOne | TODO_0_1 = new SampleClassOne();
+    let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
     let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
@@ -140,19 +140,19 @@
     eitherClassNeedsNullImplicit = new SampleClassTwo();
     eitherClassNeedsNullImplicit = null;
 
-    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | TODO_0_1 = new SampleClassOne();
+    let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsNullAndClassExplicit = new SampleClassTwo();
     eitherClassNeedsNullAndClassExplicit = null;
 
-    let eitherClassNeedsUndefinedExplicit: SampleClassOne | TODO_1_1 = new SampleClassOne();
+    let eitherClassNeedsUndefinedExplicit: SampleClassOne | SampleClassTwo | undefined = new SampleClassOne();
     eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicit = undefined;
 
-    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | TODO_1_0 = new SampleClassOne();
+    let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | undefined = new SampleClassOne();
     eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo();
     eitherClassNeedsUndefinedExplicitInterface = undefined;
 
-    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | TODO_0_1 = new SampleClassOne();
+    let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo = new SampleClassOne();
     eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();
     eitherClassNeedsUndefinedAndClassExplicit = undefined;
 
