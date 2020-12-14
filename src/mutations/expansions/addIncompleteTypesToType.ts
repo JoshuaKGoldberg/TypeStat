@@ -39,7 +39,15 @@ const fillInIncompleteType = (
     summaryWithNode: TypeSummaryWithNode,
 ): ITextInsertMutation | ITextSwapMutation | undefined => {
     // Create a new type name to add on that joins the types to be added
-    const createdTypeName = request.services.printers.type(summaryWithNode.summary.types);
+    let createdTypeName = request.services.printers.type(
+        summaryWithNode.summary.types,
+        summaryWithNode.originalProperty.type ?? summaryWithNode.originalProperty,
+    );
+
+    // For some reason, the enclosingNode option of printing isn't always applying...
+    if (createdTypeName.includes("=>")) {
+        createdTypeName = `(${createdTypeName})`;
+    }
 
     // Similar to createTypeAdditionMutation, if the node is a basic base type, we can just replace it
     if (

@@ -17,7 +17,7 @@ export const addMissingTypesToType = (
     let insertion = "";
 
     for (const [name, summary] of missingTypes) {
-        insertion += printNamedTypeSummary(request, name, summary);
+        insertion += printNamedTypeSummary(request, node, name, summary);
     }
 
     if (!insertion) {

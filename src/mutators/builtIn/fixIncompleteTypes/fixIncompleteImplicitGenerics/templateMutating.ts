@@ -46,6 +46,7 @@ export const fillInMissingTemplateTypes = (
         const allAssignedTypes = joinAssignedTypesByName(request, assignedTypeValues);
         const newType = createDeclarationForTypeSummaries(
             request,
+            undefined /* enclosingDeclaration */,
             newTemplateTypeName,
             summarizeAllAssignedTypes(request, [allAssignedTypes]),
         );
