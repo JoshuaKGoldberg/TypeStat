@@ -2,7 +2,6 @@ import * as ts from "typescript";
 
 import { ProcessOutput } from "../output";
 import { FileMutator } from "../mutators/fileMutator";
-import { Dictionary } from "../shared/maps";
 import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums";
 
 /**

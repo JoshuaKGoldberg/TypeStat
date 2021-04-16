@@ -3,7 +3,7 @@ export const arrayify = <T>(items: T | ReadonlyArray<T> | undefined): ReadonlyAr
         return [];
     }
 
-    if (Array.isArray(items)) {
+    if (items instanceof Array) {
         return items;
     }
 
