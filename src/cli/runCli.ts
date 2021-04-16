@@ -10,8 +10,6 @@ import { ResultStatus, typeStat, TypeStatArgv, TypeStatResult } from "../index";
 import { initialization } from "../initialization";
 import { createProcessOutput, ProcessOutput } from "../output";
 
-import { captureHelp } from "./captureHelp";
-
 export interface CliRuntime {
     initializationRunner: typeof initialization;
     output: ProcessOutput;
@@ -66,8 +64,7 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime?: CliRuntim
 
     switch (result.status) {
         case ResultStatus.ConfigurationError:
-            const helpText = await captureHelp(command);
-            runtime.output.stdout(helpText);
+            runtime.output.stdout(command.helpInformation());
             runtime.output.stderr(chalk.yellow(result.error));
             break;
 
