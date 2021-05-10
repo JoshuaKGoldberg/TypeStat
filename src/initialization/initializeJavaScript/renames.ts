@@ -9,7 +9,7 @@ export enum InitializationRenames {
 export const initializeRenames = async () => {
     const { renames } = await prompt<{ renames: InitializationRenames }>([
         {
-            choices: [InitializationRenames.Auto, InitializationRenames.TS, InitializationRenames.TS],
+            choices: [InitializationRenames.Auto, InitializationRenames.TS, InitializationRenames.TSX],
             initial: 0,
             message: "How would you like .js files to be renamed?",
             name: "renames",
