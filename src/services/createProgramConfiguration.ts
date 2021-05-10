@@ -3,7 +3,7 @@ import * as path from "path";
 
 import { requireExposedTypeScript } from "../mutations/createExposedTypeScript";
 import { TypeStatOptions } from "../options/types";
-import { collectOptionals } from "../shared/arrays";
+import { collectOptionals, uniquify } from "../shared/arrays";
 import { normalizeAndSlashify } from "../shared/paths";
 
 export const createProgramConfiguration = (options: TypeStatOptions) => {
@@ -28,9 +28,7 @@ export const createProgramConfiguration = (options: TypeStatOptions) => {
     // Include all possible file names in our program, including ones we won't later visit
     // TypeScript projects must include source files for all nodes we look at
     // See https://github.com/Microsoft/TypeScript/issues/28413
-    const fileNames = Array.from(
-        new Set(Array.from(collectOptionals(options.fileNames, parsedConfiguration.fileNames)).map(normalizeAndSlashify)),
-    );
+    const fileNames = uniquify(...Array.from(collectOptionals(options.fileNames, parsedConfiguration.fileNames)).map(normalizeAndSlashify));
 
     // Create a basic TypeScript compiler host and program using the parsed compiler options
     const host = ts.createCompilerHost({}, true);

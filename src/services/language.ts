@@ -3,7 +3,7 @@ import * as ts from "typescript";
 
 import { ExposedProgram } from "../mutations/createExposedTypeScript";
 import { TypeStatOptions } from "../options/types";
-import { arrayify } from "../shared/arrays";
+import { arrayify, uniquify } from "../shared/arrays";
 import { isIntrisinicNameType } from "../shared/typeNodes";
 
 import { createProgramConfiguration } from "./createProgramConfiguration";
@@ -83,16 +83,14 @@ export const createLanguageServices = (options: TypeStatOptions): LanguageServic
         },
         type(types, enclosingDeclaration, typeFormatFlags) {
             const typeChecker = program.getTypeChecker();
-            return Array.from(
-                new Set(
-                    arrayify(types).map((type) =>
-                        typeChecker.typeToString(
-                            // Our mutations generally always go for base primitives, not literals
-                            // This might need to be revisited for potential future high fidelity types...
-                            typeChecker.getBaseTypeOfLiteralType(type),
-                            enclosingDeclaration,
-                            typeFormatFlags,
-                        ),
+            return uniquify(
+                ...arrayify(types).map((type) =>
+                    typeChecker.typeToString(
+                        // Our mutations generally always go for base primitives, not literals
+                        // This might need to be revisited for potential future high fidelity types...
+                        typeChecker.getBaseTypeOfLiteralType(type),
+                        enclosingDeclaration,
+                        typeFormatFlags,
                     ),
                 ),
             ).join(" | ");
