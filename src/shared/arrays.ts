@@ -23,3 +23,7 @@ export const collectOptionals = <T>(...arrays: (ReadonlyArray<T> | undefined)[])
 };
 
 export const isNotUndefined = <T>(item: T | undefined): item is T => item !== undefined;
+
+export const uniquify = <T>(...items: T[]): T[] => {
+    return Array.from(new Set(items));
+};
