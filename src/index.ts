@@ -48,7 +48,7 @@ export const typeStat = async (argv: TypeStatArgv, output: ProcessOutput): Promi
             status: ResultStatus.ConfigurationError,
         };
     }
-
+    
     for (let i = 0; i < allOptions.length; i += 1) {
         // First run any any file renames needed as part of project setup
         const options = await processFileRenames(allOptions[i]);

@@ -37,10 +37,20 @@ export const loadOptions = async (argv: TypeStatArgv, output: ProcessOutput): Pr
     for (let i = 0; i < allRawOptions.length; i += 1) {
         const rawOptions = allRawOptions[i];
         const projectPath = getProjectPath(cwd, filePath, rawOptions);
-        const [compilerOptions, fileNames] = await Promise.all([
+        const [compilerOptions, fileSearch] = await Promise.all([
             parseRawCompilerOptions(projectPath),
             collectFileNames(argv, cwd, rawOptions),
         ]);
+
+        if (fileSearch === undefined) {
+            continue;
+        }
+
+        const [fileGlobs, fileNames] = fileSearch;
+        const implicitNodeModulesInclude = implicitNodeModulesIncluded(fileGlobs, fileNames);
+        if (implicitNodeModulesInclude) {
+            return `At least one path including node_modules was included implicitly: '${implicitNodeModulesInclude}'. Either adjust TypeStat's included files to not include node_modules (recommended) or explicitly include node_modules/ (not recommended).`;
+        }
 
         const filledOutOptions = findComplaintForOptions(
             fillOutRawOptions({ argv, compilerOptions, cwd, fileNames, output, projectPath, rawOptions }),
@@ -69,14 +79,18 @@ const collectFileNames = async (
     argv: TypeStatArgv,
     cwd: string,
     rawOptions: RawTypeStatOptions,
-): Promise<ReadonlyArray<string> | undefined> => {
+): Promise<[ReadonlyArray<string>, ReadonlyArray<string>] | undefined> => {
     if (argv.args !== undefined && argv.args.length !== 0) {
-        return globAllAsync(argv.args);
+        return [argv.args, await globAllAsync(argv.args)];
     }
 
     if (rawOptions.include === undefined) {
         return undefined;
     }
 
-    return globAllAsync(rawOptions.include.map((include) => path.join(cwd, include)));
+    return [rawOptions.include, await globAllAsync(rawOptions.include.map((include) => path.join(cwd, include)))];
+};
+
+const implicitNodeModulesIncluded = (globs: ReadonlyArray<string>, fileNames: ReadonlyArray<string> | undefined) => {
+    return !globs.some((glob) => glob.includes("node_modules")) && fileNames?.find((fileName) => fileName.includes("node_modules"));
 };
