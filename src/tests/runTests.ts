@@ -20,7 +20,8 @@ const parsed = new Command()
     .allowUnknownOption(true)
     .option("-i, --include [include]", "path to a TypeScript project file")
     .option("-a, --accept", "override existing expected results instead of asserting")
-    .parse(process.argv) as ParsedTestArgv;
+    .parse(process.argv)
+    .opts() as ParsedTestArgv;
 
 // Modify TypeScript here so that no tests incur the performance penalty of doing it themselves
 const ts = requireExposedTypeScript();

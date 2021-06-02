@@ -27,7 +27,7 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime?: CliRuntim
     const command = new Command()
         .storeOptionsAsProperties(true)
         .option("-c --config [config]", "path to a TypeStat config file")
-        .option("-l --logfile [logfile]", "paths to a logfile to ")
+        .option("-l --logfile [logfile]", "path to a logfile to print detailed logs in")
         .option("-V --version", "output the package version");
 
     const rawOptions = command.parse(rawArgv as string[]) as TypeStatArgv;
