@@ -1,6 +1,15 @@
 (function () {
     class Name { }
 
+    const stringsInferred = [''];
+    stringsInferred.push('');
+
+    const stringsExplicit: string[] = [];
+    stringsExplicit.push('');
+
+    const stringsMissing = [];
+    stringsMissing.push('');
+
     let name = new Name();
 
     let names = [];
@@ -15,9 +24,8 @@
     let idsByName = new Map();
     idsByName.set(new Name(), 123);
 
-    // TODO: fix me :)
     let uniqueMaybeNames = new Set();
-    uniqueMaybeNames.add(idsByName.get(123));
+    uniqueMaybeNames.add(Math.random() > 0.5 ? 123 : undefined)
 
     let uniqueNamesOrBooleans = new Set();
     uniqueNamesOrBooleans.add(name);
