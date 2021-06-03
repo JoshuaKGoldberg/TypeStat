@@ -3,14 +3,22 @@ import * as ts from "typescript";
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { isKnownGlobalBaseType, isNeverAndOrUnknownType } from "../../shared/nodeTypes";
 
+const onlyTypes = (candidateTypes: ReadonlyArray<ts.Type | string>): candidateTypes is ReadonlyArray<ts.Type> =>
+    !candidateTypes.some((candidateType) => typeof candidateType === "string");
+
 /**
  * @returns Whether any of the extra types don't yet exist on an original type.
+ * @remarks If any of the candidate types are strings, this unfortunately has to assume true.
  */
 export const originalTypeHasIncompleteType = (
     request: FileMutationsRequest,
     originalType: ts.Type,
-    candidateTypes: ReadonlyArray<ts.Type>,
+    candidateTypes: ReadonlyArray<ts.Type | string>,
 ) => {
+    if (!onlyTypes(candidateTypes)) {
+        return true;
+    }
+
     // If the original type is something like Function and at least one candidate type isn't,
     // consider the Function to be reporting not enough info (like a base type)
     if (isKnownGlobalBaseType(originalType) && !candidateTypes.every(isKnownGlobalBaseType)) {

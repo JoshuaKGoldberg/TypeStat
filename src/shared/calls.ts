@@ -36,3 +36,14 @@ export const getDeclaredTypesOfArgument = (
 
     return declaredTypes;
 };
+
+export const getCallExpressionType = (request: FileMutationsRequest, parentCall: ts.CallExpression) => {
+    const typeChecker = request.services.program.getTypeChecker();
+    const argumentTypes = parentCall.arguments.map((argument) => typeChecker.getTypeAtLocation(argument));
+
+    return [
+        "((",
+        argumentTypes.map((parameter, index) => `arg${index}: ${request.services.printers.type(parameter)}`).join(", "),
+        ") => unknown)",
+    ].join("");
+};

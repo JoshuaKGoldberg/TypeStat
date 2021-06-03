@@ -11,20 +11,22 @@ export interface AssignedTypeValue {
 
     /**
      * Type being added as a property or set as a complete type.
+     * 
+     * @remarks It is strongly preferable to provide this as a Type, so it can be deduplicated later on.
      */
-    type: ts.Type;
+    type: ts.Type | string;
 }
 
 /**
  * For each new member of a type, a string or type representation of what it is known to be assigned.
  */
-export type AssignedTypesByName = Map<string, ts.Type>;
+export type AssignedTypesByName = Map<string, ts.Type | string>;
 
 /**
  * Joins a set of assigned type values into a single mapping by name.
  */
 export const joinAssignedTypesByName = (request: FileMutationsRequest, assignedTypeValues: ReadonlyArray<AssignedTypeValue>) => {
-    const assignedTypesByName = new Map<string, ts.Type>();
+    const assignedTypesByName = new Map<string, ts.Type | string>();
 
     for (const { name, type } of assignedTypeValues) {
         // If the type comes with its own name, it's for a single property
@@ -34,16 +36,18 @@ export const joinAssignedTypesByName = (request: FileMutationsRequest, assignedT
         }
 
         // Types without names are spread to convey multiple properties
-        for (const property of type.getProperties()) {
-            const declarations = property.getDeclarations();
-            const relevantDeclaration = declarations === undefined ? property.valueDeclaration : declarations[0];
-            if ((relevantDeclaration as ts.Declaration | undefined) === undefined) {
-                continue;
-            }
+        if (typeof type !== "string") {
+            for (const property of type.getProperties()) {
+                const declarations = property.getDeclarations();
+                const relevantDeclaration = declarations === undefined ? property.valueDeclaration : declarations[0];
+                if ((relevantDeclaration as ts.Declaration | undefined) === undefined) {
+                    continue;
+                }
 
-            const propertyType = getTypeAtLocationIfNotError(request, relevantDeclaration);
-            if (propertyType !== undefined) {
-                assignedTypesByName.set(property.name, propertyType);
+                const propertyType = getTypeAtLocationIfNotError(request, relevantDeclaration);
+                if (propertyType !== undefined) {
+                    assignedTypesByName.set(property.name, propertyType);
+                }
             }
         }
     }

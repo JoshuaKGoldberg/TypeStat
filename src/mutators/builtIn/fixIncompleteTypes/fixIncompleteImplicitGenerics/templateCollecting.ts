@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 
 import { AssignedTypesByName, AssignedTypeValue, joinAssignedTypesByName } from "../../../../mutations/assignments";
+import { getCallExpressionType } from "../../../../shared/calls";
 import { getStaticNameOfProperty } from "../../../../shared/names";
 import { isNodeAssigningBinaryExpression, isNodeWithinNode } from "../../../../shared/nodes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
@@ -155,6 +156,14 @@ const collectMissingAssignedTypesOnChildClassNode = (
             parentPropertyAccess.parent.right,
             true /* asStandaloneProperty */,
         );
+    }
+
+    // If we're calling the member reference as a function, grab the perceived function type
+    if (ts.isCallExpression(parentPropertyAccess.parent.parent) && ts.isPropertyAccessExpression(parentPropertyAccess.parent)) {
+        return {
+            name: parentPropertyAccess.parent.name.text,
+            type: getCallExpressionType(request, parentPropertyAccess.parent.parent)
+        };
     }
 
     // Otherwise we ignore any other types
