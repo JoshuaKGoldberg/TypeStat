@@ -39,7 +39,7 @@
         "eslint-plugin-deprecation": "1.2.1",
         "eslint-plugin-no-only-tests": "2.6.0",
         "husky": "6.0.0",
-        "jest": "26.6.3",
+        "jest": "27.0.4",
         "lint-staged": "11.0.0",
         "markdownlint": "0.23.1",
         "markdownlint-cli": "0.27.1",
