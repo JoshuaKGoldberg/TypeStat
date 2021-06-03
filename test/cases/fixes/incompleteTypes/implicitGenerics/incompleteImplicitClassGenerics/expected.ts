@@ -69,6 +69,17 @@ import { ComponentLike } from './react-like';
         };
     }
 
+
+    class MemberImmediateFunction extends MemberImmediateBase<{}, { key: (arg0: boolean) => void; }> {
+        member = {
+            key: (arg0: boolean) => {}
+        };
+
+        addToState = () => {
+            this.setMember({ key: (arg0: boolean) => {} });
+        };
+    }
+
     class MemberCurriedBase<First = {}> {
         member: First;
 

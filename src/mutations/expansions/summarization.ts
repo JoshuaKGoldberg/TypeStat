@@ -7,7 +7,7 @@ export type TypeSummariesByName = Map<string, TypeSummary>;
 
 export interface TypeSummary {
     alwaysProvided?: boolean;
-    types: ts.Type[];
+    types: (ts.Type | string)[];
 }
 
 /**
@@ -41,19 +41,29 @@ export const summarizeAllAssignedTypes = (request: FileMutationsRequest, allAssi
     return typeSummariesByName;
 };
 
-const mergeTypes = (request: FileMutationsRequest, existingTypes: ts.Type[], potentialNewType: ts.Type) => {
+const mergeTypes = (request: FileMutationsRequest, existingTypes: (ts.Type | string)[], potentialNewType: ts.Type | string) => {
     const typeChecker = request.services.program.getTypeChecker();
 
     for (let i = 0; i < existingTypes.length; i += 1) {
         const existingType = existingTypes[i];
+        if (typeof existingType === "string") {
+            if (typeof potentialNewType === "string") {
+                if (existingType === potentialNewType) {
+                    return;
+                }
+            }
+        } else {
+            if (typeof potentialNewType === "string") {
+                continue;
+            }
+            if (typeChecker.isTypeAssignableTo(potentialNewType, existingType)) {
+                return;
+            }
 
-        if (typeChecker.isTypeAssignableTo(potentialNewType, existingType)) {
-            return;
-        }
-
-        if (typeChecker.isTypeAssignableTo(existingType, potentialNewType)) {
-            existingTypes[i] = potentialNewType;
-            return;
+            if (typeChecker.isTypeAssignableTo(existingType, potentialNewType)) {
+                existingTypes[i] = potentialNewType;
+                return;
+            }
         }
     }
 

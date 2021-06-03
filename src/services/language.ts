@@ -41,7 +41,7 @@ export interface LanguageServices {
 export interface Printers {
     readonly node: (node: ts.Node) => string;
     readonly type: (
-        types: ts.Type | ReadonlyArray<ts.Type>,
+        types: ts.Type | string | ReadonlyArray<ts.Type | string>,
         enclosingDeclaration?: ts.Node,
         typeFormatFlags?: ts.TypeFormatFlags,
     ) => string;
@@ -85,13 +85,15 @@ export const createLanguageServices = (options: TypeStatOptions): LanguageServic
             const typeChecker = program.getTypeChecker();
             return uniquify(
                 ...arrayify(types).map((type) =>
-                    typeChecker.typeToString(
-                        // Our mutations generally always go for base primitives, not literals
-                        // This might need to be revisited for potential future high fidelity types...
-                        typeChecker.getBaseTypeOfLiteralType(type),
-                        enclosingDeclaration,
-                        typeFormatFlags,
-                    ),
+                    typeof type === "string"
+                        ? type
+                        : typeChecker.typeToString(
+                              // Our mutations generally always go for base primitives, not literals
+                              // This might need to be revisited for potential future high fidelity types...
+                              typeChecker.getBaseTypeOfLiteralType(type),
+                              enclosingDeclaration,
+                              typeFormatFlags,
+                          ),
                 ),
             ).join(" | ");
         },

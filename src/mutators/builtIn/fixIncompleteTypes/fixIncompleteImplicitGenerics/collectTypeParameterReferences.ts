@@ -35,6 +35,8 @@ export const collectTypeParameterReferences = (
 };
 
 const findParentExpandedReferences = (request: FileMutationsRequest, node: ts.Node) => {
+    node = getEquivalentContainingTypeNode(node);
+
     // Property and variable declarations can be directly searched for as references
     if (ts.isParameterPropertyDeclaration(node, node.parent) || ts.isPropertyDeclaration(node) || ts.isVariableDeclaration(node)) {
         return request.fileInfoCache.getNodeReferencesAsNodes(node);
@@ -58,3 +60,11 @@ const findParentExpandedReferences = (request: FileMutationsRequest, node: ts.No
 
     return undefined;
 };
+
+const getEquivalentContainingTypeNode = (node: ts.Node) => {
+    while (ts.isIntersectionTypeNode(node.parent)) {
+        node = node.parent.parent;
+    }
+
+    return node;
+}
