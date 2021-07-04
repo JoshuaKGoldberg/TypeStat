@@ -40,7 +40,7 @@ export const getBaseClassDeclaration = (
     }
 
     const { valueDeclaration } = extensionSymbol;
-    if (!ts.isClassLike(valueDeclaration)) {
+    if (!valueDeclaration || !ts.isClassLike(valueDeclaration)) {
         return undefined;
     }
 

@@ -44,7 +44,9 @@ export type ExposedProgram = Replace<
     {
         getTypeChecker: ReplaceReturnType<import("typescript").Program["getTypeChecker"], ExposedTypeChecker>;
     }
->;
+> & {
+    getTypeCatalog(): readonly Type[];
+};
 
 export type ExposedTypeChecker = import("typescript").TypeChecker & {
     isTypeAssignableTo(source: Type, target: Type): boolean;

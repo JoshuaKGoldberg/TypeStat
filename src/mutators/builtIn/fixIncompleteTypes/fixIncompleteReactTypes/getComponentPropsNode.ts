@@ -53,7 +53,7 @@ const getFunctionComponentPropsNode = (
     // Try to get the first backing type declaration for the single parameter
     const [parameter] = parameters;
     const symbol = getTypeAtLocationIfNotError(request, parameter)?.getSymbol();
-    if (symbol === undefined || symbol.declarations.length === 0) {
+    if (!symbol?.declarations?.length) {
         return undefined;
     }
 

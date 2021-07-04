@@ -92,7 +92,7 @@ export const getValueDeclarationOfType = (request: FileMutationsRequest, node: t
     }
 
     // Since the real .valueDeclaration is undefined, use the first one we know of
-    return symbol.declarations.length === 0 ? undefined : symbol.declarations[0];
+    return symbol.declarations?.length ? symbol.declarations[0] : undefined;
 };
 
 /**

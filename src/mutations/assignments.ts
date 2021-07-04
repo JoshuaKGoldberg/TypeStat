@@ -11,7 +11,7 @@ export interface AssignedTypeValue {
 
     /**
      * Type being added as a property or set as a complete type.
-     * 
+     *
      * @remarks It is strongly preferable to provide this as a Type, so it can be deduplicated later on.
      */
     type: ts.Type | string;
@@ -40,7 +40,7 @@ export const joinAssignedTypesByName = (request: FileMutationsRequest, assignedT
             for (const property of type.getProperties()) {
                 const declarations = property.getDeclarations();
                 const relevantDeclaration = declarations === undefined ? property.valueDeclaration : declarations[0];
-                if ((relevantDeclaration as ts.Declaration | undefined) === undefined) {
+                if (relevantDeclaration === undefined) {
                     continue;
                 }
 

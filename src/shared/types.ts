@@ -13,7 +13,7 @@ export const typeHasLocalTypeParameters = (type: ts.Type): type is ts.InterfaceT
  */
 export const isTypeBuiltIn = (type: ts.Type) => {
     const symbol = type.getSymbol();
-    if (symbol === undefined) {
+    if (!symbol?.valueDeclaration) {
         return false;
     }
 
@@ -29,7 +29,7 @@ export const getSymbolAtLocationIfNotError = (request: FileMutationsRequest, nod
 
     const symbol = request.services.program.getTypeChecker().getSymbolAtLocation(node);
 
-    return symbol?.declarations.length ? symbol : undefined;
+    return symbol?.declarations?.length ? symbol : undefined;
 };
 
 export const getTypeAtLocationIfNotError = (request: FileMutationsRequest, node: ts.Node | undefined): ts.Type | undefined => {
