@@ -79,7 +79,7 @@ export const collectFlagsAndTypesFromTypes = (
         }
 
         // If the type is a union, add any flags or types found within it
-        if ("types" in type) {
+        if (tsutils.isUnionType(type)) {
             const subTypes = recursivelyCollectSubTypes(type);
             const [subFlags, deepSubTypes] = collectFlagsAndTypesFromTypes(request, subTypes);
 
