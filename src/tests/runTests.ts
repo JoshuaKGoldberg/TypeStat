@@ -9,11 +9,6 @@ import { RawTypeStatOptions, TypeStatOptions } from "../options/types";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider";
 import { arrayify } from "../shared/arrays";
 
-interface ParsedTestArgv {
-    accept?: boolean;
-    include?: string;
-}
-
 const parsed = new Command()
     // Allow unknown options for the case of IDE debuggers who directly write to process.argv
     // If this line is removed, VS Code debugging will break 😲
@@ -21,7 +16,7 @@ const parsed = new Command()
     .option("-i, --include [include]", "path to a TypeScript project file")
     .option("-a, --accept", "override existing expected results instead of asserting")
     .parse(process.argv)
-    .opts() as ParsedTestArgv;
+    .opts();
 
 // Modify TypeScript here so that no tests incur the performance penalty of doing it themselves
 const ts = requireExposedTypeScript();
