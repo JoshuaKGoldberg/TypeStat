@@ -57,7 +57,7 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
         }
 
         if (lastFileIndex === fileNames.length) {
-            lastFileIndex = 0;
+            lastFileIndex = -1;
 
             // Only recreate the language service once we've visited every file
             // This way we don't constantly re-scan many of the source files each wave
