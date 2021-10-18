@@ -5,7 +5,7 @@ import * as path from "path";
 
 import { requireExposedTypeScript } from "../mutations/createExposedTypeScript";
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
-import { RawTypeStatOptions, TypeStatOptions } from "../options/types";
+import { RawTypeStatOptions } from "../options/types";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider";
 import { arrayify } from "../shared/arrays";
 
@@ -46,7 +46,7 @@ describeMutationTestCases(
         };
 
         return createTypeStatProvider({
-            ...(fillOutRawOptions({
+            ...fillOutRawOptions({
                 argv: { args: [] },
                 compilerOptions,
                 cwd: path.dirname(projectPath),
@@ -56,7 +56,7 @@ describeMutationTestCases(
                     ...rawOptions,
                     projectPath,
                 },
-            }) as TypeStatOptions),
+            }),
             fileNames: [fileName],
         });
     },
