@@ -16,6 +16,11 @@ export const fixStrictNonNullAssertionPropertyAccesses: FileMutator = (request: 
 };
 
 const getStrictPropertyAccessFix = (request: FileMutationsRequest, node: ts.PropertyAccessExpression): IMutation | undefined => {
+    // Early on skip checking for "!" needs if there already is one
+    if (ts.isAssertionExpression(node.parent) || ts.isNonNullExpression(node.parent)) {
+        return undefined;
+    }
+
     // Grab the type of the property being accessed by name
     const expressionType = getTypeAtLocationIfNotError(request, node.expression);
 
