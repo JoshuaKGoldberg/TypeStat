@@ -47,13 +47,11 @@ export const createInstallMissingTypesProvider = (options: TypeStatOptions) => {
         await packageManagerRunner(options, missingTypedPackageNames);
     };
 
-    return createSingleUseProvider(
-        async (): Promise<IMutationsWave> => {
-            await installMissingTypes();
+    return createSingleUseProvider(async (): Promise<IMutationsWave> => {
+        await installMissingTypes();
 
-            return {
-                fileMutations: undefined,
-            };
-        },
-    );
+        return {
+            fileMutations: undefined,
+        };
+    });
 };
