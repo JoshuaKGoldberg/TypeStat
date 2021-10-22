@@ -11,6 +11,14 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                command: ["format:verify", "lint:eslint", "lint:markdownlint", "test:mutation", "test:unit", "tsc"]
+                command: ["compile", "format:verify", "lint:eslint", "lint:markdownlint", "test:unit"]
+
+    mutations:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: Codecademy/run-on-yarn@v1
+              with:
+                  command: yarn compile
+            - run: yarn test:mutation
 
 on: push
