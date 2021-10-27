@@ -16,7 +16,12 @@ const wrappedKinds = new Set([
     ts.SyntaxKind.VoidExpression,
 ]);
 
-export const createNonNullAssertion = (request: FileMutationsRequest, node: ts.Node): ITextInsertMutation | ITextSwapMutation => {
+export const createNonNullAssertion = (request: FileMutationsRequest, node: ts.Node): ITextInsertMutation | ITextSwapMutation => {  
+    // For property assignments (`key: value`), create a non-null assertion only for `value`.
+    if(ts.isPropertyAssignment(node)) {
+        node = node.initializer;
+    }
+
     // If the node must be wrapped in parenthesis, replace all of it
     if (wrappedKinds.has(node.kind)) {
         return {

@@ -27,3 +27,20 @@
     const takesContainedValue = (arg: ContainedValues) => { };
     takesContainedValue({ first: first, ok, second });
 })();
+
+// Nested values
+(function () {
+    const A = {
+        id: undefined
+    } as { id: boolean | undefined } | undefined
+    
+    type B = { C: boolean }
+
+    const B1: B = {
+        C: A && A.id
+    }
+    
+    const B2: B = {
+        C: A?.id
+    }
+})();
