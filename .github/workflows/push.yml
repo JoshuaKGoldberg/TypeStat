@@ -10,7 +10,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                command: ["compile", "format:verify", "lint:eslint", "lint:markdownlint", "test:unit"]
+                command: ["compile", "lint:eslint", "lint:markdownlint", "test:unit"]
 
     mutations:
         runs-on: ubuntu-latest
