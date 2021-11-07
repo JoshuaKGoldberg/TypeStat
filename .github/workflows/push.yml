@@ -5,8 +5,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: Codecademy/run-on-yarn@v1
-              with:
-                  command: ${{ matrix.command }}
+            - run: ${{ matrix.command }}
 
         strategy:
             fail-fast: false
@@ -17,8 +16,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: Codecademy/run-on-yarn@v1
-              with:
-                  command: yarn compile
+            - run: yarn compile
             - run: yarn test:mutation
 
-on: push
+on:
+    push:
+        branches:
+            - main
+    pull_request:
