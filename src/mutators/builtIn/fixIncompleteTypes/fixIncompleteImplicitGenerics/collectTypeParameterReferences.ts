@@ -67,4 +67,4 @@ const getEquivalentContainingTypeNode = (node: ts.Node) => {
     }
 
     return node;
-}
+};

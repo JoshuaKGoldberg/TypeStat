@@ -162,7 +162,7 @@ const collectMissingAssignedTypesOnChildClassNode = (
     if (ts.isCallExpression(parentPropertyAccess.parent.parent) && ts.isPropertyAccessExpression(parentPropertyAccess.parent)) {
         return {
             name: parentPropertyAccess.parent.name.text,
-            type: getCallExpressionType(request, parentPropertyAccess.parent.parent)
+            type: getCallExpressionType(request, parentPropertyAccess.parent.parent),
         };
     }
 

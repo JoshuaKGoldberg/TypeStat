@@ -2,7 +2,7 @@
 
 ![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-14cc21.svg)
 ![TypeScript: Strict](https://img.shields.io/badge/typescript-strict-informational.svg)
-[![Circle CI](https://img.shields.io/circleci/build/github/JoshuaKGoldberg/TypeStat.svg)](https://circleci.com/gh/JoshuaKGoldberg/TypeStat)
+[![Circle CI](https://github.com/JoshuaKGoldberg/TypeStat/workflows/push/badge.svg)](https://github.com/JoshuaKGoldberg/TypeStat/actions)
 [![Join the chat at https://gitter.im/TypeStat/community](https://img.shields.io/badge/chat-gitter-informational.svg)](https://gitter.im/TypeStat/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NPM version](https://badge.fury.io/js/typestat.svg)](http://badge.fury.io/js/typestat)
 

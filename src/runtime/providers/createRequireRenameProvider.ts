@@ -1,4 +1,4 @@
-import { Mutation, MutationsWave } from "automutate";
+import { Mutation } from "automutate";
 
 import { findRequireRenameMutationsInFile } from "../../mutations/renames/findRequireRenameMutationsInFile";
 import { TypeStatOptions } from "../../options/types";
@@ -13,7 +13,7 @@ import { createSingleUseProvider } from "../createSingleUserProvider";
  * @param allModifiedFileNames   Set to mark names of all files that were modified.
  */
 export const createRequireRenameProvider = (options: TypeStatOptions, allModifiedFiles: Set<string>) => {
-    return createSingleUseProvider(async (): Promise<MutationsWave> => {
+    return createSingleUseProvider(async () => {
         if (!options.files.renameExtensions) {
             return {
                 fileMutations: undefined,

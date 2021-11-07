@@ -47,7 +47,7 @@ export const createInstallMissingTypesProvider = (options: TypeStatOptions) => {
         await packageManagerRunner(options, missingTypedPackageNames);
     };
 
-    return createSingleUseProvider(async (): Promise<MutationsWave> => {
+    return createSingleUseProvider(async () => {
         await installMissingTypes();
 
         return {

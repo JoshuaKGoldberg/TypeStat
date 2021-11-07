@@ -1,4 +1,4 @@
-import { FileMutations, MutationsWave, TextInsertMutation } from "automutate";
+import { FileMutations, TextInsertMutation } from "automutate";
 import * as fs from "mz/fs";
 
 import { TypeStatOptions } from "../../options/types";
@@ -13,7 +13,7 @@ import { createSingleUseProvider } from "../createSingleUserProvider";
  * @returns Mutations wave marking all mutated files as modified.
  */
 export const createMarkFilesModifiedProvider = (options: TypeStatOptions, allModifiedFileNames: ReadonlySet<string>) => {
-    return createSingleUseProvider(async (): Promise<MutationsWave> => {
+    return createSingleUseProvider(async () => {
         if (options.files.above === "" && options.files.below === "") {
             return {
                 fileMutations: undefined,
