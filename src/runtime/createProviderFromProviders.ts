@@ -1,4 +1,4 @@
-import { IMutationsWave } from "automutate";
+import { MutationsWave } from "automutate";
 
 /**
  * Creates a provider that runs through a series of providers.
@@ -6,10 +6,10 @@ import { IMutationsWave } from "automutate";
  * @param providers   Providers to return changes from, in order.
  * @returns Single provider equivalent to the given providers, in order.
  */
-export const createProviderFromProviders = (...providers: (() => Promise<IMutationsWave>)[]) => {
+export const createProviderFromProviders = (...providers: (() => Promise<MutationsWave>)[]) => {
     let index = 0;
 
-    const multiProvider = async (): Promise<IMutationsWave> => {
+    const multiProvider = async (): Promise<MutationsWave> => {
         if (index === providers.length) {
             return {
                 fileMutations: undefined,

@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import { EOL } from "os";
 import * as ts from "typescript";
 
@@ -7,14 +7,14 @@ import { NodeSelector } from "../shared/nodeTypes";
 
 import { FileMutationsRequest } from "./fileMutator";
 
-export type NodeVisitor<TNode extends ts.Node> = (node: TNode, request: FileMutationsRequest) => Readonly<IMutation> | undefined;
+export type NodeVisitor<TNode extends ts.Node> = (node: TNode, request: FileMutationsRequest) => Readonly<Mutation> | undefined;
 
 export const collectMutationsFromNodes = <TNode extends ts.Node>(
     request: FileMutationsRequest,
     selector: NodeSelector<TNode>,
     visitor: NodeVisitor<TNode>,
 ) => {
-    const mutations: IMutation[] = [];
+    const mutations: Mutation[] = [];
 
     const visitNode = (node: ts.Node) => {
         if (request.filteredNodes.has(node)) {

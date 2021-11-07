@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import {
@@ -9,7 +9,7 @@ import {
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixNoImplicitAnyParameters: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+export const fixNoImplicitAnyParameters: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>
     collectMutationsFromNodes(request, isNodeNoImplicitAnyFixableParameter, getNoImplicitAnyMutations);
 
 const isNodeNoImplicitAnyFixableParameter = (node: ts.Node): node is ts.ParameterDeclaration & NoImplictAnyNodeToBeFixed =>

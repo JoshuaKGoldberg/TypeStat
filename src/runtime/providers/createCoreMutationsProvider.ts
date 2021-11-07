@@ -1,4 +1,4 @@
-import { IMutation, IMutationsWave } from "automutate";
+import { Mutation, MutationsWave } from "automutate";
 import chalk from "chalk";
 
 import { TypeStatOptions } from "../../options/types";
@@ -20,9 +20,9 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
     const fileNamesAndServicesCache = createFileNamesAndServicesCache(options);
     let lastFileIndex = -1;
 
-    return async (): Promise<IMutationsWave> => {
+    return async (): Promise<MutationsWave> => {
         const startTime = Date.now();
-        const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
+        const fileMutations = new Map<string, ReadonlyArray<Mutation>>();
         const { fileNames, services } = fileNamesAndServicesCache.get();
         const waveStartedFromBeginning = lastFileIndex <= 0;
         let addedMutations = 0;
@@ -74,7 +74,7 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
             fileMutations:
                 waveStartedFromBeginning && fileMutations.size === 0
                     ? undefined
-                    : (convertMapToObject(fileMutations) as Dictionary<IMutation[]>),
+                    : (convertMapToObject(fileMutations) as Dictionary<Mutation[]>),
         };
     };
 };

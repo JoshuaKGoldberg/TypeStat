@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
@@ -31,7 +31,7 @@ export const canNodeBeFixedForNoImplicitAny = (node: NoImplicitAnyNode): node is
     // TypeScript provides all parameters' --noImplicitAny fixes when asked for any parameter, so only request on the first
     (!ts.isParameter(node) || node === node.parent.parameters[0]);
 
-export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, request: FileMutationsRequest): IMutation | undefined => {
+export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, request: FileMutationsRequest): Mutation | undefined => {
     // If the node is a parameter, make sure it doesn't already have an inferable type
     // (TypeScript will still suggest a codefix to make a reundant inferred type)
     if (ts.isParameter(node)) {

@@ -10,6 +10,8 @@
         
         givenTwiceDifferent: number;
 
+        givenAlreadyAsserted: number;
+
         def() {
             this.givenNumber = 1;
             this.givenNumberOrUndefined = (1 as number | undefined)!;
@@ -20,6 +22,8 @@
 
             this.givenTwiceDifferent = 1;
             this.givenTwiceDifferent = undefined!;
+
+            this.givenAlreadyAsserted = undefined!;
         }
     }
 
