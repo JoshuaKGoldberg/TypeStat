@@ -1,4 +1,4 @@
-import { combineMutations, IMultipleMutations, IMutation } from "automutate";
+import { combineMutations, MultipleMutations, Mutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags";
@@ -11,7 +11,7 @@ import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixStrictNonNullAssertionCallExpressions: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+export const fixStrictNonNullAssertionCallExpressions: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
     return collectMutationsFromNodes(request, isVisitableCallExpression, visitCallExpression);
 };
 
@@ -20,7 +20,7 @@ const isVisitableCallExpression = (node: ts.Node): node is ts.CallExpression =>
     // We can quickly ignore any calls without arguments
     node.arguments.length !== 0;
 
-const visitCallExpression = (node: ts.CallExpression, request: FileMutationsRequest): IMultipleMutations | undefined => {
+const visitCallExpression = (node: ts.CallExpression, request: FileMutationsRequest): MultipleMutations | undefined => {
     // Collect the declared type of the function-like being called
     const functionLikeValueDeclaration = getValueDeclarationOfFunction(request, node.expression);
     if (functionLikeValueDeclaration === undefined) {
@@ -39,8 +39,8 @@ const collectArgumentMutations = (
     request: FileMutationsRequest,
     callingNode: ts.CallExpression,
     functionLikeValueDeclaration: ts.FunctionLikeDeclaration,
-): ReadonlyArray<IMutation> => {
-    const mutations: IMutation[] = [];
+): ReadonlyArray<Mutation> => {
+    const mutations: Mutation[] = [];
     const visitableArguments = Math.min(callingNode.arguments.length, functionLikeValueDeclaration.parameters.length);
 
     // Check the types of each argument being passed in against the declared parameter type

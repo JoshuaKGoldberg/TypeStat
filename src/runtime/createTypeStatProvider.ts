@@ -1,4 +1,4 @@
-import { IMutationsProvider } from "automutate";
+import { MutationsProvider } from "automutate";
 
 import { TypeStatOptions } from "../options/types";
 
@@ -12,7 +12,7 @@ import { createRequireRenameProvider } from "./providers/createRequireRenameProv
 /**
  * Creates a mutations provider that mutates files, then marks them as mutated.
  */
-export const createTypeStatProvider = (options: TypeStatOptions): IMutationsProvider => {
+export const createTypeStatProvider = (options: TypeStatOptions): MutationsProvider => {
     const allModifiedFiles = new Set<string>();
 
     return {

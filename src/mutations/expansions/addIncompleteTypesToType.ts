@@ -1,4 +1,4 @@
-import { combineMutations, IMutation, ITextInsertMutation, ITextSwapMutation } from "automutate";
+import { combineMutations, Mutation, TextInsertMutation, TextSwapMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
@@ -20,8 +20,8 @@ export interface TypeSummaryWithNode {
 export const addIncompleteTypesToType = (
     request: FileMutationsRequest,
     incompleteTypes: TypeSummariesPerNodeByName,
-): IMutation | undefined => {
-    const mutations: IMutation[] = [];
+): Mutation | undefined => {
+    const mutations: Mutation[] = [];
 
     for (const summaryWithNode of incompleteTypes.values()) {
         const mutation = fillInIncompleteType(request, summaryWithNode);
@@ -37,7 +37,7 @@ export const addIncompleteTypesToType = (
 const fillInIncompleteType = (
     request: FileMutationsRequest,
     summaryWithNode: TypeSummaryWithNode,
-): ITextInsertMutation | ITextSwapMutation | undefined => {
+): TextInsertMutation | TextSwapMutation | undefined => {
     // Create a new type name to add on that joins the types to be added
     let createdTypeName = request.services.printers.type(
         summaryWithNode.summary.types,

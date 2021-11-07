@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
@@ -14,7 +14,7 @@ type InferableVariableDeclaration = ts.VariableDeclaration &
         parent: ts.VariableDeclarationList;
     };
 
-export const fixNoInferableTypesVariableDeclarations: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+export const fixNoInferableTypesVariableDeclarations: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>
     collectMutationsFromNodes(request, isInferableTypeCapableVariableDeclaration, getNoInferableTypeVariableDeclarationMutation);
 
 const isInferableTypeCapableVariableDeclaration = (node: ts.Node): node is InferableVariableDeclaration =>

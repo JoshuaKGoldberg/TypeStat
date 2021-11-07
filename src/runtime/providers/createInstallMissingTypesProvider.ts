@@ -1,4 +1,4 @@
-import { IMutationsWave } from "automutate";
+import { MutationsWave } from "automutate";
 import builtinModules from "builtin-modules";
 
 import { TypeStatOptions } from "../../options/types";
@@ -47,13 +47,11 @@ export const createInstallMissingTypesProvider = (options: TypeStatOptions) => {
         await packageManagerRunner(options, missingTypedPackageNames);
     };
 
-    return createSingleUseProvider(
-        async (): Promise<IMutationsWave> => {
-            await installMissingTypes();
+    return createSingleUseProvider(async (): Promise<MutationsWave> => {
+        await installMissingTypes();
 
-            return {
-                fileMutations: undefined,
-            };
-        },
-    );
+        return {
+            fileMutations: undefined,
+        };
+    });
 };

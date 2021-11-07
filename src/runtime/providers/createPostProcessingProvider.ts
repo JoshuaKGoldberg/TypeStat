@@ -1,4 +1,4 @@
-import { IMutationsWave } from "automutate";
+import { MutationsWave } from "automutate";
 
 import { TypeStatOptions } from "../../options/types";
 import { createSingleUseProvider } from "../createSingleUserProvider";
@@ -13,13 +13,11 @@ import { runCommand } from "./missingTypes/runCommand";
  * @returns Mutations wave with no direct mutation changes.
  */
 export const createPostProcessingProvider = (options: TypeStatOptions, allModifiedFilePaths: ReadonlySet<string>) => {
-    return createSingleUseProvider(
-        async (): Promise<IMutationsWave> => {
-            for (const shellCommand of options.postProcess.shell) {
-                await runCommand(options, [...shellCommand, ...Array.from(allModifiedFilePaths)]);
-            }
+    return createSingleUseProvider(async (): Promise<MutationsWave> => {
+        for (const shellCommand of options.postProcess.shell) {
+            await runCommand(options, [...shellCommand, ...Array.from(allModifiedFilePaths)]);
+        }
 
-            return {};
-        },
-    );
+        return {};
+    });
 };

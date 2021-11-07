@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags";
@@ -8,11 +8,11 @@ import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixStrictNonNullAssertionBinaryExpressions: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+export const fixStrictNonNullAssertionBinaryExpressions: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
     return collectMutationsFromNodes(request, isNodeAssigningBinaryExpression, visitBinaryExpression);
 };
 
-const visitBinaryExpression = (node: ts.BinaryExpression, request: FileMutationsRequest): IMutation | undefined => {
+const visitBinaryExpression = (node: ts.BinaryExpression, request: FileMutationsRequest): Mutation | undefined => {
     // Grab the types of the declared and assigned nodes
     const assignedType = getTypeAtLocationIfNotError(request, node.right);
     if (assignedType === undefined) {

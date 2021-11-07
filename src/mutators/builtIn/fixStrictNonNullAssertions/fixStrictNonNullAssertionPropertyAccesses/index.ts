@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags";
@@ -7,15 +7,15 @@ import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixStrictNonNullAssertionPropertyAccesses: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression): IMutation | undefined => {
+export const fixStrictNonNullAssertionPropertyAccesses: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
+    const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression): Mutation | undefined => {
         return getStrictPropertyAccessFix(request, node);
     };
 
     return collectMutationsFromNodes(request, ts.isPropertyAccessExpression, visitPropertyAccessExpression);
 };
 
-const getStrictPropertyAccessFix = (request: FileMutationsRequest, node: ts.PropertyAccessExpression): IMutation | undefined => {
+const getStrictPropertyAccessFix = (request: FileMutationsRequest, node: ts.PropertyAccessExpression): Mutation | undefined => {
     // Early on skip checking for "!" needs if there already is one
     if (ts.isAssertionExpression(node.parent) || ts.isNonNullExpression(node.parent)) {
         return undefined;

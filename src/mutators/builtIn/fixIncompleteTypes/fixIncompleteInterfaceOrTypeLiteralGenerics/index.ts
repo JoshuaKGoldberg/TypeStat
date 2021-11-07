@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { joinAssignedTypesByName } from "../../../../mutations/assignments";
@@ -10,13 +10,13 @@ import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 import { collectGenericNodeReferences, InterfaceOrTypeLiteral } from "./collectGenericNodeReferences";
 import { expandValuesAssignedToReferenceNodes } from "./expandValuesAssignedToReferenceNodes";
 
-export const fixIncompleteInterfaceOrTypeLiteralGenerics: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+export const fixIncompleteInterfaceOrTypeLiteralGenerics: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>
     collectMutationsFromNodes(request, isInterfaceOrTypeLiteral, visitInterfaceOrTypeLiteral);
 
 const isInterfaceOrTypeLiteral = (node: ts.Node): node is InterfaceOrTypeLiteral =>
     ts.isInterfaceDeclaration(node) || ts.isTypeLiteralNode(node);
 
-const visitInterfaceOrTypeLiteral = (node: InterfaceOrTypeLiteral, request: FileMutationsRequest): IMutation | undefined => {
+const visitInterfaceOrTypeLiteral = (node: InterfaceOrTypeLiteral, request: FileMutationsRequest): Mutation | undefined => {
     // Find all nodes that seem like they could possibly reference the generic
     const genericReferenceNodes = collectGenericNodeReferences(request, node);
     if (genericReferenceNodes === undefined) {
