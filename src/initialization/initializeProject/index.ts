@@ -20,19 +20,13 @@ export const initializeProject = async () => {
 };
 
 const initializeBuiltInProject = async () => {
-    const choices = [
-        ...uniquify(
-            "./tsconfig.json",
-            ...await globAllAsync(["./tsconfig*json", "./*/tsconfig*json"])
-        ),
-        custom,
-    ];
+    const choices = [...uniquify("./tsconfig.json", ...(await globAllAsync(["./tsconfig*json", "./*/tsconfig*json"]))), custom];
 
     const { project } = await prompt<{ project: string }>([
         {
             ...defaultSettings,
             choices,
-            initial: choices.findIndex(choice => fs.existsSync(choice)) ?? defaultChoices.length - 1,
+            initial: choices.findIndex((choice) => fs.existsSync(choice)) ?? defaultChoices.length - 1,
             type: "select",
         },
     ]);

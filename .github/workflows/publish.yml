@@ -1,0 +1,17 @@
+name: Publish to NPM
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: Codecademy/run-on-yarn@v1
+              with:
+                  command: compile
+            - uses: JS-DevTools/npm-publish@v1
+              with:
+                  token: ${{ secrets.NPM_TOKEN }}
+
+on:
+    push:
+        branches:
+            - main
