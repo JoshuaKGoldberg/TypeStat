@@ -4,7 +4,7 @@ import chalk from "chalk";
 import { TypeStatOptions } from "../../options/types";
 import { LazyCache } from "../../services/LazyCache";
 import { FileInfoCache } from "../../shared/FileInfoCache";
-import { convertMapToObject, Dictionary } from "../../shared/maps";
+import { convertMapToObject } from "../../shared/maps";
 import { NameGenerator } from "../../shared/NameGenerator";
 import { collectFilteredNodes } from "../collectFilteredNodes";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
@@ -71,10 +71,7 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
         }
 
         return {
-            fileMutations:
-                waveStartedFromBeginning && fileMutations.size === 0
-                    ? undefined
-                    : (convertMapToObject(fileMutations) as Dictionary<Mutation[]>),
+            fileMutations: waveStartedFromBeginning && fileMutations.size === 0 ? undefined : convertMapToObject(fileMutations),
         };
     };
 };

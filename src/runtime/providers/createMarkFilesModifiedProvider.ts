@@ -21,12 +21,18 @@ export const createMarkFilesModifiedProvider = (options: TypeStatOptions, allMod
         }
 
         const fileMutations: FileMutations = {};
+        let hadMutation = false;
 
         for (const fileName of allModifiedFileNames) {
-            fileMutations[fileName] = await createFileMutations(options, fileName);
-        }
+            const mutations = await createFileMutations(options, fileName);
 
-        return { fileMutations };
+            if (mutations.length !== 0) {
+                fileMutations[fileName] = mutations;
+                hadMutation = true;
+            }
+        }
+        
+        return { fileMutations: hadMutation ? fileMutations : undefined };
     });
 };
 

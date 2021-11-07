@@ -68,5 +68,7 @@ describeMutationTestCases(
         normalizeEndlines: "\n",
         original: "./original.*",
         settings: "typestat.json",
+        // *Two* waves allow testing that regular mutations happens alongside pre or post processing.
+        waves: { maximum: 2 },
     },
 );
