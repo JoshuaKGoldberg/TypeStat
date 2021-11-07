@@ -1,4 +1,4 @@
-import { ITextSwapMutation } from "automutate";
+import { TextSwapMutation } from "automutate";
 
 import { RequireRenameRequest } from "./findRequireRenameMutationsInFile";
 import { LocalImplicitRequireCallExpression } from "./isRequireToJsFile";
@@ -6,7 +6,7 @@ import { LocalImplicitRequireCallExpression } from "./isRequireToJsFile";
 export const createRequireMutation = (
     request: RequireRenameRequest,
     node: LocalImplicitRequireCallExpression,
-): ITextSwapMutation | undefined => {
+): TextSwapMutation | undefined => {
     const newLocalFilePath = node.arguments[0].text.replace(/.js$/i, ".ts").replace(/.jsx$/i, ".tsx");
     const newLocalImportPath = newLocalFilePath.replace(/.tsx?$/i, "");
 

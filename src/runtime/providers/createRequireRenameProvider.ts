@@ -1,4 +1,4 @@
-import { IMutation, IMutationsWave } from "automutate";
+import { Mutation } from "automutate";
 
 import { findRequireRenameMutationsInFile } from "../../mutations/renames/findRequireRenameMutationsInFile";
 import { TypeStatOptions } from "../../options/types";
@@ -13,14 +13,14 @@ import { createSingleUseProvider } from "../createSingleUserProvider";
  * @param allModifiedFileNames   Set to mark names of all files that were modified.
  */
 export const createRequireRenameProvider = (options: TypeStatOptions, allModifiedFiles: Set<string>) => {
-    return createSingleUseProvider(async (): Promise<IMutationsWave> => {
+    return createSingleUseProvider(async () => {
         if (!options.files.renameExtensions) {
             return {
                 fileMutations: undefined,
             };
         }
 
-        const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
+        const fileMutations = new Map<string, ReadonlyArray<Mutation>>();
         const { fileNames, services } = createFileNamesAndServices(options);
         const allFileNames = new Set(fileNames);
 
@@ -44,7 +44,7 @@ export const createRequireRenameProvider = (options: TypeStatOptions, allModifie
         }
 
         return {
-            fileMutations: fileMutations.size === 0 ? undefined : (convertMapToObject(fileMutations) as Dictionary<IMutation[]>),
+            fileMutations: fileMutations.size === 0 ? undefined : (convertMapToObject(fileMutations) as Dictionary<Mutation[]>),
         };
     });
 };

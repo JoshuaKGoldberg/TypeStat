@@ -1,4 +1,4 @@
-import { combineMutations, IMutation } from "automutate";
+import { combineMutations, Mutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
@@ -12,7 +12,7 @@ import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
 import { collectReturningNodeExpressions } from "./collectReturningNodeExpressions";
 
-export const fixStrictNonNullAssertionReturnTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+export const fixStrictNonNullAssertionReturnTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>
     collectMutationsFromNodes(request, isNodeVisitableFunctionLikeDeclaration, visitFunctionWithBody);
 
 const isNodeVisitableFunctionLikeDeclaration = (node: ts.Node): node is FunctionLikeDeclarationWithType =>
@@ -20,7 +20,7 @@ const isNodeVisitableFunctionLikeDeclaration = (node: ts.Node): node is Function
     // If the node has an implicit return type, we don't need to change anything
     isNodeWithType(node);
 
-const visitFunctionWithBody = (node: FunctionLikeDeclarationWithType, request: FileMutationsRequest): IMutation | undefined => {
+const visitFunctionWithBody = (node: FunctionLikeDeclarationWithType, request: FileMutationsRequest): Mutation | undefined => {
     // Collect the type initially declared as returned and whether it contains null and/or undefined
     const declaredType = getTypeAtLocationIfNotError(request, node.type);
 
@@ -51,8 +51,8 @@ const collectNonNullMutations = (
     functionLike: FunctionLikeDeclarationWithType,
     missingReturnTypes: ts.TypeFlags,
     expressions: ReadonlyArray<ts.Expression>,
-): ReadonlyArray<IMutation> => {
-    const mutations: IMutation[] = [];
+): ReadonlyArray<Mutation> => {
+    const mutations: Mutation[] = [];
 
     for (const expression of expressions) {
         // If the expression doesn't return a type missing from the return, it's already safe

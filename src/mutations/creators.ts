@@ -1,4 +1,4 @@
-import { ITextInsertMutation, ITextSwapMutation } from "automutate";
+import { TextInsertMutation, TextSwapMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
@@ -21,7 +21,7 @@ export const createTypeAdditionMutation = (
     node: NodeWithAddableType,
     declaredType: ts.Type,
     allAssignedTypes: ReadonlyArray<ts.Type>,
-): ITextInsertMutation | ITextSwapMutation | undefined => {
+): TextInsertMutation | TextSwapMutation | undefined => {
     // Find any missing flags and symbols (a.k.a. types)
     const { missingFlags, missingTypes } = collectUsageFlagsAndSymbols(request, declaredType, allAssignedTypes);
 
@@ -72,7 +72,7 @@ export const createTypeCreationMutation = (
     node: NodeWithCreatableType,
     declaredType: ts.Type,
     allAssignedTypes: ReadonlyArray<ts.Type>,
-): ITextInsertMutation | undefined => {
+): TextInsertMutation | undefined => {
     // Find the already assigned flags and symbols, as well as any missing ones
     const { assignedFlags, assignedTypes, missingFlags, missingTypes } = collectUsageFlagsAndSymbols(
         request,

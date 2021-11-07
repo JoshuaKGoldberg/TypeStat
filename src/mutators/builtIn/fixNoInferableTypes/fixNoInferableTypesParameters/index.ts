@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { createTypeRemovalMutation } from "../../../../mutations/removals";
@@ -7,7 +7,7 @@ import { ParameterDeclarationWithType, isNodeWithType } from "../../../../shared
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixNoInferableTypesParameters: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+export const fixNoInferableTypesParameters: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>
     collectMutationsFromNodes(request, isInferableTypeCapableParameter, getNoInferableTypeParameterMutation);
 
 const isInferableTypeCapableParameter = (node: ts.Node): node is ParameterDeclarationWithType =>

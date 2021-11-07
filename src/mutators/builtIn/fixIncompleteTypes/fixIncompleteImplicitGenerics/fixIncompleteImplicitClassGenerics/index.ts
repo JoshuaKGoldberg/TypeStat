@@ -1,4 +1,4 @@
-import { combineMutations, IMutation } from "automutate";
+import { combineMutations, Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { isNotUndefined } from "../../../../../shared/arrays";
@@ -12,7 +12,7 @@ import { fillInMissingTemplateTypes } from "../templateMutating";
 export const fixIncompleteImplicitClassGenerics: FileMutator = (request: FileMutationsRequest) =>
     collectMutationsFromNodes(request, ts.isClassLike, visitClassLike);
 
-const visitClassLike = (node: ts.ClassLikeDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+const visitClassLike = (node: ts.ClassLikeDeclaration, request: FileMutationsRequest): Mutation | undefined => {
     // We'll want a class node that extends some base class
     const extension = getClassExtendsExpression(node);
     if (extension === undefined) {

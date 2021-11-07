@@ -1,4 +1,4 @@
-import { ITextInsertMutation } from "automutate";
+import { TextInsertMutation } from "automutate";
 import glob from "glob";
 import * as path from "path";
 import * as ts from "typescript";
@@ -28,7 +28,7 @@ const isExtensionlessExportOrImport = (node: ts.Node): node is ExtensionlessExpo
 const visitExportOrImportDeclaration = (
     node: ExtensionlessExportOrImport,
     request: FileMutationsRequest,
-): ITextInsertMutation | undefined => {
+): TextInsertMutation | undefined => {
     // If the type of the import is already known, we don't need to fix it
     if (getTypeAtLocationIfNotError(request, node.moduleSpecifier) !== undefined) {
         return undefined;

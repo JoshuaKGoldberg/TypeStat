@@ -1,4 +1,4 @@
-import { IMutation, combineMutations } from "automutate";
+import { Mutation, combineMutations } from "automutate";
 import * as ts from "typescript";
 
 import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion";
@@ -9,15 +9,15 @@ import { getStaticNameOfProperty } from "../../../../shared/names";
 import { isNullOrUndefinedMissingBetween } from "../../../../shared/nodeTypes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 
-export const fixStrictNonNullAssertionObjectLiterals: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
-    const visitObjectLiteralExpression = (node: ts.ObjectLiteralExpression): IMutation | undefined => {
+export const fixStrictNonNullAssertionObjectLiterals: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
+    const visitObjectLiteralExpression = (node: ts.ObjectLiteralExpression): Mutation | undefined => {
         return getStrictPropertyFix(request, node);
     };
 
     return collectMutationsFromNodes(request, ts.isObjectLiteralExpression, visitObjectLiteralExpression);
 };
 
-const getStrictPropertyFix = (request: FileMutationsRequest, node: ts.ObjectLiteralExpression): IMutation | undefined => {
+const getStrictPropertyFix = (request: FileMutationsRequest, node: ts.ObjectLiteralExpression): Mutation | undefined => {
     // Find the object type the node's properties are being assigned into
     const assignedType = getManuallyAssignedTypeOfNode(request, node);
     if (assignedType === undefined) {

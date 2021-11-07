@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
@@ -10,7 +10,7 @@ import { createCodeFixCreationMutation } from "./creation";
  */
 const noImplicitThisErrorCode = 2683;
 
-export const getNoImplicitThisMutations = (node: ts.ThisExpression, request: FileMutationsRequest): IMutation | undefined => {
+export const getNoImplicitThisMutations = (node: ts.ThisExpression, request: FileMutationsRequest): Mutation | undefined => {
     // Create a mutation for the code fixes if anything is available
     const codeFixes = getNoImplicitThisCodeFixes(node, request);
 

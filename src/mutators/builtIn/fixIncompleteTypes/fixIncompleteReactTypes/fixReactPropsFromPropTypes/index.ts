@@ -1,4 +1,4 @@
-import { combineMutations, IMutation, ITextInsertMutation } from "automutate";
+import { combineMutations, Mutation, TextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
 import { ReactPropTypesHint } from "../../../../../options/enums";
@@ -15,7 +15,7 @@ import { getPropTypesValue } from "./propTypes/getPropTypesValue";
 /**
  * Creates an initial props type for a component from its PropTypes declaration.
  */
-export const fixReactPropsFromPropTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+export const fixReactPropsFromPropTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
     if (request.options.hints.react.propTypes === ReactPropTypesHint.Ignore) {
         return [];
     }
@@ -23,7 +23,7 @@ export const fixReactPropsFromPropTypes: FileMutator = (request: FileMutationsRe
     return collectMutationsFromNodes(request, isReactComponentNode, visitReactComponentNode);
 };
 
-const visitReactComponentNode = (node: ReactComponentNode, request: FileMutationsRequest): IMutation | undefined => {
+const visitReactComponentNode = (node: ReactComponentNode, request: FileMutationsRequest): Mutation | undefined => {
     // If the node is a class declaration, don't bother with prop types if it already declares a React.Component template
     if (ts.isClassDeclaration(node)) {
         const extendsType = getClassExtendsType(node);
@@ -44,7 +44,7 @@ const visitReactComponentNode = (node: ReactComponentNode, request: FileMutation
     const { interfaceName, interfaceNode } = createInterfaceFromPropTypes(request, node, propTypes);
 
     // That interface will be injected with blank lines around it just before the component
-    const mutations: IMutation[] = [createInterfaceCreationMutation(request, node, interfaceNode)];
+    const mutations: Mutation[] = [createInterfaceCreationMutation(request, node, interfaceNode)];
 
     // We'll also annotate the component with a type declaration to use the new prop type
     const usage = createInterfaceUsageMutation(node, interfaceName);
@@ -59,7 +59,7 @@ const createInterfaceCreationMutation = (
     request: FileMutationsRequest,
     node: ReactComponentNode,
     interfaceNode: ts.InterfaceDeclaration,
-): ITextInsertMutation => {
+): TextInsertMutation => {
     const endline = printNewLine(request.options.compilerOptions);
     const interfaceNodeText = request.services.printers.node(interfaceNode);
 

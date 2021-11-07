@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { createTypeRemovalMutation } from "../../../../mutations/removals";
@@ -9,7 +9,7 @@ import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
 type InferablePropertyDeclaration = ts.PropertyDeclaration & NodeWithType & Required<Pick<ts.PropertyDeclaration, "initializer">>;
 
-export const fixNoInferableTypesPropertyDeclarations: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+export const fixNoInferableTypesPropertyDeclarations: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>
     collectMutationsFromNodes(request, isInferableTypeCapablePropertyDeclaration, getNoInferableTypePropertyDeclarationMutation);
 
 const isInferableTypeCapablePropertyDeclaration = (node: ts.Node): node is InferablePropertyDeclaration =>

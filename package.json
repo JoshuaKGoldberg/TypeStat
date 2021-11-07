@@ -5,7 +5,7 @@
     },
     "dependencies": {
         "@phenomnomnominal/tsquery": "^4.1.1",
-        "automutate": "^0.7.3",
+        "automutate": "^0.8.0",
         "builtin-modules": "^3.2.0",
         "chalk": "^4.1.1",
         "commander": "^8.0.0",
@@ -31,7 +31,7 @@
         "@types/react": "17.0.13",
         "@typescript-eslint/eslint-plugin": "4.28.1",
         "@typescript-eslint/parser": "4.28.1",
-        "automutate-tests": "0.3.5",
+        "automutate-tests": "0.4.0",
         "babel-jest": "27.0.6",
         "chai": "4.3.4",
         "eslint": "7.30.0",

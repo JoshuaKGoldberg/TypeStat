@@ -1,4 +1,4 @@
-import { ITextInsertMutation, ITextSwapMutation } from "automutate";
+import { TextInsertMutation, TextSwapMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
@@ -16,9 +16,9 @@ const wrappedKinds = new Set([
     ts.SyntaxKind.VoidExpression,
 ]);
 
-export const createNonNullAssertion = (request: FileMutationsRequest, node: ts.Node): ITextInsertMutation | ITextSwapMutation => {  
+export const createNonNullAssertion = (request: FileMutationsRequest, node: ts.Node): TextInsertMutation | TextSwapMutation => {
     // For property assignments (`key: value`), create a non-null assertion only for `value`.
-    if(ts.isPropertyAssignment(node)) {
+    if (ts.isPropertyAssignment(node)) {
         node = node.initializer;
     }
 

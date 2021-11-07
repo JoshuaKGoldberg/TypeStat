@@ -23,12 +23,12 @@ const ts = requireExposedTypeScript();
 
 const rawPathToRegExp = (rawPath: string) => new RegExp(`.*${rawPath.split(/\\|\//g).slice(-3).join(".*")}.*`, "i");
 
-// The .vscode/launch.json task adds includes via this environment variable
+// The .vscode/launch.json task adds includes via environment variable
 const includes = [...arrayify(parsed.include ?? []).map(rawPathToRegExp), ...arrayify(process.env.TEST_GLOB).map(rawPathToRegExp)];
 
 describeMutationTestCases(
     path.join(__dirname, "../../test"),
-    (fileName: string, typeStatPath: string | undefined) => {
+    (fileName, typeStatPath) => {
         if (typeStatPath === undefined) {
             throw new Error(`Could not find typestat.json for ${fileName}.`);
         }

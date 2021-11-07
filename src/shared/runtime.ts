@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 
 import { MutationsComplaint } from "../mutators/complaint";
 import { FileMutationsRequest, FileMutator } from "../mutators/fileMutator";
@@ -6,7 +6,7 @@ import { FileMutationsRequest, FileMutator } from "../mutators/fileMutator";
 export const findFirstMutations = (
     request: FileMutationsRequest,
     mutators: ReadonlyArray<[string, FileMutator]>,
-): ReadonlyArray<IMutation> | MutationsComplaint | undefined => {
+): ReadonlyArray<Mutation> | MutationsComplaint | undefined => {
     for (const [mutatorName, mutator] of mutators) {
         try {
             const result = mutator(request);

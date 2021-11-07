@@ -1,4 +1,4 @@
-import { combineMutations, IMultipleMutations, ITextInsertMutation } from "automutate";
+import { combineMutations, MultipleMutations, TextInsertMutation } from "automutate";
 import * as ts from "typescript";
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 
@@ -18,7 +18,7 @@ export const createCodeFixCreationMutation = (
     request: FileMutationsRequest,
     codeFixes: ReadonlyArray<ts.CodeFixAction>,
     preferences: CodeFixCreationPreferences = {},
-): IMultipleMutations | undefined => {
+): MultipleMutations | undefined => {
     if (codeFixes.length === 0) {
         return undefined;
     }
@@ -41,7 +41,7 @@ export const createCodeFixCreationMutation = (
 
     return combineMutations(
         ...simplifiedTextChanges.map(
-            (textChange): ITextInsertMutation => ({
+            (textChange): TextInsertMutation => ({
                 insertion: textChange.newText,
                 range: {
                     begin: textChange.span.start,
