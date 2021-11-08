@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
@@ -10,7 +10,7 @@ import { createCodeFixCreationMutation } from "./creation";
  */
 const fixMissingPropertyErrorCode = 2339;
 
-export const getMissingPropertyMutations = (request: FileMutationsRequest, node: ts.PropertyAccessExpression): IMutation | undefined => {
+export const getMissingPropertyMutations = (request: FileMutationsRequest, node: ts.PropertyAccessExpression): Mutation | undefined => {
     // Skip nodes that aren't setting a member of a `this` node
     if (!nodeIsSettingThisMember(node)) {
         return undefined;

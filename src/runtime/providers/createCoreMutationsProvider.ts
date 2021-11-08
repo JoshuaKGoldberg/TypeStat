@@ -1,10 +1,10 @@
-import { IMutation, IMutationsWave } from "automutate";
+import { Mutation, MutationsWave } from "automutate";
 import chalk from "chalk";
 
 import { TypeStatOptions } from "../../options/types";
 import { LazyCache } from "../../services/LazyCache";
 import { FileInfoCache } from "../../shared/FileInfoCache";
-import { convertMapToObject, Dictionary } from "../../shared/maps";
+import { convertMapToObject } from "../../shared/maps";
 import { NameGenerator } from "../../shared/NameGenerator";
 import { collectFilteredNodes } from "../collectFilteredNodes";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
@@ -20,9 +20,9 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
     const fileNamesAndServicesCache = createFileNamesAndServicesCache(options);
     let lastFileIndex = -1;
 
-    return async (): Promise<IMutationsWave> => {
+    return async (): Promise<MutationsWave> => {
         const startTime = Date.now();
-        const fileMutations = new Map<string, ReadonlyArray<IMutation>>();
+        const fileMutations = new Map<string, ReadonlyArray<Mutation>>();
         const { fileNames, services } = fileNamesAndServicesCache.get();
         const waveStartedFromBeginning = lastFileIndex <= 0;
         let addedMutations = 0;
@@ -57,7 +57,7 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
         }
 
         if (lastFileIndex === fileNames.length) {
-            lastFileIndex = 0;
+            lastFileIndex = -1;
 
             // Only recreate the language service once we've visited every file
             // This way we don't constantly re-scan many of the source files each wave
@@ -71,10 +71,7 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
         }
 
         return {
-            fileMutations:
-                waveStartedFromBeginning && fileMutations.size === 0
-                    ? undefined
-                    : (convertMapToObject(fileMutations) as Dictionary<IMutation[]>),
+            fileMutations: waveStartedFromBeginning && fileMutations.size === 0 ? undefined : convertMapToObject(fileMutations),
         };
     };
 };

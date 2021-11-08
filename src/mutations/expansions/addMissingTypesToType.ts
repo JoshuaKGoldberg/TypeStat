@@ -1,4 +1,4 @@
-import { ITextInsertMutation } from "automutate";
+import { TextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
@@ -13,7 +13,7 @@ export const addMissingTypesToType = (
     request: FileMutationsRequest,
     node: ts.InterfaceDeclaration | ts.TypeLiteralNode,
     missingTypes: TypeSummariesByName,
-): ITextInsertMutation | undefined => {
+): TextInsertMutation | undefined => {
     let insertion = "";
 
     for (const [name, summary] of missingTypes) {

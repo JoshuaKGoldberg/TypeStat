@@ -5,7 +5,7 @@ import * as path from "path";
 
 import { requireExposedTypeScript } from "../mutations/createExposedTypeScript";
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
-import { RawTypeStatOptions, TypeStatOptions } from "../options/types";
+import { RawTypeStatOptions } from "../options/types";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider";
 import { arrayify } from "../shared/arrays";
 
@@ -23,12 +23,12 @@ const ts = requireExposedTypeScript();
 
 const rawPathToRegExp = (rawPath: string) => new RegExp(`.*${rawPath.split(/\\|\//g).slice(-3).join(".*")}.*`, "i");
 
-// The .vscode/launch.json task adds includes via this environment variable
+// The .vscode/launch.json task adds includes via environment variable
 const includes = [...arrayify(parsed.include ?? []).map(rawPathToRegExp), ...arrayify(process.env.TEST_GLOB).map(rawPathToRegExp)];
 
 describeMutationTestCases(
     path.join(__dirname, "../../test"),
-    (fileName: string, typeStatPath: string | undefined) => {
+    (fileName, typeStatPath) => {
         if (typeStatPath === undefined) {
             throw new Error(`Could not find typestat.json for ${fileName}.`);
         }
@@ -46,7 +46,7 @@ describeMutationTestCases(
         };
 
         return createTypeStatProvider({
-            ...(fillOutRawOptions({
+            ...fillOutRawOptions({
                 argv: { args: [] },
                 compilerOptions,
                 cwd: path.dirname(projectPath),
@@ -56,7 +56,7 @@ describeMutationTestCases(
                     ...rawOptions,
                     projectPath,
                 },
-            }) as TypeStatOptions),
+            }),
             fileNames: [fileName],
         });
     },
@@ -68,5 +68,7 @@ describeMutationTestCases(
         normalizeEndlines: "\n",
         original: "./original.*",
         settings: "typestat.json",
+        // *Two* waves allow testing that regular mutations happens alongside pre or post processing.
+        waves: { maximum: 2 },
     },
 );

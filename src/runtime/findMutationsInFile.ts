@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import chalk from "chalk";
 import { EOL } from "os";
 
@@ -9,7 +9,7 @@ import { findFirstMutations } from "../shared/runtime";
 /**
  * Collects all mutations that should apply to a file.
  */
-export const findMutationsInFile = async (request: FileMutationsRequest): Promise<ReadonlyArray<IMutation> | undefined> => {
+export const findMutationsInFile = async (request: FileMutationsRequest): Promise<ReadonlyArray<Mutation> | undefined> => {
     const checkMessage = chalk.grey(`Checking ${chalk.bold(request.sourceFile.fileName)}...`);
     request.options.output.stdout(checkMessage);
 

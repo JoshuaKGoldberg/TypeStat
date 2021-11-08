@@ -1,4 +1,4 @@
-import { IFileMutations, IMutationsWave, ITextInsertMutation } from "automutate";
+import { FileMutations, TextInsertMutation } from "automutate";
 import * as fs from "mz/fs";
 
 import { TypeStatOptions } from "../../options/types";
@@ -13,27 +13,31 @@ import { createSingleUseProvider } from "../createSingleUserProvider";
  * @returns Mutations wave marking all mutated files as modified.
  */
 export const createMarkFilesModifiedProvider = (options: TypeStatOptions, allModifiedFileNames: ReadonlySet<string>) => {
-    return createSingleUseProvider(
-        async (): Promise<IMutationsWave> => {
-            if (options.files.above === "" && options.files.below === "") {
-                return {
-                    fileMutations: undefined,
-                };
+    return createSingleUseProvider(async () => {
+        if (options.files.above === "" && options.files.below === "") {
+            return {
+                fileMutations: undefined,
+            };
+        }
+
+        const fileMutations: FileMutations = {};
+        let hadMutation = false;
+
+        for (const fileName of allModifiedFileNames) {
+            const mutations = await createFileMutations(options, fileName);
+
+            if (mutations.length !== 0) {
+                fileMutations[fileName] = mutations;
+                hadMutation = true;
             }
-
-            const fileMutations: IFileMutations = {};
-
-            for (const fileName of allModifiedFileNames) {
-                fileMutations[fileName] = await createFileMutations(options, fileName);
-            }
-
-            return { fileMutations };
-        },
-    );
+        }
+        
+        return { fileMutations: hadMutation ? fileMutations : undefined };
+    });
 };
 
-const createFileMutations = async (options: TypeStatOptions, fileName: string): Promise<ITextInsertMutation[]> => {
-    const mutations: ITextInsertMutation[] = [];
+const createFileMutations = async (options: TypeStatOptions, fileName: string): Promise<TextInsertMutation[]> => {
+    const mutations: TextInsertMutation[] = [];
     const fileContents = (await fs.readFile(fileName)).toString();
     const fileContentsTrimmed = fileContents.trim();
     const newLine = printNewLine(options.compilerOptions);

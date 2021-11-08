@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { getMissingPropertyMutations } from "../../../../mutations/codeFixes/addMissingProperty";
@@ -6,13 +6,13 @@ import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixMissingPropertyAccesses: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+export const fixMissingPropertyAccesses: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
     // If an undeclared property is referenced multiple times, TypeScript will suggest adding it in each time
     // We therefore only suggest each property name once per wave
     // In theory, we could also respect each node name per class, but that's hard, and it's rare to have many classes per file
     const suggestedMissingProperties = new Set<string>();
 
-    const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression): IMutation | undefined => {
+    const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression): Mutation | undefined => {
         // If the access should create a missing property, go for that
         const missingPropertyFix = getMissingPropertyMutations(request, node);
         if (missingPropertyFix === undefined) {

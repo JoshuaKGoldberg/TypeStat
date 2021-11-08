@@ -1,4 +1,4 @@
-import { combineMutations, IMutation } from "automutate";
+import { combineMutations, Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { AssignedTypesByName } from "../assignments";
@@ -22,7 +22,7 @@ export const createTypeExpansionMutation = (
     request: FileMutationsRequest,
     node: InterfaceOrTypeLiteral,
     allAssignedTypes: AssignedTypesByName[],
-): IMutation | undefined => {
+): Mutation | undefined => {
     const originalPropertiesByName = groupPropertyDeclarationsByName(node);
     const summarizedAssignedTypes = summarizeAllAssignedTypes(request, allAssignedTypes);
     const incompleteTypes: TypeSummariesPerNodeByName = new Map();

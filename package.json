@@ -5,7 +5,7 @@
     },
     "dependencies": {
         "@phenomnomnominal/tsquery": "^4.1.1",
-        "automutate": "^0.7.3",
+        "automutate": "^0.8.1",
         "builtin-modules": "^3.2.0",
         "chalk": "^4.1.1",
         "commander": "^8.0.0",
@@ -31,7 +31,7 @@
         "@types/react": "17.0.13",
         "@typescript-eslint/eslint-plugin": "4.28.1",
         "@typescript-eslint/parser": "4.28.1",
-        "automutate-tests": "0.3.5",
+        "automutate-tests": "0.4.1",
         "babel-jest": "27.0.6",
         "chai": "4.3.4",
         "eslint": "7.30.0",
@@ -50,7 +50,9 @@
     },
     "license": "MIT",
     "lint-staged": {
-        "**/*.{js,json,md,ts,xml,yaml}": ["prettier --write"]
+        "**/*.{js,json,md,ts,xml,yaml}": [
+            "prettier --write"
+        ]
     },
     "main": "src/index.js",
     "name": "typestat",
@@ -59,17 +61,18 @@
         "url": "git+https://github.com/JoshuaKGoldberg/TypeStat.git"
     },
     "scripts": {
+        "compile": "tsc",
+        "format": "yarn prettier --write",
+        "format:verify": "yarn prettier --list-different \"**/*.{js,json,md,ts,yml}\"",
+        "format:write": "yarn format:verify --write",
         "lint": "run-p lint:*",
-        "lint:markdownlint": "markdownlint --config .markdownlint.json --rules ./node_modules/sentences-per-line/index.js README.md",
         "lint:eslint": "eslint ./src/**/*.ts",
+        "lint:markdownlint": "markdownlint --config .markdownlint.json --rules ./node_modules/sentences-per-line/index.js README.md",
         "precommit": "lint-staged",
-        "prettier:write": "prettier --config .prettierrc.json --write",
-        "prettier:write:all": "yarn run prettier:write ./{src,test,util}/**/*.{json,ts}",
         "test": "yarn run test:unit && yarn run test:mutation",
         "test:mutation": "mocha src/tests/runTests.js --timeout 10000",
         "test:unit": "jest --config=jest.config.js",
-        "tsc": "tsc",
         "verify": "yarn run tsc && yarn run lint && yarn run test"
     },
-    "version": "0.5.1"
+    "version": "0.5.4"
 }

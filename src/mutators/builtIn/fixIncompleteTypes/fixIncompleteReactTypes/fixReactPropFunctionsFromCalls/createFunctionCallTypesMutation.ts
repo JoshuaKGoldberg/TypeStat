@@ -1,4 +1,4 @@
-import { combineMutations, ITextSwapMutation } from "automutate";
+import { combineMutations, TextSwapMutation } from "automutate";
 import * as ts from "typescript";
 
 import { collectOptionals, isNotUndefined } from "../../../../../shared/arrays";
@@ -26,7 +26,7 @@ const createFunctionCallTypeMutation = (
     request: FileMutationsRequest,
     member: PropertySignatureWithStaticName,
     functionCallTypes: FunctionCallType[],
-): ITextSwapMutation => {
+): TextSwapMutation => {
     const combinedType = functionCallTypes.reduce<CombinedFunctionType>(
         (accum, functionCallType) => {
             return {

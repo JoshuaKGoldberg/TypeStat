@@ -1,11 +1,11 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../../../mutations/codeFixes/noImplicitAny";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixNoImplicitAnyVariableDeclarations: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> => {
+export const fixNoImplicitAnyVariableDeclarations: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
     // This mutator fixes only for --noImplicitAny
     if (!request.options.fixes.noImplicitAny) {
         return [];
@@ -22,7 +22,7 @@ const isNodeVisitableVariableDeclaration = (node: ts.Node): node is ts.VariableD
     !ts.isForInStatement(node.parent.parent) &&
     !ts.isForOfStatement(node.parent.parent);
 
-const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): Mutation | undefined => {
     // If the variable violates --noImplicitAny (has no type or initializer), this can only be a --noImplicitAny fix
     if (canNodeBeFixedForNoImplicitAny(node)) {
         return getNoImplicitAnyMutations(node, request);

@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
@@ -9,13 +9,13 @@ import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
 import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
 
-export const fixIncompletePropertyDeclarationTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<IMutation> =>
+export const fixIncompletePropertyDeclarationTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>
     collectMutationsFromNodes(request, isPropertyDeclarationWithType, visitPropertyDeclaration);
 
 const isPropertyDeclarationWithType = (node: ts.Node): node is ts.PropertyDeclaration & NodeWithType =>
     ts.isPropertyDeclaration(node) && isNodeWithType(node);
 
-const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMutationsRequest): IMutation | undefined => {
+const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMutationsRequest): Mutation | undefined => {
     // Collect types later assigned to the property, and types initially declared by or inferred on the property
     const assignedTypes = collectPropertyAssignedTypes(node, request);
     const declaredType = getTypeAtLocationIfNotError(request, node);

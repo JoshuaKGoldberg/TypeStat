@@ -1,4 +1,4 @@
-import { IMutation } from "automutate";
+import { Mutation } from "automutate";
 import * as ts from "typescript";
 
 import { TypeStatOptions } from "../../options/types";
@@ -13,7 +13,7 @@ export interface RequireRenameRequest {
 }
 
 export const findRequireRenameMutationsInFile = (request: RequireRenameRequest) => {
-    const mutations: IMutation[] = [];
+    const mutations: Mutation[] = [];
     const visitNode = (node: ts.Node) => {
         if (isRequireToJsFile(node)) {
             const mutation = createRequireMutation(request, node);

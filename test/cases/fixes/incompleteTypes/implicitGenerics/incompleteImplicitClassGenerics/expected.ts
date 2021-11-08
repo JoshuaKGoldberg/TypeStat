@@ -4,8 +4,8 @@ import { ComponentLike } from './react-like';
     // Straightforward generics
 
     class BaseWithoutGenerics { }
-    class BaseWithOneGeneric<T> { constructor(t: T) { } }
-    class BaseWithTwoGenerics<T, U> {constructor(t: T, u: U) {} }
+    class BaseWithOneGeneric<T> { constructor(t: T | OneInterface | OneType | string) { } }
+    class BaseWithTwoGenerics<T, U> {constructor(t: T | number, u: U | boolean) {} }
 
     class ExtendsBaseWithout extends BaseWithoutGenerics { }
     new ExtendsBaseWithout();
