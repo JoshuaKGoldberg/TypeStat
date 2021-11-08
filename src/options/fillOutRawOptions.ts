@@ -35,7 +35,7 @@ export const fillOutRawOptions = ({
     output,
     projectPath,
     rawOptions,
-}: OptionsFromRawOptionsSettings): TypeStatOptions | string => {
+}: OptionsFromRawOptionsSettings): TypeStatOptions => {
     const rawOptionTypes = rawOptions.types === undefined ? {} : rawOptions.types;
     const noImplicitAny = collectNoImplicitAny(compilerOptions, rawOptions);
     const noImplicitThis = collectNoImplicitThis(compilerOptions, rawOptions);

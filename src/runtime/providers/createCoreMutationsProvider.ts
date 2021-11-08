@@ -4,7 +4,7 @@ import chalk from "chalk";
 import { TypeStatOptions } from "../../options/types";
 import { LazyCache } from "../../services/LazyCache";
 import { FileInfoCache } from "../../shared/FileInfoCache";
-import { convertMapToObject, Dictionary } from "../../shared/maps";
+import { convertMapToObject } from "../../shared/maps";
 import { NameGenerator } from "../../shared/NameGenerator";
 import { collectFilteredNodes } from "../collectFilteredNodes";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
@@ -57,7 +57,7 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
         }
 
         if (lastFileIndex === fileNames.length) {
-            lastFileIndex = 0;
+            lastFileIndex = -1;
 
             // Only recreate the language service once we've visited every file
             // This way we don't constantly re-scan many of the source files each wave
@@ -71,10 +71,7 @@ export const createCoreMutationsProvider = (options: TypeStatOptions, allModifie
         }
 
         return {
-            fileMutations:
-                waveStartedFromBeginning && fileMutations.size === 0
-                    ? undefined
-                    : (convertMapToObject(fileMutations) as Dictionary<Mutation[]>),
+            fileMutations: waveStartedFromBeginning && fileMutations.size === 0 ? undefined : convertMapToObject(fileMutations),
         };
     };
 };

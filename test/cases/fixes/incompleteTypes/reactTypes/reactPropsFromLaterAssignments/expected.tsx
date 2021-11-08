@@ -31,7 +31,7 @@ texts?: string[];
 
     type WithFunctionsProps = {
         returnsBoolean: (() => boolean);
-        returnsStringOrNumber: () => string | (() => number);
+        returnsStringOrNumber: () => string | (() => number) | (() => number);
     }
 
     class WithFunctions extends React.Component<WithFunctionsProps> { }

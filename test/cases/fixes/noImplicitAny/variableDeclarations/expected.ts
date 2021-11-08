@@ -59,12 +59,12 @@
 
     // Any
 
-    let startsAnyWithString: any | string = "";
+    let startsAnyWithString: any | string | string = "";
 
-    let startsAnyGivenString: any | string;
+    let startsAnyGivenString: any | string | string;
     startsAnyGivenString = "";
 
-    let startsAnyWithStringGivenString: any | string = "";
+    let startsAnyWithStringGivenString: any | string | string = "";
     startsAnyWithStringGivenString = "";
 
     let startsStringWithAny: string = {} as any;
