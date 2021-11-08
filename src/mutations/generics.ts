@@ -10,7 +10,7 @@ import { constructArrayShorthand } from "./arrays";
  */
 export const joinIntoGenericType = (request: FileMutationsRequest, containerType: ts.Type, allTypeArgumentTypes: ts.Type[][]) => {
     const containerTypeName = request.services.printers
-        .type(containerType, undefined, ts.TypeFormatFlags.WriteArrayAsGenericType)
+        .type(containerType, undefined, ts.TypeFormatFlags.NoTruncation & ts.TypeFormatFlags.WriteArrayAsGenericType)
         // Names with parameters like Array<T> and Map<K, V> should ignore those parameters
         .split("<")[0];
 
