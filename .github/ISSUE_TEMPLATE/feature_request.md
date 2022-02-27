@@ -1,23 +1,20 @@
 ---
-name: Feature Request
-about: Request a new feature or enhancement be added
+name: Feature request
+about: Suggest an idea for this project
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
-<!--
-👋 Hi, thanks for filing an issue on TypeStat! 💖
-Please fill out all fields below to ensure your issue is addressed.
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-If your issue doesn't provide enough info to fully explain your proposed feature, it will be closed. 😦
--->
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
 
-### 🚀 Feature Request
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features you've considered.
 
-<!-- General description of what you'd like to see changed. -->
-
-#### Existing Behavior
-
-<!-- What is the behavior right now? -->
-
-#### Change Proposal
-
-<!-- What are the specific changes you'd like to see? -->
+**Additional context**
+Add any other context or screenshots about the feature request here.
