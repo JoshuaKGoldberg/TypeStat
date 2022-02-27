@@ -1,32 +1,38 @@
 ---
-name: Bug Report
-about: Report a general bug in TypeStat
+name: Bug report
+about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
+
 ---
 
-<!--
-👋 Hi, thanks for filing an issue on TypeStat! 💖
-Please fill out all fields below to ensure your issue is addressed.
+**Describe the bug**
+A clear and concise description of what the bug is.
 
-If your issue doesn't provide enough info to fully explain or reproduce your bug, it will be closed. 😦
--->
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
 
-### 🐛 Bug Report
+**Expected behavior**
+A clear and concise description of what you expected to happen.
 
--   TypeStat version: X.X.X
--   TypeScript version: X.X.X
--   Node version: X.X.X
+**Screenshots**
+If applicable, add screenshots to help explain your problem.
 
-#### Actual Behavior
+**Desktop (please complete the following information):**
+ - OS: [e.g. iOS]
+ - Browser [e.g. chrome, safari]
+ - Version [e.g. 22]
 
-<!-- What is the behavior right now? -->
+**Smartphone (please complete the following information):**
+ - Device: [e.g. iPhone6]
+ - OS: [e.g. iOS8.1]
+ - Browser [e.g. stock browser, safari]
+ - Version [e.g. 22]
 
-#### Expected Behavior
-
-<!-- What are the specific changes you'd like to see? -->
-
-#### Reproduction
-
-<!--
-Please paste a link to a repository, Gist, or other means of reproducing your error here.
-That must include your typestat.json file and any source files relevant to the issue.
--->
+**Additional context**
+Add any other context about the problem here.
