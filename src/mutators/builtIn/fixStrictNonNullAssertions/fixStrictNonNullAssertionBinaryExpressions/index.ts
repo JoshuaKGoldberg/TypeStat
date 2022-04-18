@@ -1,4 +1,5 @@
 import { Mutation } from "automutate";
+import { isTypeFlagSet } from "tsutils";
 import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags";
@@ -20,7 +21,7 @@ const visitBinaryExpression = (node: ts.BinaryExpression, request: FileMutations
     }
 
     const declaredType = getTypeAtLocationIfNotError(request, node.left);
-    if (declaredType === undefined) {
+    if (declaredType === undefined || isTypeFlagSet(declaredType, ts.TypeFlags.Any)) {
         return undefined;
     }
 

@@ -1,4 +1,13 @@
 (function () {
+    let implicitAnyDirectUndefined;
+    implicitAnyDirectUndefined = undefined;
+
+    let implicitAnyDirectNull;
+    implicitAnyDirectNull = null;
+
+    let implicitAnyTernary;
+    implicitAnyTernary = Math.random() > 0.5 ? undefined : '';
+
     function improperStringOrUndefined(text: string | undefined) {
         let recipient = '';
         recipient = text!;
