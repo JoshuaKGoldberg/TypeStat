@@ -33,7 +33,7 @@ export const canNodeBeFixedForNoImplicitAny = (node: NoImplicitAnyNode): node is
 
 export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, request: FileMutationsRequest): Mutation | undefined => {
     // If the node is a parameter, make sure it doesn't already have an inferable type
-    // (TypeScript will still suggest a codefix to make a reundant inferred type)
+    // (TypeScript will still suggest a codefix to make a redundant inferred type)
     if (ts.isParameter(node)) {
         const nodeType = getTypeAtLocationIfNotError(request, node);
         if (nodeType === undefined || !tsutils.isTypeFlagSet(nodeType, ts.TypeFlags.Any)) {

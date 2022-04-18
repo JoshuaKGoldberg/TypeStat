@@ -16,8 +16,8 @@ export const fixStrictNonNullAssertionPropertyAccesses: FileMutator = (request: 
 };
 
 const getStrictPropertyAccessFix = (request: FileMutationsRequest, node: ts.PropertyAccessExpression): Mutation | undefined => {
-    // Early on skip checking for "!" needs if there already is one
-    if (ts.isAssertionExpression(node.parent) || ts.isNonNullExpression(node.parent)) {
+    // Early on skip checking for "!" needs if there already is one or it's a ?.
+    if (ts.isAssertionExpression(node.parent) || ts.isNonNullExpression(node.parent) || node.questionDotToken) {
         return undefined;
     }
 
@@ -30,5 +30,5 @@ const getStrictPropertyAccessFix = (request: FileMutationsRequest, node: ts.Prop
     }
 
     // Add a mutation to insert a "!" before the access
-    return createNonNullAssertion(request, node);
+    return createNonNullAssertion(request, node.expression);
 };
