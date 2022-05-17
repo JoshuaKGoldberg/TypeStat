@@ -1,14 +1,21 @@
-# TypeStat
+<h1 align="center">TypeStat</h1>
 
-![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-14cc21.svg)
-![TypeScript: Strict](https://img.shields.io/badge/typescript-strict-informational.svg)
-![Build Status](https://img.shields.io/github/workflow/status/JoshuaKGoldberg/TypeStat/Push%20CI)
-[![Join the chat at https://gitter.im/TypeStat/community](https://img.shields.io/badge/chat-gitter-informational.svg)](https://gitter.im/TypeStat/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![NPM version](https://badge.fury.io/js/typestat.svg)](http://badge.fury.io/js/typestat)
+<p align="center"><strong>Converts JavaScript to TypeScript</strong> and <em>TypeScript to better TypeScript</em>.</p>
 
-**Converts JavaScript to TypeScript** _and TypeScript to better TypeScript._
+<p align="center">
+    <img alt="Code Style: Prettier" src="https://img.shields.io/badge/code_style-prettier-14cc21.svg" />
+    <img alt="TypeScript: Strict" src="https://img.shields.io/badge/typescript-strict-14cc21.svg" />
+    <a href="https://github.com/JoshuaKGoldberg/TypeStat/actions/workflows/push.yml">
+        <img alt="Build Status" src="https://img.shields.io/github/workflow/status/JoshuaKGoldberg/TypeStat/Push%20CI" />
+    </a>
+    <a href="http://badge.fury.io/js/typestat">
+        <img alt="NPM version" src="https://badge.fury.io/js/typestat.svg" />
+    </a>
+</p>
 
 ## Usage
+
+<img align="right" alt="TypeStat logo: the TypeScript blue square with rounded corners, but a plus sign instead of 'TS'" src="./typestat.png">
 
 TypeStat is a CLI utility that modifies TypeScript types in existing code.
 The built-in mutators will only ever add or remove types and will never change your runtime behavior.
