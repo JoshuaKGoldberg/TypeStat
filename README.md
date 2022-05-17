@@ -13,9 +13,9 @@
     </a>
 </p>
 
-## Usage
-
 <img align="right" alt="TypeStat logo: the TypeScript blue square with rounded corners, but a plus sign instead of 'TS'" src="./typestat.png">
+
+## Usage
 
 TypeStat is a CLI utility that modifies TypeScript types in existing code.
 The built-in mutators will only ever add or remove types and will never change your runtime behavior.
