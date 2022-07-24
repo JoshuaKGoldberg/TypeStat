@@ -2,10 +2,11 @@
 require("./mutations/createExposedTypeScript").requireExposedTypeScript();
 
 import { runMutations } from "automutate";
+import { collectFileNames } from "./collectFileNames";
 
-import { loadOptions } from "./options/loadOptions";
+import { loadPendingOptions } from "./options/loadPendingOptions";
 import { processFileRenames } from "./options/processFileRenames";
-import { TypeStatOptions } from "./options/types";
+import { PendingTypeStatOptions } from "./options/types";
 import { ProcessOutput } from "./output";
 import { createTypeStatProvider } from "./runtime/createTypeStatProvider";
 
@@ -41,24 +42,37 @@ export interface SucceededResult {
 }
 
 export const typeStat = async (argv: TypeStatArgv, output: ProcessOutput): Promise<TypeStatResult> => {
-    const allOptions = await tryLoadingOptions(argv, output);
-    if (allOptions instanceof Error || typeof allOptions === "string") {
+    const allPendingOptions = await tryLoadingPendingOptions(argv, output);
+    if (allPendingOptions instanceof Error || typeof allPendingOptions === "string") {
         return {
-            error: allOptions,
+            error: allPendingOptions,
             status: ResultStatus.ConfigurationError,
         };
     }
-    for (let i = 0; i < allOptions.length; i += 1) {
-        // First run any any file renames needed as part of project setup
-        const options = await processFileRenames(allOptions[i]);
-        if (typeof options === "string") {
+    for (let i = 0; i < allPendingOptions.length; i += 1) {
+        function createFailure(message: string): TypeStatResult {
             return {
-                error: new Error(`Could not run options at index ${i}: ${options}`),
+                error: new Error(`Could not run options at index ${i}: ${message}`),
                 status: ResultStatus.Failed,
             };
         }
 
-        // Next run the actual core TypeStat mutation logic
+        // Collect all files to be run on this option iteration from the include glob(s)
+        const fileNames = await collectFileNames(argv, process.cwd(), allPendingOptions[i].include);
+        if (!fileNames) {
+            continue;
+        }
+        if (typeof fileNames === "string") {
+            return createFailure(fileNames);
+        }
+
+        // Run any any file renames needed as part of project setup
+        const options = await processFileRenames(fileNames, allPendingOptions[i]);
+        if (typeof options === "string") {
+            return createFailure(options);
+        }
+
+        // Finally run the actual core TypeStat mutation logic
         try {
             await runMutations({
                 mutationsProvider: createTypeStatProvider(options),
@@ -76,9 +90,9 @@ export const typeStat = async (argv: TypeStatArgv, output: ProcessOutput): Promi
     };
 };
 
-const tryLoadingOptions = async (argv: TypeStatArgv, output: ProcessOutput): Promise<TypeStatOptions[] | Error | string> => {
+const tryLoadingPendingOptions = async (argv: TypeStatArgv, output: ProcessOutput): Promise<PendingTypeStatOptions[] | Error | string> => {
     try {
-        return await loadOptions(argv, output);
+        return await loadPendingOptions(argv, output);
     } catch (error) {
         return error instanceof Error ? error : new Error(error as string);
     }

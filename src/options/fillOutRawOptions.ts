@@ -11,31 +11,29 @@ import { collectNoImplicitAny } from "./parsing/collectNoImplicitAny";
 import { collectNoImplicitThis } from "./parsing/collectNoImplicitThis";
 import { collectPackageOptions } from "./parsing/collectPackageOptions";
 import { collectStrictNullChecks } from "./parsing/collectStrictNullChecks";
-import { RawTypeStatOptions, TypeStatOptions } from "./types";
+import { PendingTypeStatOptions, RawTypeStatOptions } from "./types";
 
 export interface OptionsFromRawOptionsSettings {
     argv: TypeStatArgv;
     compilerOptions: Readonly<ts.CompilerOptions>;
     cwd: string;
-    fileNames?: ReadonlyArray<string>;
     output: ProcessOutput;
     projectPath: string;
     rawOptions: RawTypeStatOptions;
 }
 
 /**
- * Combines Node and CLi argument options with project and file metadata into TypeStat options.
+ * Combines Node and CLi argument options with project and file metadata into pending TypeStat options.
  *
  * @returns Parsed TypeStat options, or a string for an error complaint.
  */
 export const fillOutRawOptions = ({
     compilerOptions,
     cwd,
-    fileNames,
     output,
     projectPath,
     rawOptions,
-}: OptionsFromRawOptionsSettings): TypeStatOptions => {
+}: OptionsFromRawOptionsSettings): PendingTypeStatOptions => {
     const rawOptionTypes = rawOptions.types === undefined ? {} : rawOptions.types;
     const noImplicitAny = collectNoImplicitAny(compilerOptions, rawOptions);
     const noImplicitThis = collectNoImplicitThis(compilerOptions, rawOptions);
@@ -55,7 +53,6 @@ export const fillOutRawOptions = ({
             noImplicitThis,
             strictNullChecks: compilerStrictNullChecks,
         },
-        fileNames,
         files: collectFileOptions(rawOptions),
         filters: collectOptionals(rawOptions.filters),
         fixes: {
@@ -74,6 +71,7 @@ export const fillOutRawOptions = ({
                 propTypesOptionality: rawOptions.hints?.react?.propTypesOptionality ?? ReactPropTypesOptionality.AsWritten,
             },
         },
+        include: rawOptions.include,
         mutators: collectAddedMutators(rawOptions, packageOptions.directory, output),
         output,
         package: packageOptions,
