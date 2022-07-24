@@ -7,7 +7,7 @@ import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums";
 /**
  * Options listed as JSON in a typestat configuration file.
  *
- * @remarks These are read from disk and parsed into {@link TypeStatOptions}.
+ * @remarks These are read from disk and parsed into {@link PendingTypeStatOptions}.
  */
 export interface RawTypeStatOptions {
     /**
@@ -133,6 +133,8 @@ export interface BaseTypeStatOptions {
 
 /**
  * Parsed runtime options for TypeStat after file renames and before loading files.
+ *
+ * @remarks These have includes globbed from disks to turn into {@link TypeStatOptions}.
  */
 export interface PendingTypeStatOptions extends BaseTypeStatOptions {
     /**
