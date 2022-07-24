@@ -1,18 +1,17 @@
 import { fs } from "mz";
 import { getNewFileName } from "./getNewFileName";
 
-import { TypeStatOptions } from "./types";
+import { BaseTypeStatOptions, TypeStatOptions } from "./types";
 
-export const processFileRenames = async (options: TypeStatOptions | string): Promise<TypeStatOptions | string> => {
-    if (typeof options === "string" || options.fileNames === undefined) {
-        return options;
-    }
-
-    return options.files.renameExtensions ? renameOptionFiles(options, options.fileNames) : ensureNoJsFiles(options, options.fileNames);
+export const processFileRenames = async (
+    fileNames: ReadonlyArray<string>,
+    options: BaseTypeStatOptions,
+): Promise<BaseTypeStatOptions | string> => {
+    return options.files.renameExtensions ? renameOptionFiles(options, fileNames) : ensureNoJsFiles(options, fileNames);
 };
 
-const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions> => {
-    const newFileNames = new Set(options.fileNames);
+const renameOptionFiles = async (options: BaseTypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions> => {
+    const newFileNames = new Set(fileNames);
 
     const filesToRename = (
         await Promise.all(
@@ -25,17 +24,15 @@ const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyAr
         )
     ).filter(({ newFileName, oldFileName }) => newFileName !== oldFileName);
 
-    if (filesToRename.length === 0) {
-        return options;
-    }
+    if (filesToRename.length !== 0) {
+        options.output.stdout(`Renaming ${filesToRename.length} files...`);
 
-    options.output.stdout(`Renaming ${filesToRename.length} files...`);
+        for (const { oldFileName, newFileName } of filesToRename) {
+            await fs.rename(oldFileName, newFileName);
 
-    for (const { oldFileName, newFileName } of filesToRename) {
-        await fs.rename(oldFileName, newFileName);
-
-        newFileNames.delete(oldFileName);
-        newFileNames.add(newFileName);
+            newFileNames.delete(oldFileName);
+            newFileNames.add(newFileName);
+        }
     }
 
     return {
@@ -52,7 +49,7 @@ const canBeRenamed = (oldFileName: string): boolean => {
     return validRenameExtensions.has(oldExtension);
 };
 
-const ensureNoJsFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions | string> => {
+const ensureNoJsFiles = async (options: BaseTypeStatOptions, fileNames: ReadonlyArray<string>): Promise<BaseTypeStatOptions | string> => {
     const jsFileNames = fileNames.filter((fileName) => fileName.endsWith(".js") || fileName.endsWith(".jsx"));
     if (jsFileNames.length === 0) {
         return options;

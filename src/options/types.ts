@@ -7,7 +7,7 @@ import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums";
 /**
  * Options listed as JSON in a typestat configuration file.
  *
- * @remarks These are read from disk and parsed into {@link TypeStatOptions}.
+ * @remarks These are read from disk and parsed into {@link PendingTypeStatOptions}.
  */
 export interface RawTypeStatOptions {
     /**
@@ -72,18 +72,13 @@ export interface RawTypeStatTypeOptions {
 }
 
 /**
- * Parsed runtime options for TypeStat.
+ * Common parsed runtime options for TypeStat.
  */
-export interface TypeStatOptions {
+export interface BaseTypeStatOptions {
     /**
      * Parsed TypeScript compiler options with relevant fields filled out.
      */
     readonly compilerOptions: Readonly<TypeStatCompilerOptions>;
-
-    /**
-     * File names to run, if not everything in the TypeScript project.
-     */
-    readonly fileNames?: ReadonlyArray<string>;
 
     /**
      * Directives for file-level changes.
@@ -134,6 +129,28 @@ export interface TypeStatOptions {
      * Options for which types to add under what aliases.
      */
     readonly types: TypeStatTypeOptions;
+}
+
+/**
+ * Parsed runtime options for TypeStat after file renames and before loading files.
+ *
+ * @remarks These have includes globbed from disks to turn into {@link TypeStatOptions}.
+ */
+export interface PendingTypeStatOptions extends BaseTypeStatOptions {
+    /**
+     * Globs of files to run on, if not everything in the TypeScript project.
+     */
+    readonly include?: ReadonlyArray<string>;
+}
+
+/**
+ * Parsed runtime options for TypeStat after file renames and loading files are done.
+ */
+export interface TypeStatOptions extends BaseTypeStatOptions {
+    /**
+     * File names to run, if not everything in the TypeScript project.
+     */
+    readonly fileNames?: ReadonlyArray<string>;
 }
 
 /**
