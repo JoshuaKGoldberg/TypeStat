@@ -31,16 +31,4 @@ describe(getNewFileName, () => {
 
         expect(actual).toBe(`path/name${extension}`);
     });
-
-    it("returns a .tsx path when renameExtensions is true and the file contains a fragment closing tag", async () => {
-        const actual = await getNewFileName(
-            true,
-            "path/name.js",
-            jest.fn().mockResolvedValue(`
-            </>
-        `),
-        );
-
-        expect(actual).toBe("path/name.tsx");
-    });
 });
