@@ -1,5 +1,4 @@
 import { getNewFileName } from "./getNewFileName";
-import { RenameExtensions } from "./types";
 
 describe(getNewFileName, () => {
     it("returns a .ts path when renameExtensions is ts", async () => {
