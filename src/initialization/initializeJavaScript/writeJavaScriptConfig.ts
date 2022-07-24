@@ -1,17 +1,14 @@
-import { writeFile } from "mz/fs";
-
 import { InitializationImports } from "./imports";
 import { InitializationRenames } from "./renames";
 
 export interface JavaScriptConfigSettings {
-    fileName: string;
     imports: InitializationImports;
     project: string;
     renames: InitializationRenames;
     sourceFiles?: string;
 }
 
-export const writeJavaScriptConfig = async ({ fileName, imports, project, sourceFiles, renames }: JavaScriptConfigSettings) => {
+export const writeJavaScriptConfig = async ({ imports, project, sourceFiles, renames }: JavaScriptConfigSettings) => {
     const fileConversion = {
         files: {
             renameExtensions: printRenames(renames),
@@ -24,10 +21,10 @@ export const writeJavaScriptConfig = async ({ fileName, imports, project, source
             noImplicitAny: true,
         },
     };
-    const shared = {
-        ...(sourceFiles && { include: [sourceFiles] }),
+    const shared = (include: string[] | undefined) => ({
+        ...(include && { include }),
         project,
-    };
+    });
 
     const allConversions =
         imports === InitializationImports.Yes
@@ -37,20 +34,28 @@ export const writeJavaScriptConfig = async ({ fileName, imports, project, source
                       fixes: {
                           importExtensions: true,
                       },
-                      ...shared,
+                      ...shared(sourceFiles ? [sourceFiles] : undefined),
                   },
                   {
                       ...fixConversion,
-                      ...shared,
+                      ...shared(
+                          sourceFiles
+                              ? renames === InitializationRenames.Auto
+                                  ? renameSourceFilesExtensionsAuto(sourceFiles)
+                                  : renames === InitializationRenames.TS
+                                  ? renameSourceFilesExtensions(sourceFiles, "ts")
+                                  : renameSourceFilesExtensions(sourceFiles, "tsx")
+                              : undefined,
+                      ),
                   },
               ]
             : {
                   ...fileConversion,
                   ...fixConversion,
-                  ...shared,
+                  ...shared(sourceFiles ? [sourceFiles] : undefined),
               };
 
-    await writeFile(fileName, JSON.stringify(allConversions, undefined, 4));
+    return allConversions;
 };
 
 const printRenames = (renames: InitializationRenames) => {
@@ -65,3 +70,18 @@ const printRenames = (renames: InitializationRenames) => {
             return "tsx";
     }
 };
+
+function renameSourceFilesExtensionsAuto(sourceFiles: string) {
+    for (const [original, replacement] of [
+        [/\{js,jsx\}/, "{ts,tsx}"],
+        [/\.js$/, ".{ts,tsx}"],
+    ] as const) {
+        sourceFiles = sourceFiles.replace(original, replacement);
+    }
+
+    return renameSourceFilesExtensions(sourceFiles, "ts");
+}
+
+function renameSourceFilesExtensions(sourceFiles: string, extension: string) {
+    return [sourceFiles.replace(/(\.|{)js/, `$1${extension}`).replace(new RegExp(`{${extension},jsx?}`), extension)];
+}
