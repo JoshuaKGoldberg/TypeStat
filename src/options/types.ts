@@ -162,8 +162,13 @@ export interface Files {
     /**
      * Whether to convert .js(x) files to .ts(x).
      */
-    renameExtensions: boolean | "ts" | "tsx";
+    renameExtensions: RenameExtensions;
 }
+
+/**
+ * Setting value for whether to convert .js(x) files to .ts(x).
+ */
+export type RenameExtensions = boolean | "ts" | "tsx";
 
 /**
  * Cross-file settings for forms of fixes.
