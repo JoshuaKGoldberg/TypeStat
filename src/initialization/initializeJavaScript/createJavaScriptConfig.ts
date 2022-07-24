@@ -8,7 +8,7 @@ export interface JavaScriptConfigSettings {
     sourceFiles?: string;
 }
 
-export const writeJavaScriptConfig = async ({ imports, project, sourceFiles, renames }: JavaScriptConfigSettings) => {
+export const createJavaScriptConfig = async ({ imports, project, sourceFiles, renames }: JavaScriptConfigSettings) => {
     const fileConversion = {
         files: {
             renameExtensions: printRenames(renames),

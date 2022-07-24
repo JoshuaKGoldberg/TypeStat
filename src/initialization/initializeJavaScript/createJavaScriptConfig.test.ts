@@ -1,8 +1,8 @@
 import { InitializationImports } from "./imports";
 import { InitializationRenames } from "./renames";
-import { writeJavaScriptConfig } from "./writeJavaScriptConfig";
+import { createJavaScriptConfig } from "./createJavaScriptConfig";
 
-describe(writeJavaScriptConfig, () => {
+describe(createJavaScriptConfig, () => {
     test.each([
         {
             expected: {
@@ -140,7 +140,7 @@ describe(writeJavaScriptConfig, () => {
             },
         },
     ])("$name", async ({ expected, settings }) => {
-        const actual = await writeJavaScriptConfig(settings);
+        const actual = await createJavaScriptConfig(settings);
 
         expect(actual).toEqual(expected);
     });
