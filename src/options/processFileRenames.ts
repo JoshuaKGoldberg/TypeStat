@@ -1,4 +1,5 @@
 import { fs } from "mz";
+import { getNewFileName } from "./getNewFileName";
 
 import { TypeStatOptions } from "./types";
 
@@ -16,7 +17,9 @@ const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyAr
     const filesToRename = (
         await Promise.all(
             fileNames.filter(canBeRenamed).map(async (fileName) => ({
-                newFileName: await getNewFileName(options, fileName),
+                newFileName: await getNewFileName(options.files.renameExtensions, fileName, async (filePath: string) =>
+                    (await fs.readFile(filePath)).toString(),
+                ),
                 oldFileName: fileName,
             })),
         )
@@ -41,34 +44,12 @@ const renameOptionFiles = async (options: TypeStatOptions, fileNames: ReadonlyAr
     };
 };
 
-const validRenameExtensions = new Set([".js", ".jsx"]);
+const validRenameExtensions = new Set([".cjs", ".cjsx", ".js", ".jsx", ".mjs", ".mjsx"]);
 
 const canBeRenamed = (oldFileName: string): boolean => {
     const oldExtension = oldFileName.substring(oldFileName.lastIndexOf("."));
 
     return validRenameExtensions.has(oldExtension);
-};
-
-const getNewFileName = async (options: TypeStatOptions, oldFileName: string): Promise<string> => {
-    const oldExtension = oldFileName.substring(oldFileName.lastIndexOf("."));
-    const beforeExtension = oldFileName.substring(0, oldFileName.length - oldExtension.length);
-
-    if (options.files.renameExtensions === "tsx" || oldExtension === ".jsx") {
-        return `${beforeExtension}.tsx`;
-    }
-
-    if (options.files.renameExtensions === "ts") {
-        return `${beforeExtension}.ts`;
-    }
-
-    const fileContents = (await fs.readFile(oldFileName)).toString();
-    const fileContentsJoined = fileContents.replace(/ /g, "").replace(/"/g, "'");
-
-    if (fileContentsJoined.includes(`require('react')`) || fileContentsJoined.includes(`from'react'`)) {
-        return `${beforeExtension}.tsx`;
-    }
-
-    return `${beforeExtension}.ts`;
 };
 
 const ensureNoJsFiles = async (options: TypeStatOptions, fileNames: ReadonlyArray<string>): Promise<TypeStatOptions | string> => {
