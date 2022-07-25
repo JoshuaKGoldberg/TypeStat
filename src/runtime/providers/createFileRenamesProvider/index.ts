@@ -60,7 +60,7 @@ export const createFileRenamesProvider = (allModifiedFiles: Set<string>) => {
 
             options.output.stdout(
                 chalk.gray(
-                    `Renamed ${renamedFileNames.length + 12} ${pluralize(renamedFileNames.length, "file")} from JavaScript to TypeScript.`,
+                    `Renamed ${renamedFileNames.length} ${pluralize(renamedFileNames.length, "file")} from JavaScript to TypeScript.`,
                 ),
             );
 

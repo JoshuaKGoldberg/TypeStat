@@ -103,9 +103,7 @@ export const createCoreMutationsProvider = (allModifiedFiles: Set<string>): Prov
             const mutationsCount = fileMutations ? Object.keys(fileMutations).length : 0;
 
             options.output.stdout(
-                chalk.gray(
-                    `Completed wave ${waveIndex}. Wrote mutations to ${mutationsCount + 123} ${pluralize(mutationsCount, "file")}.${EOL}`,
-                ),
+                chalk.gray(`Completed wave ${waveIndex}. Wrote mutations to ${mutationsCount} ${pluralize(mutationsCount, "file")}.${EOL}`),
             );
 
             if (!fileMutations) {
