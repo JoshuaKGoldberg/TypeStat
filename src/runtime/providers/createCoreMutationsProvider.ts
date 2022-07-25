@@ -11,7 +11,7 @@ import { NameGenerator } from "../../shared/NameGenerator";
 import { collectFilteredNodes } from "../collectFilteredNodes";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
 import { findMutationsInFile } from "../findMutationsInFile";
-import { ProvidedMutationsWave, Provider, ProviderCreator } from "../types";
+import { Provider, ProviderCreator } from "../types";
 
 /**
  * Creates a mutations provider that runs the core mutations within TypeStat.
@@ -23,14 +23,14 @@ export const createCoreMutationsProvider = (allModifiedFiles: Set<string>): Prov
     return (options: TypeStatOptions): Provider | undefined => {
         const enabledFixes = Object.keys(options.fixes).filter((key) => options.fixes[key as keyof typeof options.fixes]);
         if (!enabledFixes) {
-            return;
+            return undefined;
         }
 
         const fileNamesAndServicesCache = createFileNamesAndServicesCache(options);
         let lastFileIndex = -1;
         let waveIndex = 1;
 
-        return async (): Promise<ProvidedMutationsWave> => {
+        return async () => {
             const startTime = Date.now();
             const fileMutationsByFileName = new Map<string, ReadonlyArray<Mutation>>();
             const { fileNames, services } = fileNamesAndServicesCache.get();
@@ -103,11 +103,12 @@ export const createCoreMutationsProvider = (allModifiedFiles: Set<string>): Prov
             const mutationsCount = fileMutations ? Object.keys(fileMutations).length : 0;
 
             options.output.stdout(
-                chalk.gray(`Completed wave ${waveIndex}. Wrote mutations to ${mutationsCount} ${pluralize(mutationsCount, "file")}.${EOL}`),
+                chalk.gray(`Completed wave ${waveIndex}. Wrote mutations to ${mutationsCount} ${pluralize(mutationsCount, "file")}.`),
             );
 
             if (!fileMutations) {
                 options.output.stdout(chalk.blueBright(`Done.${EOL}`));
+                return undefined;
             }
 
             waveIndex += 1;

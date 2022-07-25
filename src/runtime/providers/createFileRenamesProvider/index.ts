@@ -13,14 +13,14 @@ import { getNewFileName } from "./getNewFileName";
  */
 export const createFileRenamesProvider = (allModifiedFiles: Set<string>) => {
     return createSingleUseProvider("Renaming files from JavaScript to TypeScript", (options) => {
-        // If the options don't specify to rename extension, create a provider that only makes sure no JS files are included
+        // If the options don't specify to rename extension, only make sure no JS files are included
         if (!options.files.renameExtensions) {
-            return async () => {
-                const jsFileNames = options.fileNames.filter(fileNameIsJavaScript);
-                if (jsFileNames.length === 0) {
-                    return undefined;
-                }
+            const jsFileNames = options.fileNames.filter(fileNameIsJavaScript);
+            if (jsFileNames.length === 0) {
+                return undefined;
+            }
 
+            return async () => {
                 throw new Error(
                     [
                         "The following JavaScript files were included in the project but files.renameExtensions is not enabled.",

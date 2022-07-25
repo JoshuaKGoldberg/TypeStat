@@ -4,6 +4,7 @@ require("../mutations/createExposedTypeScript").requireExposedTypeScript();
 import chalk from "chalk";
 import { Command } from "commander";
 import * as fs from "mz/fs";
+import { EOL } from "os";
 import * as path from "path";
 
 import { ResultStatus, typeStat, TypeStatArgv, TypeStatResult } from "../index";
@@ -74,7 +75,7 @@ export const runCli = async (rawArgv: ReadonlyArray<string>, runtime?: CliRuntim
             break;
 
         case ResultStatus.Succeeded:
-            runtime.output.stdout(chalk.greenBright("All done! ✨"));
+            runtime.output.stdout(chalk.greenBright(`${EOL}All done! ✨`));
             break;
     }
 
