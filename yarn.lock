@@ -1862,6 +1862,11 @@ automutate@^0.8.1:
   resolved "https://registry.yarnpkg.com/automutate/-/automutate-0.8.1.tgz#5449ed5afda83f8169f15db92885d9bd85d617e3"
   integrity sha512-+jw5lg394QanPkL//ZTHlNnkGJwAmgbn4eEhRkfZn7SfkcuKLuHDyUjtlEzh0+u3b8eAnL+ykWpJkS4kB1HDxg==
 
+automutate@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/automutate/-/automutate-0.9.0.tgz#5fee666147c93a312ffe673befc0104841313089"
+  integrity sha512-A1AydgfyQCGAihiu3NciBtRAbVw0HPHfwz7wRow3rYRSpT3BrTGSWX7vFJlXjbF1On3hKfzsa4ZWsAcAnAgTVg==
+
 babel-jest@27.0.6, babel-jest@^27.0.6:
   version "27.0.6"
   resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-27.0.6.tgz#e99c6e0577da2655118e3608b68761a5a69bd0d8"

@@ -1,7 +1,7 @@
 import * as path from "path";
 
 import { TypeStatArgv } from "../index";
-import { ProcessOutput } from "../output";
+import { ProcessOutput } from "../output/types";
 import { normalizeAndSlashify } from "../shared/paths";
 
 import { fillOutRawOptions } from "./fillOutRawOptions";
@@ -40,7 +40,7 @@ export const loadPendingOptions = async (argv: TypeStatArgv, output: ProcessOutp
 
         const filledOutOptions = fillOutRawOptions({ argv, compilerOptions, cwd, output, projectPath, rawOptions });
         const complaint = findComplaintForOptions(filledOutOptions);
-        if (typeof complaint === "string") {
+        if (complaint) {
             return `Invalid options at index ${i}: ${complaint}`;
         }
 

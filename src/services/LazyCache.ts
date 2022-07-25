@@ -4,10 +4,7 @@ export class LazyCache<T> {
     public constructor(private readonly getter: () => T) {}
 
     public get(): T {
-        if (this.value === undefined) {
-            this.value = this.getter();
-        }
-
+        this.value ??= this.getter();
         return this.value;
     }
 

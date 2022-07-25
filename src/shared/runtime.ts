@@ -30,5 +30,7 @@ export const findFirstMutations = (
 };
 
 const logOutput = (request: FileMutationsRequest, mutatorName: string, action: string, data: unknown) => {
-    request.options.output.log([mutatorName, ` ${action} in `, request.sourceFile.fileName, ": ", JSON.stringify(data, null, 4)].join(""));
+    request.options.output.log?.(
+        [mutatorName, ` ${action} in `, request.sourceFile.fileName, ": ", JSON.stringify(data, null, 4)].join(""),
+    );
 };

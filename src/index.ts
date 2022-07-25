@@ -2,13 +2,15 @@
 require("./mutations/createExposedTypeScript").requireExposedTypeScript();
 
 import { runMutations } from "automutate";
-import { collectFileNames } from "./collectFileNames";
+import chalk from "chalk";
+import { EOL } from "os";
 
 import { loadPendingOptions } from "./options/loadPendingOptions";
-import { processFileRenames } from "./options/processFileRenames";
+import { pluralize } from "./output/pluralize";
+import { ProcessOutput } from "./output/types";
 import { PendingTypeStatOptions } from "./options/types";
-import { ProcessOutput } from "./output";
 import { createTypeStatProvider } from "./runtime/createTypeStatProvider";
+import { collectFileNames } from "./collectFileNames";
 
 /**
  * Root arguments to pass to TypeStat.
@@ -49,39 +51,61 @@ export const typeStat = async (argv: TypeStatArgv, output: ProcessOutput): Promi
             status: ResultStatus.ConfigurationError,
         };
     }
+
+    output.stdout(chalk.greenBright("🚀 Welcome to TypeStat!"));
+    output.stdout(
+        [
+            chalk.green(`TypeStat will run through the `),
+            chalk.greenBright(allPendingOptions.length),
+            chalk.green(` options ${pluralize(allPendingOptions.length, "object")} specified in `),
+            chalk.greenBright(argv.config),
+            chalk.green(` to modify your source code.`),
+        ].join(""),
+    );
+    output.stdout(chalk.greenBright(`This may take a while...${EOL}`));
+
     for (let i = 0; i < allPendingOptions.length; i += 1) {
-        function createFailure(message: string): TypeStatResult {
+        // Collect all files to be run on this option iteration from the include glob(s)
+        const fileNames = await collectFileNames(argv, process.cwd(), allPendingOptions[i].include);
+        if (typeof fileNames !== "object") {
             return {
-                error: new Error(`Could not run options at index ${i}: ${message}`),
+                error: new Error(
+                    `Could not run options at index ${i + 1}: ${fileNames ?? `No files included by the 'include' setting were found.`}`,
+                ),
                 status: ResultStatus.Failed,
             };
         }
 
-        // Collect all files to be run on this option iteration from the include glob(s)
-        const fileNames = await collectFileNames(argv, process.cwd(), allPendingOptions[i].include);
-        if (!fileNames) {
-            continue;
-        }
-        if (typeof fileNames === "string") {
-            return createFailure(fileNames);
-        }
+        output.stdout(
+            [
+                chalk.green(`${EOL}Starting options object `),
+                chalk.greenBright(i + 1),
+                chalk.green(" of "),
+                chalk.greenBright(allPendingOptions.length),
+                chalk.green(`.${EOL}`),
+            ].join(""),
+        );
 
-        // Run any any file renames needed as part of project setup
-        const options = await processFileRenames(fileNames, allPendingOptions[i]);
-        if (typeof options === "string") {
-            return createFailure(options);
-        }
-
-        // Finally run the actual core TypeStat mutation logic
+        // Run the mutation providers on those starting options and files
         try {
             await runMutations({
-                mutationsProvider: createTypeStatProvider(options),
+                mutationsProvider: createTypeStatProvider({ ...allPendingOptions[i], fileNames }),
             });
         } catch (error) {
             return {
                 error: error as Error,
                 status: ResultStatus.Failed,
             };
+        } finally {
+            output.stdout(
+                [
+                    chalk.green(`Finished options object `),
+                    chalk.greenBright(i + 1),
+                    chalk.green(" of "),
+                    chalk.greenBright(allPendingOptions.length),
+                    chalk.green(`.${EOL}`),
+                ].join(""),
+            );
         }
     }
 

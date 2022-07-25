@@ -1,4 +1,4 @@
-import { RenameExtensions } from "./types";
+import { RenameExtensions } from "../../../options/types";
 
 export const getNewFileName = async (
     renameExtensions: RenameExtensions,

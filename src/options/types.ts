@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
-import { ProcessOutput } from "../output";
 import { FileMutator } from "../mutators/fileMutator";
+import { ProcessOutput } from "../output/types";
 import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums";
 
 /**
@@ -148,9 +148,9 @@ export interface PendingTypeStatOptions extends BaseTypeStatOptions {
  */
 export interface TypeStatOptions extends BaseTypeStatOptions {
     /**
-     * File names to run, if not everything in the TypeScript project.
+     * File names to run on, as globbed by the include globs.
      */
-    readonly fileNames?: ReadonlyArray<string>;
+    readonly fileNames: ReadonlyArray<string>;
 }
 
 /**

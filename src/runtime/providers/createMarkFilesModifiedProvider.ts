@@ -3,36 +3,38 @@ import * as fs from "mz/fs";
 
 import { TypeStatOptions } from "../../options/types";
 import { printNewLine } from "../../shared/printing/newlines";
-import { createSingleUseProvider } from "../createSingleUserProvider";
+import { createSingleUseProvider } from "../createSingleUseProvider";
 
 /**
- * Creates a mutations wave to mark all previously mutated files as modified.
+ * Creates a mutations provider to mark all previously mutated files as modified.
  *
- * @param options   Parsed runtime options for TypeStat.
- * @param allModifiedFileNames   Unique names of all files that were modified.
- * @returns Mutations wave marking all mutated files as modified.
+ * @returns Mutations provider to mark all mutated files as modified, if needed.
  */
-export const createMarkFilesModifiedProvider = (options: TypeStatOptions, allModifiedFileNames: ReadonlySet<string>) => {
-    return createSingleUseProvider(async () => {
+export const createMarkFilesModifiedProvider = (allModifiedFileNames: ReadonlySet<string>) => {
+    return createSingleUseProvider("Marking files as modified", (options) => {
         if (options.files.above === "" && options.files.below === "") {
-            return {
-                fileMutations: undefined,
-            };
+            return undefined;
         }
 
-        const fileMutations: FileMutations = {};
-        let hadMutation = false;
+        return async () => {
+            const fileMutations: FileMutations = {};
+            let hadMutation = false;
 
-        for (const fileName of allModifiedFileNames) {
-            const mutations = await createFileMutations(options, fileName);
+            for (const fileName of allModifiedFileNames) {
+                const mutations = await createFileMutations(options, fileName);
 
-            if (mutations.length !== 0) {
-                fileMutations[fileName] = mutations;
-                hadMutation = true;
+                if (mutations.length !== 0) {
+                    fileMutations[fileName] = mutations;
+                    hadMutation = true;
+                }
             }
-        }
-        
-        return { fileMutations: hadMutation ? fileMutations : undefined };
+
+            return {
+                mutationsWave: {
+                    fileMutations: hadMutation ? fileMutations : undefined,
+                },
+            };
+        };
     });
 };
 

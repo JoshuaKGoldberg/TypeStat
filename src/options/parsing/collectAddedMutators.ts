@@ -1,6 +1,6 @@
 import * as path from "path";
 
-import { ProcessOutput } from "../../output";
+import { ProcessOutput } from "../../output/types";
 import { builtInFileMutators } from "../../mutators/builtIn";
 import { FileMutator } from "../../mutators/fileMutator";
 import { collectOptionals } from "../../shared/arrays";
