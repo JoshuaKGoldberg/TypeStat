@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { TypeStatArgv } from "../index";
-import { ProcessOutput } from "../output";
+import { ProcessOutput } from "../output/types";
 import { collectOptionals } from "../shared/arrays";
 import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums";
 

@@ -4,6 +4,7 @@ import { TypeStatOptions } from "../options/types";
 
 import { createProviderFromProviders } from "./createProviderFromProviders";
 import { createCoreMutationsProvider } from "./providers/createCoreMutationsProvider";
+import { createFileRenamesProvider } from "./providers/createFileRenamesProvider";
 import { createInstallMissingTypesProvider } from "./providers/createInstallMissingTypesProvider";
 import { createMarkFilesModifiedProvider } from "./providers/createMarkFilesModifiedProvider";
 import { createPostProcessingProvider } from "./providers/createPostProcessingProvider";
@@ -16,12 +17,13 @@ export const createTypeStatProvider = (options: TypeStatOptions): MutationsProvi
     const allModifiedFiles = new Set<string>();
 
     return {
-        provide: createProviderFromProviders(
-            createInstallMissingTypesProvider(options),
-            createRequireRenameProvider(options, allModifiedFiles),
-            createCoreMutationsProvider(options, allModifiedFiles),
-            createMarkFilesModifiedProvider(options, allModifiedFiles),
-            createPostProcessingProvider(options, allModifiedFiles),
-        ),
+        provide: createProviderFromProviders(options, [
+            createFileRenamesProvider(allModifiedFiles),
+            createInstallMissingTypesProvider(),
+            createRequireRenameProvider(allModifiedFiles),
+            createCoreMutationsProvider(allModifiedFiles),
+            createMarkFilesModifiedProvider(allModifiedFiles),
+            createPostProcessingProvider(allModifiedFiles),
+        ]),
     };
 };

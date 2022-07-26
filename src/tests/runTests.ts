@@ -13,8 +13,9 @@ const parsed = new Command()
     // Allow unknown options for the case of IDE debuggers who directly write to process.argv
     // If this line is removed, VS Code debugging will break 😲
     .allowUnknownOption(true)
-    .option("-i, --include [include]", "path to a TypeScript project file")
     .option("-a, --accept", "override existing expected results instead of asserting")
+    .option("--console [console]", "whether to forward logs to the console")
+    .option("-i, --include [include]", "path to a TypeScript project file")
     .parse(process.argv)
     .opts();
 
@@ -40,9 +41,9 @@ describeMutationTestCases(
         const rawCompilerOptions = fs.readFileSync(typeStatPath).toString();
         const compilerOptions = ts.parseConfigFileTextToJson(typeStatPath, rawCompilerOptions).config;
         const output = {
-            log: () => {},
+            log: parsed.console ? console.log.bind(console, "[log]") : () => {},
             stderr: console.error.bind(console),
-            stdout: () => {},
+            stdout: parsed.console ? console.log.bind(console, "[stdout]") : () => {},
         };
 
         return createTypeStatProvider({

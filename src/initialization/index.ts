@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { EOL } from "os";
 
 import { ResultStatus } from "..";
-import { ProcessOutput } from "../output";
+import { ProcessOutput } from "../output/types";
 import { getQuickErrorSummary } from "../shared/errors";
 
 import { initializeJavaScript } from "./initializeJavaScript";
