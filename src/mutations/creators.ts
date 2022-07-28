@@ -62,7 +62,7 @@ export const createTypeAdditionMutation = (
  * Creates a mutation to add types to a node without a type, if any are new.
  *
  * @param request   Metadata and settings to collect mutations in a file.
- * @param begin   Starting position to add types at.
+ * @param node   Node to add the type annotation.
  * @param declaredType   Declared type from the node.
  * @param allAssignedTypes   Types now assigned to the node.
  * @returns Mutation to add any new assigned types, if any are missing from the declared type.
