@@ -1,8 +1,7 @@
-import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { getFriendlyFileName } from "../../../../../../shared/fileNames";
 import { FileMutationsRequest } from "../../../../../fileMutator";
+import { getApparentNameOfComponent } from "../../getApparentNameOfComponent";
 import { ReactComponentNode } from "../../reactFiltering/isReactComponentNode";
 
 import { createPropTypesProperty } from "./propTypesProperties";
@@ -33,18 +32,4 @@ export const createInterfaceFromPropTypes = (
     );
 
     return { interfaceName, interfaceNode };
-};
-
-export const getApparentNameOfComponent = (request: FileMutationsRequest, node: ReactComponentNode): string | undefined => {
-    // If the node itself has a name, great!
-    if (node.name !== undefined) {
-        return node.name.text;
-    }
-
-    // If the node is the default export of its file, use the file's name
-    if (tsutils.hasModifier(node.modifiers, ts.SyntaxKind.DefaultKeyword)) {
-        return getFriendlyFileName(request.sourceFile.fileName);
-    }
-
-    return "AnonymousClass";
 };

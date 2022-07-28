@@ -4,7 +4,9 @@ import { getClassExtendsType } from "../../../../../shared/nodes";
 
 export type ReactComponentNode = ReactClassComponentNode | ReactFunctionalComponentNode;
 
-export type ReactClassComponentNode = ts.ClassDeclaration | ts.ClassExpression;
+export type ReactClassComponentNode = (ts.ClassDeclaration | ts.ClassExpression) & {
+    heritageClauses: ts.NodeArray<ts.HeritageClause>;
+};
 
 export type ReactFunctionalComponentNode = ts.ArrowFunction | ts.FunctionDeclaration | ts.FunctionExpression;
 
@@ -17,8 +19,8 @@ export const isReactComponentNode = (node: ts.Node): node is ReactComponentNode 
         return node.parameters.length <= 1;
     }
 
-    // Otherwise, we only look at class declarations
-    if (!ts.isClassDeclaration(node)) {
+    // Otherwise, we only look at class declarations and class expressions
+    if (!ts.isClassLike(node)) {
         return false;
     }
 

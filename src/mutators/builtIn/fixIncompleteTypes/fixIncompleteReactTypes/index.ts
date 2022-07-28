@@ -5,6 +5,7 @@ import { fixReactPropsFromLaterAssignments } from "./fixReactPropsFromLaterAssig
 import { fixReactPropsFromUses } from "./fixReactPropsFromUses";
 import { fixReactPropsFromPropTypes } from "./fixReactPropsFromPropTypes";
 import { fixReactPropFunctionsFromCalls } from "./fixReactPropFunctionsFromCalls";
+import { fixReactPropsMissing } from "./fixReactPropsMissing";
 
 export const fixIncompleteReactTypes = (request: FileMutationsRequest) =>
     findFirstMutations(request, [
@@ -15,6 +16,10 @@ export const fixIncompleteReactTypes = (request: FileMutationsRequest) =>
 
         ["fixReactPropFunctionsFromCalls", fixReactPropFunctionsFromCalls],
 
-        // Fill in any missing explicitly declared prop types as a last resort
+        // Use propTypes with lower priority than uses, assignments, and calls
+        // In practical code they are often wrong
         ["fixReactPropsFromPropTypes", fixReactPropsFromPropTypes],
+
+        // Lastly, if the component is missing a props type altogether, create one from scratch
+        ["fixReactPropsMissing", fixReactPropsMissing],
     ]);
