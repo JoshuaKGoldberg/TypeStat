@@ -9,7 +9,7 @@ This entirely relies on TypeScript's suggested fixes to infer types from usage.
 * You're converting from JavaScript to TypeScript and want type coverage where possible
 * You'd like to enable [`--noImplicitAny`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitAny.html) but have a lot of existing violations
 
-Places that don't need added types (i.e. would violate [`no-unnecessary-type-annotation`](https://github.com/typescript-eslint/typescript-eslint/issues/295))
+Places that don't need added types (i.e. would violate [`no-inferrable-types`](https://typescript-eslint.io/rules/no-inferrable-types))
 won't have them added.
 
 ## Configuration
