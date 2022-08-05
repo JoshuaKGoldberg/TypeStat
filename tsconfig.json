@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "esModuleInterop": true,
-        "lib": ["es2015"],
+        "lib": ["es2020"],
         "module": "commonjs",
         "moduleResolution": "node",
         "noFallthroughCasesInSwitch": true,
@@ -14,7 +14,7 @@
         "resolveJsonModule": true,
         "sourceMap": true,
         "strict": true,
-        "target": "es2015"
+        "target": "es2020"
     },
     "exclude": ["test/**/*.ts"],
     "include": ["src/**/*.ts"]
