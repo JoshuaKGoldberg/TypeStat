@@ -14,6 +14,6 @@ export const globAsync = async (include: string, options: glob.IOptions = {}): P
 
 export const globAllAsync = async (includes: ReadonlyArray<string>, options: glob.IOptions = {}) =>
     (await Promise.all(includes.map(async (include: string) => globAsync(include, options)))).reduce(
-        (allResults: ReadonlyArray<string>, nextResults: ReadonlyArray<string>) => allResults.concat(nextResults),
+        (allResults: string[], nextResults: ReadonlyArray<string>) => allResults.concat(nextResults),
         [],
     );

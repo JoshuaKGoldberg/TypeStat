@@ -1,9 +1,8 @@
-import * as ts from "typescript";
-
 import { TypeStatArgv } from "../index";
 import { ProcessOutput } from "../output/types";
 import { collectOptionals } from "../shared/arrays";
 import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums";
+import { ParsedCompilerOptions } from "./parseRawCompilerOptions";
 
 import { collectAddedMutators } from "./parsing/collectAddedMutators";
 import { collectFileOptions } from "./parsing/collectFileOptions";
@@ -15,7 +14,7 @@ import { PendingTypeStatOptions, RawTypeStatOptions } from "./types";
 
 export interface OptionsFromRawOptionsSettings {
     argv: TypeStatArgv;
-    compilerOptions: Readonly<ts.CompilerOptions>;
+    compilerOptions: Readonly<ParsedCompilerOptions>;
     cwd: string;
     output: ProcessOutput;
     projectPath: string;
@@ -71,7 +70,7 @@ export const fillOutRawOptions = ({
                 propTypesOptionality: rawOptions.hints?.react?.propTypesOptionality ?? ReactPropTypesOptionality.AsWritten,
             },
         },
-        include: rawOptions.include,
+        include: rawOptions.include ?? compilerOptions.include,
         mutators: collectAddedMutators(rawOptions, packageOptions.directory, output),
         output,
         package: packageOptions,

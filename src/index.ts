@@ -70,7 +70,7 @@ export const typeStat = async (argv: TypeStatArgv, output: ProcessOutput): Promi
         if (typeof fileNames !== "object") {
             return {
                 error: new Error(
-                    `Could not run options at index ${i + 1}: ${fileNames ?? `No files included by the 'include' setting were found.`}`,
+                    `Could not run options object ${i + 1}: ${fileNames ?? `No files included by the 'include' setting were found.`}`,
                 ),
                 status: ResultStatus.Failed,
             };

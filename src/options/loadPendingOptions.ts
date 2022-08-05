@@ -36,7 +36,7 @@ export const loadPendingOptions = async (argv: TypeStatArgv, output: ProcessOutp
     for (let i = 0; i < allRawOptions.length; i += 1) {
         const rawOptions = allRawOptions[i];
         const projectPath = getProjectPath(cwd, filePath, rawOptions);
-        const compilerOptions = await parseRawCompilerOptions(projectPath);
+        const compilerOptions = await parseRawCompilerOptions(cwd, projectPath);
 
         const filledOutOptions = fillOutRawOptions({ argv, compilerOptions, cwd, output, projectPath, rawOptions });
         const complaint = findComplaintForOptions(filledOutOptions);
