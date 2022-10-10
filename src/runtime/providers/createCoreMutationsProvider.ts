@@ -12,6 +12,7 @@ import { collectFilteredNodes } from "../collectFilteredNodes";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
 import { findMutationsInFile } from "../findMutationsInFile";
 import { Provider, ProviderCreator } from "../types";
+import { WaveTracker } from "./tracking/WaveTracker";
 
 /**
  * Creates a mutations provider that runs the core mutations within TypeStat.
@@ -34,6 +35,7 @@ export const createCoreMutationsProvider = (allModifiedFiles: Set<string>): Prov
             const startTime = Date.now();
             const fileMutationsByFileName = new Map<string, ReadonlyArray<Mutation>>();
             const { fileNames, services } = fileNamesAndServicesCache.get();
+            const waveTracker = new WaveTracker();
             const waveStartedFromBeginning = lastFileIndex <= 0;
             let addedMutations = 0;
 
@@ -112,6 +114,14 @@ export const createCoreMutationsProvider = (allModifiedFiles: Set<string>): Prov
             }
 
             waveIndex += 1;
+
+            if (waveTracker.addAndCheck(fileMutations)) {
+                options.output.stdout(chalk.redBright(`It looks like TypeStat has ended up in an infinite loop.${EOL}`));
+                options.output.stdout(chalk.red(`Bailing out of applying more mutations.${EOL}`));
+                options.output.stdout(chalk.red(`Please file an issue to help us fix the bug for you:${EOL}`));
+                options.output.stdout(chalk.redBright(`https://github.com/JoshuaKGoldberg/TypeStat${EOL}`));
+                return undefined;
+            }
 
             return { mutationsWave: { fileMutations } };
         };
