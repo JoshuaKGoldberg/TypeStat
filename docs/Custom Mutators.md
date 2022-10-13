@@ -44,7 +44,7 @@ For example, this mutator will add a `/* foo */` mutation at the beginning of ea
 const prefix = "/* foo */ ";
 
 module.exports.fileMutator = (request) => {
-    return request.sourceFile.getText().startsWith(prefix)
+    return request.sourceFile.getFullText().startsWith(prefix)
         ? []
         : [{
             insertion: prefix,
