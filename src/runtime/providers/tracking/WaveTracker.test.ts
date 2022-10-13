@@ -1,4 +1,4 @@
-import { WaveTracker } from "./WaveTracker";
+import { infiniteWaveThreshold, WaveTracker } from "./WaveTracker";
 
 describe("WaveTracker", () => {
     describe("addAndCheck", () => {
@@ -41,7 +41,7 @@ describe("WaveTracker", () => {
             // Arrange
             const waveTracker = new WaveTracker();
 
-            for (let i = 0; i < 25; i += 1) {
+            for (let i = 0; i < infiniteWaveThreshold; i += 1) {
                 waveTracker.addAndCheck({ a: [] });
             }
 
@@ -81,7 +81,7 @@ describe("WaveTracker", () => {
             }
             waveTracker.addAndCheck({ b: [] });
 
-            for (let i = 0; i < 24; i += 1) {
+            for (let i = 0; i < infiniteWaveThreshold - 1; i += 1) {
                 waveTracker.addAndCheck({ a: [] });
             }
 

@@ -6,7 +6,7 @@ const createHash = (fileMutations: Dictionary<readonly Mutation[]>) => Object.ke
 /**
  * How many waves in a row must be duplicates of previously seen waves to halt.
  */
-export const infiniteWaveThreshold = 25;
+export const infiniteWaveThreshold = 20;
 
 export class WaveTracker {
     /**
