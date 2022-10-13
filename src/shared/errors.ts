@@ -1,4 +1,5 @@
-export const getQuickErrorSummary = (error: any, stackTraceLimit = Infinity): string => {
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+export const getQuickErrorSummary = (error: unknown, stackTraceLimit = Infinity): string => {
     if (!(error instanceof Error) || error.stack === undefined) {
         return `${error}`;
     }

@@ -23,7 +23,7 @@ export const loadPendingOptions = async (argv: TypeStatArgv, output: ProcessOutp
     }
 
     const cwd = process.cwd();
-    const foundRawOptions = await findRawOptions(cwd, argv.config);
+    const foundRawOptions = findRawOptions(cwd, argv.config);
     if (typeof foundRawOptions === "string") {
         return foundRawOptions;
     }

@@ -1,5 +1,22 @@
 import * as ts from "typescript";
 
+export type WellKnownTypeName =
+    | "any"
+    | "error"
+    | "unknown"
+    | "undefined"
+    | "null"
+    | "string"
+    | "number"
+    | "bigint"
+    | "false"
+    | "true"
+    | "boolean"
+    | "symbol"
+    | "void"
+    | "never"
+    | "object";
+
 export type TypeWithTypeArguments = ts.Type & {
     typeArguments: ts.Type[];
 };
@@ -17,7 +34,7 @@ export const isOptionalTypeArgumentsTypeNode = (type: ts.Type): type is TypeWith
 };
 
 export type TypeWithIntrinsicName = ts.Type & {
-    intrinsicName: string;
+    intrinsicName: WellKnownTypeName;
 };
 
 export const isIntrisinicNameType = (type: ts.Type): type is TypeWithIntrinsicName => {
