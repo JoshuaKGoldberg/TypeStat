@@ -1,4 +1,5 @@
 // Ensure TypeScript is exposed before any files import it
+// eslint-disable-next-line
 require("../mutations/createExposedTypeScript").requireExposedTypeScript();
 
 import chalk from "chalk";

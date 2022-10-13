@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-var-requires */
 /*
 This file is a ridiculous, disgusting hack and should not be considered acceptable code to write.
 Shame on you for even reading this header, let alone continuing down.

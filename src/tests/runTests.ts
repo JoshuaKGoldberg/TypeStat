@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function, @typescript-eslint/no-unsafe-assignment */
 import { describeMutationTestCases } from "automutate-tests";
 import { Command } from "commander";
 import * as fs from "fs";

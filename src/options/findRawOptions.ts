@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import * as path from "path";
 
 import { RawTypeStatOptions } from "./types";
@@ -22,9 +23,9 @@ export interface FoundRawOptions {
  *
  * @param cwd   Base directory to resolve paths from.
  * @param configPath   Suggested path to load from, instead of searching.
- * @returns Promise for parsed raw options from a configuration file, or an error string.
+ * @returns Parsed raw options from a configuration file, or an error string.
  */
-export const findRawOptions = async (cwd: string, configPath: string): Promise<FoundRawOptions | string> => {
+export const findRawOptions = (cwd: string, configPath: string): FoundRawOptions | string => {
     const resolutionPath = path.join(cwd, configPath);
 
     let filePath: string;

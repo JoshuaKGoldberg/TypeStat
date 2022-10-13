@@ -1,29 +1,13 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import * as fs from "mz/fs";
 import * as ts from "typescript";
 
 import { ExposedProgram } from "../mutations/createExposedTypeScript";
 import { TypeStatOptions } from "../options/types";
 import { arrayify, uniquify } from "../shared/arrays";
-import { isIntrisinicNameType } from "../shared/typeNodes";
+import { isIntrisinicNameType, WellKnownTypeName } from "../shared/typeNodes";
 
 import { createProgramConfiguration } from "./createProgramConfiguration";
-
-export type WellKnownTypeName =
-    | "any"
-    | "error"
-    | "unknown"
-    | "undefined"
-    | "null"
-    | "string"
-    | "number"
-    | "bigint"
-    | "false"
-    | "true"
-    | "boolean"
-    | "symbol"
-    | "void"
-    | "never"
-    | "object";
 
 export type WellKnownTypes = Readonly<Record<WellKnownTypeName, Readonly<ts.Type>>>;
 
@@ -99,21 +83,21 @@ export const createLanguageServices = (options: TypeStatOptions): LanguageServic
         },
     };
 
-    let wellKnownTypes;
+    let wellKnownTypes: WellKnownTypes | undefined;
 
     return {
         languageService,
         parsedConfiguration,
         program,
         printers,
-        get wellKnownTypes() {
-            return (wellKnownTypes ??= program.getTypeCatalog().reduce<Record<string, ts.Type>>((acc, type) => {
+        get wellKnownTypes(): WellKnownTypes {
+            return (wellKnownTypes ??= program.getTypeCatalog().reduce((acc, type) => {
                 if (isIntrisinicNameType(type)) {
                     acc[type.intrinsicName] = type;
                 }
 
                 return acc;
-            }, {}));
+            }, {} as Record<WellKnownTypeName, ts.Type>));
         },
     };
 };

@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "allowJs": true,
         "esModuleInterop": true,
         "lib": ["es2020"],
         "module": "commonjs",
@@ -17,5 +18,5 @@
         "target": "es2020"
     },
     "exclude": ["test/**/*.ts"],
-    "include": ["src/**/*.ts"]
+    "include": ["src/**/*.ts", "./*.js", "./.*.js"]
 }

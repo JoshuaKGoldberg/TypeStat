@@ -11,7 +11,13 @@ export const parseRawCompilerOptions = async (cwd: string, projectPath: string):
     const configRaw = (await fs.readFile(projectPath)).toString();
     const compilerOptions = ts.parseConfigFileTextToJson(projectPath, configRaw);
     if (compilerOptions.error !== undefined) {
-        throw new Error(`Could not parse compiler options from '${projectPath}': ${compilerOptions.error}`);
+        throw new Error(
+            `Could not parse compiler options from '${projectPath}': ${
+                typeof compilerOptions.error.messageText === "string"
+                    ? compilerOptions.error.messageText
+                    : compilerOptions.error.messageText.messageText
+            }`,
+        );
     }
 
     const config = compilerOptions.config as ParsedCompilerOptions;
