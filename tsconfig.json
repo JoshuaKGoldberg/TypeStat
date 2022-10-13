@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "allowJs": true,
         "esModuleInterop": true,
         "lib": ["es2020"],
         "module": "commonjs",
@@ -9,8 +8,6 @@
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        // "noUnusedLocals": true,
-        // "noUnusedParameters": true,
         "pretty": true,
         "resolveJsonModule": true,
         "sourceMap": true,
@@ -18,5 +15,5 @@
         "target": "es2020"
     },
     "exclude": ["test/**/*.ts"],
-    "include": ["src/**/*.ts", "./*.js", "./.*.js"]
+    "include": ["src"]
 }
