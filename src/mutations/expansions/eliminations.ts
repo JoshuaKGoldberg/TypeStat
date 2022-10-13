@@ -1,3 +1,4 @@
+import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
@@ -51,11 +52,15 @@ const candidateTypeIsAssignableToOriginal = (request: FileMutationsRequest, cand
 const functionReturnIsIncomplete = (request: FileMutationsRequest, candidateType: ts.Type, originalType: ts.Type) => {
     const typeChecker = request.services.program.getTypeChecker();
 
-    // Skip this logic if neither of the types are actually functions
-    if (candidateType.getCallSignatures().length === 0 || originalType.getCallSignatures().length === 0) {
-        return false;
+    // Skip this logic if neither of the types are actually functions that return void
+    if (!anySignatureReturnsVoid(candidateType) && !anySignatureReturnsVoid(originalType)) {
+        return undefined;
     }
 
     // Regardless of the original compiler options, factor in covariance checks to be super duper sure
     return !typeChecker.isTypeAssignableTo(candidateType, originalType) || !typeChecker.isTypeAssignableTo(originalType, candidateType);
 };
+
+function anySignatureReturnsVoid(type: ts.Type) {
+    return type.getCallSignatures().some((callSignature) => tsutils.isTypeFlagSet(callSignature.getReturnType(), ts.TypeFlags.Void));
+}

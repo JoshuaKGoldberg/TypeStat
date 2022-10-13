@@ -6,6 +6,7 @@ import { FileMutationsRequest } from "../../mutators/fileMutator";
 import { getTypeAtLocationIfNotError } from "../../shared/types";
 
 import { createCodeFixCreationMutation } from "./creation";
+import { getCodeFixIfMatchedByDiagnostic } from "./getCodeFixIfMatchedByDiagnostic";
 
 export type NoImplicitAnyNode = ts.ParameterDeclaration | ts.PropertyDeclaration | ts.VariableDeclaration;
 
@@ -42,8 +43,10 @@ export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, reque
     }
 
     // Retrieve code fix suggestions for --noImplicitAny from the requesting language service
-    const codeFixes = getNoImplicitAnyCodeFixes(node, request);
-    if (codeFixes.length === 0) {
+    const codeFixes = getCodeFixIfMatchedByDiagnostic(request, node, [
+        ts.isParameter(node) ? NoImplicitAnyErrorCode.Parameter : NoImplicitAnyErrorCode.PropertyOrVariable,
+    ]);
+    if (!codeFixes?.length) {
         return undefined;
     }
 
@@ -52,18 +55,3 @@ export const getNoImplicitAnyMutations = (node: NoImplictAnyNodeToBeFixed, reque
         ignoreKnownBlankTypes: true,
     });
 };
-
-/**
- * Uses a requesting language service to get --noImplicitAny code fixes for a type of node.
- */
-const getNoImplicitAnyCodeFixes = (node: NoImplicitAnyNode, request: FileMutationsRequest) =>
-    request.services.languageService.getCodeFixesAtPosition(
-        request.sourceFile.fileName,
-        node.getStart(request.sourceFile),
-        node.end,
-        [ts.isParameter(node) ? NoImplicitAnyErrorCode.Parameter : NoImplicitAnyErrorCode.PropertyOrVariable],
-        {
-            insertSpaceBeforeAndAfterBinaryOperators: true,
-        },
-        {},
-    );

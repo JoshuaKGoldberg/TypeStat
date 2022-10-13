@@ -61,12 +61,12 @@ import * as React from 'react';
 
     // Any
 
-    let startsAnyWithString: any | string | string = "";
+    let startsAnyWithString: any = "";
 
-    let startsAnyGivenString: any | string | string;
+    let startsAnyGivenString: any;
     startsAnyGivenString = "";
 
-    let startsAnyWithStringGivenString: any | string | string = "";
+    let startsAnyWithStringGivenString: any = "";
     startsAnyWithStringGivenString = "";
 
     let startsStringWithAny: string = {} as any;

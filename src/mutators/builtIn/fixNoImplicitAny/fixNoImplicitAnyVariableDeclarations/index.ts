@@ -16,6 +16,7 @@ export const fixNoImplicitAnyVariableDeclarations: FileMutator = (request: FileM
 
 const isNodeVisitableVariableDeclaration = (node: ts.Node): node is ts.VariableDeclaration =>
     ts.isVariableDeclaration(node) &&
+    !node.type &&
     // Binding patterns are all implicitly typed, so ignore them
     !(ts.isArrayBindingPattern(node.name) || ts.isObjectBindingPattern(node.name)) &&
     // For-in and for-of loop varibles cannot have types, so don't bother trying to add them

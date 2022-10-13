@@ -51,11 +51,11 @@
         return "";
     }
 
-    function functionReturnsNullAsAny(): any | null | null {
+    function functionReturnsNullAsAny(): any {
         return null;
     }
 
-    function functionReturnsUndefinedAsAny(): any | undefined | undefined {
+    function functionReturnsUndefinedAsAny(): any {
         return undefined;
     }
 

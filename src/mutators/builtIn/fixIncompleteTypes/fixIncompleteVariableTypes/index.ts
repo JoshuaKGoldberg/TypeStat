@@ -18,8 +18,12 @@ const isNodeVariableDeclarationWithType = (node: ts.Node): node is ts.VariableDe
 const visitVariableDeclaration = (node: ts.VariableDeclaration, request: FileMutationsRequest): Mutation | undefined => {
     // Collect types later assigned to the variable, and types initially declared by or inferred on the variable
     const assignedTypes = collectVariableAssignedTypes(node, request);
+    if (assignedTypes.some((type) => tsutils.isTypeFlagSet(type, ts.TypeFlags.Any))) {
+        return undefined;
+    }
+
     const declaredType = getTypeAtLocationIfNotError(request, node);
-    if (declaredType === undefined) {
+    if (declaredType === undefined || tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Any)) {
         return undefined;
     }
 

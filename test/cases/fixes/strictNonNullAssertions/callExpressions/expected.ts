@@ -44,7 +44,7 @@
     takesString(("" as string | undefined)!);
     takesString(("" as string | null | undefined)!);
 
-    let emptyExplicitSibling: undefined = undefined!!;
+    let emptyExplicitSibling: undefined = undefined!;
     let emptyImplicitSibling = undefined!;
     let emptyExplicitChild: undefined = undefined;
     let emptyImplicitChild = undefined;

@@ -6,7 +6,7 @@ export interface NoImplicitThisContainer {
     returnThisMember: () => string;
 }
 
-function returnThisMember(this: NoImplicitThisContainer, this: NoImplicitThisContainer) {
+function returnThisMember(this: NoImplicitThisContainer) {
     return this.member;
 }
 

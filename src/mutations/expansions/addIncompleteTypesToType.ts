@@ -1,4 +1,4 @@
-import { combineMutations, Mutation, TextInsertMutation, TextSwapMutation } from "automutate";
+import { combineMutations, MultipleMutations, Mutation, TextInsertMutation, TextSwapMutation } from "automutate";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../../mutators/fileMutator";
@@ -37,7 +37,7 @@ export const addIncompleteTypesToType = (
 const fillInIncompleteType = (
     request: FileMutationsRequest,
     summaryWithNode: TypeSummaryWithNode,
-): TextInsertMutation | TextSwapMutation | undefined => {
+): MultipleMutations | TextInsertMutation | TextSwapMutation | undefined => {
     // Create a new type name to add on that joins the types to be added
     let createdTypeName = request.services.printers.type(
         summaryWithNode.summary.types,
@@ -64,7 +64,36 @@ const fillInIncompleteType = (
         };
     }
 
-    // Otherwise, add to the original node property's types
+    // If the original node type is a function type, wrap it in parenthesis
+    const originalPropertyTypePrinted = request.services.printers.type(summaryWithNode.originalPropertyType);
+    if (originalPropertyTypePrinted.includes("=>")) {
+        const parenthesisInsertions: TextInsertMutation[] = [
+            {
+                insertion: "(",
+                range: {
+                    begin: summaryWithNode.originalProperty.type.pos,
+                },
+                type: "text-insert",
+            },
+            {
+                insertion: `) | ${createdTypeName}`,
+                range: {
+                    begin: summaryWithNode.originalProperty.type.end,
+                },
+                type: "text-insert",
+            },
+        ];
+        return {
+            mutations: parenthesisInsertions,
+            range: {
+                begin: summaryWithNode.originalProperty.type.pos,
+                end: summaryWithNode.originalProperty.type.end,
+            },
+            type: "multiple",
+        };
+    }
+
+    // Otherwise we can stick with only the insertion of the new type as a union
     return {
         insertion: ` | ${createdTypeName}`,
         range: {

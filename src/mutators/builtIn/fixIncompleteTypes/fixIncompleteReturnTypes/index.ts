@@ -21,7 +21,7 @@ const isNodeVisitableFunctionLikeDeclaration = (node: ts.Node): node is Function
 const visitFunctionWithBody = (node: FunctionLikeDeclarationWithType, request: FileMutationsRequest) => {
     // Collect the type initially declared as returned
     const declaredType = getTypeAtLocationIfNotError(request, node.type);
-    if (declaredType === undefined) {
+    if (declaredType === undefined || tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Any)) {
         return undefined;
     }
 
