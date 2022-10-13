@@ -70,6 +70,6 @@ describeMutationTestCases(
         normalizeEndlines: "\n",
         original: "./original.*",
         settings: "typestat.json",
-        waves: { maximum: infiniteWaveThreshold + 2 },
+        waves: { maximum: infiniteWaveThreshold + 1 },
     },
 );

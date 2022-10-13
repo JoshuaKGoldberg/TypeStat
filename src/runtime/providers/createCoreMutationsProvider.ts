@@ -28,6 +28,7 @@ export const createCoreMutationsProvider = (allModifiedFiles: Set<string>): Prov
         }
 
         const fileNamesAndServicesCache = createFileNamesAndServicesCache(options);
+        const waveTracker = new WaveTracker();
         let lastFileIndex = -1;
         let waveIndex = 1;
 
@@ -35,7 +36,6 @@ export const createCoreMutationsProvider = (allModifiedFiles: Set<string>): Prov
             const startTime = Date.now();
             const fileMutationsByFileName = new Map<string, ReadonlyArray<Mutation>>();
             const { fileNames, services } = fileNamesAndServicesCache.get();
-            const waveTracker = new WaveTracker();
             const waveStartedFromBeginning = lastFileIndex <= 0;
             let addedMutations = 0;
 
