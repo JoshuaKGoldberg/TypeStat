@@ -7,6 +7,7 @@ import { requireExposedTypeScript } from "../mutations/createExposedTypeScript";
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions } from "../options/types";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider";
+import { infiniteWaveThreshold } from "../runtime/providers/tracking/WaveTracker";
 import { arrayify } from "../shared/arrays";
 
 const parsed = new Command()
@@ -69,7 +70,6 @@ describeMutationTestCases(
         normalizeEndlines: "\n",
         original: "./original.*",
         settings: "typestat.json",
-        // *Two* waves allow testing that regular mutations happens alongside pre or post processing.
-        waves: { maximum: 2 },
+        waves: { maximum: infiniteWaveThreshold + 2 },
     },
 );

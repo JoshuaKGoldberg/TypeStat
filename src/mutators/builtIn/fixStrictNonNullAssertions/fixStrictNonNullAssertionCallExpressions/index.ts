@@ -55,7 +55,10 @@ const collectArgumentMutations = (
 
         // If either null or undefined is missing in the argument, we'll need a ! mutation
         if (typeOfArgument !== undefined && isNullOrUndefinedMissingBetween(typeOfArgument, typeOfParameter)) {
-            mutations.push(collectArgumentMutation(request, callingNode.arguments[i]));
+            const argumentMutation = collectArgumentMutation(request, callingNode.arguments[i]);
+            if (argumentMutation !== undefined) {
+                mutations.push(argumentMutation);
+            }
         }
     }
 
@@ -63,7 +66,7 @@ const collectArgumentMutations = (
 };
 
 const collectArgumentMutation = (request: FileMutationsRequest, callingArgument: ts.Expression) => {
-    // If the argument is a variable declared in the parent function, add the ! to the variable
+    // If the argument is a variable declared in the parent function, add the ! to the variable...
     if (ts.isIdentifier(callingArgument)) {
         const declaringVariableInitializer = getVariableInitializerForExpression(
             request,
@@ -71,7 +74,10 @@ const collectArgumentMutation = (request: FileMutationsRequest, callingArgument:
             getParentOfKind(callingArgument, isFunctionBodyOrBlock),
         );
         if (declaringVariableInitializer !== undefined) {
-            return createNonNullAssertion(request, declaringVariableInitializer);
+            // ...if the variable doesn't already have a ! after its initial value
+            return declaringVariableInitializer.kind === ts.SyntaxKind.NonNullExpression
+                ? undefined
+                : createNonNullAssertion(request, declaringVariableInitializer);
         }
     }
 

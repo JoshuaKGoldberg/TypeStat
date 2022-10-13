@@ -4,31 +4,16 @@ import * as ts from "typescript";
 import { FileMutationsRequest } from "../../mutators/fileMutator";
 
 import { createCodeFixCreationMutation } from "./creation";
+import { getCodeFixIfMatchedByDiagnostic } from "./getCodeFixIfMatchedByDiagnostic";
 
 /**
  * Error code for the TypeScript language service to get --noImplicitThis code fixes.
  */
-const noImplicitThisErrorCode = 2683;
+const noImplicitThisErrorCodes = [2683];
 
 export const getNoImplicitThisMutations = (node: ts.ThisExpression, request: FileMutationsRequest): Mutation | undefined => {
     // Create a mutation for the code fixes if anything is available
-    const codeFixes = getNoImplicitThisCodeFixes(node, request);
+    const codeFixes = getCodeFixIfMatchedByDiagnostic(request, node, noImplicitThisErrorCodes);
 
-    return codeFixes.length === 0 ? undefined : createCodeFixCreationMutation(request, codeFixes);
+    return !codeFixes?.length ? undefined : createCodeFixCreationMutation(request, codeFixes);
 };
-
-/**
- * Uses a requesting language service to get --noImplicitThis code fixes for a type of node.
- *
- * @param node   Requesting node to retrieve fixes on.
- * @param request   Source file, metadata, and settings to collect mutations in the file.
- */
-const getNoImplicitThisCodeFixes = (node: ts.ThisExpression, request: FileMutationsRequest) =>
-    request.services.languageService.getCodeFixesAtPosition(
-        request.sourceFile.fileName,
-        node.getStart(request.sourceFile),
-        node.end,
-        [noImplicitThisErrorCode],
-        {},
-        {},
-    );

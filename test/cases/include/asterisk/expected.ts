@@ -1,4 +1,4 @@
-/* foo */ /* foo */ (function() {
+/* foo */ (function() {
     console.log("Hello, world!");
 
     function ignoreChanges(): string {
