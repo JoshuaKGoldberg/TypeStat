@@ -1,4 +1,5 @@
 import minimatch from "minimatch";
+import glob from "glob";
 import * as fs from "mz/fs";
 import * as path from "path";
 import * as ts from "typescript";
@@ -30,9 +31,7 @@ export const parseRawCompilerOptions = async (cwd: string, projectPath: string):
                 useCaseSensitiveFileNames: true,
                 readDirectory: (rootDir, extensions, excludes, includes) =>
                     includes
-                        .flatMap((include) =>
-                            fs.readdirSync(path.join(rootDir, include)).map((fileName) => path.join(rootDir, include, fileName)),
-                        )
+                        .flatMap((include) => glob.sync(path.join(rootDir, include)))
                         .filter(
                             (filePath) =>
                                 !excludes?.some((exclude) => minimatch(filePath, exclude)) &&
