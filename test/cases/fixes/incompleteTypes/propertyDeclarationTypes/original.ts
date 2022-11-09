@@ -29,7 +29,7 @@
         method() {
             this.member = {
                 key: true,
-            }
+            };
         }
     }
 
@@ -37,10 +37,10 @@
         member: string;
 
         method() {
-            this.member = '';
+            this.member = "";
             this.member = {
                 key: true,
-            }
+            };
         }
     }
 
@@ -48,13 +48,34 @@
         member: string;
 
         method() {
-            this.member = '';
+            this.member = "";
             this.member = {
                 middle: {
                     deepKey: true,
                 },
                 middleKey: 0,
-            }
+            };
         }
     }
+
+    class WithAny {
+        property: any;
+    }
+
+    const withAny = new WithAny();
+    withAny.property = "";
+
+    class WithUnknown {
+        property: unknown;
+    }
+
+    const withUnknown = new WithUnknown();
+    withUnknown.property = "";
+
+    class WithNever {
+        property: never;
+    }
+
+    const withNever = new WithNever();
+    withNever.property = "";
 })();

@@ -1,4 +1,5 @@
 import { TextInsertMutation, TextSwapMutation } from "automutate";
+import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
@@ -36,8 +37,8 @@ export const createTypeAdditionMutation = (
         return undefined;
     }
 
-    // If the original type was just something like Function or Object, replace it entirely
-    if (isKnownGlobalBaseType(declaredType)) {
+    // If the original type was a bottom type or just something like Function or Object, replace it entirely
+    if (tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Never | ts.TypeFlags.Unknown) || isKnownGlobalBaseType(declaredType)) {
         return {
             insertion: ` ${newTypeAlias}`,
             range: {
