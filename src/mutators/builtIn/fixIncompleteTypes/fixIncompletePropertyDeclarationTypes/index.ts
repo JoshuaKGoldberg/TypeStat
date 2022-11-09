@@ -19,7 +19,7 @@ const visitPropertyDeclaration = (node: ts.PropertyDeclaration, request: FileMut
     // Collect types later assigned to the property, and types initially declared by or inferred on the property
     const assignedTypes = collectPropertyAssignedTypes(node, request);
     const declaredType = getTypeAtLocationIfNotError(request, node);
-    if (declaredType === undefined) {
+    if (declaredType === undefined || tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Any)) {
         return undefined;
     }
 
