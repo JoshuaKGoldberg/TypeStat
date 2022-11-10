@@ -1,14 +1,15 @@
+import { ProjectDescription } from "../initializeProject/shared";
 import { InitializationImports } from "./imports";
 import { InitializationRenames } from "./renames";
 
 export interface JavaScriptConfigSettings {
     imports: InitializationImports;
-    project: string;
+    project: ProjectDescription;
     renames: InitializationRenames;
     sourceFiles?: string;
 }
 
-export const createJavaScriptConfig = async ({ imports, project, sourceFiles, renames }: JavaScriptConfigSettings) => {
+export const createJavaScriptConfig = ({ imports, project, sourceFiles, renames }: JavaScriptConfigSettings) => {
     const fileConversion = {
         files: {
             renameExtensions: printRenames(renames),
@@ -23,7 +24,7 @@ export const createJavaScriptConfig = async ({ imports, project, sourceFiles, re
     };
     const shared = (include: string[] | undefined) => ({
         ...(include && { include }),
-        project,
+        project: project.filePath,
     });
 
     const allConversions =

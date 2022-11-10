@@ -1,11 +1,12 @@
 import { fs } from "mz";
+import { ProjectDescription } from "../initializeProject/shared";
 
 import { InitializationImprovement } from "./improvements";
 
 export interface MultiTypeScriptConfigSettings {
     fileName: string;
     improvements: ReadonlySet<InitializationImprovement>;
-    project: string;
+    project: ProjectDescription;
     sourceFiles?: string;
     testFiles: string;
 }
@@ -27,18 +28,21 @@ export const writeMultiTypeScriptConfig = async ({
                         strictNonNullAssertions: true,
                     },
                     include: [testFiles],
-                    projectPath: project,
+                    projectPath: project.filePath,
+                    types: {
+                        strictNullChecks: true,
+                    },
                 },
                 {
                     exclude: [testFiles],
                     fixes: printImprovements(improvements),
                     ...(sourceFiles && { include: [sourceFiles] }),
-                    projectPath: project,
+                    projectPath: project.filePath,
                 },
                 {
                     fixes: printImprovements(improvements),
                     include: [testFiles, sourceFiles],
-                    projectPath: project,
+                    projectPath: project.filePath,
                 },
             ],
             undefined,

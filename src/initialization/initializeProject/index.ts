@@ -3,30 +3,39 @@ import * as fs from "fs";
 
 import { uniquify } from "../../shared/arrays";
 import { globAllAsync } from "../../shared/glob";
+import { initializeNewProject } from "./initializeNewProject";
+import { ProjectDescription, TSConfigLocationSuggestion, TSConfigLocation } from "./shared";
 
-const custom = "custom";
+export const initializeProject = async (): Promise<ProjectDescription> => {
+    const project = await initializeBuiltInProject();
 
-const defaultChoices = ["./tsconfig.json", "./src/tsconfig.json", custom];
+    return project === TSConfigLocationSuggestion.Custom
+        ? initializeCustomProject()
+        : project === TSConfigLocationSuggestion.DoesNotExist
+        ? initializeNewProject()
+        : { filePath: project };
+};
 
 const defaultSettings = {
     message: "Where is your tsconfig.json?",
     name: "project",
 };
 
-export const initializeProject = async () => {
-    const project = await initializeBuiltInProject();
-
-    return project === custom ? initializeCustomProject() : project;
-};
-
 const initializeBuiltInProject = async () => {
-    const choices = [...uniquify("./tsconfig.json", ...(await globAllAsync(["./tsconfig*json", "./*/tsconfig*json"]))), custom];
+    const choices = [
+        ...uniquify(TSConfigLocation.Root, TSConfigLocation.UnderSrc, ...(await globAllAsync(["./tsconfig*json", "./*/tsconfig*json"]))),
+        TSConfigLocationSuggestion.Custom,
+        TSConfigLocationSuggestion.DoesNotExist,
+    ];
 
-    const { project } = await prompt<{ project: string }>([
+    const { project } = await prompt<{ project: TSConfigLocation | TSConfigLocationSuggestion }>([
         {
             ...defaultSettings,
             choices,
-            initial: choices.findIndex((choice) => fs.existsSync(choice)) ?? defaultChoices.length - 1,
+            initial: Math.max(
+                0,
+                [TSConfigLocation.Root, TSConfigLocation.UnderSrc].findIndex((choice) => fs.existsSync(choice)),
+            ),
             type: "select",
         },
     ]);
@@ -34,7 +43,7 @@ const initializeBuiltInProject = async () => {
     return project;
 };
 
-const initializeCustomProject = async () => {
+const initializeCustomProject = async (): Promise<ProjectDescription> => {
     const { project } = await prompt<{ project: string }>([
         {
             ...defaultSettings,
@@ -43,5 +52,5 @@ const initializeCustomProject = async () => {
         },
     ]);
 
-    return project;
+    return { filePath: project };
 };

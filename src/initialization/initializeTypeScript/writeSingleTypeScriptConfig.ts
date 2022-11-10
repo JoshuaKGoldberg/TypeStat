@@ -1,10 +1,11 @@
 import { fs } from "mz";
 
+import { ProjectDescription } from "../initializeProject/shared";
 import { InitializationImprovement } from "./improvements";
 
 export interface SingleTypeScriptConfigSettings {
     fileName: string;
-    project: string;
+    project: ProjectDescription;
     improvements: ReadonlySet<InitializationImprovement>;
     sourceFiles?: string;
 }
@@ -16,7 +17,7 @@ export const writeSingleTypeScriptConfig = async ({ fileName, project, sourceFil
             {
                 fixes: printImprovements(improvements),
                 ...(sourceFiles && { include: [sourceFiles] }),
-                projectPath: project,
+                projectPath: project.filePath,
             },
             undefined,
             4,
