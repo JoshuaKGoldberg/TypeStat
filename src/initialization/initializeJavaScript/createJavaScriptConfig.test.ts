@@ -13,7 +13,9 @@ describe(createJavaScriptConfig, () => {
             name: "Basic",
             settings: {
                 imports: InitializationImports.No,
-                project: "tsconfig.json",
+                project: {
+                    filePath: "tsconfig.json",
+                },
                 renames: InitializationRenames.TS,
             },
         },
@@ -34,7 +36,9 @@ describe(createJavaScriptConfig, () => {
             name: "TS Renames (multiple sourceFiles extensions)",
             settings: {
                 imports: InitializationImports.Yes,
-                project: "tsconfig.json",
+                project: {
+                    filePath: "tsconfig.json",
+                },
                 renames: InitializationRenames.TS,
                 sourceFiles: "src/**/*.{js,jsx}",
             },
@@ -56,7 +60,9 @@ describe(createJavaScriptConfig, () => {
             name: "TSX Renames (multiple sourceFiles extensions)",
             settings: {
                 imports: InitializationImports.Yes,
-                project: "tsconfig.json",
+                project: {
+                    filePath: "tsconfig.json",
+                },
                 renames: InitializationRenames.TSX,
                 sourceFiles: "src/**/*.{js,jsx}",
             },
@@ -69,7 +75,9 @@ describe(createJavaScriptConfig, () => {
             name: "Auto Renames (no sourceFiles)",
             settings: {
                 imports: InitializationImports.Yes,
-                project: "tsconfig.json",
+                project: {
+                    filePath: "tsconfig.json",
+                },
                 renames: InitializationRenames.Auto,
             },
         },
@@ -90,7 +98,9 @@ describe(createJavaScriptConfig, () => {
             name: "Auto Renames (single sourceFiles extension)",
             settings: {
                 imports: InitializationImports.Yes,
-                project: "tsconfig.json",
+                project: {
+                    filePath: "tsconfig.json",
+                },
                 renames: InitializationRenames.Auto,
                 sourceFiles: "src/**/*.js",
             },
@@ -112,7 +122,9 @@ describe(createJavaScriptConfig, () => {
             name: "Auto Renames (multiple sourceFiles extensions)",
             settings: {
                 imports: InitializationImports.Yes,
-                project: "tsconfig.json",
+                project: {
+                    filePath: "tsconfig.json",
+                },
                 renames: InitializationRenames.Auto,
                 sourceFiles: "src/**/*.{js,jsx}",
             },
@@ -134,7 +146,9 @@ describe(createJavaScriptConfig, () => {
             name: "Auto Renames (parenthesized sourceFiles extensions)",
             settings: {
                 imports: InitializationImports.Yes,
-                project: "tsconfig.json",
+                project: {
+                    filePath: "tsconfig.json",
+                },
                 renames: InitializationRenames.Auto,
                 sourceFiles: "src/**/*.js(x)",
             },

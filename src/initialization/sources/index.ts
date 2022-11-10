@@ -1,7 +1,11 @@
 import { prompt } from "enquirer";
+import { fs } from "mz";
+
+import { ProjectDescription } from "../initializeProject/shared";
 
 export interface InitializeSourcesSettings {
     fromJavaScript: boolean;
+    project: ProjectDescription;
 }
 
 const everything = "everything";
@@ -9,7 +13,7 @@ const other = "other";
 
 export const initializeSources = async (settings: InitializeSourcesSettings) => {
     const completion = settings.fromJavaScript ? "/**/*.{js,jsx}" : "/**/*.{ts,tsx}";
-    const builtIn = await initializeBuiltInSources(completion);
+    const builtIn = await initializeBuiltInSources(completion, settings.project);
 
     if (builtIn === other) {
         return await getCustomSources(completion);
@@ -19,10 +23,24 @@ export const initializeSources = async (settings: InitializeSourcesSettings) => 
         return undefined;
     }
 
+    if (settings.project.created) {
+        await fs.writeFile(
+            settings.project.filePath,
+            JSON.stringify(
+                {
+                    ...JSON.parse((await fs.readFile(settings.project.filePath)).toString()),
+                    include: [builtIn.replace(/\*\.\{(j|t)s\,(j|t)sx\}/, "").replace(/\/\*\*\/$/, "")],
+                },
+                null,
+                4,
+            ),
+        );
+    }
+
     return builtIn;
 };
 
-const initializeBuiltInSources = async (completion: string) => {
+const initializeBuiltInSources = async (completion: string, project: ProjectDescription) => {
     // https://github.com/enquirer/enquirer/issues/202
     const choices: string[] = [
         {
