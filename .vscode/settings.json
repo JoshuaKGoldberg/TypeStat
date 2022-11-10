@@ -4,5 +4,8 @@
         "**/*.js.map": true,
         "**/*.js": { "when": "$(basename).ts" }
     },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
     "typescript.tsdk": "node_modules/typescript/lib"
 }
