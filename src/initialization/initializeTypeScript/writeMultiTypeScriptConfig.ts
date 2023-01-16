@@ -8,7 +8,7 @@ export interface MultiTypeScriptConfigSettings {
     improvements: ReadonlySet<InitializationImprovement>;
     project: ProjectDescription;
     sourceFiles?: string;
-    testFiles: string;
+    testFiles?: string;
 }
 
 export const writeMultiTypeScriptConfig = async ({
@@ -27,21 +27,21 @@ export const writeMultiTypeScriptConfig = async ({
                         ...printImprovements(improvements),
                         strictNonNullAssertions: true,
                     },
-                    include: [testFiles],
+                    ...(testFiles && { include: [testFiles] }),
                     projectPath: project.filePath,
                     types: {
                         strictNullChecks: true,
                     },
                 },
                 {
-                    exclude: [testFiles],
+                    ...(testFiles && { exclude: [testFiles] }),
                     fixes: printImprovements(improvements),
                     ...(sourceFiles && { include: [sourceFiles] }),
                     projectPath: project.filePath,
                 },
                 {
                     fixes: printImprovements(improvements),
-                    include: [testFiles, sourceFiles],
+                    ...(testFiles ? { include: [testFiles, sourceFiles] } : { include: [sourceFiles] }),
                     projectPath: project.filePath,
                 },
             ],

@@ -4,6 +4,7 @@ const other = "other";
 
 export const initializeTests = async () => {
     const builtIn = await initializeBuiltInTests();
+    if (builtIn === "none") return;
 
     return builtIn === other ? getCustomTests() : builtIn;
 };
@@ -15,6 +16,7 @@ const initializeBuiltInTests = async () => {
         "src/**/__tests__/*.test.{ts,tsx}",
         "src/**/*.test.{ts,tsx}",
         "test/**/*.{ts,tsx}",
+        "none",
     ];
 
     const { testFiles } = await prompt<{ testFiles: string }>([
