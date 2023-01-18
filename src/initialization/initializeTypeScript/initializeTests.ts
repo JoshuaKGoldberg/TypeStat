@@ -16,7 +16,7 @@ const initializeBuiltInTests = async () => {
         "src/**/__tests__/*.test.{ts,tsx}",
         "src/**/*.test.{ts,tsx}",
         "test/**/*.{ts,tsx}",
-        "none",
+        "(none)",
     ];
 
     const { testFiles } = await prompt<{ testFiles: string }>([
