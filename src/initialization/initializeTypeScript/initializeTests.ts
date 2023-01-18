@@ -1,10 +1,11 @@
 import { prompt } from "enquirer";
 
 const other = "other";
+const none = "none";
 
 export const initializeTests = async () => {
     const builtIn = await initializeBuiltInTests();
-    if (builtIn === "none") return;
+    if (builtIn === none) return;
 
     return builtIn === other ? getCustomTests() : builtIn;
 };
