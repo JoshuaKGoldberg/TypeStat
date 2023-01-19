@@ -1,7 +1,7 @@
 import { prompt } from "enquirer";
 
 const other = "other";
-const none = "none";
+const none = "(none)";
 
 export const initializeTests = async () => {
     const builtIn = await initializeBuiltInTests();
@@ -17,7 +17,7 @@ const initializeBuiltInTests = async () => {
         "src/**/__tests__/*.test.{ts,tsx}",
         "src/**/*.test.{ts,tsx}",
         "test/**/*.{ts,tsx}",
-        "(none)",
+        none,
     ];
 
     const { testFiles } = await prompt<{ testFiles: string }>([
