@@ -28,7 +28,7 @@
         "@types/jest": "29.4.0",
         "@types/minimatch": "^5.0.0",
         "@types/mz": "2.7.4",
-        "@types/node": "18.11.18",
+        "@types/node": "18.11.19",
         "@types/prop-types": "15.7.5",
         "@types/react": "18.0.27",
         "@typescript-eslint/eslint-plugin": "4.33.0",
