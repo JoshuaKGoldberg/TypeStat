@@ -1,5 +1,5 @@
 import { TextInsertMutation, TextSwapMutation } from "automutate";
-import * as tsutils from "tsutils";
+import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";

@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import * as tsutils from "tsutils";
+import * as tsutils from "ts-api-utils";
 
 import { FileMutationsRequest } from "../mutators/fileMutator";
 import { getValueDeclarationOfType } from "./nodeTypes";
