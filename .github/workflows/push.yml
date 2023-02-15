@@ -4,7 +4,7 @@ jobs:
     ci:
         runs-on: ubuntu-latest
         steps:
-            - uses: Codecademy/run-on-yarn@v1
+            - uses: Codecademy/run-on-yarn@v2
             - run: yarn ${{ matrix.command }}
 
         strategy:
@@ -15,7 +15,7 @@ jobs:
     mutations:
         runs-on: ubuntu-latest
         steps:
-            - uses: Codecademy/run-on-yarn@v1
+            - uses: Codecademy/run-on-yarn@v2
             - run: yarn compile
             - run: yarn test:mutation
 
