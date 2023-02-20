@@ -4211,10 +4211,10 @@ minimatch@^5.0.1, minimatch@~5.1.2:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-6.0.0.tgz#e00d2875b7ae572f9e699e674fdfdab587aa1fdd"
-  integrity sha512-6c/YhQ/ZnMCtAGMJTuPQlk1Q6ig41qn1laC1H/AU6dIIgurKxxfh0OEALh9V4+vPcy2VC670D46TOGc8dirt6w==
+minimatch@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-7.0.0.tgz#20a8df098715e228c918b2bd81f34d9543767a75"
+  integrity sha512-Wog4y1P2q/0sF+0vw+6dWgqVmo/XPJg+2OtVmR6IVvNGDhcfAPjFacjZCUlGCoU/tbzH6EOeSt2P3llRAqRNiA==
   dependencies:
     brace-expansion "^2.0.1"
 
