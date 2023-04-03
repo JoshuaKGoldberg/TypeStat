@@ -55,8 +55,6 @@ export const typeStat = async (argv: TypeStatArgv, output: ProcessOutput): Promi
     output.stdout(chalk.greenBright("🚀 Welcome to TypeStat!"));
     output.stdout(chalk.yellowBright("⚠️ TypeStat is still very early stage and experimental. ⚠️ While it will improve your code, it will likely add syntax and type errors. Use TypeStat as a starting point before you manually fix and verify any changes."))
 
-
-
     output.stdout(
         [
             chalk.green(`TypeStat will run through the `),
