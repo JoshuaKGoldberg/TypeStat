@@ -1,7 +1,7 @@
+import { glob } from "glob";
 import * as path from "path";
 
 import { TypeStatArgv } from "./index";
-import { globAllAsync } from "./shared/glob";
 
 export const collectFileNames = async (
     argv: TypeStatArgv,
@@ -29,14 +29,14 @@ const collectFileNamesFromGlobs = async (
     include: ReadonlyArray<string> | undefined,
 ): Promise<[ReadonlyArray<string>, ReadonlyArray<string>] | undefined> => {
     if (argv.args !== undefined && argv.args.length !== 0) {
-        return [argv.args, await globAllAsync(argv.args)];
+        return [argv.args, await glob(argv.args)];
     }
 
     if (include === undefined) {
         return undefined;
     }
 
-    return [include, await globAllAsync(include.map((subInclude) => path.join(cwd, subInclude)))];
+    return [include, await glob(include.map((subInclude) => path.join(cwd, subInclude)))];
 };
 
 const implicitNodeModulesIncluded = (fileGlobs: ReadonlyArray<string>, fileNames: ReadonlyArray<string> | undefined) => {

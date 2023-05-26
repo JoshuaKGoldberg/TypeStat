@@ -1,5 +1,5 @@
 import minimatch from "minimatch";
-import glob from "glob";
+import { glob } from "glob";
 import * as fs from "mz/fs";
 import * as path from "path";
 import * as ts from "typescript";
