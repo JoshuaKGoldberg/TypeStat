@@ -21,7 +21,7 @@ export interface RawTypeStatOptions {
     readonly filters?: ReadonlyArray<string>;
 
     /**
-     * Which fixes (type mutations) are enabled, with fields defaulting to `true`.
+     * Which fixes (type mutations) are enabled.
      */
     readonly fixes?: Partial<Fixes>;
 
@@ -54,6 +54,11 @@ export interface RawTypeStatOptions {
      * Path to a TypeScript configuration file, if not "tsconfig.json".
      */
     readonly projectPath?: string;
+
+    /**
+     * Which post-run cleanups are enabled.
+     */
+    readonly cleanups?: Partial<Cleanups>;
 
     /**
      * Options for which types to add under what aliases.
@@ -124,6 +129,11 @@ export interface BaseTypeStatOptions {
      * Path to a tsconfig.json file.
      */
     readonly projectPath: string;
+
+    /**
+     * Whether each post-run cleanup is enabled.
+     */
+    readonly cleanups: Readonly<Cleanups>;
 
     /**
      * Options for which types to add under what aliases.
@@ -280,6 +290,16 @@ export interface PostProcess {
      * Shell commands to execute in order after mutations on mutated file paths.
      */
     shell: ReadonlyArray<ReadonlyArray<string>>;
+}
+
+/**
+ * Cleanups to run after fixing is done.
+ */
+export interface Cleanups {
+    /**
+     * Whether to suppress TypeScript type errors with comment directives.
+     */
+    suppressTypeErrors: boolean;
 }
 
 /**

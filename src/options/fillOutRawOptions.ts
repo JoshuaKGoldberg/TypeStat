@@ -76,6 +76,10 @@ export const fillOutRawOptions = ({
         package: packageOptions,
         postProcess: { shell },
         projectPath,
+        cleanups: {
+            suppressTypeErrors: false,
+            ...rawOptions.cleanups,
+        },
         types: {
             strictNullChecks: typeStrictNullChecks,
         },
