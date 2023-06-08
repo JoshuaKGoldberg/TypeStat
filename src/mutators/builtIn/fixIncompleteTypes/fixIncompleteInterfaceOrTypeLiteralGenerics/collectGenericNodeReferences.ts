@@ -8,7 +8,7 @@ import {
 } from "../../../../shared/nodeTypes";
 import { isTypeArgumentsType } from "../../../../shared/typeNodes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
-import { FileMutationsRequest } from "../../../fileMutator";
+import { FileMutationsRequest } from "../../../../shared/fileMutator";
 
 export type InterfaceOrTypeLiteral = ts.InterfaceDeclaration | ts.TypeLiteralNode;
 

@@ -9,7 +9,7 @@ import { getParentOfKind, getVariableInitializerForExpression } from "../../../.
 import { isNullOrUndefinedMissingBetween } from "../../../../shared/nodeTypes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 
 export const fixStrictNonNullAssertionCallExpressions: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
     return collectMutationsFromNodes(request, isVisitableCallExpression, visitCallExpression);

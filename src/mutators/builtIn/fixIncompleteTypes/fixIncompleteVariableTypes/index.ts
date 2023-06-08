@@ -7,7 +7,7 @@ import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes";
 import { isNodeFilteredOut } from "../../../../shared/references";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 
 export const fixIncompleteVariableTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>
     collectMutationsFromNodes(request, isNodeVariableDeclarationWithType, visitVariableDeclaration);

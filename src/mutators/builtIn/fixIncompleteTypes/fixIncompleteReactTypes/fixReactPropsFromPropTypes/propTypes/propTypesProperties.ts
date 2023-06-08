@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import { ReactPropTypesOptionality } from "../../../../../../options/enums";
-import { FileMutationsRequest } from "../../../../../fileMutator";
+import { FileMutationsRequest } from "../../../../../../shared/fileMutator";
 
 import { getPropTypesMember } from "./propTypesExtraction";
 import { createPropTypesTransform } from "./propTypesTransforms";

@@ -2,7 +2,7 @@ import * as path from "path";
 
 import { ProcessOutput } from "../../output/types";
 import { builtInFileMutators } from "../../mutators/builtIn";
-import { FileMutator } from "../../mutators/fileMutator";
+import { FileMutator } from "../../shared/fileMutator";
 import { collectOptionals } from "../../shared/arrays";
 import { getQuickErrorSummary } from "../../shared/errors";
 import { RawTypeStatOptions } from "../types";

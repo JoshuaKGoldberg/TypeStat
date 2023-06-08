@@ -3,7 +3,7 @@ import * as ts from "typescript";
 
 import { AssignedTypesByName } from "../assignments";
 import { InterfaceOrTypeLiteral } from "../../mutators/builtIn/fixIncompleteTypes/fixIncompleteInterfaceOrTypeLiteralGenerics/collectGenericNodeReferences";
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../../shared/fileMutator";
 import { isNotUndefined } from "../../shared/arrays";
 import { getStaticNameOfProperty } from "../../shared/names";
 

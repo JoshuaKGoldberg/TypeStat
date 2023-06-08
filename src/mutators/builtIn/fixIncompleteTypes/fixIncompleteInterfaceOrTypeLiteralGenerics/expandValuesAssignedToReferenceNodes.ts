@@ -3,7 +3,7 @@ import * as ts from "typescript";
 import { AssignedTypeValue } from "../../../../mutations/assignments";
 import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
-import { FileMutationsRequest } from "../../../fileMutator";
+import { FileMutationsRequest } from "../../../../shared/fileMutator";
 
 export const expandValuesAssignedToReferenceNodes = (
     request: FileMutationsRequest,

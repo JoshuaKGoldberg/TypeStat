@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../mutations/collecting/flags";
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "./fileMutator";
 import { getTypeAtLocationIfNotError } from "./types";
 
 export type NodeSelector<TNode extends ts.Node> = (node: ts.Node) => node is TNode;

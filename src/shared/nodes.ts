@@ -1,7 +1,7 @@
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "./fileMutator";
 
 import { getValueDeclarationOfType, NodeSelector } from "./nodeTypes";
 

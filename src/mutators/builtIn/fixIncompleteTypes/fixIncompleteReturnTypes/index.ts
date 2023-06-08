@@ -7,7 +7,7 @@ import { isNotUndefined } from "../../../../shared/arrays";
 import { FunctionLikeDeclarationWithType, isNodeWithType } from "../../../../shared/nodeTypes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 import { collectReturningNodeExpressions } from "../../fixStrictNonNullAssertions/fixStrictNonNullAssertionReturnTypes/collectReturningNodeExpressions";
 
 export const fixIncompleteReturnTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>

@@ -6,6 +6,6 @@ export interface ProvidedMutationsWave {
     newOptions?: TypeStatOptions;
 }
 
-export type Provider = () => Promise<ProvidedMutationsWave | undefined>;
+export type Provider = () => ProvidedMutationsWave | undefined | Promise<ProvidedMutationsWave | undefined>;
 
 export type ProviderCreator = (options: TypeStatOptions) => Provider | undefined;

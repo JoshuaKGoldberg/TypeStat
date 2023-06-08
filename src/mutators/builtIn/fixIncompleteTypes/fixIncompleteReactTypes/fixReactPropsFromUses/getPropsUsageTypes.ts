@@ -10,7 +10,7 @@ import {
     PropertySignatureWithStaticName,
 } from "../../../../../shared/nodeTypes";
 import { getSymbolAtLocationIfNotError, getTypeAtLocationIfNotError } from "../../../../../shared/types";
-import { FileMutationsRequest } from "../../../../fileMutator";
+import { FileMutationsRequest } from "../../../../../shared/fileMutator";
 import { getComponentPropsNode, ReactComponentPropsNode } from "../getComponentPropsNode";
 import { getPropNodeFromReference } from "../getPropNodeFromReference";
 import { getReactComponentNode } from "../reactFiltering/getReactComponentNode";

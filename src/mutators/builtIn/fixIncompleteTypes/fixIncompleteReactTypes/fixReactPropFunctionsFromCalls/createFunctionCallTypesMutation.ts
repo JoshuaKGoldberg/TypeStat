@@ -3,7 +3,7 @@ import * as ts from "typescript";
 
 import { collectOptionals, isNotUndefined } from "../../../../../shared/arrays";
 import { PropertySignatureWithStaticName } from "../../../../../shared/nodeTypes";
-import { FileMutationsRequest } from "../../../../fileMutator";
+import { FileMutationsRequest } from "../../../../../shared/fileMutator";
 import { FunctionCallType } from "./collectAllFunctionCallTypes";
 
 type CombinedFunctionType = {

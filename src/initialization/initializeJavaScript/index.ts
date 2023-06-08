@@ -5,6 +5,7 @@ import { initializeSources } from "../sources";
 import { initializeImports } from "./imports";
 import { initializeRenames } from "./renames";
 import { createJavaScriptConfig } from "./createJavaScriptConfig";
+import { initializeCleanups } from "./cleanups";
 
 export interface InitializeJavaScriptSettings {
     fileName: string;
@@ -15,7 +16,9 @@ export const initializeJavaScript = async ({ fileName, project }: InitializeJava
     const sourceFiles = await initializeSources({ fromJavaScript: true, project });
     const renames = await initializeRenames();
     const imports = await initializeImports();
+    const cleanups = await initializeCleanups();
 
-    const settings = createJavaScriptConfig({ imports, project, sourceFiles, renames });
+    const settings = createJavaScriptConfig({ imports, project, sourceFiles, cleanups, renames });
+
     await writeFile(fileName, JSON.stringify(settings, undefined, 4));
 };

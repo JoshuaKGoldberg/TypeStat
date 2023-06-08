@@ -1,6 +1,6 @@
 import { combineMutations, MultipleMutations, TextInsertMutation } from "automutate";
 import * as ts from "typescript";
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../../shared/fileMutator";
 
 export interface CodeFixCreationPreferences {
     ignoreKnownBlankTypes?: boolean;

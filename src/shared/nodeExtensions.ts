@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "./fileMutator";
 import { getTypeAtLocationIfNotError } from "./types";
 
 export const getClassExtendsExpression = (node: ts.ClassLikeDeclaration): ts.ExpressionWithTypeArguments | undefined => {

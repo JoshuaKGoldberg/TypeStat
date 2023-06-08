@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { getTypeAtLocationIfNotError, typeHasLocalTypeParameters } from "../../../../../shared/types";
-import { FileMutationsRequest } from "../../../../fileMutator";
+import { FileMutationsRequest } from "../../../../../shared/fileMutator";
 
 import { VariableWithImplicitGeneric } from "./implicitGenericTypes";
 

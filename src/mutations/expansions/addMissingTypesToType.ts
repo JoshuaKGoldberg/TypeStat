@@ -1,7 +1,7 @@
 import { TextInsertMutation } from "automutate";
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../../shared/fileMutator";
 import { printNamedTypeSummary } from "../../shared/printing/nodePrinting";
 
 import { TypeSummariesByName } from "./summarization";

@@ -5,7 +5,7 @@ import { joinAssignedTypesByName } from "../../../../mutations/assignments";
 import { createTypeExpansionMutation } from "../../../../mutations/expansions/expansionMutations";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 
 import { collectGenericNodeReferences, InterfaceOrTypeLiteral } from "./collectGenericNodeReferences";
 import { expandValuesAssignedToReferenceNodes } from "./expandValuesAssignedToReferenceNodes";

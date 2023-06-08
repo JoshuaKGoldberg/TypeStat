@@ -5,7 +5,7 @@ import * as ts from "typescript";
 
 import { getTypeAtLocationIfNotError } from "../../../shared/types";
 import { collectMutationsFromNodes } from "../../collectMutationsFromNodes";
-import { FileMutator, FileMutationsRequest } from "../../fileMutator";
+import { FileMutator, FileMutationsRequest } from "../../../shared/fileMutator";
 
 type ExtensionlessExportOrImport = (ts.ExportDeclaration | ts.ImportDeclaration) & {
     moduleSpecifier: ts.StringLiteral;

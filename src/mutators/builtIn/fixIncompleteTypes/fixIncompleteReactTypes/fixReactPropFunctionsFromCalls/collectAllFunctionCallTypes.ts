@@ -4,7 +4,7 @@ import { getDeclaredTypesOfArgument } from "../../../../../shared/calls";
 import { isPropertySignatureWithStaticName, PropertySignatureWithStaticName } from "../../../../../shared/nodeTypes";
 import { getTypeAtLocationIfNotError } from "../../../../../shared/types";
 
-import { FileMutationsRequest } from "../../../../fileMutator";
+import { FileMutationsRequest } from "../../../../../shared/fileMutator";
 import { ReactComponentPropsNode } from "../getComponentPropsNode";
 import { getPropNodeFromReference } from "../getPropNodeFromReference";
 

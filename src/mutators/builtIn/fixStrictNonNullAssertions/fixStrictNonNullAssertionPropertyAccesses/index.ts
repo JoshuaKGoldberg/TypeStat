@@ -5,7 +5,7 @@ import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags
 import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 
 export const fixStrictNonNullAssertionPropertyAccesses: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
     const visitPropertyAccessExpression = (node: ts.PropertyAccessExpression): Mutation | undefined => {

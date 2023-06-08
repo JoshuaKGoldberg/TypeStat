@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { KnownTypeLiteralNode, transformLiteralToTypeLiteralNode } from "../../../../../../shared/transforms";
-import { FileMutationsRequest } from "../../../../../fileMutator";
+import { FileMutationsRequest } from "../../../../../../shared/fileMutator";
 
 import { getPropTypesMember, PropTypesAccessNode, PropTypesMembers } from "./propTypesExtraction";
 import { createPropTypesProperty } from "./propTypesProperties";
