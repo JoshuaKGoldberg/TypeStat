@@ -1,6 +1,7 @@
 import { InitializationImports } from "./imports";
 import { InitializationRenames } from "./renames";
 import { createJavaScriptConfig } from "./createJavaScriptConfig";
+import { InitializationSuppressions } from "./suppressions";
 
 describe(createJavaScriptConfig, () => {
     test.each([
@@ -17,6 +18,24 @@ describe(createJavaScriptConfig, () => {
                     filePath: "tsconfig.json",
                 },
                 renames: InitializationRenames.TS,
+                suppressions: InitializationSuppressions.No,
+            },
+        },
+        {
+            expected: {
+                files: { renameExtensions: "ts" },
+                fixes: { incompleteTypes: true, missingProperties: true, noImplicitAny: true },
+                suppressions: { typeErrors: true },
+                project: "tsconfig.json",
+            },
+            name: "Basic with Suppressions",
+            settings: {
+                imports: InitializationImports.No,
+                project: {
+                    filePath: "tsconfig.json",
+                },
+                renames: InitializationRenames.TS,
+                suppressions: InitializationSuppressions.Yes,
             },
         },
         {
@@ -41,6 +60,7 @@ describe(createJavaScriptConfig, () => {
                 },
                 renames: InitializationRenames.TS,
                 sourceFiles: "src/**/*.{js,jsx}",
+                suppressions: InitializationSuppressions.No,
             },
         },
         {
@@ -65,6 +85,7 @@ describe(createJavaScriptConfig, () => {
                 },
                 renames: InitializationRenames.TSX,
                 sourceFiles: "src/**/*.{js,jsx}",
+                suppressions: InitializationSuppressions.No,
             },
         },
         {
@@ -79,6 +100,7 @@ describe(createJavaScriptConfig, () => {
                     filePath: "tsconfig.json",
                 },
                 renames: InitializationRenames.Auto,
+                suppressions: InitializationSuppressions.No,
             },
         },
         {
@@ -103,6 +125,7 @@ describe(createJavaScriptConfig, () => {
                 },
                 renames: InitializationRenames.Auto,
                 sourceFiles: "src/**/*.js",
+                suppressions: InitializationSuppressions.No,
             },
         },
         {
@@ -127,6 +150,7 @@ describe(createJavaScriptConfig, () => {
                 },
                 renames: InitializationRenames.Auto,
                 sourceFiles: "src/**/*.{js,jsx}",
+                suppressions: InitializationSuppressions.No,
             },
         },
         {
@@ -151,10 +175,11 @@ describe(createJavaScriptConfig, () => {
                 },
                 renames: InitializationRenames.Auto,
                 sourceFiles: "src/**/*.js(x)",
+                suppressions: InitializationSuppressions.No,
             },
         },
-    ])("$name", async ({ expected, settings }) => {
-        const actual = await createJavaScriptConfig(settings);
+    ])("$name", ({ expected, settings }) => {
+        const actual = createJavaScriptConfig(settings);
 
         expect(actual).toEqual(expected);
     });

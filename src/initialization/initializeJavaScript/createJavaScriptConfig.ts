@@ -1,26 +1,29 @@
 import { ProjectDescription } from "../initializeProject/shared";
 import { InitializationImports } from "./imports";
 import { InitializationRenames } from "./renames";
+import { InitializationSuppressions } from "./suppressions";
 
 export interface JavaScriptConfigSettings {
     imports: InitializationImports;
     project: ProjectDescription;
     renames: InitializationRenames;
     sourceFiles?: string;
+    suppressions: InitializationSuppressions;
 }
 
-export const createJavaScriptConfig = ({ imports, project, sourceFiles, renames }: JavaScriptConfigSettings) => {
+export const createJavaScriptConfig = ({ imports, project, sourceFiles, suppressions, renames }: JavaScriptConfigSettings) => {
     const fileConversion = {
         files: {
             renameExtensions: printRenames(renames),
         },
     };
-    const fixConversion = {
+    const coreConversion = {
         fixes: {
             incompleteTypes: true,
             missingProperties: true,
             noImplicitAny: true,
         },
+        ...(suppressions === InitializationSuppressions.Yes ? { suppressions: { typeErrors: true } } : {}),
     };
     const shared = (include: string[] | undefined) => ({
         ...(include && { include }),
@@ -38,7 +41,7 @@ export const createJavaScriptConfig = ({ imports, project, sourceFiles, renames 
                       ...shared(sourceFiles ? [sourceFiles] : undefined),
                   },
                   {
-                      ...fixConversion,
+                      ...coreConversion,
                       ...shared(
                           sourceFiles
                               ? renames === InitializationRenames.Auto
@@ -52,7 +55,7 @@ export const createJavaScriptConfig = ({ imports, project, sourceFiles, renames 
               ]
             : {
                   ...fileConversion,
-                  ...fixConversion,
+                  ...coreConversion,
                   ...shared(sourceFiles ? [sourceFiles] : undefined),
               };
 

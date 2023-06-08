@@ -32,7 +32,7 @@ export const createCoreMutationsProvider = (allModifiedFiles: Set<string>): Prov
         let lastFileIndex = -1;
         let waveIndex = 1;
 
-        return async () => {
+        return () => {
             const startTime = Date.now();
             const fileMutationsByFileName = new Map<string, ReadonlyArray<Mutation>>();
             const { fileNames, services } = fileNamesAndServicesCache.get();
@@ -66,7 +66,7 @@ export const createCoreMutationsProvider = (allModifiedFiles: Set<string>): Prov
                 }
 
                 const filteredNodes = collectFilteredNodes(options, sourceFile);
-                const foundMutations = await findMutationsInFile({
+                const foundMutations = findMutationsInFile({
                     fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
                     filteredNodes,
                     nameGenerator: new NameGenerator(sourceFile.fileName),
