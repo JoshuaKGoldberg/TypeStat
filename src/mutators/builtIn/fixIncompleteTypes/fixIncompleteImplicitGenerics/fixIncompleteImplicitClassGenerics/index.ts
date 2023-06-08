@@ -4,7 +4,7 @@ import * as ts from "typescript";
 import { isNotUndefined } from "../../../../../shared/arrays";
 import { getBaseClassDeclaration, getClassExtendsExpression } from "../../../../../shared/nodeExtensions";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../../shared/fileMutator";
 import { addMissingTemplateTypes, addNewTypeNodes } from "../additions";
 import { findMissingTemplateTypes } from "../templateCollecting";
 import { fillInMissingTemplateTypes } from "../templateMutating";

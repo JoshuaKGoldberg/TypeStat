@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { printNewLine } from "../../../../shared/printing/newlines";
-import { FileMutationsRequest } from "../../../fileMutator";
+import { FileMutationsRequest } from "../../../../shared/fileMutator";
 
 export const addNewTypeNodes = (request: FileMutationsRequest, node: ts.ClassLikeDeclaration, createdTypes: string[]) => {
     const endline = printNewLine(request.options.compilerOptions);

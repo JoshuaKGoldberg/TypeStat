@@ -4,6 +4,10 @@ import { convertMapToObject, Dictionary } from "../../shared/maps";
 import { createFileNamesAndServices } from "../createFileNamesAndServices";
 import { createSingleUseProvider } from "../createSingleUseProvider";
 import { suppressRemainingTypeIssues } from "../../cleanups/builtin/suppressTypeErrors";
+import { FileInfoCache } from "../../shared/FileInfoCache";
+import { collectFilteredNodes } from "../collectFilteredNodes";
+import { NameGenerator } from "../../shared/NameGenerator";
+import { findMutationsInFile } from "../findMutationsInFile";
 
 /**
  * Creates a mutations provider that applies post-fix cleanups.
@@ -28,11 +32,19 @@ export const createCleanupsProvider = (allModifiedFiles: Set<string>) => {
                     continue;
                 }
 
-                const foundMutations = suppressRemainingTypeIssues({
-                    options,
-                    services,
-                    sourceFile,
-                });
+                const filteredNodes = collectFilteredNodes(options, sourceFile);
+
+                const foundMutations = findMutationsInFile(
+                    {
+                        fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
+                        filteredNodes,
+                        nameGenerator: new NameGenerator(sourceFile.fileName),
+                        options,
+                        services,
+                        sourceFile,
+                    },
+                    [["suppressTypeIssues", suppressRemainingTypeIssues]],
+                );
 
                 if (foundMutations?.length) {
                     allModifiedFiles.add(fileName);

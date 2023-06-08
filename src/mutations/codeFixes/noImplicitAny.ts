@@ -2,7 +2,7 @@ import { Mutation } from "automutate";
 import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../../shared/fileMutator";
 import { getTypeAtLocationIfNotError } from "../../shared/types";
 
 import { createCodeFixCreationMutation } from "./creation";

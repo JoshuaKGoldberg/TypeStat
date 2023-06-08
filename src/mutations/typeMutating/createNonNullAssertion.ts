@@ -1,7 +1,7 @@
 import { TextInsertMutation, TextSwapMutation } from "automutate";
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../../shared/fileMutator";
 
 // The following node types need to be wrapped in parenthesis to stop the ! from being applied to the wrong (last) element:
 // As expressions: foo as Bar

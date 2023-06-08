@@ -1,5 +1,5 @@
 import { findFirstMutations } from "../../../../shared/runtime";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 
 import { fixIncompleteImplicitClassGenerics } from "./fixIncompleteImplicitClassGenerics";
 import { fixIncompleteImplicitVariableGenerics } from "./fixIncompleteImplicitVariableGenerics";

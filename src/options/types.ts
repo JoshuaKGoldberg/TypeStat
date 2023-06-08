@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { FileMutator } from "../mutators/fileMutator";
+import { FileMutator } from "../shared/fileMutator";
 import { ProcessOutput } from "../output/types";
 import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums";
 

@@ -1,7 +1,7 @@
 import { TextDeleteMutation } from "automutate";
 
 import { NodeWithType } from "../shared/nodeTypes";
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "../shared/fileMutator";
 
 export const createTypeRemovalMutation = (request: FileMutationsRequest, node: NodeWithType): TextDeleteMutation => {
     return {

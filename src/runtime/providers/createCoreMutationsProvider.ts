@@ -66,14 +66,17 @@ export const createCoreMutationsProvider = (allModifiedFiles: Set<string>): Prov
                 }
 
                 const filteredNodes = collectFilteredNodes(options, sourceFile);
-                const foundMutations = findMutationsInFile({
-                    fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
-                    filteredNodes,
-                    nameGenerator: new NameGenerator(sourceFile.fileName),
-                    options,
-                    services,
-                    sourceFile,
-                });
+                const foundMutations = findMutationsInFile(
+                    {
+                        fileInfoCache: new FileInfoCache(filteredNodes, services, sourceFile),
+                        filteredNodes,
+                        nameGenerator: new NameGenerator(sourceFile.fileName),
+                        options,
+                        services,
+                        sourceFile,
+                    },
+                    options.mutators,
+                );
 
                 if (foundMutations !== undefined && foundMutations.length !== 0) {
                     addedMutations += foundMutations.length;

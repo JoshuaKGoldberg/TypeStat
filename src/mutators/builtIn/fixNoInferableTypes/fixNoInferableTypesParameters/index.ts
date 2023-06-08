@@ -5,7 +5,7 @@ import { createTypeRemovalMutation } from "../../../../mutations/removals";
 import { declaredInitializedTypeNodeIsRedundant } from "../../../../shared/comparisons";
 import { ParameterDeclarationWithType, isNodeWithType } from "../../../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 
 export const fixNoInferableTypesParameters: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>
     collectMutationsFromNodes(request, isInferableTypeCapableParameter, getNoInferableTypeParameterMutation);

@@ -3,7 +3,7 @@ import * as ts from "typescript";
 
 import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 import { getManuallyAssignedTypeOfNode } from "../../../../shared/assignments";
 import { getStaticNameOfProperty } from "../../../../shared/names";
 import { isNullOrUndefinedMissingBetween } from "../../../../shared/nodeTypes";

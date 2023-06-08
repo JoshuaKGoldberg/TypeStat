@@ -5,7 +5,7 @@ import { ReactPropTypesHint } from "../../../../../options/enums";
 import { getClassExtendsType } from "../../../../../shared/nodes";
 import { printNewLine } from "../../../../../shared/printing/newlines";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../../shared/fileMutator";
 import { isReactComponentNode, ReactComponentNode } from "../reactFiltering/isReactComponentNode";
 
 import { createInterfaceUsageMutation } from "./annotation/createInterfaceUsageMutation";

@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../../../../../fileMutator";
+import { FileMutationsRequest } from "../../../../../../shared/fileMutator";
 import { getApparentNameOfComponent } from "../../getApparentNameOfComponent";
 import { ReactComponentNode } from "../../reactFiltering/isReactComponentNode";
 

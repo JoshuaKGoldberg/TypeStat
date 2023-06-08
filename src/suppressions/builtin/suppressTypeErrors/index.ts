@@ -10,13 +10,13 @@ import { TypeStatOptions } from "../../../options/types";
 import { LanguageServices } from "../../../services/language";
 import { Mutation } from "automutate";
 
-export interface SuppressionRequest {
+export interface CleanupRequest {
     readonly options: TypeStatOptions;
     readonly services: LanguageServices;
     readonly sourceFile: ts.SourceFile;
 }
 
-export const suppressRemainingTypeIssues = (request: SuppressionRequest): ReadonlyArray<Mutation> | undefined => {
+export const suppressRemainingTypeIssues = (request: CleanupRequest): ReadonlyArray<Mutation> | undefined => {
     if (!request.options.cleanups.suppressTypeErrors) {
         return undefined;
     }

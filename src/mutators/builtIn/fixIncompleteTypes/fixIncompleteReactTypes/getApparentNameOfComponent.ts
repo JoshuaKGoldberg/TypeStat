@@ -2,7 +2,7 @@ import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { getFriendlyFileName } from "../../../../shared/fileNames";
-import { FileMutationsRequest } from "../../../fileMutator";
+import { FileMutationsRequest } from "../../../../shared/fileMutator";
 import { ReactComponentNode } from "./reactFiltering/isReactComponentNode";
 
 /**

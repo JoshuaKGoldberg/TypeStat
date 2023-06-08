@@ -3,7 +3,7 @@ import * as ts from "typescript";
 
 import { canNodeBeFixedForNoImplicitAny, getNoImplicitAnyMutations } from "../../../../mutations/codeFixes/noImplicitAny";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 
 export const fixNoImplicitAnyVariableDeclarations: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
     // This mutator fixes only for --noImplicitAny

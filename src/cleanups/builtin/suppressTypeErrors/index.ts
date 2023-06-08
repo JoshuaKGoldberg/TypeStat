@@ -6,17 +6,9 @@ import {
     isDiagnosticWithStart,
     stringifyDiagnosticMessageText,
 } from "../../../shared/diagnostics";
-import { TypeStatOptions } from "../../../options/types";
-import { LanguageServices } from "../../../services/language";
-import { Mutation } from "automutate";
+import { FileMutator } from "../../../shared/fileMutator";
 
-export interface SuppressionRequest {
-    readonly options: TypeStatOptions;
-    readonly services: LanguageServices;
-    readonly sourceFile: ts.SourceFile;
-}
-
-export const suppressRemainingTypeIssues = (request: SuppressionRequest): ReadonlyArray<Mutation> | undefined => {
+export const suppressRemainingTypeIssues: FileMutator = (request) => {
     if (!request.options.cleanups.suppressTypeErrors) {
         return undefined;
     }

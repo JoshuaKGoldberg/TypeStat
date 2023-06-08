@@ -5,7 +5,7 @@ import { createTypeAdditionMutation, createTypeCreationMutation } from "../../..
 import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 
 export const fixIncompleteParameterTypes: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> =>
     collectMutationsFromNodes(request, isParameterWithType, visitParameterDeclaration);

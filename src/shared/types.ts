@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "./fileMutator";
 import { isIntrisinicNameType } from "./typeNodes";
 
 /**

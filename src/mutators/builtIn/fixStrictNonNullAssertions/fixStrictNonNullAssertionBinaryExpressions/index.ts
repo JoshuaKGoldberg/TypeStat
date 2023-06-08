@@ -7,7 +7,7 @@ import { createNonNullAssertion } from "../../../../mutations/typeMutating/creat
 import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 
 export const fixStrictNonNullAssertionBinaryExpressions: FileMutator = (request: FileMutationsRequest): ReadonlyArray<Mutation> => {
     return collectMutationsFromNodes(request, isNodeAssigningBinaryExpression, visitBinaryExpression);

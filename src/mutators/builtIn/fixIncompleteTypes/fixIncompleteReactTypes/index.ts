@@ -1,5 +1,5 @@
 import { findFirstMutations } from "../../../../shared/runtime";
-import { FileMutationsRequest } from "../../../fileMutator";
+import { FileMutationsRequest } from "../../../../shared/fileMutator";
 
 import { fixReactPropsFromLaterAssignments } from "./fixReactPropsFromLaterAssignments";
 import { fixReactPropsFromUses } from "./fixReactPropsFromUses";

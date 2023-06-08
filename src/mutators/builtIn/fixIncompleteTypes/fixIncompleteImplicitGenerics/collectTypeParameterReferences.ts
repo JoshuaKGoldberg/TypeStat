@@ -2,7 +2,7 @@ import * as ts from "typescript";
 
 import { isNotUndefined } from "../../../../shared/arrays";
 import { getCloseAncestorCallOrNewExpression, getExpressionWithin } from "../../../../shared/nodes";
-import { FileMutationsRequest } from "../../../fileMutator";
+import { FileMutationsRequest } from "../../../../shared/fileMutator";
 
 /**
  * Finds all the nodes that could indicate the type of a base type parameter,
