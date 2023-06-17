@@ -2651,12 +2651,12 @@ colorette@^2.0.19:
   resolved "https://registry.yarnpkg.com/colorette/-/colorette-2.0.19.tgz#cdf044f47ad41a0f4b56b3a0d5b4e6e1a2d5a798"
   integrity sha512-3tlv/dIP7FWvj3BsbHrGLJ6l/oKh1O3TcgBqMn+yyCagOxc23fyzDS6HypQbgxWbkpDnf52p1LuR4eWDQ/K9WQ==
 
-commander@^10.0.0, commander@~10.0.1:
+commander@^10.0.0:
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-10.0.1.tgz#881ee46b4f77d1c1dccc5823433aa39b022cbe06"
   integrity sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==
 
-commander@^11.0.0:
+commander@^11.0.0, commander@~11.0.0:
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-11.0.0.tgz#43e19c25dbedc8256203538e8d7e9346877a6f67"
   integrity sha512-9HMlXtt/BNoYr8ooyjjNRdIilOTkVJXB+GhxMTtOKwk0R4j4lS4NpjuqmRxroBfnfTSHQIHQB7wryHhXarNjmQ==
@@ -3325,15 +3325,15 @@ glob@^7.1.3, glob@^7.1.4:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@~10.2.2:
-  version "10.2.2"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-10.2.2.tgz#ce2468727de7e035e8ecf684669dc74d0526ab75"
-  integrity sha512-Xsa0BcxIC6th9UwNjZkhrMtNo/MnyRL8jGCP+uEwhA5oFOCY1f2s1/oNKY47xQ0Bg5nkjsfAEIej1VeH62bDDQ==
+glob@~10.2.7:
+  version "10.2.7"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-10.2.7.tgz#9dd2828cd5bc7bd861e7738d91e7113dda41d7d8"
+  integrity sha512-jTKehsravOJo8IJxUGfZILnkvVJM/MOfHRs8QcXolVef2zNI9Tqyy5+SeuOAZd3upViEZQLyFpQhYiHLrMUNmA==
   dependencies:
     foreground-child "^3.1.0"
     jackspeak "^2.0.3"
-    minimatch "^9.0.0"
-    minipass "^5.0.0"
+    minimatch "^9.0.1"
+    minipass "^5.0.0 || ^6.0.2"
     path-scurry "^1.7.0"
 
 globals@^11.1.0:
@@ -4383,32 +4383,27 @@ markdown-it@8.4.2:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-markdownlint-cli@0.34.0:
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/markdownlint-cli/-/markdownlint-cli-0.34.0.tgz#d7a4ae8e59911de6dfb01782a7cd554e8a245947"
-  integrity sha512-4G9I++VBTZkaye6Yfc/7dU6HQHcyldZEVB+bYyQJLcpJOHKk/q5ZpGqK80oKMIdlxzsA3aWOJLZ4DkoaoUWXbQ==
+markdownlint-cli@0.35.0:
+  version "0.35.0"
+  resolved "https://registry.yarnpkg.com/markdownlint-cli/-/markdownlint-cli-0.35.0.tgz#1a6386777c6f20681e1425c0b7a056cf130bc46f"
+  integrity sha512-lVIIIV1MrUtjoocgDqXLxUCxlRbn7Ve8rsWppfwciUNwLlNS28AhNiyQ3PU7jjj4Qvj+rWTTvwkqg7AcdG988g==
   dependencies:
-    commander "~10.0.1"
+    commander "~11.0.0"
     get-stdin "~9.0.0"
-    glob "~10.2.2"
+    glob "~10.2.7"
     ignore "~5.2.4"
     js-yaml "^4.1.0"
     jsonc-parser "~3.2.0"
-    markdownlint "~0.28.2"
-    minimatch "~9.0.0"
+    markdownlint "~0.29.0"
+    minimatch "~9.0.1"
     run-con "~1.2.11"
-
-markdownlint-micromark@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/markdownlint-micromark/-/markdownlint-micromark-0.1.2.tgz#5520e04febffa46741875a2f297509ffdb561f5c"
-  integrity sha512-jRxlQg8KpOfM2IbCL9RXM8ZiYWz2rv6DlZAnGv8ASJQpUh6byTBnEsbuMZ6T2/uIgntyf7SKg/mEaEBo1164fQ==
 
 markdownlint-micromark@0.1.5:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/markdownlint-micromark/-/markdownlint-micromark-0.1.5.tgz#a23400b101be32cd4336f2b6b4c47da31825524c"
   integrity sha512-HvofNU4QCvfUCWnocQP1IAWaqop5wpWrB0mKB6SSh0fcpV0PdmQNS6tdUuFew1utpYlUvYYzz84oDkrD76GB9A==
 
-markdownlint@0.29.0:
+markdownlint@0.29.0, markdownlint@~0.29.0:
   version "0.29.0"
   resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.29.0.tgz#9647478b7d5485965c557502fe54ee5a550033f2"
   integrity sha512-ASAzqpODstu/Qsk0xW5BPgWnK/qjpBQ4e7IpsSvvFXcfYIjanLTdwFRJK1SIEEh0fGSMKXcJf/qhaZYHyME0wA==
@@ -4422,14 +4417,6 @@ markdownlint@^0.11.0:
   integrity sha512-wE5WdKD6zW2DQaPQ5TFBTXh5j76DnWd/IFffnDQgHmi6Y61DJXBDfLftZ/suJHuv6cwPjM6gKw2GaRLJMOR+Mg==
   dependencies:
     markdown-it "8.4.2"
-
-markdownlint@~0.28.2:
-  version "0.28.2"
-  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.28.2.tgz#ea31586a02fe3a06403ecafbbe22d77e363c8ed5"
-  integrity sha512-yYaQXoKKPV1zgrFsyAuZPEQoe+JrY9GDag9ObKpk09twx4OCU5lut+0/kZPrQ3W7w82SmgKhd7D8m34aG1unVw==
-  dependencies:
-    markdown-it "13.0.1"
-    markdownlint-micromark "0.1.2"
 
 mdurl@^1.0.1:
   version "1.0.1"
@@ -4498,10 +4485,17 @@ minimatch@^8.0.0:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^9.0.0, minimatch@~9.0.0:
+minimatch@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-9.0.0.tgz#bfc8e88a1c40ffd40c172ddac3decb8451503b56"
   integrity sha512-0jJj8AvgKqWN05mrwuqi8QYKx1WmYSUoKSxu5Qhs9prezTz10sxAHGNZe9J9cqIJzta8DWsleh2KaVaLl6Ru2w==
+  dependencies:
+    brace-expansion "^2.0.1"
+
+minimatch@^9.0.1, minimatch@~9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-9.0.1.tgz#8a555f541cf976c622daf078bb28f29fb927c253"
+  integrity sha512-0jWhJpD/MdhPXwPuiRkCbfYfSKp2qnn2eOc279qI7f+osl/l+prKSrvhg157zSYvx/1nmgn2NqdT6k2Z7zSH9w==
   dependencies:
     brace-expansion "^2.0.1"
 
@@ -4519,6 +4513,11 @@ minipass@^5.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/minipass/-/minipass-6.0.1.tgz#315417c259cb32a1b2fc530c0e7f55c901a60a6d"
   integrity sha512-Tenl5QPpgozlOGBiveNYHg2f6y+VpxsXRoIHFUVJuSmTonXRAE6q9b8Mp/O46762/2AlW4ye4Nkyvx0fgWDKbw==
+
+"minipass@^5.0.0 || ^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/minipass/-/minipass-6.0.2.tgz#542844b6c4ce95b202c0995b0a471f1229de4c81"
+  integrity sha512-MzWSV5nYVT7mVyWCwn2o7JH13w2TBRmmSqSRCKzTw+lmft9X4z+3wjvs06Tzijo5z4W/kahUCDpRXTF+ZrmF/w==
 
 mocha@10.2.0:
   version "10.2.0"
