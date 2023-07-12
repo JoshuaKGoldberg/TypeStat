@@ -19,10 +19,10 @@
     },
     "description": "Converts JavaScript to TypeScript and TypeScript to better TypeScript.",
     "devDependencies": {
-        "@babel/core": "7.22.8",
+        "@babel/core": "7.22.9",
         "@babel/plugin-proposal-nullish-coalescing-operator": "7.18.6",
         "@babel/plugin-proposal-optional-chaining": "7.21.0",
-        "@babel/preset-env": "7.22.7",
+        "@babel/preset-env": "7.22.9",
         "@babel/preset-typescript": "7.22.5",
         "@types/glob": "8.1.0",
         "@types/jest": "29.5.3",
