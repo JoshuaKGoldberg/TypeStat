@@ -2022,10 +2022,10 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-16.0.0.tgz"
   integrity sha512-TmCW5HoZ2o2/z2EYi109jLqIaPIi9y/lc2LmDCWzuCi35bcaQ+OtUh6nwBiFK7SOu25FAU5+YKdqFZUwtqGSdg==
 
-"@types/node@18.17.4":
-  version "18.17.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.17.4.tgz#bf8ae9875528929cc9930dc3f066cd0481fe1231"
-  integrity sha512-ATL4WLgr7/W40+Sp1WnNTSKbgVn6Pvhc/2RHAdt8fl6NsQyp4oPCi2eKcGOvA494bwf1K/W6nGgZ9TwDqvpjdw==
+"@types/node@18.17.5":
+  version "18.17.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.17.5.tgz#c58b12bca8c2a437b38c15270615627e96dd0bc5"
+  integrity sha512-xNbS75FxH6P4UXTPUJp/zNPq6/xsfdJKussCWNOnz4aULWIRwMgP1LgaB5RiBnMX1DPCYenuqGZfnIAx5mbFLA==
 
 "@types/prop-types@*":
   version "15.7.3"
