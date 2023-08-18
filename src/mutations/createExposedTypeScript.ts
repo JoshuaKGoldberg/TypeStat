@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-dynamic-delete , @typescript-eslint/no-explicit-any, @typescript-eslint/no-var-requires */
 /*
 This file is a ridiculous, disgusting hack and should not be considered acceptable code to write.
 Shame on you for even reading this header, let alone continuing down.
@@ -29,14 +29,14 @@ type ArgumentTypes<TFunction> = TFunction extends (...args: infer TArgs) => any 
 
 type ReplaceReturnType<TOriginalType, TReturnType> = (...args: ArgumentTypes<TOriginalType>) => TReturnType;
 
-type Replace<TOriginalType, TReplacements extends any> = {
+type Replace<TOriginalType, TReplacements> = {
     [Property in keyof TOriginalType]: Property extends keyof TReplacements ? TReplacements[Property] : TOriginalType[Property];
 };
 
 export type ExposedTypeScript = Replace<
     typeof import("typescript"),
     {
-        createProgram: ReplaceReturnType<typeof import("typescript")["createProgram"], ExposedProgram>;
+        createProgram: ReplaceReturnType<(typeof import("typescript"))["createProgram"], ExposedProgram>;
     }
 >;
 

@@ -26,7 +26,7 @@ export interface CliRuntime {
  * @param mainRunner   Method to run with parsed arguments: generally `typeStat`.
  * @returns Promise for the result of running TypeStat.
  */
-export const runCli = async (rawArgv: ReadonlyArray<string>, runtime?: CliRuntime): Promise<ResultStatus> => {
+export const runCli = async (rawArgv: readonly string[], runtime?: CliRuntime): Promise<ResultStatus> => {
     const command = new Command()
         .storeOptionsAsProperties(true)
         .option("-c --config [config]", "path to a TypeStat config file")

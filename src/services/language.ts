@@ -25,7 +25,7 @@ export interface LanguageServices {
 export interface Printers {
     readonly node: (node: ts.Node) => string;
     readonly type: (
-        types: ts.Type | string | ReadonlyArray<ts.Type | string>,
+        types: ts.Type | string | readonly (ts.Type | string)[],
         enclosingDeclaration?: ts.Node,
         typeFormatFlags?: ts.TypeFormatFlags,
     ) => string;
@@ -91,13 +91,14 @@ export const createLanguageServices = (options: TypeStatOptions): LanguageServic
         program,
         printers,
         get wellKnownTypes(): WellKnownTypes {
-            return (wellKnownTypes ??= program.getTypeCatalog().reduce((acc, type) => {
+            return (wellKnownTypes ??= program.getTypeCatalog().reduce<Record<WellKnownTypeName, ts.Type>>((acc, type) => {
                 if (isIntrisinicNameType(type)) {
                     acc[type.intrinsicName] = type;
                 }
 
                 return acc;
-            }, {} as Record<WellKnownTypeName, ts.Type>));
+                // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
+            }, {} as WellKnownTypes));
         },
     };
 };

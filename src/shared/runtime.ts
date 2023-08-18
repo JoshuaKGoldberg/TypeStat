@@ -5,8 +5,8 @@ import { FileMutationsRequest, FileMutator } from "./fileMutator";
 
 export const findFirstMutations = (
     request: FileMutationsRequest,
-    mutators: ReadonlyArray<[string, FileMutator]>,
-): ReadonlyArray<Mutation> | MutationsComplaint | undefined => {
+    mutators: readonly [string, FileMutator][],
+): readonly Mutation[] | MutationsComplaint | undefined => {
     for (const [mutatorName, mutator] of mutators) {
         try {
             const result = mutator(request);

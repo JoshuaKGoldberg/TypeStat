@@ -47,7 +47,7 @@ const extractConfigAsRelative = (filePath: string, config: RawTypeStatOptions | 
 };
 
 const relativizeConfig = (filePath: string, config: RawTypeStatOptions) => {
-    if (config.package !== undefined && config.package.directory !== undefined && !path.isAbsolute(config.package.directory)) {
+    if (config.package?.directory !== undefined && !path.isAbsolute(config.package.directory)) {
         config = {
             ...config,
             package: {

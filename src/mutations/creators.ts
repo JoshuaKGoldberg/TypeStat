@@ -21,7 +21,7 @@ export const createTypeAdditionMutation = (
     request: FileMutationsRequest,
     node: NodeWithAddableType,
     declaredType: ts.Type,
-    allAssignedTypes: ReadonlyArray<ts.Type>,
+    allAssignedTypes: readonly ts.Type[],
 ): TextInsertMutation | TextSwapMutation | undefined => {
     // Declared 'any' types inherently can't be incomplete
     if (tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Any)) {
@@ -38,9 +38,6 @@ export const createTypeAdditionMutation = (
 
     // Join the missing types into a type string to declare
     const newTypeAlias = joinIntoType(missingFlags, missingTypes, request);
-    if (newTypeAlias === undefined) {
-        return undefined;
-    }
 
     // If the original type was a bottom type or just something like Function or Object, replace it entirely
     if (tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Never | ts.TypeFlags.Unknown) || isKnownGlobalBaseType(declaredType)) {
@@ -77,7 +74,7 @@ export const createTypeCreationMutation = (
     request: FileMutationsRequest,
     node: NodeWithCreatableType,
     declaredType: ts.Type,
-    allAssignedTypes: ReadonlyArray<ts.Type>,
+    allAssignedTypes: readonly ts.Type[],
 ): TextInsertMutation | undefined => {
     // Find the already assigned flags and symbols, as well as any missing ones
     const { assignedFlags, assignedTypes, missingFlags, missingTypes } = collectUsageFlagsAndSymbols(
@@ -93,9 +90,6 @@ export const createTypeCreationMutation = (
 
     // Join the missing types into a type string to declare
     const newTypeAlias = joinIntoType(assignedFlags, assignedTypes, request);
-    if (newTypeAlias === undefined) {
-        return undefined;
-    }
 
     // Create a mutation insertion that adds the assigned types in
     return {

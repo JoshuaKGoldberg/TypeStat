@@ -33,15 +33,15 @@ export const fillOutRawOptions = ({
     projectPath,
     rawOptions,
 }: OptionsFromRawOptionsSettings): PendingTypeStatOptions => {
-    const rawOptionTypes = rawOptions.types === undefined ? {} : rawOptions.types;
+    const rawOptionTypes = rawOptions.types ?? {};
     const noImplicitAny = collectNoImplicitAny(compilerOptions, rawOptions);
     const noImplicitThis = collectNoImplicitThis(compilerOptions, rawOptions);
     const { compilerStrictNullChecks, typeStrictNullChecks } = collectStrictNullChecks(compilerOptions, rawOptionTypes);
 
     const packageOptions = collectPackageOptions(cwd, rawOptions);
 
-    const shell: ReadonlyArray<string>[] = [];
-    if (rawOptions.postProcess !== undefined && rawOptions.postProcess.shell !== undefined) {
+    const shell: (readonly string[])[] = [];
+    if (rawOptions.postProcess?.shell !== undefined) {
         shell.push(...rawOptions.postProcess.shell);
     }
 

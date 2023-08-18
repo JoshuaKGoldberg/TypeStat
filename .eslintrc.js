@@ -1,5 +1,5 @@
 module.exports = {
-    extends: ["plugin:@typescript-eslint/recommended", "plugin:@typescript-eslint/recommended-requiring-type-checking", "prettier"],
+    extends: ["eslint:recommended", "plugin:@typescript-eslint/strict-type-checked", "plugin:@typescript-eslint/stylistic-type-checked"],
     parser: "@typescript-eslint/parser",
     parserOptions: {
         project: "tsconfig.eslint.json",
@@ -9,9 +9,5 @@ module.exports = {
     rules: {
         "deprecation/deprecation": "error",
         "no-only-tests/no-only-tests": "error",
-
-        // These rules are off because we don't want them
-        // "@typescript-eslint/explicit-function-return-type": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "off",
     },
 };

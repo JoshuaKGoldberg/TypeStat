@@ -18,7 +18,7 @@ export interface RawTypeStatOptions {
     /**
      * Any tsquery filters to exclude within files.
      */
-    readonly filters?: ReadonlyArray<string>;
+    readonly filters?: readonly string[];
 
     /**
      * Which fixes (type mutations) are enabled.
@@ -33,12 +33,12 @@ export interface RawTypeStatOptions {
     /**
      * Globs of files to run on, if not everything in the TypeScript project.
      */
-    readonly include?: ReadonlyArray<string>;
+    readonly include?: readonly string[];
 
     /**
      * Any user-defined mutators to apply after the built-in mutators.
      */
-    readonly mutators?: ReadonlyArray<string>;
+    readonly mutators?: readonly string[];
 
     /**
      * Directives for project-level changes.
@@ -93,7 +93,7 @@ export interface BaseTypeStatOptions {
     /**
      * Any tsquery filters to exclude within files.
      */
-    readonly filters?: ReadonlyArray<string>;
+    readonly filters?: readonly string[];
 
     /**
      * Whether each fix (type mutation) is enabled.
@@ -108,7 +108,7 @@ export interface BaseTypeStatOptions {
     /**
      * Mutators to run, as either the built-in mutators or custom mutators specified by the user.
      */
-    readonly mutators: ReadonlyArray<[string, FileMutator]>;
+    readonly mutators: readonly [string, FileMutator][];
 
     /**
      * Wraps process and logfile output.
@@ -150,7 +150,7 @@ export interface PendingTypeStatOptions extends BaseTypeStatOptions {
     /**
      * Globs of files to run on, if not everything in the TypeScript project.
      */
-    readonly include?: ReadonlyArray<string>;
+    readonly include?: readonly string[];
 }
 
 /**
@@ -160,7 +160,7 @@ export interface TypeStatOptions extends BaseTypeStatOptions {
     /**
      * File names to run on, as globbed by the include globs.
      */
-    readonly fileNames: ReadonlyArray<string>;
+    readonly fileNames: readonly string[];
 }
 
 /**
@@ -289,7 +289,7 @@ export interface PostProcess {
     /**
      * Shell commands to execute in order after mutations on mutated file paths.
      */
-    shell: ReadonlyArray<ReadonlyArray<string>>;
+    shell: readonly (readonly string[])[];
 }
 
 /**

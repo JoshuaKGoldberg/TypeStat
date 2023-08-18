@@ -20,7 +20,7 @@ export const getApparentNameOfComponent = (request: FileMutationsRequest, node: 
     }
 
     // If the node is the default export of its file, use the file's name
-    if (tsutils.includesModifier(node.modifiers, ts.SyntaxKind.DefaultKeyword)) {
+    if (tsutils.includesModifier(node.modifiers as ts.NodeArray<ts.Modifier>, ts.SyntaxKind.DefaultKeyword)) {
         return getFriendlyFileName(request.sourceFile.fileName);
     }
 

@@ -6,7 +6,7 @@ import { LanguageServices } from "../services/language";
 import { findRelevantNodeReferencesAsNodes } from "./references";
 
 export class FileInfoCache {
-    private readonly nodeReferences = new Map<ts.Node, ReadonlyArray<ts.Node> | undefined>();
+    private readonly nodeReferences = new Map<ts.Node, readonly ts.Node[] | undefined>();
     private variableUsage: ReadonlyMap<ts.Identifier, tsutils.VariableInfo> | undefined;
 
     public constructor(
@@ -18,7 +18,7 @@ export class FileInfoCache {
     /**
      * @returns All corresponding nodes for the reference entries for a node.
      */
-    public getNodeReferencesAsNodes(node: ts.Node): ReadonlyArray<ts.Node> | undefined {
+    public getNodeReferencesAsNodes(node: ts.Node): readonly ts.Node[] | undefined {
         let references = this.nodeReferences.get(node);
 
         if (references === undefined) {

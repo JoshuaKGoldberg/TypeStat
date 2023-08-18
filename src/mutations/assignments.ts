@@ -25,7 +25,7 @@ export type AssignedTypesByName = Map<string, ts.Type | string>;
 /**
  * Joins a set of assigned type values into a single mapping by name.
  */
-export const joinAssignedTypesByName = (request: FileMutationsRequest, assignedTypeValues: ReadonlyArray<AssignedTypeValue>) => {
+export const joinAssignedTypesByName = (request: FileMutationsRequest, assignedTypeValues: readonly AssignedTypeValue[]) => {
     const assignedTypesByName = new Map<string, ts.Type | string>();
 
     for (const { name, type } of assignedTypeValues) {

@@ -79,7 +79,7 @@ const collectComponentAttributeTypes = (request: FileMutationsRequest, node: Rea
             const type = typeChecker.getBaseTypeOfLiteralType(valueType);
 
             // Add the type underneath the attribute name
-            const name = attribute.name.text;
+            const name = ts.isJsxNamespacedName(attribute.name) ? attribute.name.getText(request.sourceFile) : attribute.name.text;
             const types = attributeTypes.get(name);
             if (types === undefined) {
                 attributeTypes.set(name, [type]);

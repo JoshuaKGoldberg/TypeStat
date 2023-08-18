@@ -15,7 +15,7 @@
         "mz": "^2.7.0",
         "strip-ansi": "^6.0.0",
         "ts-api-utils": "^1.0.1",
-        "typescript": "^4.2.4"
+        "typescript": "^5.1.6"
     },
     "description": "Converts JavaScript to TypeScript and TypeScript to better TypeScript.",
     "devDependencies": {
@@ -31,8 +31,8 @@
         "@types/node": "18.17.5",
         "@types/prop-types": "15.7.5",
         "@types/react": "18.2.20",
-        "@typescript-eslint/eslint-plugin": "4.33.0",
-        "@typescript-eslint/parser": "4.33.0",
+        "@typescript-eslint/eslint-plugin": "^6.4.0",
+        "@typescript-eslint/parser": "^6.4.0",
         "automutate-tests": "0.5.0",
         "babel-jest": "29.6.2",
         "chai": "4.3.7",

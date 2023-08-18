@@ -1,4 +1,3 @@
-import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 import { getDeclaredTypesOfArgument } from "../../../../../shared/calls";
 import { isPropertySignatureWithStaticName, PropertySignatureWithStaticName } from "../../../../../shared/nodeTypes";
@@ -8,10 +7,10 @@ import { FileMutationsRequest } from "../../../../../shared/fileMutator";
 import { ReactComponentPropsNode } from "../getComponentPropsNode";
 import { getPropNodeFromReference } from "../getPropNodeFromReference";
 
-export type FunctionCallType = {
+export interface FunctionCallType {
     parameters?: (ts.Type | undefined)[];
     returnValue?: ts.Type;
-};
+}
 
 export const collectAllFunctionCallTypes = (request: FileMutationsRequest, propsNode: ReactComponentPropsNode) => {
     const allFunctionCallTypes = new Map<PropertySignatureWithStaticName, FunctionCallType[]>();
@@ -50,7 +49,7 @@ const collectFunctionCallsTypes = (
     // For each reference, try to infer the type from its usage...
     for (const reference of references) {
         // (except for the original member we're looking around)
-        if (reference === member || !tsutils.isExpression(reference)) {
+        if (reference === member || !ts.isExpression(reference)) {
             continue;
         }
 
