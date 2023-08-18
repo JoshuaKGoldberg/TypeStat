@@ -76,5 +76,5 @@
         "test:unit": "jest --config=jest.config.js",
         "verify": "yarn run tsc && yarn run lint && yarn run test"
     },
-    "version": "0.7.0"
+    "version": "0.7.1"
 }
