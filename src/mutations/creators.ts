@@ -23,6 +23,11 @@ export const createTypeAdditionMutation = (
     declaredType: ts.Type,
     allAssignedTypes: ReadonlyArray<ts.Type>,
 ): TextInsertMutation | TextSwapMutation | undefined => {
+    // Declared 'any' types inherently can't be incomplete
+    if (tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Any)) {
+        return undefined;
+    }
+
     // Find any missing flags and symbols (a.k.a. types)
     const { missingFlags, missingTypes } = collectUsageFlagsAndSymbols(request, declaredType, allAssignedTypes);
 
