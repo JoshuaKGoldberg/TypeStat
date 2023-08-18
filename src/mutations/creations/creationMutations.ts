@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../../shared/fileMutator";
 import { printNewLine } from "../../shared/printing/newlines";
 import { printNamedTypeSummaries } from "../../shared/printing/nodePrinting";
 import { TypeSummariesByName } from "../expansions/summarization";

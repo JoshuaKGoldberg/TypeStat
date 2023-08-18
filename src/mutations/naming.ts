@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "../shared/fileMutator";
 
 export const isUpperCaseLetter = (letter: string) => {
     return letter !== letter.toLowerCase();

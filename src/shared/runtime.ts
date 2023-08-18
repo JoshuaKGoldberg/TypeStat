@@ -1,7 +1,7 @@
 import { Mutation } from "automutate";
 
 import { MutationsComplaint } from "../mutators/complaint";
-import { FileMutationsRequest, FileMutator } from "../mutators/fileMutator";
+import { FileMutationsRequest, FileMutator } from "./fileMutator";
 
 export const findFirstMutations = (
     request: FileMutationsRequest,

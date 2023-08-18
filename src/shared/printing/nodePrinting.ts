@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 import { TypeSummariesByName, TypeSummary } from "../../mutations/expansions/summarization";
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../fileMutator";
 import { printNewLine } from "./newlines";
 
 export const printNamedTypeSummaries = (

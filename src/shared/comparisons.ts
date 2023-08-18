@@ -1,7 +1,7 @@
 import { isUnionType } from "tsutils";
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "./fileMutator";
 import { ExposedTypeChecker } from "../mutations/createExposedTypeScript";
 import { isIntrisinicNameType, isOptionalTypeArgumentsTypeNode } from "./typeNodes";
 import { getTypeAtLocationIfNotError } from "./types";

@@ -1,8 +1,8 @@
 import { prompt } from "enquirer";
 import * as fs from "fs";
+import { glob } from "glob";
 
 import { uniquify } from "../../shared/arrays";
-import { globAllAsync } from "../../shared/glob";
 import { initializeNewProject } from "./initializeNewProject";
 import { ProjectDescription, TSConfigLocationSuggestion, TSConfigLocation } from "./shared";
 
@@ -23,7 +23,7 @@ const defaultSettings = {
 
 const initializeBuiltInProject = async () => {
     const choices = [
-        ...uniquify(TSConfigLocation.Root, TSConfigLocation.UnderSrc, ...(await globAllAsync(["./tsconfig*json", "./*/tsconfig*json"]))),
+        ...uniquify(TSConfigLocation.Root, TSConfigLocation.UnderSrc, ...(await glob(["./tsconfig*json", "./*/tsconfig*json"]))),
         TSConfigLocationSuggestion.Custom,
         TSConfigLocationSuggestion.DoesNotExist,
     ];

@@ -9,4 +9,8 @@
     function passesStringOrBoolean(input: string | boolean) {
         takesStringOrBoolean(input);
     }
+
+    function takesAny(
+        input: any = {}
+    ) {}
 })()

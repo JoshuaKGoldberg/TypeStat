@@ -3,7 +3,7 @@ import * as ts from "typescript";
 import { AssignedTypesByName } from "../../../../../mutations/assignments";
 import { getStaticNameOfProperty } from "../../../../../shared/names";
 import { getTypeAtLocationIfNotError } from "../../../../../shared/types";
-import { FileMutationsRequest } from "../../../../fileMutator";
+import { FileMutationsRequest } from "../../../../../shared/fileMutator";
 import { ReactComponentNode } from "../reactFiltering/isReactComponentNode";
 
 /**

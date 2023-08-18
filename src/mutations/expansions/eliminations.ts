@@ -1,7 +1,7 @@
 import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../../shared/fileMutator";
 import { isKnownGlobalBaseType, isNeverAndOrUnknownType } from "../../shared/nodeTypes";
 
 const onlyTypes = (candidateTypes: ReadonlyArray<ts.Type | string>): candidateTypes is ReadonlyArray<ts.Type> =>

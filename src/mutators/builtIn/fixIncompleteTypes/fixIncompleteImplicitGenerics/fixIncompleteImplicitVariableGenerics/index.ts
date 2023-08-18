@@ -1,5 +1,5 @@
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../../shared/fileMutator";
 
 import { collectGenericUses } from "./collectGenericUses";
 import { createExplicitGenericType } from "./createExplicitGenericType";

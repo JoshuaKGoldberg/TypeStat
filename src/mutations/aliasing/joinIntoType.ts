@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../../shared/fileMutator";
 import { isNotUndefined, uniquify } from "../../shared/arrays";
 import { getApplicableTypeAliases } from "./aliases";
 

@@ -3,10 +3,10 @@ import * as ts from "typescript";
 
 import { TypeStatOptions } from "../options/types";
 import { LanguageServices } from "../services/language";
-import { FileInfoCache } from "../shared/FileInfoCache";
-import { NameGenerator } from "../shared/NameGenerator";
+import { FileInfoCache } from "./FileInfoCache";
+import { NameGenerator } from "./NameGenerator";
 
-import { MutationsComplaint } from "./complaint";
+import { MutationsComplaint } from "../mutators/complaint";
 
 /**
  * Source file, metadata, and settings to collect mutations in the file.

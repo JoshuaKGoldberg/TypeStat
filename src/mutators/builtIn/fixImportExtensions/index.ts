@@ -1,11 +1,11 @@
 import { TextInsertMutation } from "automutate";
-import glob from "glob";
+import { glob } from "glob";
 import * as path from "path";
 import * as ts from "typescript";
 
 import { getTypeAtLocationIfNotError } from "../../../shared/types";
 import { collectMutationsFromNodes } from "../../collectMutationsFromNodes";
-import { FileMutator, FileMutationsRequest } from "../../fileMutator";
+import { FileMutator, FileMutationsRequest } from "../../../shared/fileMutator";
 
 type ExtensionlessExportOrImport = (ts.ExportDeclaration | ts.ImportDeclaration) & {
     moduleSpecifier: ts.StringLiteral;

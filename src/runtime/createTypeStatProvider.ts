@@ -9,6 +9,7 @@ import { createInstallMissingTypesProvider } from "./providers/createInstallMiss
 import { createMarkFilesModifiedProvider } from "./providers/createMarkFilesModifiedProvider";
 import { createPostProcessingProvider } from "./providers/createPostProcessingProvider";
 import { createRequireRenameProvider } from "./providers/createRequireRenameProvider";
+import { createCleanupsProvider } from "./providers/createCleanupsProvider";
 
 /**
  * Creates a mutations provider that mutates files, then marks them as mutated.
@@ -22,6 +23,7 @@ export const createTypeStatProvider = (options: TypeStatOptions): MutationsProvi
             createInstallMissingTypesProvider(),
             createRequireRenameProvider(allModifiedFiles),
             createCoreMutationsProvider(allModifiedFiles),
+            createCleanupsProvider(allModifiedFiles),
             createMarkFilesModifiedProvider(allModifiedFiles),
             createPostProcessingProvider(allModifiedFiles),
         ]),

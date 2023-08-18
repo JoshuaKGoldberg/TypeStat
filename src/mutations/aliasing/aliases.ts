@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../../shared/fileMutator";
 
 /**
  * Type flags and aliases to check when --strictNullChecks is not enabled.

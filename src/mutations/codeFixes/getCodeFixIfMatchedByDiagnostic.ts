@@ -1,5 +1,5 @@
 import * as ts from "typescript";
-import { FileMutationsRequest } from "../../mutators/fileMutator";
+import { FileMutationsRequest } from "../../shared/fileMutator";
 
 /**
  * Uses a requesting language service to get code fixes for a type of node.

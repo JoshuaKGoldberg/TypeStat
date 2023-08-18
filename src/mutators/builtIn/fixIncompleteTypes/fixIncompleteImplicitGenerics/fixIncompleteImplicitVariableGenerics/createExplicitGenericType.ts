@@ -3,7 +3,7 @@ import * as ts from "typescript";
 
 import { joinIntoGenericType } from "../../../../../mutations/generics";
 import { isTypeArgumentsType } from "../../../../../shared/typeNodes";
-import { FileMutationsRequest } from "../../../../fileMutator";
+import { FileMutationsRequest } from "../../../../../shared/fileMutator";
 
 import { GenericClassDetails } from "./getGenericClassDetails";
 import { VariableWithImplicitGeneric } from "./implicitGenericTypes";

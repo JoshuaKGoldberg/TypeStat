@@ -2,7 +2,7 @@ import * as ts from "typescript";
 
 import { getClassExtendsType } from "../../../../shared/nodes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
-import { FileMutationsRequest } from "../../../fileMutator";
+import { FileMutationsRequest } from "../../../../shared/fileMutator";
 import {
     ReactClassComponentNode,
     ReactComponentNode,

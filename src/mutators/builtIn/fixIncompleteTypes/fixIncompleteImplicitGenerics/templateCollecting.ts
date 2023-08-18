@@ -5,7 +5,7 @@ import { getCallExpressionType } from "../../../../shared/calls";
 import { getStaticNameOfProperty } from "../../../../shared/names";
 import { isNodeAssigningBinaryExpression, isNodeWithinNode } from "../../../../shared/nodes";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
-import { FileMutationsRequest } from "../../../fileMutator";
+import { FileMutationsRequest } from "../../../../shared/fileMutator";
 
 import { collectTypeParameterReferences } from "./collectTypeParameterReferences";
 

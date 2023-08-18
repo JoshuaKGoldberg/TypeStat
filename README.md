@@ -48,9 +48,10 @@ To get a deeper understanding of TypeStat, read the following docs pages in orde
 
 1. **[Usage.md](./docs/Usage.md)** for an explanation of how TypeStat works
 2. **[Fixes.md](./docs/Fixes.md)** for the type of fixes TypeStat will generate mutations for
-3. **[Types.md](./docs/Types.md)** for configuring how to work with types in mutations
-4. **[Filters.md](./docs/Filters.md)** for using [tsquery](https://github.com/phenomnomnominal/tsquery) to ignore sections of source files
-5. **[Custom Mutators.md](./docs/Custom%20Mutators.md)** for including or creating custom mutators
+3. **[Cleanups.md](./docs/Cleanups.md)** for the post-fix cleaning TypeStat may apply to files
+4. **[Types.md](./docs/Types.md)** for configuring how to work with types in mutations
+5. **[Filters.md](./docs/Filters.md)** for using [tsquery](https://github.com/phenomnomnominal/tsquery) to ignore sections of source files
+6. **[Custom Mutators.md](./docs/Custom%20Mutators.md)** for including or creating custom mutators
 
 ## Development
 

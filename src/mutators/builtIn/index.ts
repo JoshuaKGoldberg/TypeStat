@@ -1,4 +1,4 @@
-import { FileMutator } from "../fileMutator";
+import { FileMutator } from "../../shared/fileMutator";
 
 import { fixImportExtensions } from "./fixImportExtensions";
 import { fixIncompleteTypes } from "./fixIncompleteTypes";

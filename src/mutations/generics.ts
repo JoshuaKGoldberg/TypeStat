@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "../shared/fileMutator";
 import { isTypeBuiltIn } from "../shared/types";
 
 import { constructArrayShorthand } from "./arrays";

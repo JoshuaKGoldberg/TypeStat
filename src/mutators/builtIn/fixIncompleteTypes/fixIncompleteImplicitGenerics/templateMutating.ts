@@ -5,7 +5,7 @@ import { createDeclarationForTypeSummaries } from "../../../../mutations/creatio
 import { summarizeAllAssignedTypes } from "../../../../mutations/expansions/summarization";
 import { getFriendlyTypeParameterDeclarationName, getPerceivedNameOfClass } from "../../../../mutations/naming";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types";
-import { FileMutationsRequest } from "../../../fileMutator";
+import { FileMutationsRequest } from "../../../../shared/fileMutator";
 
 export const fillInMissingTemplateTypes = (
     request: FileMutationsRequest,

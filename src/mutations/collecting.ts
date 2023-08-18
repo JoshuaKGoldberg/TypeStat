@@ -1,7 +1,7 @@
 import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "../shared/fileMutator";
 import { isKnownGlobalBaseType } from "../shared/nodeTypes";
 import { setSubtract } from "../shared/sets";
 

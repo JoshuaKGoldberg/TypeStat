@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 import * as tsutils from "ts-api-utils";
 
-import { FileMutationsRequest } from "../mutators/fileMutator";
+import { FileMutationsRequest } from "./fileMutator";
 import { getValueDeclarationOfType } from "./nodeTypes";
 
 /**

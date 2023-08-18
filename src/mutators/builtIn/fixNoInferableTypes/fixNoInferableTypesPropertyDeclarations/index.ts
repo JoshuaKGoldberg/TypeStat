@@ -5,7 +5,7 @@ import { createTypeRemovalMutation } from "../../../../mutations/removals";
 import { declaredInitializedTypeNodeIsRedundant } from "../../../../shared/comparisons";
 import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes";
-import { FileMutationsRequest, FileMutator } from "../../../fileMutator";
+import { FileMutationsRequest, FileMutator } from "../../../../shared/fileMutator";
 
 type InferablePropertyDeclaration = ts.PropertyDeclaration & NodeWithType & Required<Pick<ts.PropertyDeclaration, "initializer">>;
 
