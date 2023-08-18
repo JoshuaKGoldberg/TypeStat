@@ -23,7 +23,7 @@ export const createTypeAdditionMutation = (
     declaredType: ts.Type,
     allAssignedTypes: ReadonlyArray<ts.Type>,
 ): TextInsertMutation | TextSwapMutation | undefined => {
-    // Declared types inherently can't be incomplete
+    // Declared 'any' types inherently can't be incomplete
     if (tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Any)) {
         return undefined;
     }
