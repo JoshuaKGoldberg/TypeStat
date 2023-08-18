@@ -1,3 +1,4 @@
+import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 import { getDeclaredTypesOfArgument } from "../../../../../shared/calls";
 import { isPropertySignatureWithStaticName, PropertySignatureWithStaticName } from "../../../../../shared/nodeTypes";
