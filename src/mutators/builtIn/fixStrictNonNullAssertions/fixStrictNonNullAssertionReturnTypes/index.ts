@@ -16,7 +16,7 @@ export const fixStrictNonNullAssertionReturnTypes: FileMutator = (request: FileM
     collectMutationsFromNodes(request, isNodeVisitableFunctionLikeDeclaration, visitFunctionWithBody);
 
 const isNodeVisitableFunctionLikeDeclaration = (node: ts.Node): node is FunctionLikeDeclarationWithType =>
-    tsutils.isFunctionWithBody(node) &&
+    ts.isFunctionLike(node) &&
     // If the node has an implicit return type, we don't need to change anything
     isNodeWithType(node);
 

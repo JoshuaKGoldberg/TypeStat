@@ -1,9 +1,8 @@
-import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 
 import { AssignedTypesByName } from "../../../../../mutations/assignments";
 import { getDeclaredTypesOfArgument } from "../../../../../shared/calls";
-import { isNodeWithinNode } from "../../../../../shared/nodes";
+import { isExpression, isNodeWithinNode } from "../../../../../shared/nodes";
 import {
     isNodeWithIdentifierName,
     isPropertySignatureWithStaticName,
@@ -62,7 +61,7 @@ const updateAssignedTypesForReferences = (
         }
 
         // If the reference is an indirect storage, such as a variable, recurse on *its* references
-        if (!tsutils.isExpression(reference)) {
+        if (!isExpression(reference)) {
             updateAssignedTypesForReferences(request, member, componentNode, reference, seenNodes, allAssignedTypes);
             continue;
         }

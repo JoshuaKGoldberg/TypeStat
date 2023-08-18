@@ -1,5 +1,4 @@
 import { combineMutations, MultipleMutations, Mutation } from "automutate";
-import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags";
 
@@ -38,7 +37,7 @@ const visitCallExpression = (node: ts.CallExpression, request: FileMutationsRequ
 const collectArgumentMutations = (
     request: FileMutationsRequest,
     callingNode: ts.CallExpression,
-    functionLikeValueDeclaration: ts.FunctionLikeDeclaration,
+    functionLikeValueDeclaration: ts.SignatureDeclaration,
 ): ReadonlyArray<Mutation> => {
     const mutations: Mutation[] = [];
     const visitableArguments = Math.min(callingNode.arguments.length, functionLikeValueDeclaration.parameters.length);
@@ -86,4 +85,4 @@ const collectArgumentMutation = (request: FileMutationsRequest, callingArgument:
 };
 
 const isFunctionBodyOrBlock = (node: ts.Node): node is ts.Block | ts.FunctionLikeDeclaration | ts.SourceFile =>
-    tsutils.isFunctionWithBody(node) || ts.isBlock(node) || ts.isSourceFile(node);
+    ts.isFunctionLike(node) || ts.isBlock(node) || ts.isSourceFile(node);

@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import * as tsutils from "ts-api-utils";
 
 import { FileMutationsRequest } from "./fileMutator";
 import { getValueDeclarationOfType } from "./nodeTypes";
@@ -9,7 +8,7 @@ import { getValueDeclarationOfType } from "./nodeTypes";
  */
 export const getValueDeclarationOfFunction = (request: FileMutationsRequest, node: ts.Expression) => {
     const functionLikeValueDeclaration = getValueDeclarationOfType(request, node);
-    if (functionLikeValueDeclaration === undefined || !tsutils.isFunctionWithBody(functionLikeValueDeclaration)) {
+    if (functionLikeValueDeclaration === undefined || !ts.isFunctionLike(functionLikeValueDeclaration)) {
         return undefined;
     }
 

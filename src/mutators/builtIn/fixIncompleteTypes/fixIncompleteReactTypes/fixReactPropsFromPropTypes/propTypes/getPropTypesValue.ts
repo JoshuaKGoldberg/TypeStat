@@ -16,7 +16,7 @@ type PropTypesMember = ts.PropertyDeclaration & {
  */
 const getStaticPropTypes = (node: ts.ClassElement): node is PropTypesMember =>
     ts.isPropertyDeclaration(node) &&
-    tsutils.hasModifier(node.modifiers, ts.SyntaxKind.StaticKeyword) &&
+    tsutils.includesModifier(node.modifiers, ts.SyntaxKind.StaticKeyword) &&
     ts.isIdentifier(node.name) &&
     node.name.text === "propTypes" &&
     node.initializer !== undefined &&
