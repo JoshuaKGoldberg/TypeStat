@@ -5504,10 +5504,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-ts-api-utils@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/ts-api-utils/-/ts-api-utils-0.0.20.tgz#7ab4bb781869ea28bda13e5688ea2e9153520378"
-  integrity sha512-b4gjNeZ2t8rfbpWzlVfrUvIw23H9h/ko5ASCJdHxi8GP8jlmg1xhkfFP+QfdVnGuX0XL1PXa4Oat/mKbjrAkdg==
+ts-api-utils@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ts-api-utils/-/ts-api-utils-1.0.1.tgz#8144e811d44c749cd65b2da305a032510774452d"
+  integrity sha512-lC/RGlPmwdrIBFTX59wwNzqh7aR2otPNPR/5brHZm/XKFYKsfqxihXUe9pU3JI+3vGkl+vyCoNNnPhJn3aLK1A==
 
 tslib@^1.8.1:
   version "1.14.1"

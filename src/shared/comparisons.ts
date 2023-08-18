@@ -1,4 +1,4 @@
-import { isUnionType } from "tsutils";
+import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "./fileMutator";
@@ -54,7 +54,7 @@ const declaredTypeIsEquivalent = (typeChecker: ExposedTypeChecker, declaredType:
         typeChecker.isTypeAssignableTo(declaredType, initializedType) &&
         typeChecker.isTypeAssignableTo(initializedType, declaredType) &&
         // ...though, notably, declares union types trigger false positives against non-union initializations
-        !(isUnionType(declaredType) && !isUnionType(initializedType))
+        !(tsutils.isUnionType(declaredType) && !tsutils.isUnionType(initializedType))
     ) {
         return true;
     }
