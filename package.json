@@ -15,7 +15,7 @@
         "mz": "^2.7.0",
         "strip-ansi": "^6.0.0",
         "tsutils": "^3.21.0",
-        "typescript": "^4.2.4"
+        "typescript": "^5.0.0"
     },
     "description": "Converts JavaScript to TypeScript and TypeScript to better TypeScript.",
     "devDependencies": {
