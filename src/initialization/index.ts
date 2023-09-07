@@ -44,7 +44,7 @@ export const initialization = async (output: ProcessOutput): Promise<Initializat
 
     if (!skipped) {
         output.stdout(chalk.reset(`${EOL}Awesome! You're now ready to:`));
-        output.stdout(chalk.greenBright(`typestat --config ${fileName}`));
+        output.stdout(chalk.greenBright(`npx typestat --config ${fileName}`));
         output.stdout(chalk.reset(`${EOL}Once you run that, TypeStat will start auto-fixing your typings.`));
         output.stdout(
             [chalk.yellow(`Please report any bugs on https://github.com/JoshuaKGoldberg/TypeStat! `), chalk.yellowBright("💖")].join(""),
