@@ -14,8 +14,8 @@
         "minimatch": "^8.0.0",
         "mz": "^2.7.0",
         "strip-ansi": "^6.0.0",
-        "tsutils": "^3.21.0",
-        "typescript": "^4.2.4"
+        "ts-api-utils": "^1.0.3",
+        "typescript": "^5.1.6"
     },
     "description": "Converts JavaScript to TypeScript and TypeScript to better TypeScript.",
     "devDependencies": {
@@ -31,8 +31,8 @@
         "@types/node": "18.17.14",
         "@types/prop-types": "15.7.5",
         "@types/react": "18.2.21",
-        "@typescript-eslint/eslint-plugin": "4.33.0",
-        "@typescript-eslint/parser": "4.33.0",
+        "@typescript-eslint/eslint-plugin": "^6.4.0",
+        "@typescript-eslint/parser": "^6.4.0",
         "automutate-tests": "0.5.0",
         "babel-jest": "29.6.4",
         "chai": "4.3.8",
@@ -52,9 +52,7 @@
     },
     "license": "MIT",
     "lint-staged": {
-        "**/*.{js,json,md,ts,xml,yaml}": [
-            "prettier --write"
-        ]
+        "**/*.{js,json,md,ts,xml,yaml}": ["prettier --write"]
     },
     "main": "src/index.js",
     "name": "typestat",

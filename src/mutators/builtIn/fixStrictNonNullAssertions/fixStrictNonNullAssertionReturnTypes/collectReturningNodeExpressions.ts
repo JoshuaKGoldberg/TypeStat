@@ -1,4 +1,3 @@
-import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 /**
@@ -13,12 +12,12 @@ export const collectReturningNodeExpressions = (functionLikeDeclaration: ts.Func
     // Search through nodes within the function-like to find all its return statements
     const visitNode = (node: ts.Node): void => {
         // Don't look at returns within a nested function-like signature: they return for that function
-        if (tsutils.isFunctionWithBody(node)) {
+        if (ts.isFunctionLike(node)) {
             return;
         }
 
         // Add new returning nodes as needed when we find any 'return' statement with a value (expression) returned
-        if (tsutils.isReturnStatement(node) && node.expression !== undefined) {
+        if (ts.isReturnStatement(node) && node.expression !== undefined) {
             returnedTypes.push(node.expression);
         }
 

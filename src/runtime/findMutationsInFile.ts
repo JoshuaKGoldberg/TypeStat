@@ -10,14 +10,12 @@ import { findFirstMutations } from "../shared/runtime";
  */
 export const findMutationsInFile = (
     request: FileMutationsRequest,
-    mutators: ReadonlyArray<[string, FileMutator]>,
-): ReadonlyArray<Mutation> | undefined => {
+    mutators: readonly [string, FileMutator][],
+): readonly Mutation[] | undefined => {
     let mutations = findFirstMutations(request, mutators);
     if (mutations instanceof MutationsComplaint) {
         request.options.output.stderr(
-            `${EOL}Error in ${request.sourceFile.fileName} with ${mutations.mutatorPath.join(" > ")}: ${
-                mutations.error.stack || mutations.error.message
-            }${EOL}${EOL}`,
+            `${EOL}Error in ${request.sourceFile.fileName} with ${mutations.mutatorPath.join(" > ")}: ${mutations.error.stack}${EOL}${EOL}`,
         );
 
         mutations = undefined;

@@ -29,7 +29,7 @@ export const getBaseClassDeclaration = (
     // This is an internal member, but ah well...
     if (extensionSymbol === undefined) {
         const { resolvedBaseConstructorType } = getTypeAtLocationIfNotError(request, extension.parent.parent) as ts.Type & {
-            resolvedBaseConstructorType: ts.Type;
+            resolvedBaseConstructorType: ts.Type | undefined;
         };
 
         if (resolvedBaseConstructorType !== undefined) {

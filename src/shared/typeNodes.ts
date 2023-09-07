@@ -46,7 +46,5 @@ export type TypeWithValue = ts.Type & {
 };
 
 export const isTypeWithValue = (type: ts.Type): type is TypeWithValue => {
-    {
-    }
     return "value" in type;
 };

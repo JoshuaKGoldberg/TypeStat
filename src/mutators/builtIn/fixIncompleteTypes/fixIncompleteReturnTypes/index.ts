@@ -1,5 +1,5 @@
 import { Mutation } from "automutate";
-import * as tsutils from "tsutils";
+import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 
 import { createTypeAdditionMutation } from "../../../../mutations/creators";
@@ -14,7 +14,7 @@ export const fixIncompleteReturnTypes: FileMutator = (request: FileMutationsRequ
     collectMutationsFromNodes(request, isNodeVisitableFunctionLikeDeclaration, visitFunctionWithBody);
 
 const isNodeVisitableFunctionLikeDeclaration = (node: ts.Node): node is FunctionLikeDeclarationWithType =>
-    tsutils.isFunctionWithBody(node) &&
+    ts.isFunctionLike(node) &&
     // If the node has an implicit return type, we don't need to change anything
     isNodeWithType(node);
 

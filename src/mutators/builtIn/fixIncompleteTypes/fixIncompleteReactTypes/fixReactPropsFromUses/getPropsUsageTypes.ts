@@ -1,4 +1,3 @@
-import * as tsutils from "tsutils";
 import * as ts from "typescript";
 
 import { AssignedTypesByName } from "../../../../../mutations/assignments";
@@ -62,7 +61,7 @@ const updateAssignedTypesForReferences = (
         }
 
         // If the reference is an indirect storage, such as a variable, recurse on *its* references
-        if (!tsutils.isExpression(reference)) {
+        if (!ts.isExpression(reference)) {
             updateAssignedTypesForReferences(request, member, componentNode, reference, seenNodes, allAssignedTypes);
             continue;
         }

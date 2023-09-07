@@ -1,4 +1,4 @@
-import * as tsutils from "tsutils";
+import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "../shared/fileMutator";
@@ -18,7 +18,7 @@ import { findMissingFlags, isTypeFlagSetRecursively } from "./collecting/flags";
 export const collectUsageFlagsAndSymbols = (
     request: FileMutationsRequest,
     declaredType: ts.Type,
-    allAssignedTypes: ReadonlyArray<ts.Type>,
+    allAssignedTypes: readonly ts.Type[],
 ) => {
     // Collect which flags are later assigned to the type
     const [assignedFlags, assignedTypes] = collectFlagsAndTypesFromTypes(request, allAssignedTypes);
@@ -56,7 +56,7 @@ export const collectUsageFlagsAndSymbols = (
  */
 export const collectFlagsAndTypesFromTypes = (
     request: FileMutationsRequest,
-    allTypes: ReadonlyArray<ts.Type>,
+    allTypes: readonly ts.Type[],
     allowStrictNullCheckAliases?: boolean,
 ): [Set<ts.TypeFlags>, Set<ts.Type>] => {
     const foundFlags = new Set<ts.TypeFlags>();
