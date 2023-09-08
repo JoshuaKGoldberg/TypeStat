@@ -4,7 +4,7 @@
         "typestat": "bin/typestat"
     },
     "dependencies": {
-        "@phenomnomnominal/tsquery": "^5.0.0",
+        "@phenomnomnominal/tsquery": "^6.0.0",
         "automutate": "^0.9.0",
         "builtin-modules": "^3.2.0",
         "chalk": "^4.1.1",
