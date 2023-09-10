@@ -68,11 +68,11 @@ export const runCli = async (rawArgv: readonly string[], runtime?: CliRuntime): 
     switch (result.status) {
         case ResultStatus.ConfigurationError:
             runtime.output.stdout(command.helpInformation());
-            runtime.output.stderr(chalk.yellow(result.error));
+            logError(runtime, result.error);
             break;
 
         case ResultStatus.Failed:
-            runtime.output.stderr(chalk.yellow(result.error));
+            logError(runtime, result.error);
             break;
 
         case ResultStatus.Succeeded:
@@ -88,4 +88,12 @@ const getPackageVersion = async (): Promise<string> => {
     const rawText = (await fs.readFile(packagePath)).toString();
 
     return (JSON.parse(rawText) as { version: string }).version;
+};
+
+const logError = (runtime: CliRuntime, error: Error | string) => {
+    runtime.output.stderr(chalk.yellow(error));
+
+    if (error instanceof Error && error.stack) {
+        runtime.output.stderr(chalk.gray(error.stack.slice(error.stack.indexOf("\n") + 1)));
+    }
 };

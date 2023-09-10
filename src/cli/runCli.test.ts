@@ -41,18 +41,35 @@ describe("runCli", () => {
         expect(resultStatus).toEqual(ResultStatus.Succeeded);
     });
 
-    it("logs an error when the main runner rejects with one", async () => {
+    it("logs a string when the main runner rejects with one", async () => {
         // Arrange
         const { argv, initializationRunner, output, mainRunner } = createTestArgs("--config", "typestat.json");
         const message = "Error message";
 
-        mainRunner.mockRejectedValue(new Error(message));
+        mainRunner.mockRejectedValue(message);
 
         // Act
         const resultStatus = await runCli(argv, { initializationRunner, output, mainRunner });
 
         // Assert
-        expect(output.stderr).toHaveBeenLastCalledWith(expect.stringMatching(message));
+        expect(output.stderr).toHaveBeenCalledWith(expect.stringMatching(message));
+        expect(resultStatus).toEqual(ResultStatus.Failed);
+    });
+
+    it("logs an error with a stack when the main runner rejects with one", async () => {
+        // Arrange
+        const { argv, initializationRunner, output, mainRunner } = createTestArgs("--config", "typestat.json");
+        const message = "Error message";
+        const error = new Error(message);
+
+        mainRunner.mockRejectedValue(error);
+
+        // Act
+        const resultStatus = await runCli(argv, { initializationRunner, output, mainRunner });
+
+        // Assert
+        expect(output.stderr).toHaveBeenCalledWith(expect.stringMatching(message));
+        expect(output.stderr).toHaveBeenLastCalledWith(expect.stringMatching("  at"));
         expect(resultStatus).toEqual(ResultStatus.Failed);
     });
 
