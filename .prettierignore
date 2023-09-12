@@ -1,5 +1,4 @@
-*.md
-docs/**/*.md
-test/**/actual.*
-test/**/expected.*
-test/**/original.*
+node_modules/
+packages/ts-enhance/test/**/actual.*
+packages/ts-enhance/test/**/expected.*
+packages/ts-enhance/test/**/original.*

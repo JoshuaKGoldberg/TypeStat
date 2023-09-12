@@ -1,2 +1,4 @@
-**/*.d.ts
-test/cases/
+!.*
+node_modules
+packages/ts-enhance/test/cases/
+pnpm-lock.yaml

@@ -1,58 +1,39 @@
 <h1 align="center">TypeStat</h1>
 
-<p align="center"><strong>Converts JavaScript to TypeScript</strong> and <em>TypeScript to better TypeScript</em>.</p>
+<p align="center">Tools that <strong>convert JavaScript to TypeScript</strong> and <em>TypeScript to better TypeScript</em>. ✨</p>
 
-<p align="center">
-    <img alt="Code Style: Prettier" src="https://img.shields.io/badge/code_style-prettier-14cc21.svg" />
-    <img alt="TypeScript: Strict" src="https://img.shields.io/badge/typescript-strict-14cc21.svg" />
-    <a href="https://github.com/JoshuaKGoldberg/TypeStat/actions/workflows/push.yml">
-        <img alt="Build Status" src="https://img.shields.io/github/workflow/status/JoshuaKGoldberg/TypeStat/Push%20CI" />
-    </a>
-    <a href="http://badge.fury.io/js/typestat">
-        <img alt="NPM version" src="https://badge.fury.io/js/typestat.svg" />
-    </a>
-</p>
+## Packages
 
-<img align="right" alt="TypeStat logo: the TypeScript blue square with rounded corners, but a plus sign instead of 'TS'" src="./typestat.png">
+This monorepo publishes two main packages for end-users:
 
-## Usage
+- **`ts-enhance`**: Improves a project's TypeScript code by creating and improving types. 💗
+- **`ts-initialize`**: Converts a project from JavaScript to TypeScript in as few changes as possible. 💝
 
-TypeStat is a CLI utility that modifies TypeScript types in existing code.
-The built-in mutators will only ever add or remove types and will never change your runtime behavior.
-TypeStat can:
-
-<ul style="list-style-type:none;padding-left:1rem;">
-    <li>✨ Convert JavaScript files to TypeScript in a single bound!</li>
-    <li>✨ Add TypeScript types on files freshly converted from JavaScript to TypeScript!</li>
-    <li>✨ Infer types to fix <code>--noImplicitAny</code> and <code>--noImplicitThis</code> violations!</li>
-    <li>✨ Annotate missing <code>null</code>s and <code>undefined</code>s to get you started with <code>--strictNullChecks</code>!</li>
-</ul>
-
-⚡ To start, the `typestat` command will launch an interactive guide to setting up a configuration file. ⚡
-
-```shell
-npx typestat
-```
-
-> ```shell
-> 👋 Welcome to TypeStat! 👋
-> This will create a new typestat.json for you.
-> ...
-> ```
-
-After, use **`typestat --config typestat.json`** to convert your files.
-
-### Configuration
-
-To get a deeper understanding of TypeStat, read the following docs pages in order:
-
-1. **[Usage.md](./docs/Usage.md)** for an explanation of how TypeStat works
-2. **[Fixes.md](./docs/Fixes.md)** for the type of fixes TypeStat will generate mutations for
-3. **[Cleanups.md](./docs/Cleanups.md)** for the post-fix cleaning TypeStat may apply to files
-4. **[Types.md](./docs/Types.md)** for configuring how to work with types in mutations
-5. **[Filters.md](./docs/Filters.md)** for using [tsquery](https://github.com/phenomnomnominal/tsquery) to ignore sections of source files
-6. **[Custom Mutators.md](./docs/Custom%20Mutators.md)** for including or creating custom mutators
+It additionally publishes a `typestat` package for shared code.
 
 ## Development
 
-See [Development.md](./docs/Development.md). 💖
+See [`.github/CONTRIBUTING.md`](./.github/CONTRIBUTING.md), then [`.github/DEVELOPMENT.md`](./.github/DEVELOPMENT.md).
+Thanks! 💖
+
+## Contributors
+
+<!-- spellchecker: disable -->
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.joshuakgoldberg.com"><img src="https://avatars.githubusercontent.com/u/3335181?v=4?s=100" width="100px;" alt="Josh Goldberg"/><br /><sub><b>Josh Goldberg</b></sub></a><br /><a href="https://github.com/JoshuaKGoldberg/create-typescript-app/issues?q=author%3AJoshuaKGoldberg" title="Bug reports">🐛</a> <a href="https://github.com/JoshuaKGoldberg/create-typescript-app/commits?author=JoshuaKGoldberg" title="Code">💻</a> <a href="#maintenance-JoshuaKGoldberg" title="Maintenance">🚧</a> <a href="https://github.com/JoshuaKGoldberg/create-typescript-app/pulls?q=is%3Apr+reviewed-by%3AJoshuaKGoldberg" title="Reviewed Pull Requests">👀</a> <a href="#tool-JoshuaKGoldberg" title="Tools">🔧</a> <a href="https://github.com/JoshuaKGoldberg/create-typescript-app/commits?author=JoshuaKGoldberg" title="Documentation">📖</a> <a href="#infra-JoshuaKGoldberg" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/JoshuaKGoldberg/create-typescript-app/commits?author=JoshuaKGoldberg" title="Tests">⚠️</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+<!-- spellchecker: enable -->
+
+> 💙 This monorepo's packages are based on [@JoshuaKGoldberg](https://github.com/JoshuaKGoldberg)'s [create-typescript-app](https://github.com/JoshuaKGoldberg/create-typescript-app).

@@ -1,0 +1,32 @@
+{
+	"badgeTemplate": "<img alt=\"All Contributors: <%= contributors.length %> 🤝\" src=\"https://img.shields.io/badge/all_contributors-<%= contributors.length %>_🤝-21bb42.svg\" />",
+	"commit": false,
+	"commitConvention": "angular",
+	"contributors": [
+		{
+			"avatar_url": "https://avatars.githubusercontent.com/u/3335181?v=4",
+			"contributions": [
+				"bug",
+				"code",
+				"maintenance",
+				"review",
+				"tool",
+				"doc",
+				"infra",
+				"test"
+			],
+			"login": "JoshuaKGoldberg",
+			"name": "Josh Goldberg",
+			"profile": "http://www.joshuakgoldberg.com"
+		}
+	],
+	"contributorsPerLine": 7,
+	"contributorsSortAlphabetically": true,
+	"files": ["README.md"],
+	"imageSize": 100,
+	"projectName": "create-typescript-app",
+	"projectOwner": "JoshuaKGoldberg",
+	"repoHost": "https://github.com",
+	"repoType": "github",
+	"commitType": "docs"
+}

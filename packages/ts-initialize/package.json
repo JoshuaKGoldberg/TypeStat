@@ -1,0 +1,40 @@
+{
+	"name": "ts-initialize",
+	"version": "0.8.0",
+	"description": "Converts a project from JavaScript to TypeScript in as few changes as possible. 💝",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JoshuaKGoldberg/TypeStat"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Josh Goldberg",
+		"email": "npm@joshuakgoldberg.com"
+	},
+	"type": "module",
+	"main": "./lib/index.js",
+	"bin": "./bin/index.js",
+	"files": [
+		"bin/",
+		"lib/",
+		"package.json",
+		"LICENSE.md",
+		"README.md"
+	],
+	"dependencies": {
+		"automutate": "^0.9.0",
+		"builtin-modules": "^3.2.0",
+		"chalk": "^5.3.0",
+		"enquirer": "^2.3.6",
+		"glob": "^10.0.0",
+		"typescript": "^5.1.6",
+		"typestat-utils": "workspace:*"
+	},
+	"packageManager": "pnpm@8.7.1",
+	"engines": {
+		"node": ">=18"
+	},
+	"publishConfig": {
+		"provenance": true
+	}
+}

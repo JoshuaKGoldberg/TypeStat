@@ -1,0 +1,8 @@
+{
+	"fixes": {
+		"noImplicitAny": true
+	},
+	"types": {
+		"strictNullChecks": true
+	}
+}

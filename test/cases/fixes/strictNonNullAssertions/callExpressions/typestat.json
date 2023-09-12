@@ -1,8 +1,0 @@
-{
-    "fixes": {
-        "strictNonNullAssertions": true
-    },
-    "types": {
-        "strictNullChecks": true
-    }
-}

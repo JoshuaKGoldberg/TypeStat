@@ -1,7 +1,5 @@
-*.d.ts
-*.map
 node_modules/
-npm-debug.log
-src/**/*.js
-test/**/actual.ts
-test/**/actual.tsx
+packages/*/coverage/
+packages/*/lib/
+packages/*/node_modules/
+packages/ts-enhance/test/**/actual.*

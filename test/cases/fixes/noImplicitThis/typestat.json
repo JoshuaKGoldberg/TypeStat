@@ -1,8 +1,0 @@
-{
-    "fixes": {
-        "noImplicitThis": true
-    },
-    "types": {
-        "strictNullChecks": true
-    }
-}

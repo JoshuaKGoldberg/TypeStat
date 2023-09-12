@@ -1,0 +1,10 @@
+{
+	"filters": [],
+	"fixes": {
+		"incompleteTypes": true,
+		"noImplicitAny": true
+	},
+	"types": {
+		"strictNullChecks": true
+	}
+}

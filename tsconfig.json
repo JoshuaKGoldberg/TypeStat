@@ -1,20 +1,8 @@
 {
-    "compilerOptions": {
-        "esModuleInterop": true,
-        "lib": ["es2020"],
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "pretty": true,
-        "resolveJsonModule": true,
-        "skipLibCheck": true,
-        "sourceMap": true,
-        "strict": true,
-        "target": "es2020"
-    },
-    "exclude": ["test/**/*.ts"],
-    "include": ["src"]
+	"files": [],
+	"references": [
+		{ "path": "./packages/ts-enhance" },
+		{ "path": "./packages/ts-initialize" },
+		{ "path": "./packages/typestat-utils" }
+	]
 }
