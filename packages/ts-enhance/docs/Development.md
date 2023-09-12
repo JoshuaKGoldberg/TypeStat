@@ -75,5 +75,5 @@ Run it with `node --inspect` then visit `chrome://inspect` to use the browser de
 For example:
 
 ```shell
-node --inspect typestat --config ts-enhance.json
+node --inspect ts-enhance --config ts-enhance.json
 ```

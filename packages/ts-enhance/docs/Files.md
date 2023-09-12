@@ -55,7 +55,7 @@ If a value is provided on the CLI, it will override a configuration file value (
 ```
 
 Whether to convert `.js(x)` files to `.ts(x)`.
-When this is enabled, any file with a JavaScript extension visited by TypeStat,
+When this is enabled, any file with a JavaScript extension visited by `ts-enhance`,
 regardless of whether mutations are added, will be renamed to the equivalent TypeScript extension.
 
 ### Mapping Extensions
@@ -109,5 +109,5 @@ For example:
 + const sibling: typeof import("./sibling") = require("./sibling.js");
 ```
 
-This is necessary because TypeStat does not modify emitted JavaScript.
+This is necessary because `ts-enhance` does not modify emitted JavaScript.
 Removing extensions can sometimes cause unexpected behavior changes.

@@ -35,7 +35,7 @@ export interface Printers {
 }
 
 /**
- * @returns Associated language service and type information based on TypeStat options.
+ * @returns Associated language service and type information based on ts-enhance options.
  */
 export const createLanguageServices = (
 	options: TSEnhanceOptions,

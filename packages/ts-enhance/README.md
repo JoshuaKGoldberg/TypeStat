@@ -4,7 +4,7 @@
 
 ## Usage
 
-TypeStat is a CLI utility that modifies TypeScript types in existing code.
+`ts-enhance` is a CLI tool that iteratively improves TypeScript types in existing code.
 It can:
 
 - Add type annotations to fix [`noImplicitAny`](https://aka.ms/tsconfig#noImplicitAny) and [`noImplicitThis`](https://aka.ms/tsconfig#noImplicitThis) type errors
@@ -28,11 +28,11 @@ After, use **`ts-enhance --config ts-enhance.json`** to convert your files with 
 
 ### Configuration
 
-To get a deeper understanding of TypeStat, read the following docs pages in order:
+To get a deeper understanding of `ts-enhance`, read the following docs pages in order:
 
-1. **[Usage.md](./docs/Usage.md)** for an explanation of how TypeStat works
-2. **[Fixes.md](./docs/Fixes.md)** for the type of fixes TypeStat will generate mutations for
-3. **[Cleanups.md](./docs/Cleanups.md)** for the post-fix cleaning TypeStat may apply to files
+1. **[Usage.md](./docs/Usage.md)** for an explanation of how `ts-enhance` works
+2. **[Fixes.md](./docs/Fixes.md)** for the type of fixes `ts-enhance` will generate mutations for
+3. **[Cleanups.md](./docs/Cleanups.md)** for the post-fix cleaning `ts-enhance` may apply to files
 4. **[Types.md](./docs/Types.md)** for configuring how to work with types in mutations
 5. **[Filters.md](./docs/Filters.md)** for using [tsquery](https://github.com/phenomnomnominal/tsquery) to ignore sections of source files
 6. **[Custom Mutators.md](./docs/Custom%20Mutators.md)** for including or creating custom mutators

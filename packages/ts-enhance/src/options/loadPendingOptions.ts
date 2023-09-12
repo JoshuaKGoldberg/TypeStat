@@ -11,7 +11,7 @@ import { PendingTSEnhanceOptions, RawTSEnhanceOptions } from "./types.js";
 /**
  * Reads pre-file-rename ts-enhance options using a config path.
  * @param argv   Root arguments passed to ts-enhance.
- * @returns Promise for filled-out TypeStat options, or a string complaint from failing to make them.
+ * @returns Promise for filled-out ts-enhance options, or a string complaint from failing to make them.
  */
 export const loadPendingOptions = async (
 	argv: RunEnhanceArgv,

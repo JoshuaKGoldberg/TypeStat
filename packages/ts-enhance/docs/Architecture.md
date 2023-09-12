@@ -1,11 +1,11 @@
 # Architecture
 
-This document goes over how TypeStart runs and generates fixes.
+This document goes over how `ts-enhance` runs and generates fixes.
 Before reading this, you should read:
 
-- TypeStat's [README.md](../README.md)
+- `ts-enhance`'s [README.md](../README.md)
 - Documentation on the types of [fixes](./Fixes.md)
-- Recommended TypeStat [usage](./Usage.md)
+- Recommended `ts-enhance` [usage](./Usage.md)
 - [automutate](https://github.com/automutate/automutate) and [automutate-tests](https://github.com/automutate/automutate)
 
 ## Runtime
@@ -15,11 +15,11 @@ When the `typestat` command is entered into the CLI, roughly the following happe
 1. [bin/typestat](../bin/typestat) calls to the [CLI](../src/cli/index.ts)
 2. [Commander.js](https://github.com/tj/commander.js) parses the CLI's arguments
 3. Settings are loaded from the `-c`/`--config` file
-4. An Automutator provider is created for ts-enhance with [`createTypeStatMutationsProvider`](../src/runtime/createTypeStatMutationsProvider.ts).
+4. An Automutator provider is created for ts-enhance with [`createTSEnhanceProvider`](../src/enhance/runtime/createTSEnhanceProvider.ts).
 
 ### Mutation Providers
 
-There are three mutation providers that are run in order by [`createTypeStatMutationsProvider`](src/runtime/createTypeStatMutationsProvider.ts):
+There are three mutation providers that are run in order by [`createTSEnhanceProvider`](../src/enhance/runtime/createTSEnhanceProvider.ts):
 
 1. **Require renames**: changes to `import` and `require` statements from `files.renameExtensions`
 2. **Core mutations**: changes to type annotations in provided files
@@ -48,9 +48,9 @@ For example, given files `a.ts`, `b.ts`, and `c.ts` in order,
 if the first round runs on `a.ts` and `b.ts`, the second will start on `c.ts`.
 
 Rounds stop after those thresholds to allow Automutate to write mutations regularly.
-TypeStat crashing before a round is complete shouldn't lose all accumulated mutations.
+`ts-enhance` crashing before a round is complete shouldn't lose all accumulated mutations.
 
-Once TypeStat has visited each file, it will either:
+Once `ts-enhance` has visited each file, it will either:
 
 - Stop if no file had mutations applied
 - Restart _(and reload language services)_ if any file had mutations applied
@@ -69,7 +69,7 @@ will attempt to apply [built-in file mutators](../src/mutators/builtIn/index.ts)
 Each fixer targets a general range of potential type improvements and contains a series of sub-fixers that target individual improvements.
 For example, `fixIncompleteTypes` contains a `fixIncompleteParameterTypes` fixer that fills in incomplete types for parameters.
 
-Within each round of applying mutations, TypeStat will stop looking at a file after each step if any mutations are found.
+Within each round of applying mutations, `ts-enhance` will stop looking at a file after each step if any mutations are found.
 Adding mutations from one from can improve mutations from other forms, so reloading the file between rounds could reduce the number of later rounds.
 
 > See [Fixes.md](./Fixes.md).

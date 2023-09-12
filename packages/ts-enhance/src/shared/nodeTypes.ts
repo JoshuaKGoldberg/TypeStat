@@ -32,7 +32,7 @@ export type ParameterDeclarationWithType = ts.ParameterDeclaration &
 export type PropertySignatureWithType = ts.PropertySignature & NodeWithType;
 
 /**
- * Node types TypeStat may attempt to create a type declaration on.
+ * Node types ts-enhance may attempt to create a type declaration on.
  */
 export type NodeWithCreatableType =
 	| ts.ParameterDeclaration
@@ -40,7 +40,7 @@ export type NodeWithCreatableType =
 	| ts.VariableDeclaration;
 
 /**
- * Node types TypeStat may attempt to add to an existing type declaration on.
+ * Node types ts-enhance may attempt to add to an existing type declaration on.
  */
 export type NodeWithAddableType = NodeWithType;
 

@@ -14,7 +14,7 @@ import { Provider, ProviderCreator } from "../types.js";
 import { WaveTracker } from "./tracking/WaveTracker.js";
 
 /**
- * Creates a mutations provider that runs the core mutations within TypeStat.
+ * Creates a mutations provider that runs the core mutations within ts-enhance.
  * @param allModifiedFiles   Set to mark names of all files that were modified.
  * @returns Provider to run the core mutations, if needed.
  */
@@ -165,7 +165,7 @@ export const createCoreMutationsProvider = (
 			if (waveTracker.addAndCheck(fileMutations)) {
 				options.output.stdout(
 					chalk.redBright(
-						`It looks like TypeStat has ended up in an infinite loop.${EOL}`,
+						`It looks like ts-enhance has ended up in an infinite loop.${EOL}`,
 					),
 				);
 				options.output.stdout(

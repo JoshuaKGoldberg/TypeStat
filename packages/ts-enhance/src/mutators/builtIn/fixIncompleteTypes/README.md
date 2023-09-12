@@ -17,7 +17,7 @@ Whether to augment type annotations that don't capture all values constructs can
 }
 ```
 
-> Note: if you'd like to add `| null` and `| undefined` to types, `strictNullChecks` must be enabled in your `tsconfig.json` and/or TypeStat configuration file.
+> Note: if you'd like to add `| null` and `| undefined` to types, `strictNullChecks` must be enabled in your `tsconfig.json` and/or `ts-enhance` configuration file.
 
 ## Mutations
 

@@ -20,8 +20,8 @@ export interface OptionsFromRawOptionsSettings {
 }
 
 /**
- * Combines Node and CLi argument options with project and file metadata into pending TypeStat options.
- * @returns Parsed TypeStat options, or a string for an error complaint.
+ * Combines Node and CLi argument options with project and file metadata into pending ts-enhance options.
+ * @returns Parsed ts-enhance options, or a string for an error complaint.
  */
 export const fillOutRawOptions = async ({
 	compilerOptions,

@@ -1,6 +1,6 @@
 # Usage
 
-You'll need to tailor TypeStat's settings for your project.
+You'll need to tailor `ts-enhance`'s settings for your project.
 Use the `ts-enhance` CLI tool to auto-generate a configuration file for you.
 
 ## Basic Usage
@@ -61,7 +61,7 @@ npx ts-enhance --logfile ts-enhance.log
 
 ## More Examples
 
-Use these examples as more granular references of how to perform targeted changes with TypeStat.
+Use these examples as more granular references of how to perform targeted changes with `ts-enhance`.
 
 - [Converting Classes from JavaScript to TypeScript.md](./Usage/Converting%20Classes%20from%20JavaScript%20to%20TypeScript.md)
 - [Enabling Strict Null Checks](./Usage/Enabling%20Strict%20Null%20Checks.md)
