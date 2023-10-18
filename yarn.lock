@@ -2171,10 +2171,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-5.1.2.tgz#07508b45797cb81ec3f273011b054cd0755eddca"
   integrity sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==
 
-"@types/mz@2.7.5":
-  version "2.7.5"
-  resolved "https://registry.yarnpkg.com/@types/mz/-/mz-2.7.5.tgz#6d7d6cf06a2a02b8203260a341744a76b5ecde9b"
-  integrity sha512-GFQyFu0/5xfAbfxou079uRovHaoHibbn7t98orGdF7T33mF9xBPd5JU64TdXHy351SMZGtFKGO9Uwv4/7GCllg==
+"@types/mz@2.7.6":
+  version "2.7.6"
+  resolved "https://registry.yarnpkg.com/@types/mz/-/mz-2.7.6.tgz#20e076b3198878c139608432e7e4a2f0e0200986"
+  integrity sha512-+y7boPceq5fyKDhD0wnnEtGgBJop/hewqmCwtjlF6XIjZ06VNe5GLLOoRTzUzal+FwXcTFegOyTOV7WAXC1yOw==
   dependencies:
     "@types/node" "*"
 
