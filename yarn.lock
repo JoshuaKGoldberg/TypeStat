@@ -2096,10 +2096,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-5.1.2.tgz#07508b45797cb81ec3f273011b054cd0755eddca"
   integrity sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==
 
-"@types/mz@2.7.7":
-  version "2.7.7"
-  resolved "https://registry.yarnpkg.com/@types/mz/-/mz-2.7.7.tgz#cb5fd83369b3243a25301286e529b9f195d763d1"
-  integrity sha512-cIWlsq4vFIwfsMIMTNGtL8xoXz3itY/LRiwB9cIZJYmTzHvLrFASwih50/UfOyBU+S3vA9kiDuXW7ZxMfCvXJg==
+"@types/mz@2.7.8":
+  version "2.7.8"
+  resolved "https://registry.yarnpkg.com/@types/mz/-/mz-2.7.8.tgz#5ac05b34f08e6225d7ad9b05e158b03d9ca9e2d4"
+  integrity sha512-mGLNqqwt8yu4pDw9rEphAiyWnEdok0GzOGrwi5EiTuDFxw7H3ZaEI4ASFKq4HaZtemtjQ8MkcmtWcrU4V0WkIw==
   dependencies:
     "@types/node" "*"
 
