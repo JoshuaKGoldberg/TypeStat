@@ -29,7 +29,7 @@
         "@types/minimatch": "^5.0.0",
         "@types/mz": "2.7.8",
         "@types/node": "20.9.3",
-        "@types/prop-types": "15.7.10",
+        "@types/prop-types": "15.7.11",
         "@types/react": "18.2.37",
         "@typescript-eslint/eslint-plugin": "^6.4.0",
         "@typescript-eslint/parser": "^6.4.0",
