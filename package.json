@@ -30,7 +30,7 @@
         "@types/mz": "2.7.8",
         "@types/node": "20.10.3",
         "@types/prop-types": "15.7.11",
-        "@types/react": "18.2.41",
+        "@types/react": "18.2.42",
         "@typescript-eslint/eslint-plugin": "^6.4.0",
         "@typescript-eslint/parser": "^6.4.0",
         "automutate-tests": "0.5.0",
