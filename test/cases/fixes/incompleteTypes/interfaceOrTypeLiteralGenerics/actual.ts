@@ -6,7 +6,7 @@ initiallyThere?: boolean;
 	};
 
 	class Container<T> {
-		constructor(public values: T) { }
+		constructor(public values: T) {}
 	}
 
 	new Container<Values>({

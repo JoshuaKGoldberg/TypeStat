@@ -1,4 +1,4 @@
-(function() {
+(function () {
 	function one(): string | undefined {
 		return undefined;
 	}

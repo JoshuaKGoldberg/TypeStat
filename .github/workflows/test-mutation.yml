@@ -10,7 +10,7 @@ jobs:
         with:
           flags: mutation
 
-name: Test
+name: Test Mutation
 
 on:
   pull_request: ~
