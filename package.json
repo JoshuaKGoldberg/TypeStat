@@ -25,7 +25,7 @@
         "@babel/preset-env": "7.23.5",
         "@babel/preset-typescript": "7.23.3",
         "@types/glob": "8.1.0",
-        "@types/jest": "29.5.11",
+        "@types/jest": "29.5.12",
         "@types/minimatch": "^5.0.0",
         "@types/mz": "2.7.8",
         "@types/node": "20.10.3",
