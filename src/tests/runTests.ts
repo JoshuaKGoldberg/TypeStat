@@ -3,8 +3,8 @@ import { describeMutationTestCases } from "automutate-tests";
 import { Command } from "commander";
 import * as fs from "fs";
 import * as path from "path";
+import * as ts from "typescript";
 
-import { requireExposedTypeScript } from "../mutations/createExposedTypeScript";
 import { fillOutRawOptions } from "../options/fillOutRawOptions";
 import { RawTypeStatOptions } from "../options/types";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider";
@@ -20,9 +20,6 @@ const parsed = new Command()
     .option("-i, --include [include]", "path to a TypeScript project file")
     .parse(process.argv)
     .opts();
-
-// Modify TypeScript here so that no tests incur the performance penalty of doing it themselves
-const ts = requireExposedTypeScript();
 
 const rawPathToRegExp = (rawPath: string) => new RegExp(`.*${rawPath.split(/\\|\//g).slice(-3).join(".*")}.*`, "i");
 

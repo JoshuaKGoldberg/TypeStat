@@ -1,4 +1,5 @@
 *.d.ts
+!src/types.d.ts
 *.map
 node_modules/
 npm-debug.log

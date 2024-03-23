@@ -2,7 +2,6 @@ import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 
 import { FileMutationsRequest } from "./fileMutator";
-import { ExposedTypeChecker } from "../mutations/createExposedTypeScript";
 import { isIntrisinicNameType, isOptionalTypeArgumentsTypeNode } from "./typeNodes";
 import { getTypeAtLocationIfNotError } from "./types";
 
@@ -48,7 +47,7 @@ export const declaredInitializedTypeNodeIsRedundant = (request: FileMutationsReq
     return declaredTypeIsEquivalent(request.services.program.getTypeChecker(), declaredType, initializedType);
 };
 
-const declaredTypeIsEquivalent = (typeChecker: ExposedTypeChecker, declaredType: ts.Type, initializedType: ts.Type) => {
+const declaredTypeIsEquivalent = (typeChecker: ts.TypeChecker, declaredType: ts.Type, initializedType: ts.Type) => {
     // Most types, such as `string[]` / `[""]`, are generally found by this intersection...
     if (
         typeChecker.isTypeAssignableTo(declaredType, initializedType) &&
@@ -69,7 +68,7 @@ const declaredTypeIsEquivalent = (typeChecker: ExposedTypeChecker, declaredType:
     return typeSymbolsAndArgumentsAreEquivalent(typeChecker, declaredType, initializedType);
 };
 
-const typeSymbolsAndArgumentsAreEquivalent = (typeChecker: ExposedTypeChecker, declaredType: ts.Type, initializedType: ts.Type) => {
+const typeSymbolsAndArgumentsAreEquivalent = (typeChecker: ts.TypeChecker, declaredType: ts.Type, initializedType: ts.Type) => {
     const declaredSymbol = declaredType.getSymbol();
     const initializedSymbol = initializedType.getSymbol();
     if (

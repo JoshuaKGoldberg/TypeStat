@@ -1,6 +1,3 @@
-// Ensure TypeScript is exposed before any files import it
-require("./mutations/createExposedTypeScript").requireExposedTypeScript();
-
 import { runMutations } from "automutate";
 import chalk from "chalk";
 import { EOL } from "os";
