@@ -4,11 +4,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/prepare
-      - run: pnpm run test --coverage
+      - run: pnpm run test:mutation
       - name: Codecov
         uses: codecov/codecov-action@v3
         with:
-          flags: unit
+          flags: mutation
 
 name: Test
 

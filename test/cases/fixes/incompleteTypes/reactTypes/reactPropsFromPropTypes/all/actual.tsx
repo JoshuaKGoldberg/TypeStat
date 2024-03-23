@@ -10,8 +10,8 @@ interface MyComponentProps {
     boolRequired: boolean;
     element?: React.ReactElement;
     elementRequired: React.ReactElement;
-    func: () => void;
-    funcRequired: () => void;
+    func?: Function;
+    funcRequired: Function;
     instanceOfString?: String;
     instanceOfStringRequired: String;
     node?: React.ReactNode;
