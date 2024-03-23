@@ -5,7 +5,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: Codecademy/run-on-yarn@v2
-            - run: yarn ${{ matrix.command }}
+              with:
+                  command: ${{ matrix.command }}
+                  node-version: 20
 
         strategy:
             fail-fast: false
@@ -16,7 +18,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: Codecademy/run-on-yarn@v2
-            - run: yarn compile
+              with:
+                  command: compile
+                  node-version: 20
             - run: yarn test:mutation
 
 on:
