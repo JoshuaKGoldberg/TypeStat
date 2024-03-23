@@ -1,16 +1,22 @@
-import * as ts from "typescript";
+import ts from "typescript";
 
-import { FileMutationsRequest } from "./fileMutator";
-import { getValueDeclarationOfType } from "./nodeTypes";
+import { FileMutationsRequest } from "./fileMutator.js";
+import { getValueDeclarationOfType } from "./nodeTypes.js";
 
 /**
  * @returns Declared type of a function-like expression.
  */
-export const getValueDeclarationOfFunction = (request: FileMutationsRequest, node: ts.Expression) => {
-    const functionLikeValueDeclaration = getValueDeclarationOfType(request, node);
-    if (functionLikeValueDeclaration === undefined || !ts.isFunctionLike(functionLikeValueDeclaration)) {
-        return undefined;
-    }
+export const getValueDeclarationOfFunction = (
+	request: FileMutationsRequest,
+	node: ts.Expression,
+) => {
+	const functionLikeValueDeclaration = getValueDeclarationOfType(request, node);
+	if (
+		functionLikeValueDeclaration === undefined ||
+		!ts.isFunctionLike(functionLikeValueDeclaration)
+	) {
+		return undefined;
+	}
 
-    return functionLikeValueDeclaration;
+	return functionLikeValueDeclaration;
 };

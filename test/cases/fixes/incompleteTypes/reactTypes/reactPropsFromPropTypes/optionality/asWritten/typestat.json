@@ -1,10 +1,10 @@
 {
-    "fixes": {
-        "incompleteTypes": true
-    },
-    "hints": {
-        "react": {
-            "propTypesOptionality": "asWritten"
-        }
-    }
+	"fixes": {
+		"incompleteTypes": true
+	},
+	"hints": {
+		"react": {
+			"propTypesOptionality": "asWritten"
+		}
+	}
 }

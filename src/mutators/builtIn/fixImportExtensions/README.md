@@ -4,15 +4,15 @@ Whether to add extensions to `export` and `import` declarations that refer to fi
 
 ## Use Cases
 
-* Your existing code uses a build tool to import from files without using extensions, but TypeScript's `declare module` syntax requires importing via extensions.
+- Your existing code uses a build tool to import from files without using extensions, but TypeScript's `declare module` syntax requires importing via extensions.
 
 ## Configuration
 
 ```json
 {
-    "fixes": {
-        "importExtensions": true
-    }
+	"fixes": {
+		"importExtensions": true
+	}
 }
 ```
 

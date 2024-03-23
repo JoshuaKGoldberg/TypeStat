@@ -1,8 +1,8 @@
 {
-    "files": {
-        "above": "/* Above file */"
-    },
-    "fixes": {
-        "incompleteTypes": true
-    }
+	"files": {
+		"above": "/* Above file */"
+	},
+	"fixes": {
+		"incompleteTypes": true
+	}
 }

@@ -1,7 +1,7 @@
 /* 2 */ /* 1 */ (function() {
-    console.log("Hello, world!");
+	console.log("Hello, world!");
 
-    function ignoreChanges(): string {
-        return undefined;
-    }
+	function ignoreChanges(): string {
+		return undefined;
+	}
 })();

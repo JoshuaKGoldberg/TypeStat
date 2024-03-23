@@ -1,67 +1,67 @@
 (function () {
-    function givenStringTypeLater(abc): void {
-        console.log(abc);
-    }
+	function givenStringTypeLater(abc): void {
+		console.log(abc);
+	}
 
-    givenStringTypeLater("");
+	givenStringTypeLater("");
 
-    function givenStringOrNullTypeLater(abc): void {
-        console.log(abc);
-    }
+	function givenStringOrNullTypeLater(abc): void {
+		console.log(abc);
+	}
 
-    givenStringOrNullTypeLater("" as string | null);
+	givenStringOrNullTypeLater("" as string | null);
 
-    function givenStringOrNullOnStringTypeLater(abc: string): void {
-        console.log(abc);
-    }
+	function givenStringOrNullOnStringTypeLater(abc: string): void {
+		console.log(abc);
+	}
 
-    givenStringOrNullOnStringTypeLater("" as string | null);
+	givenStringOrNullOnStringTypeLater("" as string | null);
 
-    function givenStringOrUndefinedOnStringTypeLater(abc: string): void {
-        console.log(abc);
-    }
+	function givenStringOrUndefinedOnStringTypeLater(abc: string): void {
+		console.log(abc);
+	}
 
-    givenStringOrUndefinedOnStringTypeLater("" as string | undefined);
+	givenStringOrUndefinedOnStringTypeLater("" as string | undefined);
 
-    function givenNullTypeLater(abc): void {
-        console.log(abc);
-    }
+	function givenNullTypeLater(abc): void {
+		console.log(abc);
+	}
 
-    givenNullTypeLater(null);
+	givenNullTypeLater(null);
 
-    function givenUndefinedTypeLater(abc): void {
-        console.log(abc);
-    }
+	function givenUndefinedTypeLater(abc): void {
+		console.log(abc);
+	}
 
-    givenUndefinedTypeLater(undefined);
+	givenUndefinedTypeLater(undefined);
 
-    function givenAnyTypeLater(abc): void {
-        console.log(abc);
-    }
+	function givenAnyTypeLater(abc): void {
+		console.log(abc);
+	}
 
-    givenAnyTypeLater({} as any);
+	givenAnyTypeLater({} as any);
 
-    function givenEmptyObjectLiteralTypeLater(abc): void {
-        console.log(abc);
-    }
+	function givenEmptyObjectLiteralTypeLater(abc): void {
+		console.log(abc);
+	}
 
-    givenEmptyObjectLiteralTypeLater({});
+	givenEmptyObjectLiteralTypeLater({});
 
-    function givenObjectTypeLater(abc): void {
-        console.log(abc);
-    }
+	function givenObjectTypeLater(abc): void {
+		console.log(abc);
+	}
 
-    givenObjectTypeLater({} as Object);
+	givenObjectTypeLater({} as Object);
 
-    ['notGivenInferableType'].filter(char => console.log(char));
+	["notGivenInferableType"].filter((char) => console.log(char));
 
-    ['notGivenInferableTypes'].forEach((char, index) => {
-        console.log(char, index);
-    })
+	["notGivenInferableTypes"].forEach((char, index) => {
+		console.log(char, index);
+	});
 
-    const needsWrapping = count => `${count}lbs`;
-    needsWrapping(1.234567);
+	const needsWrapping = (count) => `${count}lbs`;
+	needsWrapping(1.234567);
 
-    const needsNoWrapping = (count) => `${count}lbs`;
-    needsNoWrapping(1.234567);
+	const needsNoWrapping = (count) => `${count}lbs`;
+	needsNoWrapping(1.234567);
 })();

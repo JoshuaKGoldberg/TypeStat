@@ -1,8 +1,8 @@
 {
-    "fixes": {
-        "noInferableTypes": true
-    },
-    "types": {
-        "strictNullChecks": true
-    }
+	"fixes": {
+		"noInferableTypes": true
+	},
+	"types": {
+		"strictNullChecks": true
+	}
 }

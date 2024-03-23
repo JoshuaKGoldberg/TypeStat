@@ -9,9 +9,7 @@ Use the `-m`/`--mutators` CLI flag and/or `mutators` configuration setting to ad
 
 ```json
 {
-    "mutators": [
-        "my-mutator-module"
-    ]
+	"mutators": ["my-mutator-module"]
 }
 ```
 
@@ -31,8 +29,8 @@ import { Mutation } from "automutate";
 import { FileMutationsRequest } from "typestat";
 
 export const mutator = (request: FileMutationsRequest): Mutation[] => {
-    // TODO: Implement!
-    return [];
+	// TODO: Implement!
+	return [];
 };
 ```
 
@@ -44,14 +42,16 @@ For example, this mutator will add a `/* foo */` mutation at the beginning of ea
 const prefix = "/* foo */ ";
 
 module.exports.fileMutator = (request) => {
-    return request.sourceFile.getFullText().startsWith(prefix)
-        ? []
-        : [{
-            insertion: prefix,
-            range: {
-                begin: 0,
-            },
-            type: "text-insert",
-        }];
+	return request.sourceFile.getFullText().startsWith(prefix)
+		? []
+		: [
+				{
+					insertion: prefix,
+					range: {
+						begin: 0,
+					},
+					type: "text-insert",
+				},
+			];
 };
 ```

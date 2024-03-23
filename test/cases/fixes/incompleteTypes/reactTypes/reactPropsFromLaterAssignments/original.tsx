@@ -1,41 +1,43 @@
-import React from 'react';
+import React from "react";
 
 (function () {
-    interface ClassComponentProps {
-        other?: boolean;
-    }
+	interface ClassComponentProps {
+		other?: boolean;
+	}
 
-    class ClassComponent extends React.Component<ClassComponentProps> {
-        render() {
-            return this.props.text;    
-        }
-    }
+	class ClassComponent extends React.Component<ClassComponentProps> {
+		render() {
+			return this.props.text;
+		}
+	}
 
-    const renderClassComponent = (text: string) =>
-        <ClassComponent text={text} />;
-        
-    type FunctionComponentProps =  {
-        other?: boolean;
-    }
+	const renderClassComponent = (text: string) => <ClassComponent text={text} />;
 
-    class FunctionComponent extends React.Component<FunctionComponentProps> {
-        render() {
-            return this.props.texts.join('');
-        }
-    }
+	type FunctionComponentProps = {
+		other?: boolean;
+	};
 
-    const renderFunctionComponent = (texts: string[]) =>
-        <FunctionComponent texts={texts} />;
+	class FunctionComponent extends React.Component<FunctionComponentProps> {
+		render() {
+			return this.props.texts.join("");
+		}
+	}
 
-    type WithFunctionsProps = {
-        returnsBoolean: Function;
-        returnsStringOrNumber: () => string;
-    }
+	const renderFunctionComponent = (texts: string[]) => (
+		<FunctionComponent texts={texts} />
+	);
 
-    class WithFunctions extends React.Component<WithFunctionsProps> { }
+	type WithFunctionsProps = {
+		returnsBoolean: Function;
+		returnsStringOrNumber: () => string;
+	};
 
-    const withFunctions = <WithFunctions
-        returnsBoolean={() => false}
-        returnsStringOrNumber={() => 0}
-    />;
+	class WithFunctions extends React.Component<WithFunctionsProps> {}
+
+	const withFunctions = (
+		<WithFunctions
+			returnsBoolean={() => false}
+			returnsStringOrNumber={() => 0}
+		/>
+	);
 })();

@@ -1,5 +1,5 @@
 export const constructArrayShorthand = (genericTypeNames: string[]) => {
-    const body = genericTypeNames.join(" | ");
+	const body = genericTypeNames.join(" | ");
 
-    return body.includes(" ") ? `(${body})[]` : `${body}[]`;
+	return body.includes(" ") ? `(${body})[]` : `${body}[]`;
 };

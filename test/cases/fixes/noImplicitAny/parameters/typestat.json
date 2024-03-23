@@ -1,8 +1,8 @@
 {
-    "fixes": {
-        "noImplicitAny": true
-    },
-    "types": {
-        "strictNullChecks": true
-    }
+	"fixes": {
+		"noImplicitAny": true
+	},
+	"types": {
+		"strictNullChecks": true
+	}
 }

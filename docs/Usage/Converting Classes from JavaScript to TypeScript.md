@@ -8,8 +8,8 @@ Use `fixes.missingProperties` to apply those mutations across all files:
 
 ```json
 {
-    "fixes": {
-        "missingProperties": true
-    }
+	"fixes": {
+		"missingProperties": true
+	}
 }
 ```

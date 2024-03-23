@@ -6,8 +6,8 @@ This entirely relies on TypeScript's suggested fixes to infer types from usage.
 
 ## Use Cases
 
-* You're converting from JavaScript to TypeScript and want type coverage where possible
-* You'd like to enable [`--noImplicitThis`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitThis.html) but have a lot of existing violations
+- You're converting from JavaScript to TypeScript and want type coverage where possible
+- You'd like to enable [`--noImplicitThis`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitThis.html) but have a lot of existing violations
 
 Functions that already have a known scope or don't refer to `this` won't have them added.
 
@@ -15,9 +15,9 @@ Functions that already have a known scope or don't refer to `this` won't have th
 
 ```json
 {
-    "fixes": {
-        "noImplicitThis": true
-    }
+	"fixes": {
+		"noImplicitThis": true
+	}
 }
 ```
 

@@ -1,5 +1,6 @@
-*.md
-docs/**/*.md
-test/**/actual.*
-test/**/expected.*
-test/**/original.*
+.all-contributorsrc
+coverage/
+lib/
+test/cases/**/actual.*
+test/cases/**/expected.*
+pnpm-lock.yaml

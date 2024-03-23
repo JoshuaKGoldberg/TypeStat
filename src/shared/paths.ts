@@ -1,3 +1,4 @@
-import * as path from "path";
+import * as path from "node:path";
 
-export const normalizeAndSlashify = (filePath: string) => path.normalize(filePath).replace(/\\/g, "/");
+export const normalizeAndSlashify = (filePath: string) =>
+	path.normalize(filePath).replace(/\\/g, "/");

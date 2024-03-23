@@ -1,24 +1,36 @@
-import { writeFile } from "mz/fs";
+import * as fs from "node:fs/promises";
 
-import { ProjectDescription } from "../initializeProject/shared";
-import { initializeSources } from "../sources";
-import { initializeImports } from "./imports";
-import { initializeRenames } from "./renames";
-import { createJavaScriptConfig } from "./createJavaScriptConfig";
-import { initializeCleanups } from "./cleanups";
+import { ProjectDescription } from "../initializeProject/shared.js";
+import { initializeSources } from "../sources/index.js";
+import { initializeCleanups } from "./cleanups.js";
+import { createJavaScriptConfig } from "./createJavaScriptConfig.js";
+import { initializeImports } from "./imports.js";
+import { initializeRenames } from "./renames.js";
 
 export interface InitializeJavaScriptSettings {
-    fileName: string;
-    project: ProjectDescription;
+	fileName: string;
+	project: ProjectDescription;
 }
 
-export const initializeJavaScript = async ({ fileName, project }: InitializeJavaScriptSettings) => {
-    const sourceFiles = await initializeSources({ fromJavaScript: true, project });
-    const renames = await initializeRenames();
-    const imports = await initializeImports();
-    const cleanups = await initializeCleanups();
+export const initializeJavaScript = async ({
+	fileName,
+	project,
+}: InitializeJavaScriptSettings) => {
+	const sourceFiles = await initializeSources({
+		fromJavaScript: true,
+		project,
+	});
+	const renames = await initializeRenames();
+	const imports = await initializeImports();
+	const cleanups = await initializeCleanups();
 
-    const settings = createJavaScriptConfig({ imports, project, sourceFiles, cleanups, renames });
+	const settings = createJavaScriptConfig({
+		cleanups,
+		imports,
+		project,
+		renames,
+		sourceFiles,
+	});
 
-    await writeFile(fileName, JSON.stringify(settings, undefined, 4));
+	await fs.writeFile(fileName, JSON.stringify(settings, undefined, 4));
 };

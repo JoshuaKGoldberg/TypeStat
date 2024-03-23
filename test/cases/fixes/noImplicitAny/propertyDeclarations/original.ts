@@ -1,41 +1,41 @@
 (function () {
-    class Container {
-        givenUndefined: string = "";
+	class Container {
+		givenUndefined: string = "";
 
-        givenUndefinedHasNull: string | null = "";
+		givenUndefinedHasNull: string | null = "";
 
-        givenNull: string = "";
+		givenNull: string = "";
 
-        givenNullHasUndefined: string | undefined = "";
+		givenNullHasUndefined: string | undefined = "";
 
-        givenString: string = "";
+		givenString: string = "";
 
-        givenStringHasNull: string | null = "";
+		givenStringHasNull: string | null = "";
 
-        givenStringHasUndefined: string | undefined = "";
+		givenStringHasUndefined: string | undefined = "";
 
-        setToUndefined: string = undefined;
+		setToUndefined: string = undefined;
 
-        setToUndefinedHasNull: string | null = undefined;
+		setToUndefinedHasNull: string | null = undefined;
 
-        setToNull: string = null;
+		setToNull: string = null;
 
-        setToNullHasUndefined: string | undefined = null;
+		setToNullHasUndefined: string | undefined = null;
 
-        setToString: string = "";
+		setToString: string = "";
 
-        setToStringHasUndefined: string | undefined = "";
+		setToStringHasUndefined: string | undefined = "";
 
-        setToStringHasNull: string | null = "";
-    }
+		setToStringHasNull: string | null = "";
+	}
 
-    const container = new Container();
+	const container = new Container();
 
-    container.givenUndefined = undefined;
-    container.givenUndefinedHasNull = undefined;
-    container.givenNull = null;
-    container.givenNullHasUndefined = null;
-    container.givenString = "";
-    container.givenStringHasNull = "";
-    container.givenStringHasNull = "";
+	container.givenUndefined = undefined;
+	container.givenUndefinedHasNull = undefined;
+	container.givenNull = null;
+	container.givenNullHasUndefined = null;
+	container.givenString = "";
+	container.givenStringHasNull = "";
+	container.givenStringHasNull = "";
 })();

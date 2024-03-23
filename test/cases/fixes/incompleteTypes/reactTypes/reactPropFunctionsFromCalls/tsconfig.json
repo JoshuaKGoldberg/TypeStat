@@ -1,8 +1,8 @@
 {
-    "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "jsx": "react"
-    },
-    "files": ["actual.tsx"]
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"jsx": "react"
+	},
+	"files": ["actual.tsx"]
 }

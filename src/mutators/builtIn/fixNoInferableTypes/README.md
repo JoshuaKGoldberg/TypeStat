@@ -2,18 +2,18 @@
 
 Whether to remove type annotations that don't change the meaning of code.
 
-# Use Cases
+## Use Cases
 
-* Your code was recently converted from JavaScript to TypeScript and previously useful type declarations are now visual clutter
-* You used to always add type declarations, but have since realized doing so unnecessary is a futile and wasteful act
+- Your code was recently converted from JavaScript to TypeScript and previously useful type declarations are now visual clutter
+- You used to always add type declarations, but have since realized doing so unnecessary is a futile and wasteful act
 
 ## Configuration
 
 ```json
 {
-    "fixes": {
-        "noInferableTypes": true
-    }
+	"fixes": {
+		"noInferableTypes": true
+	}
 }
 ```
 
@@ -30,7 +30,7 @@ When a parameter is declared with a `: number` type declaration and a numeric in
 ```diff
 - function receivesNumber(value: number = 0) {
 + function receivesNumber(value = 0) {
-    return value * 2; 
+    return value * 2;
 }
 ```
 

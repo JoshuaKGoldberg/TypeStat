@@ -2,17 +2,17 @@
 // https://github.com/microsoft/TypeScript/issues/36309
 
 export interface NoImplicitThisContainer {
-    member: string;
-    returnThisMember: () => string;
+	member: string;
+	returnThisMember: () => string;
 }
 
 function returnThisMember() {
-    return this.member;
+	return this.member;
 }
 
 const container: NoImplicitThisContainer = {
-    member: "sample",
-    returnThisMember: returnThisMember,
+	member: "sample",
+	returnThisMember: returnThisMember,
 };
 
 container.returnThisMember();

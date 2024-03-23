@@ -1,8 +1,8 @@
 {
-    "fixes": {
-        "incompleteTypes": true
-    },
-    "postProcess": {
-        "shell": [["node", "./postProcess.js"]]
-    }
+	"fixes": {
+		"incompleteTypes": true
+	},
+	"postProcess": {
+		"shell": [["node", "./postProcess.cjs"]]
+	}
 }

@@ -1,161 +1,210 @@
-import * as ts from "typescript";
+import ts from "typescript";
 
-import { KnownTypeLiteralNode, transformLiteralToTypeLiteralNode } from "../../../../../../shared/transforms";
-import { FileMutationsRequest } from "../../../../../../shared/fileMutator";
-
-import { getPropTypesMember, PropTypesAccessNode, PropTypesMembers } from "./propTypesExtraction";
-import { createPropTypesProperty } from "./propTypesProperties";
+import { FileMutationsRequest } from "../../../../../../shared/fileMutator.js";
+import {
+	KnownTypeLiteralNode,
+	transformLiteralToTypeLiteralNode,
+} from "../../../../../../shared/transforms.js";
+import {
+	PropTypesAccessNode,
+	PropTypesMembers,
+	getPropTypesMember,
+} from "./propTypesExtraction.js";
+import { createPropTypesProperty } from "./propTypesProperties.js";
 
 export const createPropTypesTransform = (
-    request: FileMutationsRequest,
-    { accessNode, nameNode }: Exclude<PropTypesMembers, "isRequired">,
+	request: FileMutationsRequest,
+	{ accessNode, nameNode }: Exclude<PropTypesMembers, "isRequired">,
 ): ts.TypeNode | undefined => {
-    switch (nameNode.text) {
-        case "array":
-            return ts.factory.createArrayTypeNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword));
+	switch (nameNode.text) {
+		case "array":
+			return ts.factory.createArrayTypeNode(
+				ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
+			);
 
-        case "arrayOf":
-            return createArrayOfTransform(request, accessNode);
+		case "arrayOf":
+			return createArrayOfTransform(request, accessNode);
 
-        case "bool":
-            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
+		case "bool":
+			return ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
 
-        case "func":
-            return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Function"), undefined);
+		case "func":
+			return ts.factory.createTypeReferenceNode(
+				ts.factory.createIdentifier("Function"),
+				undefined,
+			);
 
-        case "element":
-            return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("React.ReactElement"), undefined);
+		case "element":
+			return ts.factory.createTypeReferenceNode(
+				ts.factory.createIdentifier("React.ReactElement"),
+				undefined,
+			);
 
-        case "instanceOf":
-            return createInstanceOfTransform(accessNode);
+		case "instanceOf":
+			return createInstanceOfTransform(accessNode);
 
-        case "number":
-            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
+		case "number":
+			return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
 
-        case "node":
-            return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("React.ReactNode"), undefined);
+		case "node":
+			return ts.factory.createTypeReferenceNode(
+				ts.factory.createIdentifier("React.ReactNode"),
+				undefined,
+			);
 
-        case "object":
-            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword);
+		case "object":
+			return ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword);
 
-        case "oneOf":
-            return createOneOfTransform(accessNode);
+		case "oneOf":
+			return createOneOfTransform(accessNode);
 
-        case "oneOfType":
-            return createOneOfTypeTransform(request, accessNode);
+		case "oneOfType":
+			return createOneOfTypeTransform(request, accessNode);
 
-        case "shape":
-            return createShapeTransform(request, accessNode);
+		case "shape":
+			return createShapeTransform(request, accessNode);
 
-        case "string":
-            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+		case "string":
+			return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
 
-        case "symbol":
-            return ts.factory.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword);
-    }
+		case "symbol":
+			return ts.factory.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword);
+	}
 
-    return undefined;
+	return undefined;
 };
 
-const createArrayOfTransform = (request: FileMutationsRequest, accessNode: PropTypesAccessNode) => {
-    if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
-        return undefined;
-    }
+const createArrayOfTransform = (
+	request: FileMutationsRequest,
+	accessNode: PropTypesAccessNode,
+) => {
+	if (
+		!ts.isCallExpression(accessNode.parent) ||
+		accessNode.parent.arguments.length !== 1
+	) {
+		return undefined;
+	}
 
-    const memberTypeNode = getPropTypesMember(accessNode.parent.arguments[0]);
-    if (memberTypeNode === undefined) {
-        return undefined;
-    }
+	const memberTypeNode = getPropTypesMember(accessNode.parent.arguments[0]);
+	if (memberTypeNode === undefined) {
+		return undefined;
+	}
 
-    const innerTransform = createPropTypesTransform(request, memberTypeNode);
-    if (innerTransform === undefined) {
-        return undefined;
-    }
+	const innerTransform = createPropTypesTransform(request, memberTypeNode);
+	if (innerTransform === undefined) {
+		return undefined;
+	}
 
-    return ts.factory.createArrayTypeNode(innerTransform);
+	return ts.factory.createArrayTypeNode(innerTransform);
 };
 
 const createInstanceOfTransform = (accessNode: PropTypesAccessNode) => {
-    if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
-        return undefined;
-    }
+	if (
+		!ts.isCallExpression(accessNode.parent) ||
+		accessNode.parent.arguments.length !== 1
+	) {
+		return undefined;
+	}
 
-    const className = accessNode.parent.arguments[0];
-    if (!ts.isIdentifier(className)) {
-        return undefined;
-    }
+	const className = accessNode.parent.arguments[0];
+	if (!ts.isIdentifier(className)) {
+		return undefined;
+	}
 
-    return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(className.text), undefined);
+	return ts.factory.createTypeReferenceNode(
+		ts.factory.createIdentifier(className.text),
+		undefined,
+	);
 };
 
 const createOneOfTransform = (accessNode: PropTypesAccessNode) => {
-    if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
-        return undefined;
-    }
+	if (
+		!ts.isCallExpression(accessNode.parent) ||
+		accessNode.parent.arguments.length !== 1
+	) {
+		return undefined;
+	}
 
-    const allowedItems = accessNode.parent.arguments[0];
-    if (!ts.isArrayLiteralExpression(allowedItems)) {
-        return undefined;
-    }
+	const allowedItems = accessNode.parent.arguments[0];
+	if (!ts.isArrayLiteralExpression(allowedItems)) {
+		return undefined;
+	}
 
-    const allowedTypes = allowedItems.elements
-        .map(transformLiteralToTypeLiteralNode)
-        .filter((typeNode): typeNode is KnownTypeLiteralNode => typeNode !== undefined);
-    if (allowedTypes.length === 0) {
-        return undefined;
-    }
+	const allowedTypes = allowedItems.elements
+		.map(transformLiteralToTypeLiteralNode)
+		.filter(
+			(typeNode): typeNode is KnownTypeLiteralNode => typeNode !== undefined,
+		);
+	if (allowedTypes.length === 0) {
+		return undefined;
+	}
 
-    return ts.factory.createUnionTypeNode(allowedTypes);
+	return ts.factory.createUnionTypeNode(allowedTypes);
 };
 
-const createOneOfTypeTransform = (request: FileMutationsRequest, accessNode: PropTypesAccessNode) => {
-    if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
-        return undefined;
-    }
+const createOneOfTypeTransform = (
+	request: FileMutationsRequest,
+	accessNode: PropTypesAccessNode,
+) => {
+	if (
+		!ts.isCallExpression(accessNode.parent) ||
+		accessNode.parent.arguments.length !== 1
+	) {
+		return undefined;
+	}
 
-    const allowedItems = accessNode.parent.arguments[0];
-    if (!ts.isArrayLiteralExpression(allowedItems)) {
-        return undefined;
-    }
+	const allowedItems = accessNode.parent.arguments[0];
+	if (!ts.isArrayLiteralExpression(allowedItems)) {
+		return undefined;
+	}
 
-    const allowedTypes = allowedItems.elements
-        .map((element) => {
-            if (!ts.isPropertyAccessExpression(element) || !ts.isIdentifier(element.name)) {
-                return undefined;
-            }
+	const allowedTypes = allowedItems.elements
+		.map((element) => {
+			if (
+				!ts.isPropertyAccessExpression(element) ||
+				!ts.isIdentifier(element.name)
+			) {
+				return undefined;
+			}
 
-            return createPropTypesTransform(request, {
-                accessNode: element,
-                nameNode: element.name,
-            });
-        })
-        .filter((typeName): typeName is ts.TypeNode => typeName !== undefined);
-    if (allowedTypes.length === 0) {
-        return undefined;
-    }
+			return createPropTypesTransform(request, {
+				accessNode: element,
+				nameNode: element.name,
+			});
+		})
+		.filter((typeName): typeName is ts.TypeNode => typeName !== undefined);
+	if (allowedTypes.length === 0) {
+		return undefined;
+	}
 
-    return ts.factory.createUnionTypeNode(allowedTypes);
+	return ts.factory.createUnionTypeNode(allowedTypes);
 };
 
-const createShapeTransform = (request: FileMutationsRequest, accessNode: PropTypesAccessNode) => {
-    if (!ts.isCallExpression(accessNode.parent) || accessNode.parent.arguments.length !== 1) {
-        return undefined;
-    }
+const createShapeTransform = (
+	request: FileMutationsRequest,
+	accessNode: PropTypesAccessNode,
+) => {
+	if (
+		!ts.isCallExpression(accessNode.parent) ||
+		accessNode.parent.arguments.length !== 1
+	) {
+		return undefined;
+	}
 
-    const shape = accessNode.parent.arguments[0];
-    // Todo: handle shared variables and `...` object spreads
-    if (!ts.isObjectLiteralExpression(shape)) {
-        return undefined;
-    }
+	const shape = accessNode.parent.arguments[0];
+	// Todo: handle shared variables and `...` object spreads
+	if (!ts.isObjectLiteralExpression(shape)) {
+		return undefined;
+	}
 
-    const members: ts.TypeElement[] = [];
+	const members: ts.TypeElement[] = [];
 
-    for (const rawProperty of shape.properties) {
-        const member = createPropTypesProperty(request, rawProperty);
-        if (member !== undefined) {
-            members.push(member);
-        }
-    }
+	for (const rawProperty of shape.properties) {
+		const member = createPropTypesProperty(request, rawProperty);
+		if (member !== undefined) {
+			members.push(member);
+		}
+	}
 
-    return ts.factory.createTypeLiteralNode(members);
+	return ts.factory.createTypeLiteralNode(members);
 };

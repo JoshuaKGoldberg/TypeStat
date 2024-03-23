@@ -1,0 +1,38 @@
+{
+	"dictionaries": ["typescript"],
+	"ignorePaths": [
+		".github",
+		"CHANGELOG.md",
+		"coverage",
+		"lib",
+		"node_modules",
+		"pnpm-lock.yaml"
+	],
+	"words": [
+		"arrayify",
+		"automerge",
+		"automutate",
+		"automutator",
+		"endlines",
+		"execa",
+		"extensionless",
+		"hackily",
+		"globbed",
+		"IIFE",
+		"inferables",
+		"intrinsic",
+		"jscodeshift",
+		"knip",
+		"logfile",
+		"nodenext",
+		"packagejson",
+		"phenomnomnominal",
+		"predeclared",
+		"slashify",
+		"tsquery",
+		"tsup",
+		"typestat",
+		"undefineds",
+		"uniquify"
+	]
+}

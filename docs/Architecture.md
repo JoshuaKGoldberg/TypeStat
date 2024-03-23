@@ -3,10 +3,10 @@
 This document goes over how TypeStart runs and generates fixes.
 Before reading this, you should read:
 
-* TypeStat's [README.md](../README.md)
-* Documentation on the types of [fixes](./Fixes.md)
-* Recommended TypeStat [usage](./Usage.md)
-* [automutate](https://github.com/automutate/automutate) and [automutate-tests](https://github.com/automutate/automutate)
+- TypeStat's [README.md](../README.md)
+- Documentation on the types of [fixes](./Fixes.md)
+- Recommended TypeStat [usage](./Usage.md)
+- [automutate](https://github.com/automutate/automutate) and [automutate-tests](https://github.com/automutate/automutate)
 
 ## Runtime
 
@@ -40,8 +40,8 @@ Each round of mutations in the core mutation provider roughly:
 1. Records the starting time
 2. Creates a set of TypeScript language services
 3. For each file to be visited:
-    1. Retrieves file mutations for that file
-    2. If more than 100 mutations have been collected, or mutations have been collected and it's been more than 10 seconds since the round started, stops the round
+   1. Retrieves file mutations for that file
+   2. If more than 100 mutations have been collected, or mutations have been collected and it's been more than 10 seconds since the round started, stops the round
 
 Subsequent rounds will pick up where the previous round left off.
 For example, given files `a.ts`, `b.ts`, and `c.ts` in order,
@@ -52,19 +52,19 @@ TypeStat crashing before a round is complete shouldn't lose all accumulated muta
 
 Once TypeStat has visited each file, it will either:
 
-* Stop if no file had mutations applied
-* Restart _(and reload language services)_ if any file had mutations applied
+- Stop if no file had mutations applied
+- Restart _(and reload language services)_ if any file had mutations applied
 
 #### File Mutations
 
 For each file it visits, [`findMutationsInFile`](../src/runtime/findMutationsInFile.ts)
 will attempt to apply [built-in file mutators](../src/mutators/builtIn/index.ts):
 
-* [`fixIncompleteTypes`](../src/mutators/builtIn/fixIncompleteTypes/README.md)
-* [`fixMissingProperties`](../src/mutators/builtIn/fixMissingProperties/README.md)
-* [`fixNoImplicitAny`](../src/mutators/builtIn/fixNoImplicitAny/README.md)
-* [`fixNoImplicitThis`](../src/mutators/builtIn/fixNoImplicitThis/README.md)
-* [`fixStrictNonNullAssertions`](../src/mutators/builtIn/fixStrictNonNullAssertions/README.md)
+- [`fixIncompleteTypes`](../src/mutators/builtIn/fixIncompleteTypes/README.md)
+- [`fixMissingProperties`](../src/mutators/builtIn/fixMissingProperties/README.md)
+- [`fixNoImplicitAny`](../src/mutators/builtIn/fixNoImplicitAny/README.md)
+- [`fixNoImplicitThis`](../src/mutators/builtIn/fixNoImplicitThis/README.md)
+- [`fixStrictNonNullAssertions`](../src/mutators/builtIn/fixStrictNonNullAssertions/README.md)
 
 Each fixer targets a general range of potential type improvements and contains a series of sub-fixers that target individual improvements.
 For example, `fixIncompleteTypes` contains a `fixIncompleteParameterTypes` fixer that fills in incomplete types for parameters.
@@ -97,8 +97,8 @@ The `mutators` directory figures out which types should be modified, then `mutat
 
 We should note two common pieces of terminology used in this directory:
 
-* **"Flags"** refers to type nodes for primitive types, such as `boolean`
-* **"Types"** refers to rich (non-primitive) types, such as `MyClass`
+- **"Flags"** refers to type nodes for primitive types, such as `boolean`
+- **"Types"** refers to rich (non-primitive) types, such as `MyClass`
 
 ### `options`
 

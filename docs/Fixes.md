@@ -3,20 +3,20 @@
 TypeStat will apply mutations ("fixes") to files as it finds them.
 These mutations are all purely additive and limited to the type system, meaning they will _not_ change your JavaScript output.
 
-Each classifiation of fix can be individually configured in your `typestat.json` file.
+Each classification of fix can be individually configured in your `typestat.json` file.
 These all default to `false` but can be enabled by being set to `true`.
 
 ```json
 {
-    "fixes": {
-        "importExtensions": true,
-        "incompleteTypes": true,
-        "missingProperties": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "noInferableTypes": true,
-        "strictNonNullAssertions": true
-    }
+	"fixes": {
+		"importExtensions": true,
+		"incompleteTypes": true,
+		"missingProperties": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noInferableTypes": true,
+		"strictNonNullAssertions": true
+	}
 }
 ```
 
@@ -38,7 +38,7 @@ See [fixIncompleteTypes/README.md](../src/mutators/builtIn/fixIncompleteTypes/RE
 
 Whether to apply TypeScript's fixer for missing properties on classes.
 
-See [fixMisingProperties/README.md](../src/mutators/builtIn/fixMissingProperties/README.md).
+See [fixMissingProperties/README.md](../src/mutators/builtIn/fixMissingProperties/README.md).
 
 ### `noImplicitAny`
 

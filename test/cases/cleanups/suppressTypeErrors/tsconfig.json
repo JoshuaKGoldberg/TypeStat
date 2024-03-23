@@ -1,6 +1,6 @@
 {
-    "compilerOptions": {
-        "strictNullChecks": true
-    },
-    "files": ["actual.ts"]
+	"compilerOptions": {
+		"strictNullChecks": true
+	},
+	"files": ["actual.ts"]
 }

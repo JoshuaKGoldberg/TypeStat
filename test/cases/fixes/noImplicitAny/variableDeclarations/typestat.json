@@ -1,8 +1,8 @@
 {
-    "fixes": {
-        "incompleteTypes": true
-    },
-    "types": {
-        "strictNullChecks": true
-    }
+	"fixes": {
+		"incompleteTypes": true
+	},
+	"types": {
+		"strictNullChecks": true
+	}
 }

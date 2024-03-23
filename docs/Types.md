@@ -7,13 +7,13 @@ If true, TypeStat will set `strictNullChecks` to `true` regardless of your `tsco
 
 ```json
 {
-    "types": {
-        "strictNullChecks": true
-    }
+	"types": {
+		"strictNullChecks": true
+	}
 }
 ```
 
 This interacts with fixers in a few ways:
 
-* Type additions will now include `null` and/or `undefined`
-* [Property Accesses](./Nodes.md#Strict%20Property%20Accesses) will have `!`s added as needeed
+- Type additions will now include `null` and/or `undefined`
+- [Property Accesses](./Nodes.md#Strict%20Property%20Accesses) will have `!`s added as needed
