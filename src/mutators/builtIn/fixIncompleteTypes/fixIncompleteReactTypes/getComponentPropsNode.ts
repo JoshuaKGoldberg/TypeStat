@@ -58,7 +58,9 @@ const getFunctionComponentPropsNode = (
     }
 
     const [declaration] = symbol.declarations;
-    if (isReactComponentPropsNode(declaration)) {
+    // If the declaration is in another file... well, let's assume it's unrelated.
+    // TODO: We'll eventually need to handle shared props types.
+    if (isReactComponentPropsNode(declaration) && declaration.getSourceFile() === request.sourceFile) {
         return declaration;
     }
 
