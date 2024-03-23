@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-(function() {
+(function () {
 
 interface MyComponentProps {
     array?: any[];
@@ -75,7 +75,10 @@ interface MyComponentProps {
 			numbersExact: PropTypes.oneOf([1, 2, 3]),
 			numbersExactRequired: PropTypes.oneOf([1, 2, 3]).isRequired,
 			numberType: PropTypes.oneOfType([PropTypes.number]),
-			numberOrStringType: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+			numberOrStringType: PropTypes.oneOfType([
+				PropTypes.number,
+				PropTypes.string,
+			]),
 			shape: PropTypes.shape({
 				subShape: PropTypes.shape({
 					subSubNumber: PropTypes.number,
@@ -103,7 +106,10 @@ interface MyComponentProps {
 			stringsAndNumbers: PropTypes.oneOf(["a", 2, "def", 4]),
 			stringsAndNumbersRequired: PropTypes.oneOf(["a", 2, "def", 4]).isRequired,
 			stringsType: PropTypes.oneOfType([PropTypes.string]),
-			stringsOrNumbersType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+			stringsOrNumbersType: PropTypes.oneOfType([
+				PropTypes.string,
+				PropTypes.number,
+			]),
 		};
 
 		render() {

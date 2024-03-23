@@ -1,57 +1,57 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-(function() {
+(function () {
 
 interface MyComponentProps {
-	array?: any[];
-	arrayRequired: any[];
-	bool?: boolean;
-	boolRequired: boolean;
-	element?: React.ReactElement;
-	elementRequired: React.ReactElement;
-	func: () => void;
-	funcRequired: () => void;
-	instanceOfString?: String;
-	instanceOfStringRequired: String;
-	node?: React.ReactNode;
-	nodeRequired: React.ReactNode;
-	number?: number;
-	numberRequired: number;
-	numbers?: number[];
-	numbersRequired: number[];
-	numbersExact?: 1 | 2 | 3;
-	numbersExactRequired: 1 | 2 | 3;
-	numberType?: number;
-	numberOrStringType?: number | string;
-	shape?: {
-		subShape?: {
-			subSubNumber?: number;
-			subSubNumberRequired: number;
-		};
-		subShapeRequired: {
-			subSubNumber?: number;
-			subSubNumberRequired: number;
-		};
-	};
-	shapeRequired: {
-		subShape?: {
-			subSubNumber?: number;
-			subSubNumberRequired: number;
-		};
-		subShapeRequired: {
-			subSubNumber?: number;
-			subSubNumberRequired: number;
-		};
-	};
-	string?: string;
-	stringRequired: string;
-	strings?: "a" | "bc" | "def";
-	stringsRequired: "a" | "bc" | "def";
-	stringsAndNumbers?: "a" | 2 | "def" | 4;
-	stringsAndNumbersRequired: "a" | 2 | "def" | 4;
-	stringsType?: string;
-	stringsOrNumbersType?: string | number;
+    array?: any[];
+    arrayRequired: any[];
+    bool?: boolean;
+    boolRequired: boolean;
+    element?: React.ReactElement;
+    elementRequired: React.ReactElement;
+    func: () => void;
+    funcRequired: () => void;
+    instanceOfString?: String;
+    instanceOfStringRequired: String;
+    node?: React.ReactNode;
+    nodeRequired: React.ReactNode;
+    number?: number;
+    numberRequired: number;
+    numbers?: number[];
+    numbersRequired: number[];
+    numbersExact?: 1 | 2 | 3;
+    numbersExactRequired: 1 | 2 | 3;
+    numberType?: number;
+    numberOrStringType?: number | string;
+    shape?: {
+        subShape?: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
+        };
+        subShapeRequired: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
+        };
+    };
+    shapeRequired: {
+        subShape?: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
+        };
+        subShapeRequired: {
+            subSubNumber?: number;
+            subSubNumberRequired: number;
+        };
+    };
+    string?: string;
+    stringRequired: string;
+    strings?: "a" | "bc" | "def";
+    stringsRequired: "a" | "bc" | "def";
+    stringsAndNumbers?: "a" | 2 | "def" | 4;
+    stringsAndNumbersRequired: "a" | 2 | "def" | 4;
+    stringsType?: string;
+    stringsOrNumbersType?: string | number;
 }
 
 	class MyComponent extends React.Component<MyComponentProps> {
@@ -75,7 +75,10 @@ interface MyComponentProps {
 			numbersExact: PropTypes.oneOf([1, 2, 3]),
 			numbersExactRequired: PropTypes.oneOf([1, 2, 3]).isRequired,
 			numberType: PropTypes.oneOfType([PropTypes.number]),
-			numberOrStringType: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+			numberOrStringType: PropTypes.oneOfType([
+				PropTypes.number,
+				PropTypes.string,
+			]),
 			shape: PropTypes.shape({
 				subShape: PropTypes.shape({
 					subSubNumber: PropTypes.number,
@@ -103,7 +106,10 @@ interface MyComponentProps {
 			stringsAndNumbers: PropTypes.oneOf(["a", 2, "def", 4]),
 			stringsAndNumbersRequired: PropTypes.oneOf(["a", 2, "def", 4]).isRequired,
 			stringsType: PropTypes.oneOfType([PropTypes.string]),
-			stringsOrNumbersType: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+			stringsOrNumbersType: PropTypes.oneOfType([
+				PropTypes.string,
+				PropTypes.number,
+			]),
 		};
 
 		render() {
@@ -112,8 +118,8 @@ interface MyComponentProps {
 	}
 
 interface LaterAssignedComponentProps {
-	string?: string;
-	stringRequired: string;
+    string?: string;
+    stringRequired: string;
 }
 
 
