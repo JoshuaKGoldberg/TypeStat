@@ -11,7 +11,7 @@
         "commander": "^11.0.0",
         "enquirer": "^2.3.6",
         "glob": "^10.0.0",
-        "minimatch": "^8.0.0",
+        "minimatch": "^9.0.0",
         "mz": "^2.7.0",
         "strip-ansi": "^6.0.0",
         "ts-api-utils": "^1.0.3",
