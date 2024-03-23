@@ -90,7 +90,7 @@ export const expandReferencesForGenericTypes = (
 			continue;
 		}
 
-		// Find the index of the corresponding type argument in the instantiatiin of the node,
+		// Find the index of the corresponding type argument in the instantiation of the node,
 		// and finally use that to grab the node for the template parameter from the type argument's index
 		const typeArgumentIndex =
 			templatedParentInstantiation.typeArguments.indexOf(referencingNode);
@@ -268,7 +268,7 @@ const expressionRefersToOriginalType = (
 	// This can go wrong easily: e.g. with multiple type arguments that have intermixed usages
 	if (
 		isTypeArgumentsType(expressionNodeType) &&
-		expressionNodeType.typeArguments?.includes(originalType)
+		expressionNodeType.typeArguments.includes(originalType)
 	) {
 		return true;
 	}
