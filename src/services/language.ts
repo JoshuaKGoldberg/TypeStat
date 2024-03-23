@@ -2,7 +2,6 @@
 import * as fs from "mz/fs";
 import * as ts from "typescript";
 
-import { ExposedProgram } from "../mutations/createExposedTypeScript";
 import { TypeStatOptions } from "../options/types";
 import { arrayify, uniquify } from "../shared/arrays";
 import { isIntrisinicNameType, WellKnownTypeName } from "../shared/typeNodes";
@@ -18,7 +17,7 @@ export interface LanguageServices {
     readonly languageService: ts.LanguageService;
     readonly parsedConfiguration: ts.ParsedCommandLine;
     readonly printers: Printers;
-    readonly program: ExposedProgram;
+    readonly program: ts.Program;
     readonly wellKnownTypes: WellKnownTypes;
 }
 
