@@ -24,7 +24,7 @@ export type TypeWithTypeArguments = ts.Type & {
 export const isTypeArgumentsType = (
 	type: ts.Type,
 ): type is TypeWithTypeArguments => {
-	return "typeArguments" in type;
+	return "typeArguments" in type && !!type.typeArguments;
 };
 
 export type TypeWithOptionalTypeArguments = ts.Type & {

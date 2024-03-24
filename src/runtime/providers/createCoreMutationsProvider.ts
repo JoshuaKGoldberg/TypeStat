@@ -26,9 +26,6 @@ export const createCoreMutationsProvider = (
 		const enabledFixes = Object.keys(options.fixes).filter(
 			(key) => options.fixes[key as keyof typeof options.fixes],
 		);
-		if (!enabledFixes.length) {
-			return undefined;
-		}
 
 		const fileNamesAndServicesCache = createFileNamesAndServicesCache(options);
 		const waveTracker = new WaveTracker();

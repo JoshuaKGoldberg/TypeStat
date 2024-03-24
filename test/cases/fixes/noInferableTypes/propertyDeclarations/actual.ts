@@ -1,6 +1,10 @@
 (function () {
-	class Parent { parent = true; }
-	class Child extends Parent { child = true; }
+	class Parent {
+		parent = true;
+	}
+	class Child extends Parent {
+		child = true;
+	}
 
 	class ContainsInferables {
 		// Inferable literals
@@ -26,7 +30,6 @@
 		// Non-inferable multi-type arrays
 		public nonInferableNullOrStrings: (null | string)[] = [null];
 		public nonInferableNumberOrRegExps: (number | RegExp)[] = [0];
-
 
 		// Class instances
 

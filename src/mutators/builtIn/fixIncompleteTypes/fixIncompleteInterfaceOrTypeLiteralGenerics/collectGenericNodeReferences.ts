@@ -268,7 +268,7 @@ const expressionRefersToOriginalType = (
 	// This can go wrong easily: e.g. with multiple type arguments that have intermixed usages
 	if (
 		isTypeArgumentsType(expressionNodeType) &&
-		expressionNodeType.typeArguments.includes(originalType)
+		expressionNodeType.typeArguments?.includes(originalType)
 	) {
 		return true;
 	}

@@ -25,6 +25,5 @@ private _withGetterAndSetter: string;
 		get withGetterAndSetter() {
 			return this._withGetterAndSetter;
 		}
-
 	}
 })();

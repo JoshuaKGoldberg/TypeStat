@@ -3,7 +3,7 @@
 
 	value!.length;
 	value?.length;
-	
+
 	declare const valueAny: any;
 
 	valueAny.length;
@@ -13,7 +13,7 @@
 
 	valueAnyOrUndefined.length;
 	valueAnyOrUndefined?.length;
-	
+
 	// Internal declarations
 	class Abc {
 		givenNumber: number;
@@ -21,7 +21,7 @@
 		givenUndefined: number;
 
 		givenTwiceSame: number;
-		
+
 		givenTwiceDifferent: number;
 
 		givenAlreadyAsserted: number;
@@ -93,8 +93,8 @@
 		a: {
 			b: {
 				c: number;
-			}
-		}
+			};
+		};
 	}
 
 	function withNotNullable(value: NotNullable) {
@@ -141,8 +141,8 @@
 		a?: {
 			b: {
 				c: number;
-			}
-		}
+			};
+		};
 	}
 
 	function withOuterNullable(value: OuterNullable) {
@@ -189,8 +189,8 @@
 		a: {
 			b?: {
 				c: number;
-			}
-		}
+			};
+		};
 	}
 
 	function withMiddleNullable(value: MiddleNullable) {
@@ -237,8 +237,8 @@
 		a: {
 			b: {
 				c?: number;
-			}
-		}
+			};
+		};
 	}
 
 	function withInnerNullable(value: InnerNullable) {

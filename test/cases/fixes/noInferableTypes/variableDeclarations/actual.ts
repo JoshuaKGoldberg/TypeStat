@@ -1,6 +1,10 @@
 (function () {
-	class Parent { parent = true; }
-	class Child extends Parent { child = true; }
+	class Parent {
+		parent = true;
+	}
+	class Child extends Parent {
+		child = true;
+	}
 
 	// Inferable const literals
 	const constInferableBoolean = false;
@@ -49,7 +53,6 @@
 	// Non-inferable let multi-type arrays
 	let letNonInferableNullOrStrings: (null | string)[] = [null];
 	let letNonInferableNumberOrRegExps: (number | RegExp)[] = [0];
-
 
 	// Class instances
 
