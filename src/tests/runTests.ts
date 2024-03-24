@@ -30,7 +30,10 @@ const parsed: ParsedOptions = new Command()
 	.opts();
 
 const rawPathToRegExp = (rawPath: string) =>
-	new RegExp(`.*${rawPath.split(/\\|\//).slice(-3).join(".*")}.*`, "i");
+	new RegExp(
+		`.*${rawPath.replace(/^test/, "").split(/\\|\//).filter(Boolean).slice(-3).join(".*")}.*`,
+		"i",
+	);
 
 // The .vscode/launch.json task adds includes via environment variable
 const includes = [
