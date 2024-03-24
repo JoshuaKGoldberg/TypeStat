@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 (function () {
 	type WithFunctionsProps = {
@@ -7,7 +7,7 @@ import * as React from 'react';
 		providesNumberThenString: (arg0: number, arg1: string) => void;
 		providesBooleanGivesNumber: (arg0: boolean) => number;
 		returnsString: () => string;
-	}
+	};
 
 	class WithFunctions extends React.Component<WithFunctionsProps> {
 		onClick = () => {
@@ -16,7 +16,7 @@ import * as React from 'react';
 			this.props.providesNumberThenString(0, "");
 			this.callReceiveNumber(this.props.providesBooleanGivesNumber(true));
 			this.callReceiveString(this.props.returnsString());
-		}
+		};
 
 		callReceiveNumber = (value: number) => value;
 		callReceiveString = (text: string) => text;

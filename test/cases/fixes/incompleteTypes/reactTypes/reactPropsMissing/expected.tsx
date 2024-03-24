@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 (function () {
 	interface SomeValue {
@@ -36,7 +36,7 @@ isObject?: SomeValue;
 		<ManyProps always isNumberOrStringArray={[3, "c"]} />,
 		<ManyProps always isObject={someValue} />,
 		<ManyProps always isObject={someValue} />,
-	]
+	];
 
 interface SinglePropArrowFunctionProps {
 prop: number[];
@@ -47,7 +47,9 @@ prop: number[];
 		return <div />;
 	};
 
-	const renderSinglePropArrowFunction = () => <SinglePropArrowFunction prop={[1, 2, 3]} />;
+	const renderSinglePropArrowFunction = () => (
+		<SinglePropArrowFunction prop={[1, 2, 3]} />
+	);
 
 interface SinglePropFunctionExpressionAnonymousProps {
 prop: number[];
@@ -58,18 +60,24 @@ prop: number[];
 		return <div />;
 	};
 
-	const renderSinglePropFunctionExpressionAnonymous = () => <SinglePropFunctionExpressionAnonymous prop={[1, 2, 3]} />;
+	const renderSinglePropFunctionExpressionAnonymous = () => (
+		<SinglePropFunctionExpressionAnonymous prop={[1, 2, 3]} />
+	);
 
 interface FunctionExpressionNamedProps {
 prop: number[];
 }
 
-	const SinglePropFunctionExpressionNamed = function FunctionExpressionNamed({ prop }: FunctionExpressionNamedProps) {
+	const SinglePropFunctionExpressionNamed = function FunctionExpressionNamed({
+		prop,
+	}: FunctionExpressionNamedProps) {
 		console.log(prop);
 		return <div />;
 	};
 
-	const renderSinglePropFunctionExpressionNamed = () => <SinglePropFunctionExpressionNamed prop={[1, 2, 3]} />;
+	const renderSinglePropFunctionExpressionNamed = () => (
+		<SinglePropFunctionExpressionNamed prop={[1, 2, 3]} />
+	);
 
 interface SinglePropClassExpressionProps {
 prop: number[];
@@ -81,7 +89,9 @@ prop: number[];
 		}
 	};
 
-	const renderSinglePropClassExpression = () => <SinglePropClassExpression prop={[1, 2, 3]} />;
+	const renderSinglePropClassExpression = () => (
+		<SinglePropClassExpression prop={[1, 2, 3]} />
+	);
 
 interface SinglePropClassDeclarationProps {
 prop: number[];
@@ -91,8 +101,9 @@ prop: number[];
 		render() {
 			return <div />;
 		}
-	};
+	}
 
-	const renderSinglePropClassDeclaration = () => <SinglePropClassDeclaration prop={[1, 2, 3]} />;
-
+	const renderSinglePropClassDeclaration = () => (
+		<SinglePropClassDeclaration prop={[1, 2, 3]} />
+	);
 })();

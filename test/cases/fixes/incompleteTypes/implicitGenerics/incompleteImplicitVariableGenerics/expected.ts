@@ -1,14 +1,14 @@
 (function () {
-	class Name { }
+	class Name {}
 
-	const stringsInferred = [''];
-	stringsInferred.push('');
+	const stringsInferred = [""];
+	stringsInferred.push("");
 
 	const stringsExplicit: string[] = [];
-	stringsExplicit.push('');
+	stringsExplicit.push("");
 
 	const stringsMissing: string[] = [];
-	stringsMissing.push('');
+	stringsMissing.push("");
 
 	let name = new Name();
 
@@ -19,13 +19,13 @@
 	uniqueNames.add(name);
 
 	let namesById: Map<string, Name> = new Map();
-	namesById.set('abc123', new Name())
+	namesById.set("abc123", new Name());
 
 	let idsByName: Map<Name, number> = new Map();
 	idsByName.set(new Name(), 123);
 
 	let uniqueMaybeNames: Set<number> = new Set();
-	uniqueMaybeNames.add(Math.random() > 0.5 ? 123 : undefined)
+	uniqueMaybeNames.add(Math.random() > 0.5 ? 123 : undefined);
 
 	let uniqueNamesOrBooleans: Set<Name | boolean> = new Set();
 	uniqueNamesOrBooleans.add(name);

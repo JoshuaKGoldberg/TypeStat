@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 (function () {
 	// Primitives
@@ -118,14 +118,16 @@ import * as React from 'react';
 	let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
 	eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
-	let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
+	let eitherClassNeedsUnionExplicitInterface: SampleInterface =
+		new SampleClassOne();
 	eitherClassNeedsUnionExplicitInterface = new SampleClassTwo();
 
 	let eitherClassNeedsNullImplicit = new SampleClassOne();
 	eitherClassNeedsNullImplicit = new SampleClassTwo();
 	eitherClassNeedsNullImplicit = null;
 
-	let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo = new SampleClassOne();
+	let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo =
+		new SampleClassOne();
 	eitherClassNeedsNullAndClassExplicit = new SampleClassTwo();
 	eitherClassNeedsNullAndClassExplicit = null;
 
@@ -133,11 +135,13 @@ import * as React from 'react';
 	eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
 	eitherClassNeedsUndefinedExplicit = undefined;
 
-	let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | undefined = new SampleClassOne();
+	let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | undefined =
+		new SampleClassOne();
 	eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo();
 	eitherClassNeedsUndefinedExplicitInterface = undefined;
 
-	let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo = new SampleClassOne();
+	let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo =
+		new SampleClassOne();
 	eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();
 	eitherClassNeedsUndefinedAndClassExplicit = undefined;
 
@@ -157,7 +161,11 @@ import * as React from 'react';
 	for (const string of iterableStrings) {
 	}
 
-	const iterableStringOrUndefineds: (string | undefined)[] = ["abc", "def", "ghi"];
+	const iterableStringOrUndefineds: (string | undefined)[] = [
+		"abc",
+		"def",
+		"ghi",
+	];
 	for (const stringOrUndefined of iterableStringOrUndefineds) {
 	}
 
@@ -181,14 +189,12 @@ import * as React from 'react';
 	returnsStringOrNumber = () => 0;
 
 	// Predeclared functions (React FCs)
-	
+
 	interface MyComponentProps {
 		text: string;
 	}
 
-	const MyComponent: React.FC<MyComponentProps> = ({
-		text 
-	}) => {
+	const MyComponent: React.FC<MyComponentProps> = ({ text }) => {
 		return <span>{text}</span>;
-	}
+	};
 })();

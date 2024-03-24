@@ -1,5 +1,5 @@
 /* Above file */
-(function() {
+(function () {
 	let text: string | number;
 	text = 1;
 })();

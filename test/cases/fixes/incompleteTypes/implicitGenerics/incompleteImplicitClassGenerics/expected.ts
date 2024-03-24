@@ -1,50 +1,54 @@
-import { ComponentLike } from './react-like';
+import { ComponentLike } from "./react-like";
 
 (function () {
 	// Straightforward generics
 
-	class BaseWithoutGenerics { }
-	class BaseWithOneGeneric<T> { constructor(t: T | OneInterface | OneType | string) { } }
-	class BaseWithTwoGenerics<T, U> {constructor(t: T | number, u: U | boolean) {} }
+	class BaseWithoutGenerics {}
+	class BaseWithOneGeneric<T> {
+		constructor(t: T | OneInterface | OneType | string) {}
+	}
+	class BaseWithTwoGenerics<T, U> {
+		constructor(t: T | number, u: U | boolean) {}
+	}
 
-	class ExtendsBaseWithout extends BaseWithoutGenerics { }
+	class ExtendsBaseWithout extends BaseWithoutGenerics {}
 	new ExtendsBaseWithout();
 
 
 	class ExtendsBaseWithOneLiteral extends BaseWithOneGeneric<string> {
 		constructor() {
-			super('abc')
+			super("abc");
 		}
 	}
 
 	interface OneInterface {
 		property: string;
 	}
-	const oneInterface: OneInterface = { property: 'abc' };
+	const oneInterface: OneInterface = { property: "abc" };
 
 
 	class ExtendsBaseWithOneInterface extends BaseWithOneGeneric<OneInterface> {
 		constructor() {
-			super(oneInterface)
+			super(oneInterface);
 		}
 	}
 
 	type OneType = {
 		property: string[];
-	}
-	const oneType: OneType = { property: ['a', 'b', 'c'] };
+	};
+	const oneType: OneType = { property: ["a", "b", "c"] };
 
 
 	class ExtendsBaseWithOneType extends BaseWithOneGeneric<OneType> {
 		constructor() {
-			super(oneType)
+			super(oneType);
 		}
 	}
 
 
 	class ExtendsBaseWithTwo extends BaseWithTwoGenerics<number, boolean> {
 		constructor() {
-			super(123, false)
+			super(123, false);
 		}
 	}
 
@@ -72,7 +76,7 @@ import { ComponentLike } from './react-like';
 
 	class MemberImmediateFunction extends MemberImmediateBase<{}, { key: (arg0: boolean) => void; }> {
 		member = {
-			key: (arg0: boolean) => {}
+			key: (arg0: boolean) => {},
 		};
 
 		addToState = () => {
@@ -97,7 +101,7 @@ import { ComponentLike } from './react-like';
 		member: MemberAndType;
 
 		addToState = () => {
-			this.setMember(previousMember => ({
+			this.setMember((previousMember) => ({
 				key: !previousMember.key,
 			}));
 		};
@@ -110,7 +114,7 @@ import { ComponentLike } from './react-like';
 		};
 
 		addToState = () => {
-			this.setMember(previousMember => ({
+			this.setMember((previousMember) => ({
 				key: !previousMember.key,
 			}));
 		};

@@ -74,10 +74,10 @@
 
 	// Void and undefined
 
-	let startsUndefinedWithVoid: undefined = ((): void => { })();
+	let startsUndefinedWithVoid: undefined = ((): void => {})();
 
 	let startsUndefinedGivenVoid: undefined;
-	startsUndefinedGivenVoid = ((): void => { })();
+	startsUndefinedGivenVoid = ((): void => {})();
 
 	let startsVoidWithUndefined: void = undefined;
 
@@ -133,14 +133,16 @@
 	let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
 	eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
-	let eitherClassNeedsUnionExplicitInterface: SampleInterface = new SampleClassOne();
+	let eitherClassNeedsUnionExplicitInterface: SampleInterface =
+		new SampleClassOne();
 	eitherClassNeedsUnionExplicitInterface = new SampleClassTwo();
 
 	let eitherClassNeedsNullImplicit = new SampleClassOne();
 	eitherClassNeedsNullImplicit = new SampleClassTwo();
 	eitherClassNeedsNullImplicit = null;
 
-	let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo = new SampleClassOne();
+	let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo =
+		new SampleClassOne();
 	eitherClassNeedsNullAndClassExplicit = new SampleClassTwo();
 	eitherClassNeedsNullAndClassExplicit = null;
 
@@ -148,11 +150,13 @@
 	eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
 	eitherClassNeedsUndefinedExplicit = undefined;
 
-	let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | undefined = new SampleClassOne();
+	let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | undefined =
+		new SampleClassOne();
 	eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo();
 	eitherClassNeedsUndefinedExplicitInterface = undefined;
 
-	let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo = new SampleClassOne();
+	let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo =
+		new SampleClassOne();
 	eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();
 	eitherClassNeedsUndefinedAndClassExplicit = undefined;
 
@@ -172,7 +176,11 @@
 	for (const string of iterableStrings) {
 	}
 
-	const iterableStringOrUndefineds: (string | undefined)[] = ["abc", "def", "ghi"];
+	const iterableStringOrUndefineds: (string | undefined)[] = [
+		"abc",
+		"def",
+		"ghi",
+	];
 	for (const stringOrUndefined of iterableStringOrUndefineds) {
 	}
 
@@ -189,7 +197,7 @@
 	// Functions
 
 	let resolve;
-	resolve = () => { };
+	resolve = () => {};
 
 	new Promise<void>((_resolve) => {
 		resolve = _resolve;
