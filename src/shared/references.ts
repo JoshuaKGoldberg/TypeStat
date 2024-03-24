@@ -75,11 +75,7 @@ const findRelevantNodeReferences = (
 	node: ts.Node,
 ): ts.ReferenceEntry[] | undefined => {
 	// Find all locations the node is referenced
-	const nodeSourceFile = node.getSourceFile();
-	const referencedSymbols = services.languageService.findReferences(
-		nodeSourceFile.fileName,
-		node.getStart(nodeSourceFile),
-	);
+	const referencedSymbols = findReferencesForNormalizedFileName(services, node);
 	if (referencedSymbols === undefined) {
 		return undefined;
 	}
@@ -104,3 +100,25 @@ const findRelevantNodeReferences = (
 
 	return Array.from(references);
 };
+
+function findReferencesForNormalizedFileName(
+	services: LanguageServices,
+	node: ts.Node,
+) {
+	const nodeSourceFile = node.getSourceFile();
+	try {
+		return services.languageService.findReferences(
+			// TypeScript stores pnpm-resolved node_modules under non-pnpm paths.
+			nodeSourceFile.fileName.replace(
+				/node_modules\/\.pnpm\/.+\/node_modules/,
+				"node_modules",
+			),
+			node.getStart(nodeSourceFile),
+		);
+	} catch {
+		return services.languageService.findReferences(
+			nodeSourceFile.fileName,
+			node.getStart(nodeSourceFile),
+		);
+	}
+}
