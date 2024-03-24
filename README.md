@@ -55,7 +55,8 @@ To get a deeper understanding of TypeStat, read the following docs pages in orde
 
 ## Development
 
-See [`.github/CONTRIBUTING.md`](./.github/CONTRIBUTING.md), then [`.github/DEVELOPMENT.md`](./.github/DEVELOPMENT.md).
+See [`.github/CONTRIBUTING.md`](./.github/CONTRIBUTING.md), then [`.github/DEVELOPMENT.md`](./.github/DEVELOPMENT.md) for general tooling documentation.
+For understanding the project, see `./docs` in general, and especially [`./docs/Architecture.md`](./docs/Architecture.md).
 Thanks! 💖
 
 ## Contributors
