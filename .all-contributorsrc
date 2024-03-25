@@ -1,93 +1,132 @@
 {
-	"badgeTemplate": "\t<a href=\"#contributors\" target=\"_blank\"><img alt=\"👪 All Contributors: <%= contributors.length %>\" src=\"https://img.shields.io/badge/%F0%9F%91%AA_all_contributors-<%= contributors.length %>-21bb42.svg\" /></a>",
-	"commit": false,
-	"commitConvention": "angular",
-	"commitType": "docs",
-	"contributors": [
-		{
-			"login": "beyang",
-			"name": "Beyang Liu",
-			"avatar_url": "https://avatars.githubusercontent.com/u/1646931?v=4",
-			"profile": "https://sourcegraph.com/",
-			"contributions": ["code"]
-		},
-		{
-			"login": "bitsnaps",
-			"name": "Ibrahim H.",
-			"avatar_url": "https://avatars.githubusercontent.com/u/1217741?v=4",
-			"profile": "https://stackoverflow.com/users/5494094/ibrahim-h",
-			"contributions": ["code"]
-		},
-		{
-			"login": "danstiner",
-			"name": "Daniel Stiner",
-			"avatar_url": "https://avatars.githubusercontent.com/u/52513?v=4",
-			"profile": "https://danstiner.me/",
-			"contributions": ["bug"]
-		},
-		{
-			"login": "emday4prez",
-			"name": "Emerson",
-			"avatar_url": "https://avatars.githubusercontent.com/u/35363144?v=4",
-			"profile": "https://github.com/emday4prez",
-			"contributions": ["code"]
-		},
-		{
-			"login": "ghost",
-			"name": "Deleted user",
-			"avatar_url": "https://avatars.githubusercontent.com/u/10137?v=4",
-			"profile": "https://github.com/ghost",
-			"contributions": ["maintenance"]
-		},
-		{
-			"login": "girishsontakke",
-			"name": "Girish Sontakke",
-			"avatar_url": "https://avatars.githubusercontent.com/u/61848210?v=4",
-			"profile": "https://girish.netlify.app/",
-			"contributions": ["code"]
-		},
-		{
-			"login": "gutenye",
-			"name": "Guten",
-			"avatar_url": "https://avatars.githubusercontent.com/u/377544?v=4",
-			"profile": "https://maps.guten.me/",
-			"contributions": ["bug"]
-		},
-		{
-			"login": "JoshuaKGoldberg",
-			"name": "Josh Goldberg ✨",
-			"avatar_url": "https://avatars.githubusercontent.com/u/3335181?v=4",
-			"profile": "http://www.joshuakgoldberg.com/",
-			"contributions": ["maintenance", "bug", "tool", "code", "infra", "doc"]
-		},
-		{
-			"login": "markjm",
-			"name": "Mark Molinaro",
-			"avatar_url": "https://avatars.githubusercontent.com/u/16494982?v=4",
-			"profile": "https://www.linkedin.com/in/markjm-1/",
-			"contributions": ["bug", "code"]
-		},
-		{
-			"login": "micrology",
-			"name": "Nigel Gilbert",
-			"avatar_url": "https://avatars.githubusercontent.com/u/1449986?v=4",
-			"profile": "https://cress.soc.surrey.ac.uk/web/people/ngilbert",
-			"contributions": ["bug"]
-		},
-		{
-			"login": "orionna319",
-			"name": "orionna319",
-			"avatar_url": "https://avatars.githubusercontent.com/u/85230052?v=4",
-			"profile": "https://orionna.me/",
-			"contributions": ["bug"]
-		}
-	],
-	"contributorsPerLine": 7,
-	"contributorsSortAlphabetically": true,
-	"files": ["README.md"],
-	"imageSize": 100,
-	"projectName": "TypeStat",
-	"projectOwner": "JoshuaKGoldberg",
-	"repoHost": "https://github.com",
-	"repoType": "github"
+  "badgeTemplate": "\t<a href=\"#contributors\" target=\"_blank\"><img alt=\"👪 All Contributors: <%= contributors.length %>\" src=\"https://img.shields.io/badge/%F0%9F%91%AA_all_contributors-<%= contributors.length %>-21bb42.svg\" /></a>",
+  "commit": false,
+  "commitConvention": "angular",
+  "commitType": "docs",
+  "contributors": [
+    {
+      "login": "beyang",
+      "name": "Beyang Liu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1646931?v=4",
+      "profile": "https://sourcegraph.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "bitsnaps",
+      "name": "Ibrahim H.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1217741?v=4",
+      "profile": "https://stackoverflow.com/users/5494094/ibrahim-h",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "danstiner",
+      "name": "Daniel Stiner",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52513?v=4",
+      "profile": "https://danstiner.me/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "emday4prez",
+      "name": "Emerson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/35363144?v=4",
+      "profile": "https://github.com/emday4prez",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ghost",
+      "name": "Deleted user",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10137?v=4",
+      "profile": "https://github.com/ghost",
+      "contributions": [
+        "maintenance"
+      ]
+    },
+    {
+      "login": "girishsontakke",
+      "name": "Girish Sontakke",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61848210?v=4",
+      "profile": "https://girish.netlify.app/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "gutenye",
+      "name": "Guten",
+      "avatar_url": "https://avatars.githubusercontent.com/u/377544?v=4",
+      "profile": "https://maps.guten.me/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "JoshuaKGoldberg",
+      "name": "Josh Goldberg ✨",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3335181?v=4",
+      "profile": "http://www.joshuakgoldberg.com/",
+      "contributions": [
+        "maintenance",
+        "bug",
+        "tool",
+        "code",
+        "infra",
+        "doc"
+      ]
+    },
+    {
+      "login": "markjm",
+      "name": "Mark Molinaro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16494982?v=4",
+      "profile": "https://www.linkedin.com/in/markjm-1/",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "micrology",
+      "name": "Nigel Gilbert",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1449986?v=4",
+      "profile": "https://cress.soc.surrey.ac.uk/web/people/ngilbert",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "orionna319",
+      "name": "orionna319",
+      "avatar_url": "https://avatars.githubusercontent.com/u/85230052?v=4",
+      "profile": "https://orionna.me/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "rubiesonthesky",
+      "name": "rubiesonthesky",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2591240?v=4",
+      "profile": "https://github.com/rubiesonthesky",
+      "contributions": [
+        "bug"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "contributorsSortAlphabetically": true,
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "projectName": "TypeStat",
+  "projectOwner": "JoshuaKGoldberg",
+  "repoHost": "https://github.com",
+  "repoType": "github"
 }
