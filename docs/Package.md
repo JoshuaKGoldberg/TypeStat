@@ -4,11 +4,11 @@ An optional set of configuration fields containing package-level changes to make
 
 ```json
 {
-    "package": {
-        "directory": "../MyRepo",
-        "file": "./node/package.json",
-        "missingTypes": "yarn"
-    }
+	"package": {
+		"directory": "../MyRepo",
+		"file": "./node/package.json",
+		"missingTypes": "yarn"
+	}
 }
 ```
 
@@ -16,9 +16,9 @@ An optional set of configuration fields containing package-level changes to make
 
 ```json
 {
-    "package": {
-        "directory": "../MyRepo"
-    }
+	"package": {
+		"directory": "../MyRepo"
+	}
 }
 ```
 
@@ -29,9 +29,9 @@ All non-absolute paths within all settings except `-c`/`--config` will be resolv
 
 ```json
 {
-    "package": {
-        "file": "./node/package.json"
-    }
+	"package": {
+		"file": "./node/package.json"
+	}
 }
 ```
 
@@ -44,9 +44,9 @@ If `package.file` is relative, `package.directory` will be used as a root path t
 
 ```json
 {
-    "package": {
-        "missingTypes": true
-    }
+	"package": {
+		"missingTypes": true
+	}
 }
 ```
 
@@ -66,41 +66,41 @@ TypeStat will attempt to install `@types/lodash` unless it's already any form of
 
 This field has four potential allowed configurations:
 
-* `false` _(default)_: skip installing missing packages
-* `true`: auto-detect whether to use Yarn _(if a `yarn.lock` exists)_ or npm _(default)_
+- `false` _(default)_: skip installing missing packages
+- `true`: auto-detect whether to use Yarn _(if a `yarn.lock` exists)_ or npm _(default)_
 
-    ```json
-    {
-        "package": {
-            "missingTypes": true
-        }
-    }
-    ```
+  ```json
+  {
+  	"package": {
+  		"missingTypes": true
+  	}
+  }
+  ```
 
-* `"npm"`: install using npm
+- `"npm"`: install using npm
 
-    ```json
-    {
-        "package": {
-            "missingTypes": "npm"
-        }
-    }
-    ```
+  ```json
+  {
+  	"package": {
+  		"missingTypes": "npm"
+  	}
+  }
+  ```
 
-* `"yarn"`: install using Yarn
+- `"yarn"`: install using Yarn
 
-    ```json
-    {
-        "package": {
-            "missingTypes": "yarn"
-        }
-    }
-    ```
+  ```json
+  {
+  	"package": {
+  		"missingTypes": "yarn"
+  	}
+  }
+  ```
 
 ### Node types
 
 `@types/node` will be installed in any of the following cases:
 
-* `module =`, `module.exports =`, or `module.exports.*` = statement(s) exist
-* [Built-in modules](https://www.npmjs.com/package/builtin-modules) are imported from
-* A global [`process` object](https://nodejs.org/api/process.html#process_process) is referenced
+- `module =`, `module.exports =`, or `module.exports.*` = statement(s) exist
+- [Built-in modules](https://www.npmjs.com/package/builtin-modules) are imported from
+- A global [`process` object](https://nodejs.org/api/process.html#process_process) is referenced

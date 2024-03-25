@@ -6,8 +6,8 @@ Whether to add missing non-null assertions.
 
 You'd like to enable [`--strictNullChecks`](https://basarat.gitbooks.io/typescript/docs/options/strictNullChecks.html) but:
 
-* You'd like to enable the setting now and clean up existing violations later
-* Your tests pass nullable values in places that otherwise shouldn't accept them
+- You'd like to enable the setting now and clean up existing violations later
+- Your tests pass nullable values in places that otherwise shouldn't accept them
 
 Note that `strictNullChecks` must be enabled in your `tsconfig.json` and/or TypeStat configuration file.
 
@@ -15,9 +15,9 @@ Note that `strictNullChecks` must be enabled in your `tsconfig.json` and/or Type
 
 ```json
 {
-    "fixes": {
-        "strictNonNullAssertions": true
-    }
+	"fixes": {
+		"strictNonNullAssertions": true
+	}
 }
 ```
 

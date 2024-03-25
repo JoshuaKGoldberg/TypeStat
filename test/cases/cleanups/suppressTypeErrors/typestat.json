@@ -1,5 +1,5 @@
 {
-    "cleanups": {
-        "suppressTypeErrors": true
-    }
+	"cleanups": {
+		"suppressTypeErrors": true
+	}
 }

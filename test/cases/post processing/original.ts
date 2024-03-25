@@ -1,5 +1,5 @@
-(function() {
-    let missingNumber: string = "initial";
+(function () {
+	let missingNumber: string = "initial";
 
-    missingNumber = 7;
+	missingNumber = 7;
 })();

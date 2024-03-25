@@ -1,19 +1,24 @@
-import { fs } from "mz";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
-import { TypeStatOptions } from "../../../options/types";
+import { TypeStatOptions } from "../../../options/types.js";
+import { installWithNpm } from "./installWithNpm.js";
+import { installWithYarn } from "./installWithYarn.js";
 
-import { installWithNpm } from "./installWithNpm";
-import { installWithYarn } from "./installWithYarn";
+export const collectPackageManagerRunner = (
+	options: TypeStatOptions,
+	missingTypes: "npm" | "yarn" | true,
+) => {
+	if (missingTypes === "npm") {
+		return installWithNpm;
+	}
 
-export const collectPackageManagerRunner = async (options: TypeStatOptions, missingTypes: true | "npm" | "yarn") => {
-    if (missingTypes === "npm") {
-        return installWithNpm;
-    }
+	if (
+		missingTypes === "yarn" ||
+		fs.existsSync(path.join(options.package.directory, "yarn.lock"))
+	) {
+		return installWithYarn;
+	}
 
-    if (missingTypes === "yarn" || (await fs.exists(path.join(options.package.directory, "yarn.lock")))) {
-        return installWithYarn;
-    }
-
-    return installWithNpm;
+	return installWithNpm;
 };

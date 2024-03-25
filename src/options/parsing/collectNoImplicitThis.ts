@@ -1,15 +1,18 @@
-import * as ts from "typescript";
+import ts from "typescript";
 
-import { RawTypeStatOptions } from "../types";
+import { RawTypeStatOptions } from "../types.js";
 
-export const collectNoImplicitThis = (compilerOptions: Readonly<ts.CompilerOptions>, rawOptions: RawTypeStatOptions): boolean => {
-    if (rawOptions.fixes !== undefined && rawOptions.fixes.noImplicitThis !== undefined) {
-        return rawOptions.fixes.noImplicitThis;
-    }
+export const collectNoImplicitThis = (
+	compilerOptions: Readonly<ts.CompilerOptions>,
+	rawOptions: RawTypeStatOptions,
+): boolean => {
+	if (rawOptions.fixes?.noImplicitThis !== undefined) {
+		return rawOptions.fixes.noImplicitThis;
+	}
 
-    if (compilerOptions.noImplicitThis !== undefined) {
-        return compilerOptions.noImplicitThis;
-    }
+	if (compilerOptions.noImplicitThis !== undefined) {
+		return compilerOptions.noImplicitThis;
+	}
 
-    return false;
+	return false;
 };

@@ -1,7 +1,7 @@
 // Processed!
 
-(function() {
-    let missingNumber: string | number = "initial";
+(function () {
+	let missingNumber: string | number = "initial";
 
-    missingNumber = 7;
+	missingNumber = 7;
 })();

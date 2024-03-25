@@ -6,8 +6,8 @@ This entirely relies on TypeScript's suggested fixes to infer types from usage.
 
 ## Use Cases
 
-* You're converting from JavaScript to TypeScript and want type coverage where possible
-* You'd like to enable [`--noImplicitAny`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitAny.html) but have a lot of existing violations
+- You're converting from JavaScript to TypeScript and want type coverage where possible
+- You'd like to enable [`--noImplicitAny`](https://basarat.gitbooks.io/typescript/docs/options/noImplicitAny.html) but have a lot of existing violations
 
 Places that don't need added types (i.e. would violate [`no-inferrable-types`](https://typescript-eslint.io/rules/no-inferrable-types))
 won't have them added.
@@ -16,9 +16,9 @@ won't have them added.
 
 ```json
 {
-    "fixes": {
-        "noImplicitAny": true
-    }
+	"fixes": {
+		"noImplicitAny": true
+	}
 }
 ```
 
@@ -47,7 +47,7 @@ If a class property is declared without a type, this will add one.
 
 #### Examples: `noImplicitAny` Property Declarations
 
-When a class property is declared without a type but is later assigned `number`,  TypeScript can infer the type from its usage:
+When a class property is declared without a type but is later assigned `number`, TypeScript can infer the type from its usage:
 
 ```diff
 class Person {

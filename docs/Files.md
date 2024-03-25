@@ -4,11 +4,11 @@ An optional set of configuration fields containing file-level changes to make ou
 
 ```json
 {
-    "files": {
-        "above": "/* Above file */",
-        "below": "/* Below file */",
-        "renameExtensions": true
-    }
+	"files": {
+		"above": "/* Above file */",
+		"below": "/* Below file */",
+		"renameExtensions": true
+	}
 }
 ```
 
@@ -16,9 +16,9 @@ An optional set of configuration fields containing file-level changes to make ou
 
 ```json
 {
-    "files": {
-        "above": "/* Above file */"
-    }
+	"files": {
+		"above": "/* Above file */"
+	}
 }
 ```
 
@@ -32,9 +32,9 @@ If a value is provided on the CLI, it will override a configuration file value (
 
 ```json
 {
-    "files": {
-        "below": "/* Below file */"
-    }
+	"files": {
+		"below": "/* Below file */"
+	}
 }
 ```
 
@@ -48,9 +48,9 @@ If a value is provided on the CLI, it will override a configuration file value (
 
 ```json
 {
-    "files": {
-        "renameExtensions": true
-    }
+	"files": {
+		"renameExtensions": true
+	}
 }
 ```
 
@@ -62,41 +62,41 @@ regardless of whether mutations are added, will be renamed to the equivalent Typ
 
 This field has four potential allowed configurations:
 
-* `false` _(default)_: skip renaming file extensions
-* `true`: auto-detect whether a file should be `.ts` or `.tsx`
+- `false` _(default)_: skip renaming file extensions
+- `true`: auto-detect whether a file should be `.ts` or `.tsx`
 
-    ```json
-    {
-        "files": {
-            "renameExtensions": true
-        }
-    }
-    ```
+  ```json
+  {
+  	"files": {
+  		"renameExtensions": true
+  	}
+  }
+  ```
 
-* `"ts"`: always convert to `.ts`
+- `"ts"`: always convert to `.ts`
 
-    ```json
-    {
-        "files": {
-            "renameExtensions": "ts"
-        }
-    }
-    ```
+  ```json
+  {
+  	"files": {
+  		"renameExtensions": "ts"
+  	}
+  }
+  ```
 
-* `"tsx"`: always convert to `.tsx`
+- `"tsx"`: always convert to `.tsx`
 
-    ```json
-    {
-        "files": {
-            "renameExtensions": "tsx"
-        }
-    }
-    ```
+  ```json
+  {
+  	"files": {
+  		"renameExtensions": "tsx"
+  	}
+  }
+  ```
 
 When auto-detection is enabled, a file will be converted to `.tsx` if either of the following is true:
 
-* It `import`s or `require`s from the `"react"` module
-* Its original file extension is `.jsx`
+- It `import`s or `require`s from the `"react"` module
+- Its original file extension is `.jsx`
 
 ### Handling `require`s
 

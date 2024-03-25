@@ -1,8 +1,5 @@
 {
-    "default": true,
-    "line-length": {
-        "line_length": 175
-    },
-    "no-inline-html": false,
-    "no-trailing-punctuation": false
+	"extends": "markdownlint/style/prettier",
+	"first-line-h1": false,
+	"no-inline-html": false
 }

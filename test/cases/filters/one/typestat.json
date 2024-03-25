@@ -1,10 +1,10 @@
 {
-    "filters": ["FunctionDeclaration[name.text=one]"],
-    "fixes": {
-        "incompleteTypes": true,
-        "noImplicitAny": true
-    },
-    "types": {
-        "strictNullChecks": true
-    }
+	"filters": ["FunctionDeclaration[name.text=one]"],
+	"fixes": {
+		"incompleteTypes": true,
+		"noImplicitAny": true
+	},
+	"types": {
+		"strictNullChecks": true
+	}
 }

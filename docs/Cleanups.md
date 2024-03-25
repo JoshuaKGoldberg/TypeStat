@@ -8,9 +8,9 @@ These all default to `false` but can be enabled by being set to `true`.
 
 ```json
 {
-    "cleanups": {
-        "suppressTypeErrors": true
-    }
+	"cleanups": {
+		"suppressTypeErrors": true
+	}
 }
 ```
 

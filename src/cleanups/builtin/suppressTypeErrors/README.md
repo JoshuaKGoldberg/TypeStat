@@ -4,15 +4,15 @@ Whether to add a `// @ts-expect-error` comment directive before each remaining t
 
 ## Use Cases
 
-* Your existing code has type errors that are too complex or context-dependent for TypeStat to clean up.
+- Your existing code has type errors that are too complex or context-dependent for TypeStat to clean up.
 
 ## Configuration
 
 ```json
 {
-    "cleanups": {
-        "suppressTypeErrors": true
-    }
+	"cleanups": {
+		"suppressTypeErrors": true
+	}
 }
 ```
 

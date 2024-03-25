@@ -1,283 +1,283 @@
 (function () {
-    declare const value: string | undefined;
+	declare const value: string | undefined;
 
-    value.length;
-    value?.length;
-    
-    declare const valueAny: any;
+	value.length;
+	value?.length;
 
-    valueAny.length;
-    valueAny?.length;
+	declare const valueAny: any;
 
-    declare const valueAnyOrUndefined: any | undefined;
+	valueAny.length;
+	valueAny?.length;
 
-    valueAnyOrUndefined.length;
-    valueAnyOrUndefined?.length;
-    
-    // Internal declarations
-    class Abc {
-        givenNumber: number;
-        givenNumberOrUndefined: number;
-        givenUndefined: number;
+	declare const valueAnyOrUndefined: any | undefined;
 
-        givenTwiceSame: number;
-        
-        givenTwiceDifferent: number;
+	valueAnyOrUndefined.length;
+	valueAnyOrUndefined?.length;
 
-        givenAlreadyAsserted: number;
+	// Internal declarations
+	class Abc {
+		givenNumber: number;
+		givenNumberOrUndefined: number;
+		givenUndefined: number;
 
-        def() {
-            this.givenNumber = 1;
-            this.givenNumberOrUndefined = 1 as number | undefined;
-            this.givenUndefined = undefined;
+		givenTwiceSame: number;
 
-            this.givenTwiceSame = 1;
-            this.givenTwiceSame = 1;
+		givenTwiceDifferent: number;
 
-            this.givenTwiceDifferent = 1;
-            this.givenTwiceDifferent = undefined;
+		givenAlreadyAsserted: number;
 
-            this.givenAlreadyAsserted = undefined!;
-        }
-    }
+		def() {
+			this.givenNumber = 1;
+			this.givenNumberOrUndefined = 1 as number | undefined;
+			this.givenUndefined = undefined;
 
-    // External declarations
+			this.givenTwiceSame = 1;
+			this.givenTwiceSame = 1;
 
-    class Container {
-        givenUndefined: string = "";
+			this.givenTwiceDifferent = 1;
+			this.givenTwiceDifferent = undefined;
 
-        givenUndefinedHasNull: string | null = "";
+			this.givenAlreadyAsserted = undefined!;
+		}
+	}
 
-        givenNull: string = "";
+	// External declarations
 
-        givenNullHasUndefined: string | undefined = "";
+	class Container {
+		givenUndefined: string = "";
 
-        givenString: string = "";
+		givenUndefinedHasNull: string | null = "";
 
-        givenStringHasNull: string | null = "";
+		givenNull: string = "";
 
-        givenStringHasUndefined: string | undefined = "";
+		givenNullHasUndefined: string | undefined = "";
 
-        setToUndefined: string = undefined;
+		givenString: string = "";
 
-        setToUndefinedHasNull: string | null = undefined;
+		givenStringHasNull: string | null = "";
 
-        setToNull: string = null;
+		givenStringHasUndefined: string | undefined = "";
 
-        setToNullHasUndefined: string | undefined = null;
+		setToUndefined: string = undefined;
 
-        setToString: string = "";
+		setToUndefinedHasNull: string | null = undefined;
 
-        setToStringHasUndefined: string | undefined = "";
+		setToNull: string = null;
 
-        setToStringHasNull: string | null = "";
-    }
+		setToNullHasUndefined: string | undefined = null;
 
-    const container = new Container();
+		setToString: string = "";
 
-    container.givenUndefined = undefined;
-    container.givenUndefinedHasNull = undefined;
-    container.givenNull = null;
-    container.givenNullHasUndefined = null;
-    container.givenString = "";
-    container.givenStringHasNull = "";
-    container.givenStringHasNull = "";
+		setToStringHasUndefined: string | undefined = "";
 
-    // Nested type shapes
+		setToStringHasNull: string | null = "";
+	}
 
-    function withNullableString(value: string | undefined) {
-        value.length;
-    }
+	const container = new Container();
 
-    interface NotNullable {
-        a: {
-            b: {
-                c: number;
-            }
-        }
-    }
+	container.givenUndefined = undefined;
+	container.givenUndefinedHasNull = undefined;
+	container.givenNull = null;
+	container.givenNullHasUndefined = null;
+	container.givenString = "";
+	container.givenStringHasNull = "";
+	container.givenStringHasNull = "";
 
-    function withNotNullable(value: NotNullable) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	// Nested type shapes
 
-    function withOptionalNotNullable(value?: NotNullable) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withNullableString(value: string | undefined) {
+		value.length;
+	}
 
-    function withPartialNotNullable(value: Partial<NotNullable>) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	interface NotNullable {
+		a: {
+			b: {
+				c: number;
+			};
+		};
+	}
 
-    function withOptionalPartialNotNullable(value?: Partial<NotNullable>) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withNotNullable(value: NotNullable) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    interface OuterNullable {
-        a?: {
-            b: {
-                c: number;
-            }
-        }
-    }
+	function withOptionalNotNullable(value?: NotNullable) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    function withOuterNullable(value: OuterNullable) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withPartialNotNullable(value: Partial<NotNullable>) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    function withOptionalOuterNullable(value?: OuterNullable) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withOptionalPartialNotNullable(value?: Partial<NotNullable>) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    function withPartialOuterNullable(value: Partial<OuterNullable>) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	interface OuterNullable {
+		a?: {
+			b: {
+				c: number;
+			};
+		};
+	}
 
-    function withOptionalPartialOuterNullable(value?: Partial<OuterNullable>) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withOuterNullable(value: OuterNullable) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    interface MiddleNullable {
-        a: {
-            b?: {
-                c: number;
-            }
-        }
-    }
+	function withOptionalOuterNullable(value?: OuterNullable) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    function withMiddleNullable(value: MiddleNullable) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withPartialOuterNullable(value: Partial<OuterNullable>) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    function withOptionalMiddleNullable(value?: MiddleNullable) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withOptionalPartialOuterNullable(value?: Partial<OuterNullable>) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    function withPartialMiddleNullable(value: Partial<MiddleNullable>) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	interface MiddleNullable {
+		a: {
+			b?: {
+				c: number;
+			};
+		};
+	}
 
-    function withOptionalPartialMiddleNullable(value?: Partial<MiddleNullable>) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withMiddleNullable(value: MiddleNullable) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    interface InnerNullable {
-        a: {
-            b: {
-                c?: number;
-            }
-        }
-    }
+	function withOptionalMiddleNullable(value?: MiddleNullable) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    function withInnerNullable(value: InnerNullable) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withPartialMiddleNullable(value: Partial<MiddleNullable>) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    function withOptionalInnerNullable(value?: InnerNullable) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withOptionalPartialMiddleNullable(value?: Partial<MiddleNullable>) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 
-    function withPartialInnerNullable(value: Partial<InnerNullable>) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	interface InnerNullable {
+		a: {
+			b: {
+				c?: number;
+			};
+		};
+	}
 
-    function withOptionalPartialInnerNullable(value?: Partial<InnerNullable>) {
-        value.a.b.c.toPrecision(0);
-        value.a?.b.c.toPrecision(0);
-        value.a?.b?.c.toPrecision(0);
-        value.a?.b?.c?.toPrecision(0);
-        value.a?.b.c?.toPrecision(0);
-        value.a.b.c?.toPrecision(0);
-        value.a.b?.c.toPrecision(0);
-    }
+	function withInnerNullable(value: InnerNullable) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
+
+	function withOptionalInnerNullable(value?: InnerNullable) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
+
+	function withPartialInnerNullable(value: Partial<InnerNullable>) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
+
+	function withOptionalPartialInnerNullable(value?: Partial<InnerNullable>) {
+		value.a.b.c.toPrecision(0);
+		value.a?.b.c.toPrecision(0);
+		value.a?.b?.c.toPrecision(0);
+		value.a?.b?.c?.toPrecision(0);
+		value.a?.b.c?.toPrecision(0);
+		value.a.b.c?.toPrecision(0);
+		value.a.b?.c.toPrecision(0);
+	}
 })();

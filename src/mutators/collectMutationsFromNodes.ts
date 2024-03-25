@@ -1,52 +1,58 @@
 import { Mutation } from "automutate";
 import { EOL } from "os";
-import * as ts from "typescript";
+import ts from "typescript";
 
-import { getQuickErrorSummary } from "../shared/errors";
-import { NodeSelector } from "../shared/nodeTypes";
+import { getQuickErrorSummary } from "../shared/errors.js";
+import { FileMutationsRequest } from "../shared/fileMutator.js";
+import { NodeSelector } from "../shared/nodeTypes.js";
 
-import { FileMutationsRequest } from "../shared/fileMutator";
-
-export type NodeVisitor<TNode extends ts.Node> = (node: TNode, request: FileMutationsRequest) => Readonly<Mutation> | undefined;
+export type NodeVisitor<TNode extends ts.Node> = (
+	node: TNode,
+	request: FileMutationsRequest,
+) => Readonly<Mutation> | undefined;
 
 export const collectMutationsFromNodes = <TNode extends ts.Node>(
-    request: FileMutationsRequest,
-    selector: NodeSelector<TNode>,
-    visitor: NodeVisitor<TNode>,
+	request: FileMutationsRequest,
+	selector: NodeSelector<TNode>,
+	visitor: NodeVisitor<TNode>,
 ) => {
-    const mutations: Mutation[] = [];
+	const mutations: Mutation[] = [];
 
-    const visitNode = (node: ts.Node) => {
-        if (request.filteredNodes.has(node)) {
-            return;
-        }
+	const visitNode = (node: ts.Node) => {
+		if (request.filteredNodes.has(node)) {
+			return;
+		}
 
-        if (selector(node)) {
-            const mutation = tryGetMutation(request, node, visitor);
+		if (selector(node)) {
+			const mutation = tryGetMutation(request, node, visitor);
 
-            if (mutation !== undefined) {
-                mutations.push(mutation);
-            }
-        }
+			if (mutation !== undefined) {
+				mutations.push(mutation);
+			}
+		}
 
-        ts.forEachChild(node, visitNode);
-    };
+		ts.forEachChild(node, visitNode);
+	};
 
-    ts.forEachChild(request.sourceFile, visitNode);
+	ts.forEachChild(request.sourceFile, visitNode);
 
-    return mutations;
+	return mutations;
 };
 
-const tryGetMutation = <TNode extends ts.Node>(request: FileMutationsRequest, node: TNode, visitor: NodeVisitor<TNode>) => {
-    try {
-        return visitor(node, request);
-    } catch (error) {
-        request.options.output.stderr(
-            `${EOL}Error in ${request.sourceFile.fileName} at node '${node.getText(request.sourceFile)}' (position ${node.pos}):`,
-        );
-        request.options.output.stderr(`\t${getQuickErrorSummary(error)}`);
-        request.options.output.stderr(EOL);
-    }
+const tryGetMutation = <TNode extends ts.Node>(
+	request: FileMutationsRequest,
+	node: TNode,
+	visitor: NodeVisitor<TNode>,
+) => {
+	try {
+		return visitor(node, request);
+	} catch (error) {
+		request.options.output.stderr(
+			`${EOL}Error in ${request.sourceFile.fileName} at node '${node.getText(request.sourceFile)}' (position ${node.pos}):`,
+		);
+		request.options.output.stderr(`\t${getQuickErrorSummary(error)}`);
+		request.options.output.stderr(EOL);
+	}
 
-    return undefined;
+	return undefined;
 };

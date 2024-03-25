@@ -9,15 +9,13 @@ For example, this configuration will add `!`s only to `*.test.ts` test files, su
 
 ```json
 {
-    "fixes": {
-        "strictNonNullAssertions": true
-    },
-    "include": [
-        "./src/**/*.test.ts"
-    ],
-    "types": {
-        "strictNullChecks": true
-    }
+	"fixes": {
+		"strictNonNullAssertions": true
+	},
+	"include": ["./src/**/*.test.ts"],
+	"types": {
+		"strictNullChecks": true
+	}
 }
 ```
 
@@ -26,27 +24,25 @@ For example, this configuration will add `!`s only to `*.test.ts` test files, su
 Alternately, you can enable the `incompleteTypes` fix, which will prefer adding `| null` and `| undefined` to types as properties, parameters, and so on.
 This configuration will add those with:
 
-* `filters` to ignore class and test disposal methods, as they might assign `null` or `undefined` unnecessarily
-* `types.matching` to only add `null` and `undefined` as types
-* `types.onlyPrimitives` to skip computing advanced types as a performance improvement
+- `filters` to ignore class and test disposal methods, as they might assign `null` or `undefined` unnecessarily
+- `types.matching` to only add `null` and `undefined` as types
+- `types.onlyPrimitives` to skip computing advanced types as a performance improvement
 
 ```json
 {
-    "filters": [
-        "CallExpression[expression.text=suiteTeardown]",
-        "CallExpression[expression.text=teardown]",
-        "MethodDeclaration[name.text=dispose]"
-    ],
-    "fixes": {
-        "incompleteTypes": true
-    },
-    "types": {
-        "matching": [
-            "^(null|undefined)$"
-        ],
-        "onlyPrimitives": true,
-        "strictNullChecks": true
-    }
+	"filters": [
+		"CallExpression[expression.text=suiteTeardown]",
+		"CallExpression[expression.text=teardown]",
+		"MethodDeclaration[name.text=dispose]"
+	],
+	"fixes": {
+		"incompleteTypes": true
+	},
+	"types": {
+		"matching": ["^(null|undefined)$"],
+		"onlyPrimitives": true,
+		"strictNullChecks": true
+	}
 }
 ```
 

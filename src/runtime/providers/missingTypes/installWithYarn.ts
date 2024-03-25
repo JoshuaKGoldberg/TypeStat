@@ -1,10 +1,19 @@
-import { TypeStatOptions } from "../../../options/types";
+import { TypeStatOptions } from "../../../options/types.js";
+import { runCommand } from "./runCommand.js";
 
-import { runCommand } from "./runCommand";
-
-export const installWithYarn = async (options: TypeStatOptions, missingPackageNames: ReadonlyArray<string>) => {
-    await runCommand(
-        options,
-        ["yarn", "add", ...Array.from(missingPackageNames).map((packageName) => `@types/${packageName}`), "-D"].join(" "),
-    );
+export const installWithYarn = async (
+	options: TypeStatOptions,
+	missingPackageNames: readonly string[],
+) => {
+	await runCommand(
+		options,
+		[
+			"yarn",
+			"add",
+			...Array.from(missingPackageNames).map(
+				(packageName) => `@types/${packageName}`,
+			),
+			"-D",
+		].join(" "),
+	);
 };

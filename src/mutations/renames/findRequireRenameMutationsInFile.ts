@@ -1,32 +1,33 @@
 import { Mutation } from "automutate";
-import * as ts from "typescript";
+import ts from "typescript";
 
-import { TypeStatOptions } from "../../options/types";
-
-import { createRequireMutation } from "./createRequireMutation";
-import { isRequireToJsFile } from "./isRequireToJsFile";
+import { TypeStatOptions } from "../../options/types.js";
+import { createRequireMutation } from "./createRequireMutation.js";
+import { isRequireToJsFile } from "./isRequireToJsFile.js";
 
 export interface RequireRenameRequest {
-    allFileNames: ReadonlySet<string>;
-    options: TypeStatOptions;
-    sourceFile: ts.SourceFile;
+	allFileNames: ReadonlySet<string>;
+	options: TypeStatOptions;
+	sourceFile: ts.SourceFile;
 }
 
-export const findRequireRenameMutationsInFile = (request: RequireRenameRequest) => {
-    const mutations: Mutation[] = [];
-    const visitNode = (node: ts.Node) => {
-        if (isRequireToJsFile(node)) {
-            const mutation = createRequireMutation(request, node);
+export const findRequireRenameMutationsInFile = (
+	request: RequireRenameRequest,
+) => {
+	const mutations: Mutation[] = [];
+	const visitNode = (node: ts.Node) => {
+		if (isRequireToJsFile(node)) {
+			const mutation = createRequireMutation(request, node);
 
-            if (mutation !== undefined) {
-                mutations.push(mutation);
-            }
-        }
+			if (mutation !== undefined) {
+				mutations.push(mutation);
+			}
+		}
 
-        ts.forEachChild(node, visitNode);
-    };
+		ts.forEachChild(node, visitNode);
+	};
 
-    visitNode(request.sourceFile);
+	visitNode(request.sourceFile);
 
-    return mutations;
+	return mutations;
 };

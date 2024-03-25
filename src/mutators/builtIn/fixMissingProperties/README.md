@@ -6,15 +6,15 @@ This entirely relies on TypeScript's suggested fixes to infer types from usage.
 
 ## Use Cases
 
-* You're converting from JavaScript to TypeScript and have classes that contain properties
+- You're converting from JavaScript to TypeScript and have classes that contain properties
 
 ## Configuration
 
 ```json
 {
-    "fixes": {
-        "missingProperties": true
-    }
+	"fixes": {
+		"missingProperties": true
+	}
 }
 ```
 

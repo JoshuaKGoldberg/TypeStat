@@ -1,41 +1,41 @@
 (function () {
-    class Container {
-        givenUndefined: string | undefined = "";
+	class Container {
+		givenUndefined: string | undefined = "";
 
-        givenUndefinedHasNull: string | null | undefined = "";
+		givenUndefinedHasNull: string | null | undefined = "";
 
-        givenNull: string | null = "";
+		givenNull: string | null = "";
 
-        givenNullHasUndefined: string | undefined | null = "";
+		givenNullHasUndefined: string | undefined | null = "";
 
-        givenString: string = "";
+		givenString: string = "";
 
-        givenStringHasNull: string | null = "";
+		givenStringHasNull: string | null = "";
 
-        givenStringHasUndefined: string | undefined = "";
+		givenStringHasUndefined: string | undefined = "";
 
-        setToUndefined: string | undefined = undefined;
+		setToUndefined: string | undefined = undefined;
 
-        setToUndefinedHasNull: string | null | undefined = undefined;
+		setToUndefinedHasNull: string | null | undefined = undefined;
 
-        setToNull: string | null = null;
+		setToNull: string | null = null;
 
-        setToNullHasUndefined: string | undefined | null = null;
+		setToNullHasUndefined: string | undefined | null = null;
 
-        setToString: string = "";
+		setToString: string = "";
 
-        setToStringHasUndefined: string | undefined = "";
+		setToStringHasUndefined: string | undefined = "";
 
-        setToStringHasNull: string | null = "";
-    }
+		setToStringHasNull: string | null = "";
+	}
 
-    const container = new Container();
+	const container = new Container();
 
-    container.givenUndefined = undefined;
-    container.givenUndefinedHasNull = undefined;
-    container.givenNull = null;
-    container.givenNullHasUndefined = null;
-    container.givenString = "";
-    container.givenStringHasNull = "";
-    container.givenStringHasNull = "";
+	container.givenUndefined = undefined;
+	container.givenUndefinedHasNull = undefined;
+	container.givenNull = null;
+	container.givenNullHasUndefined = null;
+	container.givenString = "";
+	container.givenStringHasNull = "";
+	container.givenStringHasNull = "";
 })();

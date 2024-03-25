@@ -1,21 +1,21 @@
-(function() {
-    class Foo {
-        public value: number = 3;
+(function () {
+	class Foo {
+		public value: number = 3;
 
-        dispose() {
-            this.value = null;
-        }
-    }
+		dispose() {
+			this.value = null;
+		}
+	}
 
-    function teardown(action: () => void) {
-        action();
-    }
+	function teardown(action: () => void) {
+		action();
+	}
 
-    let foo = new Foo();
+	let foo = new Foo();
 
-    foo.value = 1;
+	foo.value = 1;
 
-    teardown(() => {
-        foo = null;
-    });
+	teardown(() => {
+		foo = null;
+	});
 })();

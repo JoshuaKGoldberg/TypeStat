@@ -20,9 +20,9 @@ For example, the following `typestat.json` will add auto-fixes for missing type 
 
 ```json
 {
-    "fixes": {
-        "noImplicitAny": true,
-    }
+	"fixes": {
+		"noImplicitAny": true
+	}
 }
 ```
 
@@ -37,16 +37,16 @@ For example, the following `typestat.json` will:
 
 ```json
 [
-    {
-        "fixes": {
-            "noImplicitAny": true
-        }
-    },
-    {
-        "fixes": {
-            "noInferableTypes": true
-        }
-    }
+	{
+		"fixes": {
+			"noImplicitAny": true
+		}
+	},
+	{
+		"fixes": {
+			"noInferableTypes": true
+		}
+	}
 ]
 ```
 
@@ -62,7 +62,6 @@ npx typestat --logfile typestat.log
 ## More Examples
 
 Use these examples as more granular references of how to perform targeted changes with TypeStat.
-Reach out on [Gitter](https://gitter.im/TypeStat/community) or [Twitter](https://twitter.com/JoshuaKGoldberg) if you want help!
 
-* [Converting Classes from JavaScript to TypeScript.md](./Usage/Converting%20Classes%20from%20JavaScript%20to%20TypeScript.md)
-* [Enabling Strict Null Checks](./Usage/Enabling%20Strict%20Null%20Checks.md)
+- [Converting Classes from JavaScript to TypeScript.md](./Usage/Converting%20Classes%20from%20JavaScript%20to%20TypeScript.md)
+- [Enabling Strict Null Checks](./Usage/Enabling%20Strict%20Null%20Checks.md)

@@ -4,16 +4,16 @@ Whether to augment type annotations that don't capture all values constructs can
 
 ## Use Cases
 
-* You're enabling `strictNullChecks` but existing types don't yet have `| null` or `| undefined` as appropriate
-* You're converting from JavaScript to TypeScript and adding React component types
+- You're enabling `strictNullChecks` but existing types don't yet have `| null` or `| undefined` as appropriate
+- You're converting from JavaScript to TypeScript and adding React component types
 
 ## Configuration
 
 ```json
 {
-    "fixes": {
-        "incompleteTypes": true
-    }
+	"fixes": {
+		"incompleteTypes": true
+	}
 }
 ```
 
@@ -127,11 +127,11 @@ class ContainsValue {
 
 React components can have types their props filled in using:
 
-* Component classes:
-  * `static propTypes = ...` properties
-  * Later-assigned `.propTypes = ...` properties
-* Functional components: `propTypes` properties
-* Both: regular usage in JSX
+- Component classes:
+  - `static propTypes = ...` properties
+  - Later-assigned `.propTypes = ...` properties
+- Functional components: `propTypes` properties
+- Both: regular usage in JSX
 
 Component classes will generate `interface`s, while function components will generate `type`s.
 

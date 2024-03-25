@@ -1,33 +1,6 @@
 {
-    "arrowParens": "always",
-    "parser": "typescript",
-    "printWidth": 140,
-    "tabWidth": 4,
-    "trailingComma": "all",
-    "overrides": [
-        {
-            "files": ".*.json",
-            "options": {
-                "parser": "json"
-            }
-        },
-        {
-            "files": "*.json",
-            "options": {
-                "parser": "json"
-            }
-        },
-        {
-            "files": ".vscode/*.json",
-            "options": {
-                "parser": "json"
-            }
-        },
-        {
-            "files": "*.yml",
-            "options": {
-                "parser": "yaml"
-            }
-        }
-    ]
+	"$schema": "http://json.schemastore.org/prettierrc",
+	"overrides": [{ "files": ".nvmrc", "options": { "parser": "yaml" } }],
+	"plugins": ["prettier-plugin-curly", "prettier-plugin-packagejson"],
+	"useTabs": true
 }

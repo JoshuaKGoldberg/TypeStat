@@ -12,9 +12,9 @@ If your issue doesn't provide enough info to fully explain or reproduce your bug
 
 ### 🐛 Bug Report
 
--   TypeStat version: X.X.X
--   TypeScript version: X.X.X
--   Node version: X.X.X
+- TypeStat version: X.X.X
+- TypeScript version: X.X.X
+- Node version: X.X.X
 
 #### Actual Behavior
 
