@@ -102,7 +102,7 @@ devDependencies:
     version: 2.7.0(eslint@8.57.0)(typescript@5.4.3)
   eslint-plugin-regexp:
     specifier: ^2.3.0
-    version: 2.3.0(eslint@8.57.0)
+    version: 2.4.0(eslint@8.57.0)
   eslint-plugin-vitest:
     specifier: ^0.3.26
     version: 0.3.26(@typescript-eslint/eslint-plugin@7.3.1)(eslint@8.57.0)(typescript@5.4.3)(vitest@1.4.0)
@@ -2829,8 +2829,8 @@ packages:
       - typescript
     dev: true
 
-  /eslint-plugin-regexp@2.3.0(eslint@8.57.0):
-    resolution: {integrity: sha512-T8JUs7ssRGbuXb+CGfdUJbcxTBMCNOpNqNBLuC8JUKAEIez72J37RaOi5/4dAUsGz92GbWVtqTLPSJZGyP/sQA==}
+  /eslint-plugin-regexp@2.4.0(eslint@8.57.0):
+    resolution: {integrity: sha512-OL2S6VPjQhs9s/NclQ0qattVq1J0GU8ox70/HIVy5Dxw+qbbdd7KQkyucsez2clEQjvdtDe12DTnPphFFUyXFg==}
     engines: {node: ^18 || >=20}
     peerDependencies:
       eslint: '>=8.44.0'
