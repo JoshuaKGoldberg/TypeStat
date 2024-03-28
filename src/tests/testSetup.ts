@@ -16,13 +16,11 @@ export const runMutationForTest = async (
 	const rawCompilerOptions = fs.readFileSync(typestatPath).toString();
 	const rawOptions = JSON.parse(rawCompilerOptions) as RawTypeStatOptions;
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const compilerOptions: ts.CompilerOptions =
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-		(
-			ts.parseConfigFileTextToJson(projectPath, rawCompilerOptions) as {
-				config: ts.CompilerOptions;
-			}
-		).config;
+	const compilerOptions: ts.CompilerOptions = (
+		ts.parseConfigFileTextToJson(projectPath, rawCompilerOptions) as {
+			config: ts.CompilerOptions;
+		}
+	).config;
 
 	const output = {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
