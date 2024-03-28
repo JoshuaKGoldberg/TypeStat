@@ -5,7 +5,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/prepare
       - run: pnpm run build --no-dts
-      - run: pnpm run test:mutation
+      - run: pnpm run test:mutation --coverage
       - name: Codecov
         uses: codecov/codecov-action@v4
         with:

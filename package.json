@@ -26,7 +26,7 @@
 		"lint:spelling": "cspell \"**\" \".github/**/*\"",
 		"prepare": "husky",
 		"test": "vitest",
-		"test:mutation": "vitest run --dir test --coverage",
+		"test:mutation": "vitest run --dir test",
 		"tsc": "tsc"
 	},
 	"lint-staged": {

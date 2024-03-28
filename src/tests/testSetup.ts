@@ -1,6 +1,6 @@
 import { runMutations } from "automutate";
-import * as fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import ts from "typescript";
 
 import { fillOutRawOptions } from "../options/fillOutRawOptions.js";
@@ -12,15 +12,17 @@ export const runMutationForTest = async (
 	originalFileName = "original.ts",
 ) => {
 	const typestatPath = path.join(dirPath, "typestat.json");
-
 	const projectPath = path.join(dirPath, "tsconfig.json");
 	const rawCompilerOptions = fs.readFileSync(typestatPath).toString();
 	const rawOptions = JSON.parse(rawCompilerOptions) as RawTypeStatOptions;
-	const compilerOptions = (
-		ts.parseConfigFileTextToJson(dirPath, rawCompilerOptions) as {
-			config: ts.CompilerOptions;
-		}
-	).config;
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+	const compilerOptions: ts.CompilerOptions =
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+		(
+			ts.parseConfigFileTextToJson(projectPath, rawCompilerOptions) as {
+				config: ts.CompilerOptions;
+			}
+		).config;
 
 	const output = {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
