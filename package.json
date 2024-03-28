@@ -26,7 +26,7 @@
 		"lint:spelling": "cspell \"**\" \".github/**/*\"",
 		"prepare": "husky",
 		"test": "vitest",
-		"test:mutation": "mocha lib/tests/runTests.js --timeout 50000",
+		"test:mutation": "vitest run --dir test --coverage",
 		"tsc": "tsc"
 	},
 	"lint-staged": {

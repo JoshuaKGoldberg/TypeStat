@@ -84,4 +84,10 @@
 
 		return "";
 	};
+
+	function navigateByUrl(url: string): Promise<boolean>;
+
+	async function navigateTo(id: number): Promise<boolean> | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean | boolean {
+		return await navigateByUrl(`/page/${id}`);
+	}
 })();
