@@ -9,4 +9,4 @@ describe("incompleteTypes - returnTypes", () => {
 		);
 		expect(resultFile).toMatchFileSnapshot("./expected.ts");
 	});
-}, 50000);
+});
