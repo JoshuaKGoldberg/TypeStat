@@ -2,7 +2,10 @@
 	"name": "typestat",
 	"version": "0.7.3",
 	"description": "Converts JavaScript to TypeScript and TypeScript to better TypeScript. 🧫",
-	"repository": "JoshuaKGoldberg/TypeStat",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JoshuaKGoldberg/TypeStat"
+	},
 	"license": "MIT",
 	"author": {
 		"name": "JoshuaKGoldberg",
