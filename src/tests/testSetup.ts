@@ -15,7 +15,6 @@ export const runMutationForTest = async (
 	const projectPath = path.join(dirPath, "tsconfig.json");
 	const rawCompilerOptions = fs.readFileSync(typestatPath).toString();
 	const rawOptions = JSON.parse(rawCompilerOptions) as RawTypeStatOptions;
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	const compilerOptions: ts.CompilerOptions = (
 		ts.parseConfigFileTextToJson(projectPath, rawCompilerOptions) as {
 			config: ts.CompilerOptions;
