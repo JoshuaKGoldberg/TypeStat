@@ -84,4 +84,27 @@
 
 		return "";
 	};
+
+	async function navigateTo(): Promise<boolean> {
+		return await new Promise(() => "");
+	}
+
+	function navigateByUrl(url: string): Promise<boolean>;
+
+	async function navigateTo(): Promise<boolean> {
+		return await navigateByUrl("");
+	}
+
+	async function navigateTo2(): Promise<boolean> {
+		const navigated = await navigateByUrl("");
+		return navigated;
+	}
+
+	async function returnSame(): Promise<boolean> {
+		return navigateByUrl("");
+	}
+
+	async function returnPromise(): Promise<string> {
+		return Promise.resolve("");
+	}
 })();
