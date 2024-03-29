@@ -1,46 +1,21 @@
 {
 	"configurations": [
 		{
-			"args": [
-				"--reporter",
-				"spec",
-				"--colors",
-				"--no-timeouts",
-				"${workspaceFolder}/lib/tests/runTests.js"
-			],
-			"env": {
-				"TEST_ACCEPT": "true",
-				"TEST_GLOB": "${relativeFileDirname}"
-			},
+			"args": ["run", "-u", "${relativeFile}"],
+			"autoAttachChildProcesses": true,
+			"console": "integratedTerminal",
 			"name": "Accept Current Mutation Test",
-			"preLaunchTask": "tsc",
-			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+			"program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
 			"request": "launch",
-			"type": "node"
-		},
-		{
-			"args": [
-				"--reporter",
-				"spec",
-				"--colors",
-				"--no-timeouts",
-				"${workspaceFolder}/lib/tests/runTests.js"
-			],
-			"env": {
-				"TEST_ACCEPT": "true",
-				"TEST_GLOB": "${relativeFileDirname}"
-			},
-			"name": "Debug Current Mutation Test",
-			"preLaunchTask": "tsc",
-			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
-			"request": "launch",
+			"skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+			"smartStep": true,
 			"type": "node"
 		},
 		{
 			"args": ["run", "${relativeFile}"],
 			"autoAttachChildProcesses": true,
 			"console": "integratedTerminal",
-			"name": "Debug Current Unit Test File",
+			"name": "Debug Current Test File",
 			"program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
 			"request": "launch",
 			"skipFiles": ["<node_internals>/**", "**/node_modules/**"],

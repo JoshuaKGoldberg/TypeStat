@@ -85,39 +85,13 @@ To launch it, open a test file, then run _Debug Current Test File_ from the VS C
 
 ### Mutation Tests
 
-Most TypeStat tests run TypeStat on checked-in files and are built on [`automutate-tests`](https://github.com/automutate/automutate-tests).
+Most TypeStat tests run TypeStat on checked-in files and are use snapshot testing for output.
 These tests are located under `test/cases`.
 
-`pnpm run test:mutation` may take in two parameters:
-
-#### `--accept`
-
-Whether to override existing expected test results instead of asserting equality.
-Tests can still fail if TypeStat throws an error, but not if the contents aren't equal.
+[Vitest](https://vitest.dev) is also used for these tests. To accept new snapshots, you can run command
 
 ```shell
-pnpm run test:mutation --accept
-```
-
-#### `--include`
-
-Regular expression filter(s) to include only some tests.
-If not provided (the default), all tests are run.
-If provided, only tests whose name matches one or more include filter will run.
-
-Include filters are always prefixed and suffixed with `(.*)`, so you don't need to explicitly provide full test names.
-
-For example, to run all tests with `variable` in their name:
-
-```shell
-pnpm run test:mutation --include "noImplicitAny"
-```
-
-To run the `noImplicitAny/variableDeclarations` tests, either would work:
-
-```shell
-pnpm run test:mutation --accept --include "noImplicitAny/variableDeclarations"
-pnpm run test:mutation --accept --include "ImplicitAn.*variableDeclaration"
+pnpm run test:mutation --update
 ```
 
 #### Debugging Mutation Tests
