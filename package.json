@@ -19,7 +19,7 @@
 	"scripts": {
 		"build": "NODE_OPTIONS='--max-old-space-size=16384' tsup",
 		"format": "prettier .",
-		"lint": "eslint . \".*js\" --max-warnings 0",
+		"lint": "eslint . .*js --max-warnings 0",
 		"lint:knip": "knip",
 		"lint:md": "markdownlint \"**/*.md\" \".github/**/*.md\" --rules sentences-per-line",
 		"lint:packages": "pnpm dedupe --check",
