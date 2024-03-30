@@ -115,7 +115,10 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/2591240?v=4",
       "profile": "https://github.com/rubiesonthesky",
       "contributions": [
-        "bug"
+        "bug",
+        "maintenance",
+        "tool",
+        "code"
       ]
     }
   ],
