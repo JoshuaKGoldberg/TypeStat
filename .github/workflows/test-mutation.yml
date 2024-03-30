@@ -7,7 +7,7 @@ jobs:
       - run: pnpm run build --no-dts
       - run: pnpm run test:mutation
       - name: Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v3
         with:
           flags: mutation
 
