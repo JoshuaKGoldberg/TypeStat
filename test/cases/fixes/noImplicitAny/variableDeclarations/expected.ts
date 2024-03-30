@@ -92,9 +92,9 @@
 	// Async
 
 	async function _() {
-		let stringFromNullImmediate: string | null = await Promise.resolve<null>(null);
+		let stringFromNullImmediate: string = await Promise.resolve<null>(null);
 
-		let stringFromUndefinedLater: string | undefined;
+		let stringFromUndefinedLater: string;
 		stringFromUndefinedLater = await Promise.resolve<undefined>(undefined);
 	}
 
