@@ -89,7 +89,7 @@ Most TypeStat tests run TypeStat on checked-in files and are use snapshot testin
 These tests are located under `test/cases`.
 
 [Vitest](https://vitest.dev) is also used for these tests.
-To accept new snapshots, you can run command:
+To accept new snapshots, you can use [Vitest's snapshot updates](https://vitest.dev/guide/snapshot#updating-snapshots):
 
 ```shell
 pnpm run test:mutation --update
@@ -99,8 +99,8 @@ pnpm run test:mutation --update
 
 VS Code tasks to debug test files is shipped that allows directly placing breakpoints in source TypeScript code.
 
-- `Accept Current Mutation Test` runs with `--accept` on the test folder of a currently opened test file, such as an `original.ts` or `typestat.json`.
-- `Debug Current Test File` does not run with `--accept`, and thus logs any differences as errors.
+- `Accept Current Mutation Test` runs with `-u`/`--update` on the test folder of a currently opened test file, such as an `original.ts` or `typestat.json` to update its snapshot.
+- `Debug Current Test File` does not run with `-u`/`--update`, and thus treats any differences as test failures.
 
 ## Performance Debugging Tips
 
