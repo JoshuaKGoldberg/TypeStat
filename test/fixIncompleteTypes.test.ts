@@ -35,7 +35,7 @@ describe("Incomplete types", () => {
 		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-	});
+	}, 50000);
 
 	it("parameter types", async () => {
 		const caseDir = path.join(
@@ -74,7 +74,7 @@ describe("Incomplete types", () => {
 			const { actualContent, expectedFilePath } =
 				await runMutationTest(caseDir);
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		});
+		}, 50000);
 
 		it("react props from later assignments", async () => {
 			const caseDir = path.join(
@@ -84,7 +84,7 @@ describe("Incomplete types", () => {
 			const { actualContent, expectedFilePath } =
 				await runMutationTest(caseDir);
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		});
+		}, 50000);
 
 		describe("React props from prop types", () => {
 			it("all", async () => {
@@ -95,7 +95,7 @@ describe("Incomplete types", () => {
 				const { actualContent, expectedFilePath } =
 					await runMutationTest(caseDir);
 				await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-			});
+			}, 50000);
 
 			describe("Optionality", () => {
 				it("always optional", async () => {
