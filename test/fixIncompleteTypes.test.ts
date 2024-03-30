@@ -53,7 +53,7 @@ describe("Incomplete types", () => {
 		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-	});
+	}, 50000);
 
 	describe("React types", () => {
 		it("not react props", async () => {

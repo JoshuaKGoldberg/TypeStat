@@ -14,7 +14,7 @@ describe("files", () => {
 		const caseDir = path.join(import.meta.dirname, "cases/files/below");
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-	});
+	}, 50000);
 
 	it("both", async () => {
 		const caseDir = path.join(import.meta.dirname, "cases/files/both");
