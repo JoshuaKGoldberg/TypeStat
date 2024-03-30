@@ -6,6 +6,8 @@ import { setSubtract } from "../../shared/sets.js";
 const knownTypeFlagEquivalents = new Map([
 	[ts.TypeFlags.BigInt, ts.TypeFlags.BigIntLiteral],
 	[ts.TypeFlags.BigIntLiteral, ts.TypeFlags.BigInt],
+	[ts.TypeFlags.Boolean, ts.TypeFlags.BooleanLiteral],
+	[ts.TypeFlags.BooleanLiteral, ts.TypeFlags.Boolean],
 	[ts.TypeFlags.Number, ts.TypeFlags.NumberLiteral],
 	[ts.TypeFlags.NumberLiteral, ts.TypeFlags.Number],
 	[ts.TypeFlags.String, ts.TypeFlags.StringLiteral],
