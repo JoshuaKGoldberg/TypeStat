@@ -85,7 +85,8 @@ export const expandReferencesForGenericTypes = (
 		if (
 			templatedDeclaration === undefined ||
 			!isNodeWithDefinedTypeParameters(templatedDeclaration) ||
-			templatedParentInstantiation.typeArguments === undefined
+			templatedParentInstantiation.typeArguments === undefined ||
+			templatedDeclaration.typeParameters === undefined
 		) {
 			continue;
 		}
