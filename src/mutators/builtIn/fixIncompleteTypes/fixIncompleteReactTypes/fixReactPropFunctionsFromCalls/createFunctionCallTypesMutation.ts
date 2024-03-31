@@ -39,7 +39,6 @@ const createFunctionCallTypeMutation = (
 		(accumulator, functionCallType) => {
 			return {
 				parameters: combineParameters(
-					request,
 					accumulator.parameters,
 					functionCallType.parameters,
 				),
@@ -65,7 +64,6 @@ const createFunctionCallTypeMutation = (
 };
 
 const combineParameters = (
-	request: FileMutationsRequest,
 	previous: ts.Type[][],
 	next: (ts.Type | undefined)[] | undefined,
 ) => {
