@@ -172,5 +172,6 @@ module.exports = {
 				type: "natural",
 			},
 		],
+		"vitest/consistent-test-it": "error",
 	},
 };
