@@ -64,7 +64,7 @@ export type NodeWithDefinedTypeArguments = ts.Node & {
 
 // TODO: make this a more specific type
 // Will have to deal with instantiations (new Container<T>() { ... }) and declarations (class Container<T>() { ... }))
-export type NodeWithDefinedTypeParameters = ts.Node & {
+export type NodeWithTypeParameters = ts.Node & {
 	typeParameters: ts.NodeArray<ts.TypeNode> | undefined;
 };
 
