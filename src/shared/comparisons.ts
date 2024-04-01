@@ -57,11 +57,22 @@ export const declaredInitializedTypeNodeIsRedundant = (
 		return undefined;
 	}
 
-	return declaredTypeIsEquivalent(
-		request.services.program.getTypeChecker(),
-		declaredType,
-		initializedType,
-	);
+	const typeChecker = request.services.program.getTypeChecker();
+
+	const declaredEscapedName = declaredType.getSymbol()?.getEscapedName();
+
+	// This is brute-force way to keep Map<string, number> comparison to Map without type arguments...
+	// This will allow many type declarations that could be removed.
+	if (
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+		(declaredEscapedName === "Map" || declaredEscapedName === "set") &&
+		typeChecker.typeToString(declaredType) !=
+			typeChecker.typeToString(initializedType)
+	) {
+		return false;
+	}
+
+	return declaredTypeIsEquivalent(typeChecker, declaredType, initializedType);
 };
 
 const declaredTypeIsEquivalent = (

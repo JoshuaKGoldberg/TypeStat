@@ -46,6 +46,9 @@
 	let letInferableNullOrStrings = [null, ""];
 	let letInferableNumberOrRegExps = [0, /./];
 
+	// Non-inferable const arrays
+	const constNonInferableStringArray: string[] = [];
+
 	// Non-inferable const multi-type arrays
 	const constNonInferableNullOrStrings: (null | string)[] = [null];
 	const constNonInferableNumberOrRegExps: (number | RegExp)[] = [0];
@@ -87,7 +90,8 @@
 	// should keep their types
 	// map
 	type TypeSummariesPerNodeByName = Map<string, number>;
-	const incompleteTypes = new Map();
+	const incompleteTypes: TypeSummariesPerNodeByName = new Map();
+	const stringSet = new Set();
 	// array
 	interface Mutation {
 		readonly range: number;
@@ -102,4 +106,14 @@
 	const fixIncompleteImplicitClassGenerics: FileMutator = (
 		request: FileMutationsRequest,
 	) => undefined;
+
+	// should lose their types
+	const incompleteTypes2: TypeSummariesPerNodeByName = new Map<
+		string,
+		number
+	>();
+	const stringMapTyped = new Map<string, number>();
+	const anyMap = new Map();
+	const anySet = new Set();
+	const anyArray: any[] = [];
 })();
