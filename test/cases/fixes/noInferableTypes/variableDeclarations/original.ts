@@ -86,7 +86,7 @@
 
 	// should keep their types
 	// map
-	type TypeSummariesPerNodeByName = Map<string, unknown>;
+	type TypeSummariesPerNodeByName = Map<string, number>;
 	const incompleteTypes: TypeSummariesPerNodeByName = new Map();
 	// array
 	interface Mutation {

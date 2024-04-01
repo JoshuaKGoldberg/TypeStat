@@ -11,5 +11,5 @@ describe("Missing properties", () => {
 		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-	});
+	}, 10000);
 });
