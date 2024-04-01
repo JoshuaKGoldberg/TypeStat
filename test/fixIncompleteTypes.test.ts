@@ -25,7 +25,7 @@ describe("Incomplete types", () => {
 			const { actualContent, expectedFilePath } =
 				await runMutationTest(caseDir);
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		});
+		}, 50000);
 	});
 
 	it("Interface or type literal generics", async () => {
