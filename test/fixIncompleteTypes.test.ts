@@ -37,6 +37,15 @@ describe("Incomplete types", () => {
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 	}, 50000);
 
+	it("Non-generic Interface as Type argument", async () => {
+		const caseDir = path.join(
+			dirname,
+			"cases/fixes/incompleteTypes/nonGenericInterfaceAsTypeArgument",
+		);
+		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+	}, 50000);
+
 	it("parameter types", async () => {
 		const caseDir = path.join(
 			dirname,
