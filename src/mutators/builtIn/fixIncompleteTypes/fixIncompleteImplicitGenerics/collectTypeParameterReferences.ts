@@ -13,8 +13,6 @@ import {
  */
 export const collectTypeParameterReferences = (
 	request: FileMutationsRequest,
-	childClass: ts.Node,
-	baseClass: ts.Node,
 	baseTypeParameter: ts.Node,
 ) => {
 	// Find nodes that reference (and therefore indicate type information for) the base type
