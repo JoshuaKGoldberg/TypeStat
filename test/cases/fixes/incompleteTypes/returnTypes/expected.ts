@@ -85,7 +85,7 @@
 		return "";
 	};
 
-	async function navigateTo(): Promise<boolean> {
+	async function navigateTo(): Promise<boolean> | boolean {
 		return await new Promise(() => "");
 	}
 

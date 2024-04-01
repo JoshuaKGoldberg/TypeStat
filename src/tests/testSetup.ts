@@ -20,20 +20,27 @@ export const runMutationTest = async (dirPath: string) => {
 		throw new Error(`${dirPath} should have a file named original.*`);
 	}
 
-	const rawTypeStatOptions = await fs.readFile(
-		path.join(dirPath, "typestat.json"),
-		{
+	const readFile = (filename: string) =>
+		fs.readFile(path.join(dirPath, filename), {
 			encoding: "utf-8",
-		},
-	);
+		});
+
+	const rawTypeStatOptions = await readFile("typestat.json");
 	const rawOptions = JSON.parse(rawTypeStatOptions) as RawTypeStatOptions;
 
 	const projectPath = path.join(dirPath, "tsconfig.json");
-	const compilerOptions: ts.CompilerOptions = (
-		ts.parseConfigFileTextToJson(projectPath, rawTypeStatOptions) as {
-			config: ts.CompilerOptions;
-		}
-	).config;
+	const rawCompilerOptionsJson = await readFile("tsconfig.json");
+	const convertResult = ts.parseConfigFileTextToJson(
+		"tsconfig.json",
+		rawCompilerOptionsJson,
+	);
+
+	if (convertResult.error) {
+		console.error(convertResult.error);
+		throw new Error("Error while reading tsconfig");
+	}
+
+	const compilerOptions = convertResult.config as ts.CompilerOptions;
 
 	const output = {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -66,7 +73,7 @@ export const runMutationTest = async (dirPath: string) => {
 		mutationsProvider: provider,
 	});
 
-	const actualContent = await fs.readFile(actualFile, { encoding: "utf-8" });
+	const actualContent = await readFile(actualFileName);
 	const expectFileName = `expected.ts${fileNameSuffix}`;
 	const expectedFilePath = path.join(dirPath, expectFileName);
 
