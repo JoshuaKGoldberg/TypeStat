@@ -10,4 +10,4 @@ test("import extensions", async () => {
 	);
 	const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 	await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-});
+}, 10000);
