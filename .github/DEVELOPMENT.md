@@ -83,47 +83,22 @@ To launch it, open a test file, then run _Debug Current Test File_ from the VS C
 
 ### Mutation Tests
 
-Most TypeStat tests run TypeStat on checked-in files and are built on [`automutate-tests`](https://github.com/automutate/automutate-tests).
+Most TypeStat tests run TypeStat on checked-in files and are use snapshot testing for output.
 These tests are located under `test/cases`.
 
-`pnpm run test:mutation` may take in two parameters:
-
-#### `--accept`
-
-Whether to override existing expected test results instead of asserting equality.
-Tests can still fail if TypeStat throws an error, but not if the contents aren't equal.
+[Vitest](https://vitest.dev) is also used for these tests.
+To accept new snapshots, you can use [Vitest's snapshot updates](https://vitest.dev/guide/snapshot#updating-snapshots):
 
 ```shell
-pnpm run test:mutation --accept
-```
-
-#### `--include`
-
-Regular expression filter(s) to include only some tests.
-If not provided (the default), all tests are run.
-If provided, only tests whose name matches one or more include filter will run.
-
-Include filters are always prefixed and suffixed with `(.*)`, so you don't need to explicitly provide full test names.
-
-For example, to run all tests with `variable` in their name:
-
-```shell
-pnpm run test:mutation --include "noImplicitAny"
-```
-
-To run the `noImplicitAny/variableDeclarations` tests, either would work:
-
-```shell
-pnpm run test:mutation --accept --include "noImplicitAny/variableDeclarations"
-pnpm run test:mutation --accept --include "ImplicitAn.*variableDeclaration"
+pnpm run test:mutation --update
 ```
 
 #### Debugging Mutation Tests
 
 VS Code tasks to debug test files is shipped that allows directly placing breakpoints in source TypeScript code.
 
-- `Accept Current Mutation Test` runs with `--accept` on the test folder of a currently opened test file, such as an `original.ts` or `typestat.json`.
-- `Debug Current Mutation Test` does not run with `--accept`, and thus logs any differences as errors.
+- `Accept Current Mutation Test` runs with `-u`/`--update` on the test folder of a currently opened test file, such as an `original.ts` or `typestat.json` to update its snapshot.
+- `Debug Current Test File` does not run with `-u`/`--update`, and thus treats any differences as test failures.
 
 ## Performance Debugging Tips
 
