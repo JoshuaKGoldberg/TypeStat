@@ -20,14 +20,17 @@ export const runMutationTest = async (dirPath: string) => {
 		throw new Error(`${dirPath} should have a file named original.*`);
 	}
 
-	const typestatPath = path.join(dirPath, "typestat.json");
+	const rawTypeStatOptions = await fs.readFile(
+		path.join(dirPath, "typestat.json"),
+		{
+			encoding: "utf-8",
+		},
+	);
+	const rawOptions = JSON.parse(rawTypeStatOptions) as RawTypeStatOptions;
+
 	const projectPath = path.join(dirPath, "tsconfig.json");
-	const rawCompilerOptions = await fs.readFile(typestatPath, {
-		encoding: "utf-8",
-	});
-	const rawOptions = JSON.parse(rawCompilerOptions) as RawTypeStatOptions;
 	const compilerOptions: ts.CompilerOptions = (
-		ts.parseConfigFileTextToJson(projectPath, rawCompilerOptions) as {
+		ts.parseConfigFileTextToJson(projectPath, rawTypeStatOptions) as {
 			config: ts.CompilerOptions;
 		}
 	).config;
@@ -51,13 +54,10 @@ export const runMutationTest = async (dirPath: string) => {
 		...fillOutRawOptions({
 			argv: { args: [] },
 			compilerOptions,
-			cwd: path.dirname(projectPath),
+			cwd: dirPath,
 			output,
 			projectPath,
-			rawOptions: {
-				...rawOptions,
-				projectPath,
-			},
+			rawOptions,
 		}),
 		fileNames: [actualFile],
 	});
