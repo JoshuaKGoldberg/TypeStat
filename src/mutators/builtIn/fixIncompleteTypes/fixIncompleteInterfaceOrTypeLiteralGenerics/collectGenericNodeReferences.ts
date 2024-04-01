@@ -4,8 +4,8 @@ import { FileMutationsRequest } from "../../../../shared/fileMutator.js";
 import {
 	getIdentifyingTypeLiteralParent,
 	isNodeWithDefinedTypeArguments,
-	isNodeWithDefinedTypeParameters,
 	isNodeWithIdentifierName,
+	isNodeWithTypeParameters,
 } from "../../../../shared/nodeTypes.js";
 import { isTypeArgumentsType } from "../../../../shared/typeNodes.js";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types.js";
@@ -84,7 +84,7 @@ export const expandReferencesForGenericTypes = (
 		const templatedDeclaration = templatedDeclarationSymbol.valueDeclaration;
 		if (
 			templatedDeclaration === undefined ||
-			!isNodeWithDefinedTypeParameters(templatedDeclaration) ||
+			!isNodeWithTypeParameters(templatedDeclaration) ||
 			templatedParentInstantiation.typeArguments === undefined ||
 			templatedDeclaration.typeParameters === undefined
 		) {

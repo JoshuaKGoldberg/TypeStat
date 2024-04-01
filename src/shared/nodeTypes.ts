@@ -84,9 +84,9 @@ export const isNodeWithDefinedTypeArguments = (
 	return "typeArguments" in node;
 };
 
-export const isNodeWithDefinedTypeParameters = (
+export const isNodeWithTypeParameters = (
 	node: ts.Node,
-): node is NodeWithDefinedTypeParameters => {
+): node is NodeWithTypeParameters => {
 	return "typeParameters" in node;
 };
 
