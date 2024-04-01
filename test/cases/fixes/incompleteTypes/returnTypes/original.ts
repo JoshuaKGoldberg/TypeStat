@@ -107,4 +107,16 @@
 	async function returnPromise(): Promise<string> {
 		return Promise.resolve("");
 	}
+
+	const returnsBigInt = (): string => {
+		return BigInt("123");
+	};
+
+	const returnsBigintOrNumber = (): number => {
+		return 123n;
+	};
+
+	const returnsNumberAndBigint = (): bigint => {
+		return 123;
+	};
 })();

@@ -6,6 +6,8 @@ import { FileMutationsRequest } from "../../shared/fileMutator.js";
  * Type flags and aliases to check when --strictNullChecks is not enabled.
  */
 const nonStrictTypeFlagAliases = new Map([
+	[ts.TypeFlags.BigInt, "bigint"],
+	[ts.TypeFlags.BigIntLiteral, "bigint"],
 	[ts.TypeFlags.Boolean, "boolean"],
 	[ts.TypeFlags.BooleanLiteral, "boolean"],
 	[ts.TypeFlags.Number, "number"],
