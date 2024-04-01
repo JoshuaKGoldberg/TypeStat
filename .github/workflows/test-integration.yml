@@ -4,14 +4,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/prepare
-      - run: pnpm run build --no-dts
-      - run: pnpm run test:mutation --coverage
+      - run: pnpm run test:integration --coverage
       - name: Codecov
         uses: codecov/codecov-action@v3
         with:
-          flags: mutation
+          flags: integration
 
-name: Test Mutation
+name: Integration test
 
 on:
   pull_request: ~

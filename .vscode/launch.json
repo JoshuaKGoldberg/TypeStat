@@ -4,7 +4,7 @@
 			"args": ["run", "-u", "${relativeFile}"],
 			"autoAttachChildProcesses": true,
 			"console": "integratedTerminal",
-			"name": "Accept Current Mutation Test",
+			"name": "Accept Snapshot for Integration test",
 			"program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
 			"request": "launch",
 			"skipFiles": ["<node_internals>/**", "**/node_modules/**"],

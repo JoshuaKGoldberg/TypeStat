@@ -3,9 +3,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import ts from "typescript";
 
-import { fillOutRawOptions } from "../options/fillOutRawOptions.js";
-import { RawTypeStatOptions } from "../options/types.js";
-import { createTypeStatProvider } from "../runtime/createTypeStatProvider.js";
+import { fillOutRawOptions } from "../src/options/fillOutRawOptions.js";
+import { RawTypeStatOptions } from "../src/options/types.js";
+import { createTypeStatProvider } from "../src/runtime/createTypeStatProvider.js";
 
 export interface MutationTestResult {
 	actualContent: string;

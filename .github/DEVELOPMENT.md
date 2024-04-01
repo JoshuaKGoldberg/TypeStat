@@ -56,7 +56,7 @@ pnpm run lint --fix
 There are two kinds of tests:
 
 - [Unit tests](#unit-tests)
-- [Mutation tests](#mutation-tests)
+- [Integration tests](#integration-tests)
 
 ### Unit TEsts
 
@@ -81,23 +81,23 @@ Calls to `console.log`, `console.warn`, and other console methods will cause a t
 This repository includes a [VS Code launch configuration](https://code.visualstudio.com/docs/editor/debugging) for debugging unit tests.
 To launch it, open a test file, then run _Debug Current Test File_ from the VS Code Debug panel (or press F5).
 
-### Mutation Tests
+### Integration Tests
 
 Most TypeStat tests run TypeStat on checked-in files and are use snapshot testing for output.
-These tests are located under `test/cases`.
+These tests are located under `integrationTests/cases`.
 
 [Vitest](https://vitest.dev) is also used for these tests.
 To accept new snapshots, you can use [Vitest's snapshot updates](https://vitest.dev/guide/snapshot#updating-snapshots):
 
 ```shell
-pnpm run test:mutation --update
+pnpm run test:integration --update
 ```
 
-#### Debugging Mutation Tests
+#### Debugging Integration Tests
 
 VS Code tasks to debug test files is shipped that allows directly placing breakpoints in source TypeScript code.
 
-- `Accept Current Mutation Test` runs with `-u`/`--update` on the test folder of a currently opened test file, such as an `original.ts` or `typestat.json` to update its snapshot.
+- `Accept Current Integration Test` runs with `-u`/`--update` on the test folder of a currently opened test file, such as an `original.ts` or `typestat.json` to update its snapshot.
 - `Debug Current Test File` does not run with `-u`/`--update`, and thus treats any differences as test failures.
 
 ## Performance Debugging Tips

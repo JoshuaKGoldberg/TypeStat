@@ -1,13 +1,13 @@
-import path from "path";
+import path from "node:path";
 import { expect, test } from "vitest";
 
-import { runMutationTest } from "../src/tests/testSetup.js";
+import { runMutationTest } from "./testSetup.js";
 
-test("Infinite wave detection", async () => {
+test("import extensions", async () => {
 	const caseDir = path.join(
 		import.meta.dirname,
-		"cases/infinite wave detection",
+		"cases/fixes/importExtensions",
 	);
 	const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 	await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-}, 50000);
+}, 10000);

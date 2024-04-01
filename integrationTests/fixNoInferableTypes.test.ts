@@ -1,26 +1,32 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { runMutationTest } from "../src/tests/testSetup.js";
+import { runMutationTest } from "./testSetup.js";
 
-describe("Custom mutators", () => {
-	it("empty array", async () => {
+describe("No inferable types", () => {
+	it("parameters", async () => {
 		const caseDir = path.join(
 			import.meta.dirname,
-			"cases/custom mutators/empty",
+			"cases/fixes/noInferableTypes/parameters",
 		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 	});
 
-	it("one mutator", async () => {
-		const caseDir = path.join(import.meta.dirname, "cases/custom mutators/one");
+	it("property declarations", async () => {
+		const caseDir = path.join(
+			import.meta.dirname,
+			"cases/fixes/noInferableTypes/propertyDeclarations",
+		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 	});
 
-	it("two mutators", async () => {
-		const caseDir = path.join(import.meta.dirname, "cases/custom mutators/two");
+	it("variable declarations", async () => {
+		const caseDir = path.join(
+			import.meta.dirname,
+			"cases/fixes/noInferableTypes/variableDeclarations",
+		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 	});

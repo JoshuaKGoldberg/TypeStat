@@ -1,6 +1,6 @@
 .all-contributorsrc
 coverage/
 lib/
-test/cases/**/actual.*
-test/cases/**/expected.*
+integrationTests/cases/**/actual.*
+integrationTests/cases/**/expected.*
 pnpm-lock.yaml

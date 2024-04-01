@@ -29,7 +29,7 @@
 		"lint:spelling": "cspell \"**\" \".github/**/*\"",
 		"prepare": "husky",
 		"test": "vitest --dir src",
-		"test:mutation": "vitest run --dir test",
+		"test:integration": "vitest run --dir integrationTests",
 		"tsc": "tsc"
 	},
 	"lint-staged": {

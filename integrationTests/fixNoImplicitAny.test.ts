@@ -1,13 +1,13 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { runMutationTest } from "../src/tests/testSetup.js";
+import { runMutationTest } from "./testSetup.js";
 
-describe("No inferable types", () => {
+describe("noImplicitAny", () => {
 	it("parameters", async () => {
 		const caseDir = path.join(
 			import.meta.dirname,
-			"cases/fixes/noInferableTypes/parameters",
+			"cases/fixes/noImplicitAny/parameters",
 		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
@@ -16,7 +16,7 @@ describe("No inferable types", () => {
 	it("property declarations", async () => {
 		const caseDir = path.join(
 			import.meta.dirname,
-			"cases/fixes/noInferableTypes/propertyDeclarations",
+			"cases/fixes/noImplicitAny/propertyDeclarations",
 		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
@@ -25,7 +25,7 @@ describe("No inferable types", () => {
 	it("variable declarations", async () => {
 		const caseDir = path.join(
 			import.meta.dirname,
-			"cases/fixes/noInferableTypes/variableDeclarations",
+			"cases/fixes/noImplicitAny/variableDeclarations",
 		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);

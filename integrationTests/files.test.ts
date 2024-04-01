@@ -1,7 +1,7 @@
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { runMutationTest } from "../src/tests/testSetup.js";
+import { runMutationTest } from "./testSetup.js";
 
 describe("files", () => {
 	it("addition above", async () => {
