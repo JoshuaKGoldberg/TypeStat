@@ -39,7 +39,7 @@ dependencies:
 devDependencies:
   '@types/eslint':
     specifier: ^8.56.6
-    version: 8.56.6
+    version: 8.56.7
   '@types/glob':
     specifier: 8.1.0
     version: 8.1.0
@@ -84,7 +84,7 @@ devDependencies:
     version: 48.2.2(eslint@8.57.0)
   eslint-plugin-jsonc:
     specifier: ^2.14.1
-    version: 2.14.1(eslint@8.57.0)
+    version: 2.15.0(eslint@8.57.0)
   eslint-plugin-markdown:
     specifier: ^4.0.1
     version: 4.0.1(eslint@8.57.0)
@@ -92,8 +92,8 @@ devDependencies:
     specifier: ^16.6.2
     version: 16.6.2(eslint@8.57.0)
   eslint-plugin-package-json:
-    specifier: ^0.10.4
-    version: 0.10.4(eslint@8.57.0)(jsonc-eslint-parser@2.4.0)
+    specifier: ^0.12.0
+    version: 0.12.1(eslint@8.57.0)(jsonc-eslint-parser@2.4.0)
   eslint-plugin-perfectionist:
     specifier: ^2.7.0
     version: 2.7.0(eslint@8.57.0)(typescript@5.4.3)
@@ -102,7 +102,7 @@ devDependencies:
     version: 2.4.0(eslint@8.57.0)
   eslint-plugin-vitest:
     specifier: ^0.4.0
-    version: 0.4.0(@typescript-eslint/eslint-plugin@7.4.0)(eslint@8.57.0)(typescript@5.4.3)(vitest@1.4.0)
+    version: 0.4.1(@typescript-eslint/eslint-plugin@7.4.0)(eslint@8.57.0)(typescript@5.4.3)(vitest@1.4.0)
   eslint-plugin-yml:
     specifier: ^1.13.2
     version: 1.13.2(eslint@8.57.0)
@@ -132,7 +132,7 @@ devDependencies:
     version: 0.2.1(prettier@3.2.5)
   prettier-plugin-packagejson:
     specifier: ^2.4.12
-    version: 2.4.13(prettier@3.2.5)
+    version: 2.4.14(prettier@3.2.5)
   sentences-per-line:
     specifier: 0.2.1
     version: 0.2.1
@@ -1496,8 +1496,8 @@ packages:
       p-map: 4.0.0
     dev: true
 
-  /@types/eslint@8.56.6:
-    resolution: {integrity: sha512-ymwc+qb1XkjT/gfoQwxIeHZ6ixH23A+tCT2ADSA/DPVKzAjwYkTXBMCQ/f6fe4wEa85Lhp26VPeUxI7wMhAi7A==}
+  /@types/eslint@8.56.7:
+    resolution: {integrity: sha512-SjDvI/x3zsZnOkYZ3lCt9lOZWZLB2jIlNKz+LBgCtDurK0JZcwucxYHn1w2BJkD34dgX9Tjnak0txtq4WTggEA==}
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
@@ -2666,8 +2666,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-jsonc@2.14.1(eslint@8.57.0):
-    resolution: {integrity: sha512-Tei6G4N7pZulP5MHi0EIdtseiCqUPkDMd0O8Zrw4muMIlsjJ5/B9X+U3Pfo6B7l0mTL9LN9FwuWT70dRJ6z7tg==}
+  /eslint-plugin-jsonc@2.15.0(eslint@8.57.0):
+    resolution: {integrity: sha512-wAphMVgTQPAKAYV8d/QEkEYDg8uer9nMQ85N17IUiJcAWLxJs83/Exe59dEH9yKUpvpLf46H+wR7/U7lZ3/NpQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
@@ -2714,8 +2714,8 @@ packages:
       semver: 7.6.0
     dev: true
 
-  /eslint-plugin-package-json@0.10.4(eslint@8.57.0)(jsonc-eslint-parser@2.4.0):
-    resolution: {integrity: sha512-dape6w9G7hCXDkoVWoPwrQjUK0V6636qAgUPewduXLH9RdEw/y4XGqCyvD5KujlMBQuagadMkxuGNluW0GC4vQ==}
+  /eslint-plugin-package-json@0.12.1(eslint@8.57.0)(jsonc-eslint-parser@2.4.0):
+    resolution: {integrity: sha512-Z70ddt7tvZrdLZv4V1OkoDqGnnFakVRmAAeP+y/18ZvpgoPJXkqa+JRJNh+tWQ2PMZU4CqleZ6tZOEoq47AY2g==}
     engines: {node: '>=18'}
     peerDependencies:
       eslint: '>=8.0.0'
@@ -2772,8 +2772,8 @@ packages:
       scslre: 0.3.0
     dev: true
 
-  /eslint-plugin-vitest@0.4.0(@typescript-eslint/eslint-plugin@7.4.0)(eslint@8.57.0)(typescript@5.4.3)(vitest@1.4.0):
-    resolution: {integrity: sha512-3oWgZIwdWVBQ5plvkmOBjreIGLQRdYb7x54OP8uIRHeZyRVJIdOn9o/qWVb9292fDMC8jn7H7d9TSFBZqhrykQ==}
+  /eslint-plugin-vitest@0.4.1(@typescript-eslint/eslint-plugin@7.4.0)(eslint@8.57.0)(typescript@5.4.3)(vitest@1.4.0):
+    resolution: {integrity: sha512-+PnZ2u/BS+f5FiuHXz4zKsHPcMKHie+K+1Uvu/x91ovkCMEOJqEI8E9Tw1Wzx2QRz4MHOBHYf1ypO8N1K0aNAA==}
     engines: {node: ^18.0.0 || >= 20.0.0}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '*'
@@ -4419,8 +4419,8 @@ packages:
       - supports-color
     dev: true
 
-  /prettier-plugin-packagejson@2.4.13(prettier@3.2.5):
-    resolution: {integrity: sha512-n64Y3E1iEese0RN0EmxM6E7dAiy47UPJOFyAjMNfZWPKQ1exwaaMTXEhK7vKIrbXLSmf2J9y4H5rnE1VII1vRg==}
+  /prettier-plugin-packagejson@2.4.14(prettier@3.2.5):
+    resolution: {integrity: sha512-sli+gV5tW7uxvzDZQscaBtSfbyAW2ToL6n/HGt51PipwX9vI7M54vefG0mKSfklVkT29TNGO6Mo6g8c6Z79gmw==}
     peerDependencies:
       prettier: '>= 1.16.0'
     peerDependenciesMeta:
@@ -4428,7 +4428,7 @@ packages:
         optional: true
     dependencies:
       prettier: 3.2.5
-      sort-package-json: 2.9.0
+      sort-package-json: 2.10.0
       synckit: 0.9.0
     dev: true
 
@@ -4746,8 +4746,8 @@ packages:
       sort-object-keys: 1.1.3
     dev: true
 
-  /sort-package-json@2.9.0:
-    resolution: {integrity: sha512-vlEd6i57Eb9+ruta1+hID+emmAmGzWKraEX1kk5LAQ0k1glgDHOENeieqzfir0m8MHcebzDH4FEwqjPnMEjy2g==}
+  /sort-package-json@2.10.0:
+    resolution: {integrity: sha512-MYecfvObMwJjjJskhxYfuOADkXp1ZMMnCFC8yhp+9HDsk7HhR336hd7eiBs96lTXfiqmUNI+WQCeCMRBhl251g==}
     hasBin: true
     dependencies:
       detect-indent: 7.0.1
@@ -4756,6 +4756,7 @@ packages:
       git-hooks-list: 3.1.0
       globby: 13.2.2
       is-plain-obj: 4.1.0
+      semver: 7.6.0
       sort-object-keys: 1.1.3
     dev: true
 

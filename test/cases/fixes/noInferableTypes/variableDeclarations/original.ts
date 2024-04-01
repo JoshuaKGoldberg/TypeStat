@@ -83,4 +83,23 @@
 	let letTakesParentOrUndefinedAsParent: Parent | undefined = new Parent();
 	let letTakesParentOrUndefinedAsChild: Parent | undefined = new Child();
 	let letTakesChildOrUndefinedAsChild: Child | undefined = new Child();
+
+	// should keep their types
+	// map
+	type TypeSummariesPerNodeByName = Map<string, unknown>;
+	const incompleteTypes: TypeSummariesPerNodeByName = new Map();
+	// array
+	interface Mutation {
+		readonly range: number;
+		readonly type: string;
+	}
+	const mutations: Mutation[] = [];
+	// function
+	type FileMutationsRequest = Record<string, unknown>;
+	type FileMutator = (
+		request: FileMutationsRequest,
+	) => readonly Mutation[] | undefined;
+	const fixIncompleteImplicitClassGenerics: FileMutator = (
+		request: FileMutationsRequest,
+	) => undefined;
 })();

@@ -48,12 +48,7 @@ export const findMissingTemplateTypes = (
 	// For example, if it defaults to `{ exists: boolean }` but is given `.extra = 1;`, collect `extra: number`
 	for (const baseTypeParameter of baseTypeParameters.slice(i)) {
 		missingTemplateTypes.push(
-			collectMissingParameterTypes(
-				request,
-				childClass,
-				baseClass,
-				baseTypeParameter,
-			),
+			collectMissingParameterTypes(request, childClass, baseTypeParameter),
 		);
 	}
 
@@ -63,14 +58,11 @@ export const findMissingTemplateTypes = (
 const collectMissingParameterTypes = (
 	request: FileMutationsRequest,
 	childClass: ts.ClassLikeDeclaration,
-	baseClass: ts.ClassLikeDeclaration,
 	baseTypeParameter: ts.TypeParameterDeclaration,
 ): AssignedTypesByName | string | undefined => {
 	// Each usage of the base type parameter might introduce new assigned types
 	const typeParameterReferences = collectTypeParameterReferences(
 		request,
-		childClass,
-		baseClass,
 		baseTypeParameter,
 	);
 	if (typeParameterReferences === undefined) {
