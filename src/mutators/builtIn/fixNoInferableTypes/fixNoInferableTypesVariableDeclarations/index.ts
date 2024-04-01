@@ -1,5 +1,4 @@
 import { Mutation } from "automutate";
-import * as tsutils from "ts-api-utils";
 import ts from "typescript";
 
 import { createTypeRemovalMutation } from "../../../../mutations/removals.js";
@@ -39,9 +38,6 @@ const getNoInferableTypeVariableDeclarationMutation = (
 	request: FileMutationsRequest,
 ) => {
 	if (
-		// `const` variables should always have their declarations removed
-		tsutils.isNodeFlagSet(node.parent, ts.NodeFlags.Const) ||
-		// `let` variables should have only uninformative declarations removed
 		declaredInitializedTypeNodeIsRedundant(request, node.type, node.initializer)
 	) {
 		return createTypeRemovalMutation(request, node);
