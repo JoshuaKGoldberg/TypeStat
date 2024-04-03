@@ -1,4 +1,4 @@
-import ts from "typescript";
+import { isThisExpression } from "ts-api-utils";
 
 import { getNoImplicitThisMutations } from "../../../mutations/codeFixes/noImplicitThis.js";
 import {
@@ -17,6 +17,3 @@ export const fixNoImplicitThis: FileMutator = (
 				getNoImplicitThisMutations,
 			)
 		: undefined;
-
-const isThisExpression = (node: ts.Node): node is ts.ThisExpression =>
-	node.kind === ts.SyntaxKind.ThisKeyword;

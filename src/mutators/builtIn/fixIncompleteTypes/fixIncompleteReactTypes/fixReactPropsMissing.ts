@@ -66,7 +66,7 @@ const collectComponentAttributeTypes = (
 ) => {
 	// Find all references to the node, if there are more than just the node itself
 	const references = request.fileInfoCache.getNodeReferencesAsNodes(
-		node.parent.kind === ts.SyntaxKind.VariableDeclaration ? node.parent : node,
+		ts.isVariableDeclaration(node.parent) ? node.parent : node,
 	);
 	if (references === undefined || references.length === 0) {
 		return undefined;

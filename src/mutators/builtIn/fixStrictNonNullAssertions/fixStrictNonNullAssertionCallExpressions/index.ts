@@ -118,8 +118,7 @@ const collectArgumentMutation = (
 		);
 		if (declaringVariableInitializer !== undefined) {
 			// ...if the variable doesn't already have a ! after its initial value
-			return declaringVariableInitializer.kind ===
-				ts.SyntaxKind.NonNullExpression
+			return ts.isNonNullExpression(declaringVariableInitializer)
 				? undefined
 				: createNonNullAssertion(request, declaringVariableInitializer);
 		}
