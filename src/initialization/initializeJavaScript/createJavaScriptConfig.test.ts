@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { InitializationCleanups } from "./cleanups.js";
 import { createJavaScriptConfig } from "./createJavaScriptConfig.js";
@@ -6,7 +6,7 @@ import { InitializationImports } from "./imports.js";
 import { InitializationRenames } from "./renames.js";
 
 describe("createJavaScriptConfig", () => {
-	test.each([
+	it.each([
 		{
 			expected: {
 				files: { renameExtensions: "ts" },
