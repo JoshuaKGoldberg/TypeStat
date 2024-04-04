@@ -1,4 +1,4 @@
-import { prompt } from "enquirer";
+import enruirer from "enquirer";
 import * as fs from "node:fs/promises";
 
 import { ProjectDescription } from "../initializeProject/shared.js";
@@ -64,7 +64,7 @@ const initializeBuiltInSources = async (completion: string) => {
 		other,
 	];
 
-	const { sourceFiles } = await prompt<{ sourceFiles: string }>([
+	const { sourceFiles } = await enruirer.prompt<{ sourceFiles: string }>([
 		{
 			choices,
 			initial: choices.length - 1,
@@ -78,7 +78,7 @@ const initializeBuiltInSources = async (completion: string) => {
 };
 
 const getCustomSources = async (completion: string) => {
-	const { sourceFiles } = await prompt<{ sourceFiles: string }>([
+	const { sourceFiles } = await enruirer.prompt<{ sourceFiles: string }>([
 		{
 			initial: `src${completion}`,
 			message: "Which files would you like to convert?",

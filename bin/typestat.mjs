@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { runCli } = require("../lib/cli/runCli.js");
+import { runCli } from "../lib/cli/runCli.js";
 
 runCli(process.argv)
 	.then((resultStatus) => {

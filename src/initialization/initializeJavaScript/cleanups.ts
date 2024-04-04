@@ -1,4 +1,4 @@
-import { prompt } from "enquirer";
+import enruirer from "enquirer";
 
 export enum InitializationCleanups {
 	No = "No",
@@ -6,7 +6,9 @@ export enum InitializationCleanups {
 }
 
 export const initializeCleanups = async () => {
-	const { cleanups } = await prompt<{ cleanups: InitializationCleanups }>([
+	const { cleanups } = await enruirer.prompt<{
+		cleanups: InitializationCleanups;
+	}>([
 		{
 			choices: [InitializationCleanups.No, InitializationCleanups.Yes],
 			initial: 1,

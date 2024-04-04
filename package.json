@@ -14,10 +14,10 @@
 	"type": "module",
 	"main": "./lib/index.js",
 	"bin": {
-		"typestat": "bin/typestat.js"
+		"typestat": "bin/typestat.mjs"
 	},
 	"files": [
-		"bin/typestat.js",
+		"bin/typestat.mjs",
 		"lib/",
 		"package.json",
 		"LICENSE.md",

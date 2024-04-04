@@ -1,4 +1,4 @@
-import { prompt } from "enquirer";
+import enruirer from "enquirer";
 
 export enum InitializationImprovement {
 	MissingProperties = "Add missing property declarations to classes",
@@ -17,7 +17,7 @@ export const initializeImprovements = async () => {
 		InitializationImprovement.StrictNullChecks,
 	];
 
-	const { improvements } = await prompt<{
+	const { improvements } = await enruirer.prompt<{
 		improvements: InitializationImprovement[];
 	}>([
 		{
