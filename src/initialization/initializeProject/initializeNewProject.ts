@@ -1,4 +1,4 @@
-import enruirer from "enquirer";
+import enquirer from "enquirer";
 import * as fs from "node:fs/promises";
 
 import { ProjectDescription } from "./shared.js";
@@ -6,7 +6,7 @@ import { ProjectDescription } from "./shared.js";
 const filePath = "./tsconfig.json";
 
 export const initializeNewProject = async (): Promise<ProjectDescription> => {
-	const { emit } = await enruirer.prompt<{ emit: string }>([
+	const { emit } = await enquirer.prompt<{ emit: string }>([
 		{
 			choices: ["yes", "no"],
 			message: "Should TypeScript output .js files from .ts sources?",
@@ -14,7 +14,7 @@ export const initializeNewProject = async (): Promise<ProjectDescription> => {
 			type: "select",
 		},
 	]);
-	const { inBrowser } = await enruirer.prompt<{ inBrowser: string }>([
+	const { inBrowser } = await enquirer.prompt<{ inBrowser: string }>([
 		{
 			choices: ["yes", "no"],
 			message: "Does your code run in browser?",
@@ -25,7 +25,7 @@ export const initializeNewProject = async (): Promise<ProjectDescription> => {
 	const jsx =
 		inBrowser &&
 		(
-			await enruirer.prompt<{ jsx: string }>([
+			await enquirer.prompt<{ jsx: string }>([
 				{
 					choices: ["yes", "no"],
 					message: "Does your project use JSX?",
@@ -34,7 +34,7 @@ export const initializeNewProject = async (): Promise<ProjectDescription> => {
 				},
 			])
 		).jsx;
-	const { target } = await enruirer.prompt<{ target: string }>([
+	const { target } = await enquirer.prompt<{ target: string }>([
 		{
 			choices: ["es2020", "es2021", "es2022", "esnext"],
 			message: "What minimum runtime does your code run on?",
@@ -42,7 +42,7 @@ export const initializeNewProject = async (): Promise<ProjectDescription> => {
 			type: "select",
 		},
 	]);
-	const { strict } = await enruirer.prompt<{ strict: string }>([
+	const { strict } = await enquirer.prompt<{ strict: string }>([
 		{
 			choices: ["yes", "no"],
 			message:

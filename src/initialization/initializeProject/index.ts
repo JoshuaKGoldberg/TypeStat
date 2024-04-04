@@ -1,4 +1,4 @@
-import enruirer from "enquirer";
+import enquirer from "enquirer";
 import * as fs from "fs";
 import { glob } from "glob";
 
@@ -36,7 +36,7 @@ const initializeBuiltInProject = async () => {
 		TSConfigLocationSuggestion.DoesNotExist,
 	];
 
-	const { project } = await enruirer.prompt<{
+	const { project } = await enquirer.prompt<{
 		project: TSConfigLocation | TSConfigLocationSuggestion;
 	}>([
 		{
@@ -56,7 +56,7 @@ const initializeBuiltInProject = async () => {
 };
 
 const initializeCustomProject = async (): Promise<ProjectDescription> => {
-	const { project } = await enruirer.prompt<{ project: string }>([
+	const { project } = await enquirer.prompt<{ project: string }>([
 		{
 			...defaultSettings,
 			initial: "./tsconfig.json",

@@ -1,4 +1,4 @@
-import enruirer from "enquirer";
+import enquirer from "enquirer";
 
 export enum InitializationImports {
 	No = "No",
@@ -6,7 +6,7 @@ export enum InitializationImports {
 }
 
 export const initializeImports = async () => {
-	const { imports } = await enruirer.prompt<{ imports: InitializationImports }>(
+	const { imports } = await enquirer.prompt<{ imports: InitializationImports }>(
 		[
 			{
 				choices: [InitializationImports.No, InitializationImports.Yes],

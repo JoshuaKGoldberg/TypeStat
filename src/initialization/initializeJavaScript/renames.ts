@@ -1,4 +1,4 @@
-import enruirer from "enquirer";
+import enquirer from "enquirer";
 
 export enum InitializationRenames {
 	Auto = "Rename files containing JSX to .tsx and others to .ts",
@@ -7,7 +7,7 @@ export enum InitializationRenames {
 }
 
 export const initializeRenames = async () => {
-	const { renames } = await enruirer.prompt<{ renames: InitializationRenames }>(
+	const { renames } = await enquirer.prompt<{ renames: InitializationRenames }>(
 		[
 			{
 				choices: [

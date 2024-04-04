@@ -1,4 +1,4 @@
-import enruirer from "enquirer";
+import enquirer from "enquirer";
 import * as fs from "fs";
 
 export enum InitializationPurpose {
@@ -17,7 +17,7 @@ export const initializePurpose = async () => {
 		choices.unshift(InitializationPurpose.Skipped);
 	}
 
-	const { purpose } = await enruirer.prompt<{ purpose: InitializationPurpose }>(
+	const { purpose } = await enquirer.prompt<{ purpose: InitializationPurpose }>(
 		[
 			{
 				choices,
