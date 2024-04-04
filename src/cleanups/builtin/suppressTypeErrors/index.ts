@@ -33,8 +33,19 @@ export const suppressRemainingTypeIssues: FileMutator = (request) => {
 		}
 	}
 
+	const currentDir = request.services.program.getCurrentDirectory();
+
 	return Array.from(diagnosticsPerLine).map(([line, diagnostics]) => {
-		const messages = diagnostics.map(stringifyDiagnosticMessageText).join(" ");
+		const messages = diagnostics
+			.map((diagnostic) => {
+				const message = stringifyDiagnosticMessageText(diagnostic);
+				if (currentDir) {
+					return message.replace(currentDir, "<rootDir>");
+				}
+
+				return message;
+			})
+			.join(" ");
 		return {
 			insertion: `// @ts-expect-error -- TODO: ${messages}\n`,
 			range: {
