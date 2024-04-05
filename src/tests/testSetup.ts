@@ -4,15 +4,19 @@ import path from "node:path";
 import ts from "typescript";
 
 import { fillOutRawOptions } from "../options/fillOutRawOptions.js";
+import { parseRawCompilerOptions } from "../options/parseRawCompilerOptions.js";
 import { RawTypeStatOptions } from "../options/types.js";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider.js";
 
 export interface MutationTestResult {
 	actualContent: string;
 	expectedFilePath: string;
+	options: string;
 }
 
-export const runMutationTest = async (dirPath: string) => {
+export const runMutationTest = async (
+	dirPath: string,
+): Promise<MutationTestResult> => {
 	const originalFileName = (await fs.readdir(dirPath)).find((file) =>
 		file.startsWith("original."),
 	);
@@ -40,7 +44,7 @@ export const runMutationTest = async (dirPath: string) => {
 		throw new Error("Error while reading tsconfig");
 	}
 
-	const compilerOptions = convertResult.config as ts.CompilerOptions;
+	const compilerOptions = await parseRawCompilerOptions(dirPath, projectPath);
 
 	const output = {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -57,15 +61,17 @@ export const runMutationTest = async (dirPath: string) => {
 
 	await fs.copyFile(originalFile, actualFile);
 
+	const pendingOptions = fillOutRawOptions({
+		argv: { args: [] },
+		compilerOptions,
+		cwd: dirPath,
+		output,
+		projectPath,
+		rawOptions,
+	});
+
 	const provider = createTypeStatProvider({
-		...fillOutRawOptions({
-			argv: { args: [] },
-			compilerOptions,
-			cwd: dirPath,
-			output,
-			projectPath,
-			rawOptions,
-		}),
+		...pendingOptions,
 		fileNames: [actualFile],
 	});
 
@@ -77,5 +83,10 @@ export const runMutationTest = async (dirPath: string) => {
 	const expectFileName = `expected.ts${fileNameSuffix}`;
 	const expectedFilePath = path.join(dirPath, expectFileName);
 
-	return { actualContent, expectedFilePath };
+	const optionsSnapshot = JSON.stringify(pendingOptions, null, 2).replaceAll(
+		dirPath,
+		"<rootDir>",
+	);
+
+	return { actualContent, expectedFilePath, options: optionsSnapshot };
 };
