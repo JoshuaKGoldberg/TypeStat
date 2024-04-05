@@ -1,4 +1,3 @@
-import * as fs from "node:fs";
 import * as fsp from "node:fs/promises";
 import ts from "typescript";
 
@@ -26,10 +25,17 @@ export const parseRawCompilerOptions = async (
 	config.include &&= ts.parseJsonConfigFileContent(
 		compilerOptions.config,
 		{
-			fileExists: fs.existsSync,
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			directoryExists: ts.sys.directoryExists,
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			fileExists: ts.sys.fileExists,
+			getCurrentDirectory: () => process.cwd(),
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			getDirectories: ts.sys.getDirectories,
 			// eslint-disable-next-line @typescript-eslint/unbound-method
 			readDirectory: ts.sys.readDirectory,
-			readFile: (file) => fs.readFileSync(file, "utf8"),
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			readFile: ts.sys.readFile,
 			useCaseSensitiveFileNames: true,
 		},
 		cwd,
