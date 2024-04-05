@@ -9,7 +9,9 @@ describe("noImplicitThis", () => {
 			import.meta.dirname,
 			"cases/fixes/noImplicitThis",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 });
