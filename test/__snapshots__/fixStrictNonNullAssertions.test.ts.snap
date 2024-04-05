@@ -6,15 +6,9 @@ exports[`strictNonNullAssertions > binaryExpressions > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "compilerOptions": {
-      "strictNullChecks": true
-    },
-    "files": [
-      "actual.ts"
-    ],
+    "strictNullChecks": true,
     "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": true
+    "noImplicitThis": false
   },
   "files": {
     "above": "",
@@ -88,9 +82,6 @@ exports[`strictNonNullAssertions > callExpressions > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": true
@@ -167,9 +158,6 @@ exports[`strictNonNullAssertions > objectLiterals > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": true
@@ -246,9 +234,6 @@ exports[`strictNonNullAssertions > propertyAccesses > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": true
@@ -325,15 +310,9 @@ exports[`strictNonNullAssertions > returnTypes > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "compilerOptions": {
-      "strictNullChecks": true
-    },
-    "files": [
-      "actual.ts"
-    ],
+    "strictNullChecks": true,
     "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": true
+    "noImplicitThis": false
   },
   "files": {
     "above": "",

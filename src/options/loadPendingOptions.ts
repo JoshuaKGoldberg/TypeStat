@@ -34,14 +34,14 @@ export const loadPendingOptions = async (
 	for (let i = 0; i < allRawOptions.length; i += 1) {
 		const rawOptions = allRawOptions[i];
 		const projectPath = getProjectPath(cwd, filePath, rawOptions);
-		const compilerOptions = await parseRawCompilerOptions(cwd, projectPath);
+		const tsConfig = await parseRawCompilerOptions(cwd, projectPath);
 
 		const filledOutOptions = fillOutRawOptions({
-			compilerOptions,
 			cwd,
 			output,
 			projectPath,
 			rawOptions,
+			tsConfig,
 		});
 		const complaint = findComplaintForOptions(filledOutOptions);
 		if (complaint) {

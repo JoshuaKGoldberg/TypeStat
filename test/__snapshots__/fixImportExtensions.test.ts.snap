@@ -6,11 +6,6 @@ exports[`import extensions > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts",
-      "foundDirect.ts",
-      "foundIndirect/index.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false

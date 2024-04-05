@@ -38,7 +38,7 @@ export const runMutationTest = async (
 
 	const projectPath = path.join(dirPath, "tsconfig.json");
 
-	const compilerOptions = await parseRawCompilerOptions(dirPath, projectPath);
+	const tsConfig = await parseRawCompilerOptions(dirPath, projectPath);
 
 	const output = {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -49,11 +49,11 @@ export const runMutationTest = async (
 	};
 
 	const pendingOptions = fillOutRawOptions({
-		compilerOptions,
 		cwd: dirPath,
 		output,
 		projectPath,
 		rawOptions,
+		tsConfig,
 	});
 
 	const provider = createTypeStatProvider({

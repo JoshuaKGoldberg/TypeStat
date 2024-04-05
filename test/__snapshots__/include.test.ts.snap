@@ -6,12 +6,6 @@ exports[`include > asterisk > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "include": [
-      "original.ts",
-      "expected.ts",
-      "actual.ts"
-    ],
-    "compileOnSave": false,
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -38,9 +32,9 @@ exports[`include > asterisk > options 1`] = `
     }
   },
   "include": [
-    "original.ts",
-    "expected.ts",
-    "actual.ts"
+    "<rootDir>/actual.ts",
+    "<rootDir>/expected.ts",
+    "<rootDir>/original.ts"
   ],
   "mutators": [
     [
@@ -67,8 +61,6 @@ exports[`include > directory > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "include": [],
-    "compileOnSave": false,
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -94,7 +86,11 @@ exports[`include > directory > options 1`] = `
       "propTypesOptionality": "asWritten"
     }
   },
-  "include": [],
+  "include": [
+    "<rootDir>/actual.ts",
+    "<rootDir>/expected.ts",
+    "<rootDir>/original.ts"
+  ],
   "mutators": [
     [
       "./sampleMutator.cjs",

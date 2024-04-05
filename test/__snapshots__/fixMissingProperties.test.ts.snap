@@ -6,9 +6,6 @@ exports[`Missing properties > missing property accesses > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": true

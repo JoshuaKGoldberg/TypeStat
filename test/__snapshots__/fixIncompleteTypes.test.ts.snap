@@ -6,10 +6,6 @@ exports[`Incomplete types > Implicit generics > incomplete implicit class generi
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts",
-      "react-like.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -84,9 +80,6 @@ exports[`Incomplete types > Implicit generics > incomplete implicit variable gen
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -161,9 +154,6 @@ exports[`Incomplete types > Interface or type literal generics > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -238,9 +228,6 @@ exports[`Incomplete types > Non-generic Interface as Type argument > options 1`]
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -315,9 +302,6 @@ exports[`Incomplete types > React types > React props from prop types > Optional
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.tsx"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -392,9 +376,6 @@ exports[`Incomplete types > React types > React props from prop types > Optional
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.tsx"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -469,9 +450,6 @@ exports[`Incomplete types > React types > React props from prop types > Optional
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.tsx"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -546,9 +524,6 @@ exports[`Incomplete types > React types > React props from prop types > all > op
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.tsx"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -623,14 +598,9 @@ exports[`Incomplete types > React types > not react props > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "compilerOptions": {
-      "allowSyntheticDefaultImports": true,
-      "esModuleInterop": true,
-      "jsx": "react"
-    },
-    "files": [
-      "actual.tsx"
-    ],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react",
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -705,14 +675,9 @@ exports[`Incomplete types > React types > react prop functions from calls > opti
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "compilerOptions": {
-      "allowSyntheticDefaultImports": true,
-      "esModuleInterop": true,
-      "jsx": "react"
-    },
-    "files": [
-      "actual.tsx"
-    ],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react",
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -787,9 +752,6 @@ exports[`Incomplete types > React types > react props from later assignments > o
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.tsx"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -864,14 +826,9 @@ exports[`Incomplete types > React types > react props from prop uses > options 1
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "compilerOptions": {
-      "allowSyntheticDefaultImports": true,
-      "esModuleInterop": true,
-      "jsx": "react"
-    },
-    "files": [
-      "actual.tsx"
-    ],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react",
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -946,14 +903,9 @@ exports[`Incomplete types > React types > react props missing > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "compilerOptions": {
-      "allowSyntheticDefaultImports": true,
-      "esModuleInterop": true,
-      "jsx": "react"
-    },
-    "files": [
-      "actual.tsx"
-    ],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react",
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -1028,9 +980,6 @@ exports[`Incomplete types > parameter types > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -1105,9 +1054,6 @@ exports[`Incomplete types > property declaration types > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -1182,9 +1128,6 @@ exports[`Incomplete types > return types > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": true
@@ -1261,9 +1204,6 @@ exports[`Incomplete types > variable types > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.tsx"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": true

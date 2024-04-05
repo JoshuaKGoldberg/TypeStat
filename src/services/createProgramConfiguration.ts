@@ -10,8 +10,10 @@ export const createProgramConfiguration = (options: TypeStatOptions) => {
 	// Create a TypeScript configuration using the raw options
 	const parsedConfiguration = ts.parseJsonConfigFileContent(
 		{
-			...options.compilerOptions,
-			skipLibCheck: true,
+			compilerOptions: {
+				...options.compilerOptions,
+				skipLibCheck: true,
+			},
 		},
 		{
 			fileExists: fs.existsSync,
