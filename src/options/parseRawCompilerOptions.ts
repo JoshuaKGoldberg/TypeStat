@@ -1,8 +1,5 @@
-import { glob } from "glob";
-import { minimatch } from "minimatch";
 import * as fs from "node:fs";
 import * as fsp from "node:fs/promises";
-import * as path from "node:path";
 import ts from "typescript";
 
 import { stringifyDiagnosticMessageText } from "../shared/diagnostics.js";
@@ -29,17 +26,10 @@ export const parseRawCompilerOptions = async (
 	config.include &&= ts.parseJsonConfigFileContent(
 		compilerOptions.config,
 		{
-			fileExists: (filePath) => fs.statSync(filePath).isFile(),
-			readDirectory: (rootDir, extensions, excludes, includes) =>
-				includes
-					.flatMap((include) => glob.sync(path.join(rootDir, include)))
-					.filter(
-						(filePath) =>
-							!excludes?.some((exclude) => minimatch(filePath, exclude)) &&
-							extensions.some((extension) => filePath.endsWith(extension)),
-					)
-					.map((filePath) => path.relative(rootDir, filePath)),
-			readFile: (filePath) => fs.readFileSync(filePath).toString(),
+			fileExists: fs.existsSync,
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			readDirectory: ts.sys.readDirectory,
+			readFile: (file) => fs.readFileSync(file, "utf8"),
 			useCaseSensitiveFileNames: true,
 		},
 		cwd,
