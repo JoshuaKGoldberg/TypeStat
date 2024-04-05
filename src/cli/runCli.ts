@@ -63,7 +63,7 @@ export const runCli = async (
 	let result: TypeStatResult;
 
 	try {
-		result = await runtime.mainRunner(rawOptions, runtime.output);
+		result = await runtime.mainRunner(rawOptions.config, runtime.output);
 	} catch (error) {
 		result = {
 			error: error instanceof Error ? error : new Error(error as string),

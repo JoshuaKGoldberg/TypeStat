@@ -59,7 +59,6 @@ export const runMutationTest = async (dirPath: string) => {
 
 	const provider = createTypeStatProvider({
 		...fillOutRawOptions({
-			argv: { args: [] },
 			compilerOptions,
 			cwd: dirPath,
 			output,
