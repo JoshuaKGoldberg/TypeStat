@@ -10,8 +10,6 @@ import { PendingTypeStatOptions, RawTypeStatOptions } from "./types.js";
 
 /**
  * Reads pre-file-rename TypeStat options using a config path.
- * @param configPath   Config path
- * @param output   Wraps process and logfile output.
  * @returns Promise for filled-out TypeStat options, or a string complaint from failing to make them.
  */
 export const loadPendingOptions = async (
