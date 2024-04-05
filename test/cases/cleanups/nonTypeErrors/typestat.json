@@ -1,0 +1,6 @@
+{
+	"cleanups": {
+		"suppressTypeErrors": true
+	},
+	"projectPath": "./tsconfig.json"
+}

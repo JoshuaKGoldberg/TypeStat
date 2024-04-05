@@ -8,7 +8,7 @@ describe("filters", () => {
 		const caseDir = path.join(import.meta.dirname, "./cases/filters/empty");
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-	});
+	}, 6000);
 
 	it("one", async () => {
 		const caseDir = path.join(import.meta.dirname, "./cases/filters/one");

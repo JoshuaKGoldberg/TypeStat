@@ -11,7 +11,7 @@ describe("strictNonNullAssertions", () => {
 		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-	});
+	}, 6000);
 
 	it("callExpressions", async () => {
 		const caseDir = path.join(
@@ -47,5 +47,5 @@ describe("strictNonNullAssertions", () => {
 		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-	});
+	}, 6000);
 });

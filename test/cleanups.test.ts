@@ -12,4 +12,13 @@ describe("Cleanups", () => {
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 	});
+
+	it("non-TypeErrors", async () => {
+		const caseDir = path.join(
+			import.meta.dirname,
+			"cases/cleanups/nonTypeErrors",
+		);
+		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+	}, 6000);
 });

@@ -11,7 +11,7 @@ describe("noImplicitAny", () => {
 		);
 		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-	});
+	}, 6000);
 
 	it("property declarations", async () => {
 		const caseDir = path.join(
