@@ -83,7 +83,10 @@ export const runMutationTest = async (
 	const expectFileName = `expected.ts${fileNameSuffix}`;
 	const expectedFilePath = path.join(dirPath, expectFileName);
 
-	const optionsSnapshot = JSON.stringify(pendingOptions, null, 2);
+	const optionsSnapshot = JSON.stringify(pendingOptions, null, 2).replaceAll(
+		dirPath,
+		"<rootDir>",
+	);
 
 	return { actualContent, expectedFilePath, options: optionsSnapshot };
 };
