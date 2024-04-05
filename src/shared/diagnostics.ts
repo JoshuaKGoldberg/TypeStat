@@ -22,3 +22,19 @@ export const stringifyDiagnosticMessageText = (diagnostic: ts.Diagnostic) => {
 		? diagnostic.messageText
 		: diagnostic.messageText.messageText;
 };
+
+export const userFriendlyDiagnosticMessageText = (
+	diagnostic: ts.Diagnostic,
+	currentDir: string,
+) => {
+	const diagnosticMessage = stringifyDiagnosticMessageText(diagnostic);
+	if (diagnostic.code === 1259) {
+		// = Module_0_can_only_be_default_imported_using_the_1_flag
+		return diagnosticMessage.replace(
+			/Module '"[^"]*"' can only be default-imported/,
+			"This module can only be default-imported",
+		);
+	} else {
+		return diagnosticMessage.replace(currentDir, "<rootDir>");
+	}
+};
