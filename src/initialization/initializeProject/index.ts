@@ -10,6 +10,8 @@ import {
 	TSConfigLocationSuggestion,
 } from "./shared.js";
 
+const prompt = enquirer.prompt;
+
 export const initializeProject = async (): Promise<ProjectDescription> => {
 	const project = await initializeBuiltInProject();
 
@@ -36,7 +38,7 @@ const initializeBuiltInProject = async () => {
 		TSConfigLocationSuggestion.DoesNotExist,
 	];
 
-	const { project } = await enquirer.prompt<{
+	const { project } = await prompt<{
 		project: TSConfigLocation | TSConfigLocationSuggestion;
 	}>([
 		{
@@ -56,7 +58,7 @@ const initializeBuiltInProject = async () => {
 };
 
 const initializeCustomProject = async (): Promise<ProjectDescription> => {
-	const { project } = await enquirer.prompt<{ project: string }>([
+	const { project } = await prompt<{ project: string }>([
 		{
 			...defaultSettings,
 			initial: "./tsconfig.json",

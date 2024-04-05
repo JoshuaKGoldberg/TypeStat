@@ -1,5 +1,7 @@
 import enquirer from "enquirer";
 
+const prompt = enquirer.prompt;
+
 const other = "other";
 const none = "(none)";
 
@@ -23,7 +25,7 @@ const initializeBuiltInTests = async () => {
 		none,
 	];
 
-	const { testFiles } = await enquirer.prompt<{ testFiles: string }>([
+	const { testFiles } = await prompt<{ testFiles: string }>([
 		{
 			choices,
 			initial: choices.length - 1,
@@ -37,7 +39,7 @@ const initializeBuiltInTests = async () => {
 };
 
 const getCustomTests = async () => {
-	const { testFiles } = await enquirer.prompt<{ testFiles: string }>([
+	const { testFiles } = await prompt<{ testFiles: string }>([
 		{
 			initial: "test/**/*.{ts,tsx}",
 			message: "Where are your test files?",

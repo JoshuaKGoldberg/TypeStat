@@ -1,5 +1,7 @@
 import enquirer from "enquirer";
 
+const prompt = enquirer.prompt;
+
 export enum InitializationImprovement {
 	MissingProperties = "Add missing property declarations to classes",
 	NoImplicitAny = "Enable the --noImplicitAny compiler flag",
@@ -17,7 +19,7 @@ export const initializeImprovements = async () => {
 		InitializationImprovement.StrictNullChecks,
 	];
 
-	const { improvements } = await enquirer.prompt<{
+	const { improvements } = await prompt<{
 		improvements: InitializationImprovement[];
 	}>([
 		{

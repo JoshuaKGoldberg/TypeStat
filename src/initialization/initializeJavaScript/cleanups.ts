@@ -1,14 +1,14 @@
 import enquirer from "enquirer";
 
+const prompt = enquirer.prompt;
+
 export enum InitializationCleanups {
 	No = "No",
 	Yes = "Yes",
 }
 
 export const initializeCleanups = async () => {
-	const { cleanups } = await enquirer.prompt<{
-		cleanups: InitializationCleanups;
-	}>([
+	const { cleanups } = await prompt<{ cleanups: InitializationCleanups }>([
 		{
 			choices: [InitializationCleanups.No, InitializationCleanups.Yes],
 			initial: 1,
