@@ -26,9 +26,6 @@ dependencies:
   glob:
     specifier: ^10.3.10
     version: 10.3.12
-  minimatch:
-    specifier: ^9.0.3
-    version: 9.0.4
   strip-ansi:
     specifier: ^7.1.0
     version: 7.1.0
