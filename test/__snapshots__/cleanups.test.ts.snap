@@ -1,0 +1,81 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Cleanups > suppressTypeErrors > options 1`] = `
+"{
+  "cleanups": {
+    "suppressTypeErrors": true
+  },
+  "compilerOptions": {
+    "compilerOptions": {
+      "strictNullChecks": true
+    },
+    "files": [
+      "actual.ts"
+    ],
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "strictNullChecks": false
+  },
+  "files": {
+    "above": "",
+    "below": "",
+    "renameExtensions": false
+  },
+  "filters": [],
+  "fixes": {
+    "importExtensions": false,
+    "incompleteTypes": false,
+    "missingProperties": false,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "noInferableTypes": false,
+    "strictNonNullAssertions": false
+  },
+  "hints": {
+    "react": {
+      "propTypes": "whenRequired",
+      "propTypesOptionality": "asWritten"
+    }
+  },
+  "mutators": [
+    [
+      "fixImportExtensions",
+      null
+    ],
+    [
+      "fixIncompleteTypes",
+      null
+    ],
+    [
+      "fixMissingProperties",
+      null
+    ],
+    [
+      "fixNoImplicitAny",
+      null
+    ],
+    [
+      "fixNoImplicitThis",
+      null
+    ],
+    [
+      "fixNoInferableTypes",
+      null
+    ],
+    [
+      "fixStrictNonNullAssertions",
+      null
+    ]
+  ],
+  "output": {},
+  "package": {
+    "directory": "<rootDir>",
+    "file": "<rootDir>/package.json"
+  },
+  "postProcess": {
+    "shell": []
+  },
+  "projectPath": "<rootDir>/tsconfig.json",
+  "types": {}
+}"
+`;

@@ -16,8 +16,8 @@
 		"endlines",
 		"execa",
 		"extensionless",
-		"hackily",
 		"globbed",
+		"hackily",
 		"IIFE",
 		"inferables",
 		"intrinsic",
@@ -33,6 +33,7 @@
 		"tsup",
 		"typestat",
 		"undefineds",
-		"uniquify"
+		"uniquify",
+		"vitest"
 	]
 }
