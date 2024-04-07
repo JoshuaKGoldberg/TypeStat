@@ -1,12 +1,19 @@
-{
-	"cleanups": {
-		"suppressTypeErrors": true
+[
+	{
+		"files": {
+			"above": "/* Above file */",
+			"below": "/* Below file */"
+		},
+		"fixes": {
+			"incompleteTypes": true
+		}
 	},
-	"files": {
-		"above": "/* Above file */",
-		"below": "/* Below file */"
-	},
-	"fixes": {
-		"incompleteTypes": true
+	{
+		"cleanups": {
+			"suppressTypeErrors": true
+		},
+		"fixes": {
+			"incompleteTypes": true
+		}
 	}
-}
+]

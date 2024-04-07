@@ -1,11 +1,18 @@
-{
-	"cleanups": {
-		"suppressTypeErrors": true
+[
+	{
+		"fixes": {
+			"incompleteTypes": true
+		},
+		"postProcess": {
+			"shell": [["node", "./postProcess.cjs"]]
+		}
 	},
-	"fixes": {
-		"incompleteTypes": true
-	},
-	"postProcess": {
-		"shell": [["node", "./postProcess.cjs"]]
+	{
+		"cleanups": {
+			"suppressTypeErrors": true
+		},
+		"fixes": {
+			"incompleteTypes": true
+		}
 	}
-}
+]
