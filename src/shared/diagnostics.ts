@@ -28,11 +28,11 @@ export const userFriendlyDiagnosticMessageText = (
 	currentDir: string,
 ) => {
 	const diagnosticMessage = stringifyDiagnosticMessageText(diagnostic);
-	if (diagnostic.code === 1259) {
+	if (diagnostic.code === 1192 || diagnostic.code === 1259) {
 		// = Module_0_can_only_be_default_imported_using_the_1_flag
 		return diagnosticMessage.replace(
-			/Module '"[^"]*"' can only be default-imported/,
-			"This module can only be default-imported",
+			/Module '"[^"]*"' (can only be default-imported|has no default export)/,
+			"This module $1",
 		);
 	} else {
 		return diagnosticMessage.replace(currentDir, "<rootDir>");
