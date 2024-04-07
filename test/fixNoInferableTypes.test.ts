@@ -9,8 +9,10 @@ describe("No inferable types", () => {
 			import.meta.dirname,
 			"cases/fixes/noInferableTypes/parameters",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 
 	it("property declarations", async () => {
@@ -18,8 +20,10 @@ describe("No inferable types", () => {
 			import.meta.dirname,
 			"cases/fixes/noInferableTypes/propertyDeclarations",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 
 	it("variable declarations", async () => {
@@ -27,7 +31,9 @@ describe("No inferable types", () => {
 			import.meta.dirname,
 			"cases/fixes/noInferableTypes/variableDeclarations",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 });

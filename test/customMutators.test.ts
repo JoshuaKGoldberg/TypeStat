@@ -9,19 +9,25 @@ describe("Custom mutators", () => {
 			import.meta.dirname,
 			"cases/custom mutators/empty",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 
 	it("one mutator", async () => {
 		const caseDir = path.join(import.meta.dirname, "cases/custom mutators/one");
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 
 	it("two mutators", async () => {
 		const caseDir = path.join(import.meta.dirname, "cases/custom mutators/two");
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 });

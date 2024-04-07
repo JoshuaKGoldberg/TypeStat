@@ -1,0 +1,80 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Missing properties > missing property accesses > options 1`] = `
+"{
+  "cleanups": {
+    "suppressTypeErrors": false
+  },
+  "compilerOptions": {
+    "files": [
+      "actual.ts"
+    ],
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "strictNullChecks": true
+  },
+  "files": {
+    "above": "",
+    "below": "",
+    "renameExtensions": false
+  },
+  "filters": [],
+  "fixes": {
+    "importExtensions": false,
+    "incompleteTypes": false,
+    "missingProperties": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "noInferableTypes": false,
+    "strictNonNullAssertions": false
+  },
+  "hints": {
+    "react": {
+      "propTypes": "whenRequired",
+      "propTypesOptionality": "asWritten"
+    }
+  },
+  "mutators": [
+    [
+      "fixImportExtensions",
+      null
+    ],
+    [
+      "fixIncompleteTypes",
+      null
+    ],
+    [
+      "fixMissingProperties",
+      null
+    ],
+    [
+      "fixNoImplicitAny",
+      null
+    ],
+    [
+      "fixNoImplicitThis",
+      null
+    ],
+    [
+      "fixNoInferableTypes",
+      null
+    ],
+    [
+      "fixStrictNonNullAssertions",
+      null
+    ]
+  ],
+  "output": {},
+  "package": {
+    "directory": "<rootDir>",
+    "file": "<rootDir>/package.json"
+  },
+  "postProcess": {
+    "shell": []
+  },
+  "projectPath": "<rootDir>/tsconfig.json",
+  "types": {
+    "strictNullChecks": true
+  }
+}"
+`;
