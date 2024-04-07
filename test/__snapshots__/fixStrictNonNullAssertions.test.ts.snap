@@ -3,7 +3,7 @@
 exports[`strictNonNullAssertions > binaryExpressions > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "strictNullChecks": true,
@@ -79,7 +79,7 @@ exports[`strictNonNullAssertions > binaryExpressions > options 1`] = `
 exports[`strictNonNullAssertions > callExpressions > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -155,7 +155,7 @@ exports[`strictNonNullAssertions > callExpressions > options 1`] = `
 exports[`strictNonNullAssertions > objectLiterals > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -231,7 +231,7 @@ exports[`strictNonNullAssertions > objectLiterals > options 1`] = `
 exports[`strictNonNullAssertions > propertyAccesses > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -307,7 +307,7 @@ exports[`strictNonNullAssertions > propertyAccesses > options 1`] = `
 exports[`strictNonNullAssertions > returnTypes > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "strictNullChecks": true,

@@ -85,16 +85,19 @@
 		return "";
 	};
 
+// @ts-expect-error -- TODO: Duplicate function implementation. Type 'boolean | Promise<boolean>' is not a valid async function return type in ES5/ES3 because it does not refer to a Promise-compatible constructor value.
 	async function navigateTo(): Promise<boolean> | boolean {
 		return await new Promise(() => "");
 	}
 
 	function navigateByUrl(url: string): Promise<boolean>;
 
+// @ts-expect-error -- TODO: Function implementation name must be 'navigateByUrl'. Duplicate function implementation. Type 'boolean | Promise<boolean>' is not a valid async function return type in ES5/ES3 because it does not refer to a Promise-compatible constructor value.
 	async function navigateTo(): Promise<boolean> | boolean {
 		return await navigateByUrl("");
 	}
 
+// @ts-expect-error -- TODO: Type 'boolean | Promise<boolean>' is not a valid async function return type in ES5/ES3 because it does not refer to a Promise-compatible constructor value.
 	async function navigateTo2(): Promise<boolean> | boolean {
 		const navigated = await navigateByUrl("");
 		return navigated;

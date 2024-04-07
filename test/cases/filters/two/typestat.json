@@ -1,4 +1,7 @@
 {
+	"cleanups": {
+		"suppressTypeErrors": true
+	},
 	"filters": [
 		"MethodDeclaration[name.text=dispose]",
 		"CallExpression[expression.text=teardown]"

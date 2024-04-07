@@ -1,4 +1,7 @@
 {
+	"cleanups": {
+		"suppressTypeErrors": true
+	},
 	"files": {
 		"below": "/* Below file */"
 	},

@@ -3,7 +3,7 @@
 exports[`import extensions > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,

@@ -3,7 +3,7 @@
 exports[`Custom mutators > empty array > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -77,7 +77,7 @@ exports[`Custom mutators > empty array > options 1`] = `
 exports[`Custom mutators > one mutator > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -130,7 +130,7 @@ exports[`Custom mutators > one mutator > options 1`] = `
 exports[`Custom mutators > two mutators > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,

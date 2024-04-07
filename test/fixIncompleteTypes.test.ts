@@ -177,6 +177,17 @@ describe("Incomplete types", () => {
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 			expect(options).toMatchSnapshot("options");
 		});
+
+		it("react variable types", async () => {
+			const caseDir = path.join(
+				dirname,
+				"cases/fixes/incompleteTypes/reactTypes/reactVariableTypes",
+			);
+			const { actualContent, expectedFilePath, options } =
+				await runMutationTest(caseDir);
+			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+			expect(options).toMatchSnapshot("options");
+		});
 	});
 
 	it("return types", async () => {

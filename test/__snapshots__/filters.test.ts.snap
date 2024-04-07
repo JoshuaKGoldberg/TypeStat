@@ -3,7 +3,7 @@
 exports[`filters > empty > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": true,
@@ -79,7 +79,7 @@ exports[`filters > empty > options 1`] = `
 exports[`filters > one > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": true,
@@ -157,7 +157,7 @@ exports[`filters > one > options 1`] = `
 exports[`filters > two > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": true,

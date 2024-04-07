@@ -3,7 +3,7 @@
 exports[`files > addition above > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -77,7 +77,7 @@ exports[`files > addition above > options 1`] = `
 exports[`files > addition below > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -151,7 +151,7 @@ exports[`files > addition below > options 1`] = `
 exports[`files > both > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -225,7 +225,7 @@ exports[`files > both > options 1`] = `
 exports[`files > empty addition > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,

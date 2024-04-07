@@ -3,7 +3,7 @@
 exports[`include > asterisk > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -58,7 +58,7 @@ exports[`include > asterisk > options 1`] = `
 exports[`include > directory > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,

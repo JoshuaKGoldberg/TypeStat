@@ -3,7 +3,7 @@
 exports[`No inferable types > parameters > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -79,7 +79,7 @@ exports[`No inferable types > parameters > options 1`] = `
 exports[`No inferable types > property declarations > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
@@ -155,7 +155,7 @@ exports[`No inferable types > property declarations > options 1`] = `
 exports[`No inferable types > variable declarations > options 1`] = `
 "{
   "cleanups": {
-    "suppressTypeErrors": false
+    "suppressTypeErrors": true
   },
   "compilerOptions": {
     "noImplicitAny": false,
