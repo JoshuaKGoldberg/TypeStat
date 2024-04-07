@@ -8,6 +8,8 @@ test("import extensions", async () => {
 		import.meta.dirname,
 		"cases/fixes/importExtensions",
 	);
-	const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+	const { actualContent, expectedFilePath, options } =
+		await runMutationTest(caseDir);
 	await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+	expect(options).toMatchSnapshot("options");
 }, 10000);

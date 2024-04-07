@@ -12,9 +12,10 @@ describe("Incomplete types", () => {
 				dirname,
 				"cases/fixes/incompleteTypes/implicitGenerics/incompleteImplicitClassGenerics",
 			);
-			const { actualContent, expectedFilePath } =
+			const { actualContent, expectedFilePath, options } =
 				await runMutationTest(caseDir);
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+			expect(options).toMatchSnapshot("options");
 		}, 50000);
 
 		it("incomplete implicit variable generics", async () => {
@@ -22,9 +23,10 @@ describe("Incomplete types", () => {
 				dirname,
 				"cases/fixes/incompleteTypes/implicitGenerics/incompleteImplicitVariableGenerics",
 			);
-			const { actualContent, expectedFilePath } =
+			const { actualContent, expectedFilePath, options } =
 				await runMutationTest(caseDir);
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+			expect(options).toMatchSnapshot("options");
 		}, 50000);
 	});
 
@@ -33,8 +35,10 @@ describe("Incomplete types", () => {
 			dirname,
 			"cases/fixes/incompleteTypes/interfaceOrTypeLiteralGenerics",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	}, 50000);
 
 	it("Non-generic Interface as Type argument", async () => {
@@ -42,8 +46,10 @@ describe("Incomplete types", () => {
 			dirname,
 			"cases/fixes/incompleteTypes/nonGenericInterfaceAsTypeArgument",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	}, 50000);
 
 	it("parameter types", async () => {
@@ -51,8 +57,10 @@ describe("Incomplete types", () => {
 			dirname,
 			"cases/fixes/incompleteTypes/parameterTypes",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 
 	it("property declaration types", async () => {
@@ -60,8 +68,10 @@ describe("Incomplete types", () => {
 			dirname,
 			"cases/fixes/incompleteTypes/propertyDeclarationTypes",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	}, 50000);
 
 	describe("React types", () => {
@@ -70,9 +80,10 @@ describe("Incomplete types", () => {
 				dirname,
 				"cases/fixes/incompleteTypes/reactTypes/notReactProps",
 			);
-			const { actualContent, expectedFilePath } =
+			const { actualContent, expectedFilePath, options } =
 				await runMutationTest(caseDir);
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+			expect(options).toMatchSnapshot("options");
 		});
 
 		it("react prop functions from calls", async () => {
@@ -80,9 +91,10 @@ describe("Incomplete types", () => {
 				dirname,
 				"cases/fixes/incompleteTypes/reactTypes/reactPropFunctionsFromCalls",
 			);
-			const { actualContent, expectedFilePath } =
+			const { actualContent, expectedFilePath, options } =
 				await runMutationTest(caseDir);
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+			expect(options).toMatchSnapshot("options");
 		}, 50000);
 
 		it("react props from later assignments", async () => {
@@ -90,9 +102,10 @@ describe("Incomplete types", () => {
 				dirname,
 				"cases/fixes/incompleteTypes/reactTypes/reactPropsFromLaterAssignments",
 			);
-			const { actualContent, expectedFilePath } =
+			const { actualContent, expectedFilePath, options } =
 				await runMutationTest(caseDir);
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+			expect(options).toMatchSnapshot("options");
 		}, 50000);
 
 		describe("React props from prop types", () => {
@@ -101,9 +114,10 @@ describe("Incomplete types", () => {
 					dirname,
 					"cases/fixes/incompleteTypes/reactTypes/reactPropsFromPropTypes/all",
 				);
-				const { actualContent, expectedFilePath } =
+				const { actualContent, expectedFilePath, options } =
 					await runMutationTest(caseDir);
 				await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+				expect(options).toMatchSnapshot("options");
 			}, 50000);
 
 			describe("Optionality", () => {
@@ -112,9 +126,10 @@ describe("Incomplete types", () => {
 						dirname,
 						"cases/fixes/incompleteTypes/reactTypes/reactPropsFromPropTypes/optionality/alwaysOptional",
 					);
-					const { actualContent, expectedFilePath } =
+					const { actualContent, expectedFilePath, options } =
 						await runMutationTest(caseDir);
 					await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+					expect(options).toMatchSnapshot("options");
 				});
 
 				it("always required", async () => {
@@ -122,9 +137,10 @@ describe("Incomplete types", () => {
 						dirname,
 						"cases/fixes/incompleteTypes/reactTypes/reactPropsFromPropTypes/optionality/alwaysRequired",
 					);
-					const { actualContent, expectedFilePath } =
+					const { actualContent, expectedFilePath, options } =
 						await runMutationTest(caseDir);
 					await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+					expect(options).toMatchSnapshot("options");
 				});
 
 				it("as written", async () => {
@@ -132,9 +148,10 @@ describe("Incomplete types", () => {
 						dirname,
 						"cases/fixes/incompleteTypes/reactTypes/reactPropsFromPropTypes/optionality/asWritten",
 					);
-					const { actualContent, expectedFilePath } =
+					const { actualContent, expectedFilePath, options } =
 						await runMutationTest(caseDir);
 					await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+					expect(options).toMatchSnapshot("options");
 				});
 			});
 		});
@@ -144,9 +161,10 @@ describe("Incomplete types", () => {
 				dirname,
 				"cases/fixes/incompleteTypes/reactTypes/reactPropsFromUses",
 			);
-			const { actualContent, expectedFilePath } =
+			const { actualContent, expectedFilePath, options } =
 				await runMutationTest(caseDir);
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+			expect(options).toMatchSnapshot("options");
 		});
 
 		it("react props missing", async () => {
@@ -154,9 +172,10 @@ describe("Incomplete types", () => {
 				dirname,
 				"cases/fixes/incompleteTypes/reactTypes/reactPropsMissing",
 			);
-			const { actualContent, expectedFilePath } =
+			const { actualContent, expectedFilePath, options } =
 				await runMutationTest(caseDir);
 			await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+			expect(options).toMatchSnapshot("options");
 		});
 	});
 
@@ -165,8 +184,10 @@ describe("Incomplete types", () => {
 			dirname,
 			"cases/fixes/incompleteTypes/returnTypes",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 
 	it("variable types", async () => {
@@ -174,7 +195,9 @@ describe("Incomplete types", () => {
 			dirname,
 			"cases/fixes/incompleteTypes/variableTypes",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 });
