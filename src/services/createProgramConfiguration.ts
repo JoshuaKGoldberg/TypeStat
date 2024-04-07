@@ -1,26 +1,19 @@
-import * as fs from "node:fs";
 import * as path from "node:path";
 import ts from "typescript";
 
 import { TypeStatOptions } from "../options/types.js";
 import { collectOptionals, uniquify } from "../shared/arrays.js";
 import { normalizeAndSlashify } from "../shared/paths.js";
+import { parseJsonConfigFileContent } from "./parseJsonConfigFileContent.js";
 
 export const createProgramConfiguration = (options: TypeStatOptions) => {
 	// Create a TypeScript configuration using the raw options
-	const parsedConfiguration = ts.parseJsonConfigFileContent(
+	const parsedConfiguration = parseJsonConfigFileContent(
 		{
 			compilerOptions: {
 				...options.compilerOptions,
 				skipLibCheck: true,
 			},
-		},
-		{
-			fileExists: fs.existsSync,
-			// eslint-disable-next-line @typescript-eslint/unbound-method
-			readDirectory: ts.sys.readDirectory,
-			readFile: (file) => fs.readFileSync(file, "utf8"),
-			useCaseSensitiveFileNames: true,
 		},
 		path.resolve(path.dirname(options.projectPath)),
 		{ noEmit: true },

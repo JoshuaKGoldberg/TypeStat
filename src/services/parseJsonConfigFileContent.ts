@@ -1,6 +1,3 @@
-import { minimatch } from "minimatch";
-import * as fs from "node:fs";
-import * as path from "node:path";
 import ts from "typescript";
 
 export const parseJsonConfigFileContent = (
@@ -11,21 +8,17 @@ export const parseJsonConfigFileContent = (
 	return ts.parseJsonConfigFileContent(
 		config,
 		{
-			fileExists: (filePath) => fs.statSync(filePath).isFile(),
-			readDirectory: (rootDir, extensions, excludes, includes) =>
-				includes
-					.flatMap((include) =>
-						fs
-							.readdirSync(path.join(rootDir, include))
-							.map((fileName) => path.join(rootDir, include, fileName)),
-					)
-					.filter(
-						(filePath) =>
-							!excludes?.some((exclude) => minimatch(filePath, exclude)) &&
-							extensions.some((extension) => filePath.endsWith(extension)),
-					)
-					.map((filePath) => path.relative(rootDir, filePath)),
-			readFile: (filePath) => fs.readFileSync(filePath).toString(),
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			directoryExists: ts.sys.directoryExists,
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			fileExists: ts.sys.fileExists,
+			getCurrentDirectory: () => process.cwd(),
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			getDirectories: ts.sys.getDirectories,
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			readDirectory: ts.sys.readDirectory,
+			// eslint-disable-next-line @typescript-eslint/unbound-method
+			readFile: ts.sys.readFile,
 			useCaseSensitiveFileNames: true,
 		},
 		cwd,
