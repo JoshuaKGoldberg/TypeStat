@@ -86,18 +86,15 @@
 	};
 
 	async function navigateTo(): Promise<boolean> {
-		return await new Promise(() => "");
+		return await new Promise(() => {});
 	}
 
-	function navigateByUrl(url: string): Promise<boolean>;
-
-	async function navigateTo(): Promise<boolean> {
-		return await navigateByUrl("");
+	async function navigateByUrl(url: string): Promise<boolean> {
+		return Promise.resolve(true);
 	}
 
 	async function navigateTo2(): Promise<boolean> {
-		const navigated = await navigateByUrl("");
-		return navigated;
+		return await navigateByUrl("");
 	}
 
 	async function returnSame(): Promise<boolean> {
