@@ -9,7 +9,9 @@ describe("Missing properties", () => {
 			import.meta.dirname,
 			"./cases/fixes/missingProperties/missingPropertyAccesses",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	}, 10000);
 });

@@ -9,17 +9,21 @@ describe("noImplicitAny", () => {
 			import.meta.dirname,
 			"cases/fixes/noImplicitAny/parameters",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-	});
+		expect(options).toMatchSnapshot("options");
+	}, 7000);
 
 	it("property declarations", async () => {
 		const caseDir = path.join(
 			import.meta.dirname,
 			"cases/fixes/noImplicitAny/propertyDeclarations",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 
 	it("variable declarations", async () => {
@@ -27,7 +31,9 @@ describe("noImplicitAny", () => {
 			import.meta.dirname,
 			"cases/fixes/noImplicitAny/variableDeclarations",
 		);
-		const { actualContent, expectedFilePath } = await runMutationTest(caseDir);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
 	});
 });
