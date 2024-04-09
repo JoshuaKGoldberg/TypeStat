@@ -10,25 +10,14 @@ describe("collectFileNames", () => {
 			path.resolve(import.meta.dirname),
 			["*"],
 		);
-		const names = Array.isArray(fileNames)
-			? (fileNames as string[]).map((item) => item.replace(cwd, "<rootDir>"))
-			: undefined;
-
-		// Assert
 		expect(fileNames).toContain(`${cwd}/src/collectFileNames.test.ts`);
 	});
 
-	it("return error if node modules are included", async () => {
+	it("should return error if node_modules are implicitly included", async () => {
 		const cwd = path.resolve(import.meta.dirname, "..");
 		const fileNames = await collectFileNames(cwd, ["*"]);
-
-		// Assert
-		const error =
-			typeof fileNames === "string"
-				? fileNames.replace(cwd, "<rootDir>")
-				: undefined;
-		expect(error).toEqual(
-			"At least one path including node_modules was included implicitly: '<rootDir>/node_modules'. Either adjust TypeStat's included files to not include node_modules (recommended) or explicitly include node_modules/ (not recommended).",
+		expect(fileNames).toEqual(
+			`At least one path including node_modules was included implicitly: '${cwd}/node_modules'. Either adjust TypeStat's included files to not include node_modules (recommended) or explicitly include node_modules/ (not recommended).`,
 		);
 	});
 });
