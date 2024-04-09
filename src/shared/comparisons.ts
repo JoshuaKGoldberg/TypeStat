@@ -65,7 +65,7 @@ export const declaredInitializedTypeNodeIsRedundant = (
 	// This will allow many type declarations that could be removed.
 	if (
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-		(declaredEscapedName === "Map" || declaredEscapedName === "set") &&
+		(declaredEscapedName === "Map" || declaredEscapedName === "Set") &&
 		typeChecker.typeToString(declaredType) !=
 			typeChecker.typeToString(initializedType)
 	) {
