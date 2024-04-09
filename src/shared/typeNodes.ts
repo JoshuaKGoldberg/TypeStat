@@ -46,11 +46,3 @@ export const isIntrinsicNameType = (
 ): type is TypeWithIntrinsicName => {
 	return "intrinsicName" in type;
 };
-
-export type TypeWithValue = ts.Type & {
-	value: string;
-};
-
-export const isTypeWithValue = (type: ts.Type): type is TypeWithValue => {
-	return "value" in type;
-};
