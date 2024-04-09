@@ -92,6 +92,11 @@
 	type TypeSummariesPerNodeByName = Map<string, number>;
 	const incompleteTypes: TypeSummariesPerNodeByName = new Map();
 	const stringSet: Set<string> = new Set();
+	const copySet: ReadonlySet<Parent> = new Set<Parent>();
+	let letStringMapTyped: Map<string, string | number> = new Map<
+		string,
+		number
+	>();
 	// array
 	interface Mutation {
 		readonly range: number;
@@ -106,6 +111,9 @@
 	const fixIncompleteImplicitClassGenerics: FileMutator = (
 		request: FileMutationsRequest,
 	) => undefined;
+	class MyMap<K, V> {
+		//
+	}
 
 	// should lose their types
 	const incompleteTypes2: TypeSummariesPerNodeByName = new Map<
