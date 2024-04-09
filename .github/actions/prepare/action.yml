@@ -4,11 +4,17 @@ name: Prepare
 
 runs:
   steps:
-    - uses: pnpm/action-setup@v3
-    - uses: actions/setup-node@v4
+    - name: Install pnpm
+      uses: pnpm/action-setup@v3
+      with:
+        run_install: false
+    - name: Install Node.js
+      uses: actions/setup-node@v4
       with:
         cache: pnpm
+        cache-dependency-path: "pnpm-lock.yaml"
         node-version: "20"
-    - run: pnpm install --frozen-lockfile
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
       shell: bash
   using: composite
