@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { collectFileNames } from "./collectFileNames.js";
 
 describe("collectFileNames", () => {
-	it("should collect files with wildcard", async () => {
+	it("should collect files with wildcard when collection succeeds", async () => {
 		const cwd = path.resolve(import.meta.dirname, "..");
 		const fileNames = await collectFileNames(
 			path.resolve(import.meta.dirname),
@@ -15,7 +15,7 @@ describe("collectFileNames", () => {
 			: undefined;
 
 		// Assert
-		expect(names).toContain("<rootDir>/src/collectFileNames.test.ts");
+		expect(fileNames).toContain(`${cwd}/src/collectFileNames.test.ts`);
 	});
 
 	it("return error if node modules are included", async () => {
