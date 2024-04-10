@@ -2,17 +2,14 @@ import * as tsutils from "ts-api-utils";
 import ts from "typescript";
 
 import { FileMutationsRequest } from "./fileMutator.js";
-import {
-	isIntrinsicNameType,
-	isOptionalTypeArgumentsTypeNode,
-} from "./typeNodes.js";
+import { isIntrinsicNameType, isTypeArgumentsType } from "./typeNodes.js";
 import { getTypeAtLocationIfNotError } from "./types.js";
 
 export const declaredInitializedTypeNodeIsRedundant = (
 	request: FileMutationsRequest,
 	declaration: ts.TypeNode,
 	initializer: ts.Node,
-) => {
+): boolean | undefined => {
 	// Most literals (e.g. `""`) have a corresponding keyword (e.g. `string`)
 	switch (declaration.kind) {
 		case ts.SyntaxKind.BooleanKeyword:
@@ -35,21 +32,20 @@ export const declaredInitializedTypeNodeIsRedundant = (
 			return ts.isIdentifier(initializer) && initializer.text === "undefined";
 	}
 
-	// `RegExp`s are also initializers that one should never reassign
-	if (
-		ts.isTypeReferenceNode(declaration) &&
-		ts.isIdentifier(declaration.typeName)
-	) {
-		switch (declaration.typeName.text) {
-			case "RegExp":
-				return initializer.kind === ts.SyntaxKind.RegularExpressionLiteral;
-		}
-	}
+	const program = request.services.program;
 
 	// Other types are complex enough to need the type checker...
 	const declaredType = getTypeAtLocationIfNotError(request, declaration);
 	if (declaredType === undefined) {
 		return undefined;
+	}
+
+	const declaredEscapedName = declaredType.getSymbol()?.getEscapedName();
+
+	// `RegExp`s are also initializers that one should never reassign
+	switch (declaredEscapedName) {
+		case "RegExp":
+			return initializer.kind === ts.SyntaxKind.RegularExpressionLiteral;
 	}
 
 	const initializedType = getTypeAtLocationIfNotError(request, initializer);
@@ -59,13 +55,13 @@ export const declaredInitializedTypeNodeIsRedundant = (
 
 	const typeChecker = request.services.program.getTypeChecker();
 
-	const declaredEscapedName = declaredType.getSymbol()?.getEscapedName();
-
 	// This is brute-force way to keep Map<string, number> comparison to Map without type arguments...
 	// This will allow many type declarations that could be removed.
 	if (
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-		(declaredEscapedName === "Map" || declaredEscapedName === "Set") &&
+		(declaredEscapedName === "Map" ||
+			declaredEscapedName === "Set" ||
+			declaredEscapedName === "ReadonlySet") &&
 		typeChecker.typeToString(declaredType) !=
 			typeChecker.typeToString(initializedType)
 	) {
@@ -79,9 +75,11 @@ const declaredTypeIsEquivalent = (
 	typeChecker: ts.TypeChecker,
 	declaredType: ts.Type,
 	initializedType: ts.Type,
-) => {
+): boolean => {
 	// Most types, such as `string[]` / `[""]`, are generally found by this intersection...
 	if (
+		!tsutils.isIntrinsicAnyType(declaredType) &&
+		!tsutils.isIntrinsicAnyType(initializedType) &&
 		typeChecker.isTypeAssignableTo(declaredType, initializedType) &&
 		typeChecker.isTypeAssignableTo(initializedType, declaredType) &&
 		// ...though, notably, declares union types trigger false positives against non-union initializations
@@ -116,20 +114,13 @@ const typeSymbolsAndArgumentsAreEquivalent = (
 	typeChecker: ts.TypeChecker,
 	declaredType: ts.Type,
 	initializedType: ts.Type,
-) => {
+): boolean => {
 	const declaredSymbol = declaredType.getSymbol();
 	const initializedSymbol = initializedType.getSymbol();
 	if (
 		declaredSymbol !== initializedSymbol ||
-		!isOptionalTypeArgumentsTypeNode(declaredType) ||
-		declaredType.typeArguments === undefined ||
-		!isOptionalTypeArgumentsTypeNode(initializedType) ||
-		initializedType.typeArguments === undefined
-	) {
-		return false;
-	}
-
-	if (
+		!isTypeArgumentsType(declaredType) ||
+		!isTypeArgumentsType(initializedType) ||
 		declaredType.typeArguments.length !== initializedType.typeArguments.length
 	) {
 		return false;
@@ -159,7 +150,7 @@ const typeSymbolsAndArgumentsAreEquivalent = (
 const intrinsicNamesAreEquivalent = (
 	declaredName: string,
 	initializedName: string,
-) => {
+): boolean => {
 	switch (declaredName) {
 		case "boolean":
 			return initializedName === "false" || initializedName === "true";

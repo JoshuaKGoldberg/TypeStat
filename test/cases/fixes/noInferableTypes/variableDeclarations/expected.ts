@@ -92,6 +92,9 @@
 	type TypeSummariesPerNodeByName = Map<string, number>;
 	const incompleteTypes: TypeSummariesPerNodeByName = new Map();
 	const stringSet = new Set();
+	const stringSetWithInitialValue = new Set([""]);
+	const stringOrNumberSet = new Set();
+	const stringOrNumberSet2: Set<string | number> = new Set<number>();
 	const copySet: ReadonlySet<Parent> = new Set<Parent>();
 	let letStringMapTyped: Map<string, string | number> = new Map<
 		string,
