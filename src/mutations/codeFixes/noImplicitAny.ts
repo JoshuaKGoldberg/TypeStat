@@ -44,10 +44,7 @@ export const getNoImplicitAnyMutations = (
 	// (TypeScript will still suggest a codefix to make a redundant inferred type)
 	if (ts.isParameter(node)) {
 		const nodeType = getTypeAtLocationIfNotError(request, node);
-		if (
-			nodeType === undefined ||
-			!tsutils.isTypeFlagSet(nodeType, ts.TypeFlags.Any)
-		) {
+		if (nodeType === undefined || !tsutils.isIntrinsicAnyType(nodeType)) {
 			return undefined;
 		}
 	}

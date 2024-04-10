@@ -30,7 +30,7 @@ export const collectUsageFlagsAndSymbols = (
 	// If the declared type is the general 'any', then we assume all are missing
 	// Similarly, if it's a plain Function or Object, we'll want to replace its contents
 	if (
-		tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Any) ||
+		tsutils.isIntrinsicAnyType(declaredType) ||
 		isKnownGlobalBaseType(declaredType)
 	) {
 		return {
