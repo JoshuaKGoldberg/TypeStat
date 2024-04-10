@@ -114,7 +114,7 @@ devDependencies:
     version: 2.4.0
   knip:
     specifier: ^5.2.2
-    version: 5.8.0(@types/node@20.12.5)(typescript@5.4.4)
+    version: 5.9.0(@types/node@20.12.5)(typescript@5.4.4)
   lint-staged:
     specifier: 15.2.2
     version: 15.2.2
@@ -1180,8 +1180,8 @@ packages:
       fastq: 1.17.1
     dev: true
 
-  /@npmcli/git@5.0.4:
-    resolution: {integrity: sha512-nr6/WezNzuYUppzXRaYu/W4aT5rLxdXqEFupbh6e/ovlYFQ8hpu1UUPV3Ir/YTl+74iXl2ZOMlGzudh9ZPUchQ==}
+  /@npmcli/git@5.0.5:
+    resolution: {integrity: sha512-x8hXItC8OFOwdgERzRIxg0ic1lQqW6kSZFFQtZTCNYOeGb9UqzVcod02TYljI9UBl4RtfcyQ0A7ygmcGFvEqWw==}
     engines: {node: ^16.14.0 || >=18.0.0}
     dependencies:
       '@npmcli/promise-spawn': 7.0.1
@@ -1215,7 +1215,7 @@ packages:
     resolution: {integrity: sha512-OI2zdYBLhQ7kpNPaJxiflofYIpkNLi+lnGdzqUOfRmCF3r2l1nadcjtCYMJKv/Utm/ZtlffaUuTiAktPHbc17g==}
     engines: {node: ^16.14.0 || >=18.0.0}
     dependencies:
-      '@npmcli/git': 5.0.4
+      '@npmcli/git': 5.0.5
       glob: 10.3.12
       hosted-git-info: 7.0.1
       json-parse-even-better-errors: 3.0.1
@@ -3614,8 +3614,8 @@ packages:
       json-buffer: 3.0.1
     dev: true
 
-  /knip@5.8.0(@types/node@20.12.5)(typescript@5.4.4):
-    resolution: {integrity: sha512-q7/3eULypxgjT2EWWt3lly7hbQteKpRj04mfqPMjPb8CPWnF1GzyQtXr++eO0r6pAvSegLlhi/NFmG56sM6pfw==}
+  /knip@5.9.0(@types/node@20.12.5)(typescript@5.4.4):
+    resolution: {integrity: sha512-x5vNKlPjwtkwEza0tDBZ4je0onscqJYC2qsdIWbTBrg1MDgE+SEQhrvEiWdFz8AtfZ/8XwCh3DLFhPC1PQfLkg==}
     engines: {node: '>=18.6.0'}
     hasBin: true
     peerDependencies:
