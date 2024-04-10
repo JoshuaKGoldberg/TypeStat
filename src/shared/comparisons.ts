@@ -1,9 +1,16 @@
 import * as tsutils from "ts-api-utils";
-import ts from "typescript";
+import ts, {
+	isNewExpression,
+	isRegularExpressionLiteral,
+	isTypeReferenceNode,
+} from "typescript";
 
 import { FileMutationsRequest } from "./fileMutator.js";
 import { isIntrinsicNameType, isTypeArgumentsType } from "./typeNodes.js";
-import { getTypeAtLocationIfNotError } from "./types.js";
+import {
+	getTypeAtLocationIfNotError,
+	getTypeAtLocationIfNotErrorWithChecker,
+} from "./types.js";
 
 export const declaredInitializedTypeNodeIsRedundant = (
 	request: FileMutationsRequest,
@@ -32,20 +39,15 @@ export const declaredInitializedTypeNodeIsRedundant = (
 			return ts.isIdentifier(initializer) && initializer.text === "undefined";
 	}
 
-	const program = request.services.program;
-
 	// Other types are complex enough to need the type checker...
 	const declaredType = getTypeAtLocationIfNotError(request, declaration);
 	if (declaredType === undefined) {
 		return undefined;
 	}
 
-	const declaredEscapedName = declaredType.getSymbol()?.getEscapedName();
-
 	// `RegExp`s are also initializers that one should never reassign
-	switch (declaredEscapedName) {
-		case "RegExp":
-			return initializer.kind === ts.SyntaxKind.RegularExpressionLiteral;
+	if (isRegularExpressionLiteral(declaration)) {
+		return isRegularExpressionLiteral(initializer);
 	}
 
 	const initializedType = getTypeAtLocationIfNotError(request, initializer);
@@ -55,17 +57,26 @@ export const declaredInitializedTypeNodeIsRedundant = (
 
 	const typeChecker = request.services.program.getTypeChecker();
 
+	const declaredText = declaredType.getSymbol()?.getEscapedName();
+
 	// This is brute-force way to keep Map<string, number> comparison to Map without type arguments...
 	// This will allow many type declarations that could be removed.
 	if (
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-		(declaredEscapedName === "Map" ||
-			declaredEscapedName === "Set" ||
-			declaredEscapedName === "ReadonlySet") &&
+		(declaredText === "Map" ||
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+			declaredText === "Set" ||
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+			declaredText === "ReadonlySet") &&
 		typeChecker.typeToString(declaredType) !=
 			typeChecker.typeToString(initializedType)
 	) {
 		return false;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+	if (declaredText === "Set") {
+		return typeIsEquivalentForSet(typeChecker, declaration, initializer);
 	}
 
 	return declaredTypeIsEquivalent(typeChecker, declaredType, initializedType);
@@ -78,8 +89,6 @@ const declaredTypeIsEquivalent = (
 ): boolean => {
 	// Most types, such as `string[]` / `[""]`, are generally found by this intersection...
 	if (
-		!tsutils.isIntrinsicAnyType(declaredType) &&
-		!tsutils.isIntrinsicAnyType(initializedType) &&
 		typeChecker.isTypeAssignableTo(declaredType, initializedType) &&
 		typeChecker.isTypeAssignableTo(initializedType, declaredType) &&
 		// ...though, notably, declares union types trigger false positives against non-union initializations
@@ -160,4 +169,53 @@ const intrinsicNamesAreEquivalent = (
 	}
 
 	return false;
+};
+
+/**
+ * TypeChecker completes types for some nodes. So we need to check the equivalence
+ * from the node level, not from their types.
+ */
+const typeIsEquivalentForSet = (
+	typeChecker: ts.TypeChecker,
+	declaration: ts.TypeNode,
+	initializer: ts.Node,
+) => {
+	const declarationTypeArguments = isTypeReferenceNode(declaration)
+		? declaration.typeArguments
+		: undefined;
+	const initalizerTypeArguments = isNewExpression(initializer)
+		? initializer.typeArguments
+		: undefined;
+
+	if (
+		!declarationTypeArguments?.length ||
+		declarationTypeArguments.length !== initalizerTypeArguments?.length
+	) {
+		return false;
+	}
+
+	for (let i = 0; i < declarationTypeArguments.length; i += 1) {
+		const declaredTypeArgument = getTypeAtLocationIfNotErrorWithChecker(
+			typeChecker,
+			declarationTypeArguments[i],
+		);
+		const initializedTypeArgument = getTypeAtLocationIfNotErrorWithChecker(
+			typeChecker,
+			initalizerTypeArguments[i],
+		);
+
+		if (
+			!declaredTypeArgument ||
+			!initializedTypeArgument ||
+			!declaredTypeIsEquivalent(
+				typeChecker,
+				declaredTypeArgument,
+				initializedTypeArgument,
+			)
+		) {
+			return false;
+		}
+	}
+
+	return true;
 };

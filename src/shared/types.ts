@@ -52,9 +52,21 @@ export const getTypeAtLocationIfNotError = (
 		return undefined;
 	}
 
-	const type = request.services.program
-		.getTypeChecker()
-		.getTypeAtLocation(node);
+	return getTypeAtLocationIfNotErrorWithChecker(
+		request.services.program.getTypeChecker(),
+		node,
+	);
+};
+
+export const getTypeAtLocationIfNotErrorWithChecker = (
+	typeChecker: ts.TypeChecker,
+	node: ts.Node | undefined,
+): ts.Type | undefined => {
+	if (node === undefined) {
+		return undefined;
+	}
+
+	const type = typeChecker.getTypeAtLocation(node);
 
 	return isIntrinsicNameType(type) && type.intrinsicName === "error"
 		? undefined
