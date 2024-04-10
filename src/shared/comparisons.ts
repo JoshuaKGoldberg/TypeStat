@@ -35,15 +35,15 @@ export const declaredInitializedTypeNodeIsRedundant = (
 			return ts.isIdentifier(initializer) && initializer.text === "undefined";
 	}
 
+	// `RegExp`s are also initializers that one should never reassign
+	if (ts.isRegularExpressionLiteral(declaration)) {
+		return ts.isRegularExpressionLiteral(initializer);
+	}
+
 	// Other types are complex enough to need the type checker...
 	const declaredType = getTypeAtLocationIfNotError(request, declaration);
 	if (declaredType === undefined) {
 		return undefined;
-	}
-
-	// `RegExp`s are also initializers that one should never reassign
-	if (ts.isRegularExpressionLiteral(declaration)) {
-		return ts.isRegularExpressionLiteral(initializer);
 	}
 
 	const initializedType = getTypeAtLocationIfNotError(request, initializer);
