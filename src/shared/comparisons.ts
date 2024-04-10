@@ -1,9 +1,5 @@
 import * as tsutils from "ts-api-utils";
-import ts, {
-	isNewExpression,
-	isRegularExpressionLiteral,
-	isTypeReferenceNode,
-} from "typescript";
+import ts from "typescript";
 
 import { FileMutationsRequest } from "./fileMutator.js";
 import { isIntrinsicNameType, isTypeArgumentsType } from "./typeNodes.js";
@@ -46,8 +42,8 @@ export const declaredInitializedTypeNodeIsRedundant = (
 	}
 
 	// `RegExp`s are also initializers that one should never reassign
-	if (isRegularExpressionLiteral(declaration)) {
-		return isRegularExpressionLiteral(initializer);
+	if (ts.isRegularExpressionLiteral(declaration)) {
+		return ts.isRegularExpressionLiteral(initializer);
 	}
 
 	const initializedType = getTypeAtLocationIfNotError(request, initializer);
@@ -180,16 +176,16 @@ const typeIsEquivalentForSet = (
 	declaration: ts.TypeNode,
 	initializer: ts.Node,
 ) => {
-	const declarationTypeArguments = isTypeReferenceNode(declaration)
+	const declarationTypeArguments = ts.isTypeReferenceNode(declaration)
 		? declaration.typeArguments
 		: undefined;
-	const initalizerTypeArguments = isNewExpression(initializer)
+	const initializerTypeArguments = ts.isNewExpression(initializer)
 		? initializer.typeArguments
 		: undefined;
 
 	if (
 		!declarationTypeArguments?.length ||
-		declarationTypeArguments.length !== initalizerTypeArguments?.length
+		declarationTypeArguments.length !== initializerTypeArguments?.length
 	) {
 		return false;
 	}
@@ -201,7 +197,7 @@ const typeIsEquivalentForSet = (
 		);
 		const initializedTypeArgument = getTypeAtLocationIfNotErrorWithChecker(
 			typeChecker,
-			initalizerTypeArguments[i],
+			initializerTypeArguments[i],
 		);
 
 		if (
