@@ -3,26 +3,6 @@ import ts from "typescript";
 import { FileMutationsRequest } from "./fileMutator.js";
 import { getTypeAtLocationIfNotError } from "./types.js";
 
-export const getClassExtendsExpression = (
-	node: ts.ClassLikeDeclaration,
-): ts.ExpressionWithTypeArguments | undefined => {
-	const { heritageClauses } = node;
-	if (heritageClauses === undefined) {
-		return undefined;
-	}
-
-	const classExtension = heritageClauses.find(
-		(clause) => clause.token === ts.SyntaxKind.ExtendsKeyword,
-	);
-	if (classExtension === undefined) {
-		return undefined;
-	}
-
-	return classExtension.types.length === 1
-		? classExtension.types[0]
-		: undefined;
-};
-
 export const getBaseClassDeclaration = (
 	request: FileMutationsRequest,
 	extension: ts.ExpressionWithTypeArguments,
