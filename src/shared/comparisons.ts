@@ -6,6 +6,7 @@ import { isIntrinsicNameType, isTypeArgumentsType } from "./typeNodes.js";
 import {
 	getTypeAtLocationIfNotError,
 	getTypeAtLocationIfNotErrorWithChecker,
+	isTypeBuiltIn,
 } from "./types.js";
 
 export const declaredInitializedTypeNodeIsRedundant = (
@@ -46,6 +47,14 @@ export const declaredInitializedTypeNodeIsRedundant = (
 		return undefined;
 	}
 
+	const declaredText = declaredType.getSymbol()?.getEscapedName();
+
+	// ReadonlySet is type-only, it can't be initialized. It should be never be removed.
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+	if (declaredText === "ReadonlySet" && isTypeBuiltIn(declaredType)) {
+		return false;
+	}
+
 	const initializedType = getTypeAtLocationIfNotError(request, initializer);
 	if (initializedType === undefined) {
 		return undefined;
@@ -53,17 +62,14 @@ export const declaredInitializedTypeNodeIsRedundant = (
 
 	const typeChecker = request.services.program.getTypeChecker();
 
-	const declaredText = declaredType.getSymbol()?.getEscapedName();
-
 	// This is brute-force way to keep Map<string, number> comparison to Map without type arguments...
 	// This will allow many type declarations that could be removed.
 	if (
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
 		(declaredText === "Map" ||
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-			declaredText === "Set" ||
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-			declaredText === "ReadonlySet") &&
+			declaredText === "Set") &&
+		isTypeBuiltIn(initializedType) &&
 		typeChecker.typeToString(declaredType) !=
 			typeChecker.typeToString(initializedType)
 	) {
@@ -71,7 +77,7 @@ export const declaredInitializedTypeNodeIsRedundant = (
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-	if (declaredText === "Set") {
+	if (declaredText === "Set" && isTypeBuiltIn(initializedType)) {
 		return typeIsEquivalentForSet(typeChecker, declaration, initializer);
 	}
 
