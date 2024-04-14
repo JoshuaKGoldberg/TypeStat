@@ -6,9 +6,6 @@ exports[`No inferable types > parameters > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": true
@@ -85,9 +82,6 @@ exports[`No inferable types > property declarations > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": true
@@ -164,9 +158,6 @@ exports[`No inferable types > variable declarations > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": true

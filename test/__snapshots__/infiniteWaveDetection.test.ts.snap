@@ -6,10 +6,6 @@ exports[`Infinite wave detection > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "include": [
-      "actual.ts"
-    ],
-    "compileOnSave": false,
     "noImplicitAny": false,
     "noImplicitThis": false,
     "strictNullChecks": false
@@ -36,7 +32,7 @@ exports[`Infinite wave detection > options 1`] = `
     }
   },
   "include": [
-    "actual.ts"
+    "<rootDir>/actual.ts"
   ],
   "mutators": [
     [

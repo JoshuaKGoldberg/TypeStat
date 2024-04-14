@@ -6,9 +6,6 @@ exports[`filters > empty > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": true,
     "noImplicitThis": false,
     "strictNullChecks": true
@@ -85,9 +82,6 @@ exports[`filters > one > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": true,
     "noImplicitThis": false,
     "strictNullChecks": true
@@ -166,9 +160,6 @@ exports[`filters > two > options 1`] = `
     "suppressTypeErrors": false
   },
   "compilerOptions": {
-    "files": [
-      "actual.ts"
-    ],
     "noImplicitAny": true,
     "noImplicitThis": false,
     "strictNullChecks": true
