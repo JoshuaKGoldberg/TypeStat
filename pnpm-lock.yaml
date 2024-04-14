@@ -93,7 +93,7 @@ devDependencies:
     version: 17.2.0(eslint@8.57.0)
   eslint-plugin-package-json:
     specifier: ^0.12.0
-    version: 0.12.1(eslint@8.57.0)(jsonc-eslint-parser@2.4.0)
+    version: 0.12.2(eslint@8.57.0)(jsonc-eslint-parser@2.4.0)
   eslint-plugin-perfectionist:
     specifier: ^2.7.0
     version: 2.8.0(eslint@8.57.0)(typescript@5.4.5)
@@ -2724,8 +2724,8 @@ packages:
       semver: 7.6.0
     dev: true
 
-  /eslint-plugin-package-json@0.12.1(eslint@8.57.0)(jsonc-eslint-parser@2.4.0):
-    resolution: {integrity: sha512-Z70ddt7tvZrdLZv4V1OkoDqGnnFakVRmAAeP+y/18ZvpgoPJXkqa+JRJNh+tWQ2PMZU4CqleZ6tZOEoq47AY2g==}
+  /eslint-plugin-package-json@0.12.2(eslint@8.57.0)(jsonc-eslint-parser@2.4.0):
+    resolution: {integrity: sha512-saWJz3wcAUg9sHmKycKaut/dmTLtiq56VNh4yQlW6EQd1GhKi1MQ5lCf/aXWCHRCXbWozFhG1Q6FDce7Q5T9bw==}
     engines: {node: '>=18'}
     peerDependencies:
       eslint: '>=8.0.0'
@@ -2733,7 +2733,7 @@ packages:
     dependencies:
       eslint: 8.57.0
       jsonc-eslint-parser: 2.4.0
-      package-json-validator: 0.6.3
+      package-json-validator: 0.6.4
       semver: 7.6.0
       sort-package-json: 1.57.0
       validate-npm-package-name: 5.0.0
@@ -4253,8 +4253,8 @@ packages:
       mimic-fn: 3.1.0
     dev: true
 
-  /package-json-validator@0.6.3:
-    resolution: {integrity: sha512-juKiFboV4UKUvWQ+OSxstnyukhuluyuEoFmgZw1Rx21XzmwlgDWLcbl3qzjA3789IRORYhVFs7cmAO0YFGwHCg==}
+  /package-json-validator@0.6.4:
+    resolution: {integrity: sha512-sp5bWr5eUoVgNV50vsJyil0XCluM+qMvtba8X4ug5Z/0YtYZsePka+tZgqiZnAyFyf5pwXaSDwYncFdSEzX7PA==}
     hasBin: true
     dependencies:
       optimist: 0.6.1
