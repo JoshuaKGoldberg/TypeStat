@@ -1,8 +1,18 @@
-{
-	"fixes": {
-		"incompleteTypes": true
+[
+	{
+		"fixes": {
+			"incompleteTypes": true
+		},
+		"postProcess": {
+			"shell": [["node", "./postProcess.cjs"]]
+		}
 	},
-	"postProcess": {
-		"shell": [["node", "./postProcess.cjs"]]
+	{
+		"cleanups": {
+			"suppressTypeErrors": true
+		},
+		"fixes": {
+			"incompleteTypes": true
+		}
 	}
-}
+]

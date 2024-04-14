@@ -129,6 +129,7 @@ interface LaterAssignedComponentProps {
 		}
 	}
 
+// @ts-expect-error -- TODO: Property 'propTypes' does not exist on type 'typeof LaterAssignedComponent'.
 	LaterAssignedComponent.propTypes = {
 		string: PropTypes.string,
 		stringRequired: PropTypes.string.isRequired,

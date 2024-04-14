@@ -57,6 +57,7 @@
 	let textSibling: string | undefined = "";
 	let textChild: string | undefined = "";
 
+// @ts-expect-error -- TODO: Argument of type 'undefined' is not assignable to parameter of type 'string'.
 	takesString(emptyExplicitSibling);
 	takesString(emptyImplicitSibling);
 	takesString(textSibling);

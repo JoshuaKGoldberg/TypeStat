@@ -4,7 +4,10 @@ import path from "node:path";
 
 import { fillOutRawOptions } from "../options/fillOutRawOptions.js";
 import { parseRawCompilerOptions } from "../options/parseRawCompilerOptions.js";
-import { RawTypeStatOptions } from "../options/types.js";
+import {
+	PendingTypeStatOptions,
+	RawTypeStatOptions,
+} from "../options/types.js";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider.js";
 
 export interface MutationTestResult {
@@ -34,11 +37,14 @@ export const runMutationTest = async (
 	await fs.copyFile(originalFile, actualFile);
 
 	const rawTypeStatOptions = await readFile("typestat.json");
-	const rawOptions = JSON.parse(rawTypeStatOptions) as RawTypeStatOptions;
+	const rawOptions = JSON.parse(rawTypeStatOptions) as
+		| RawTypeStatOptions
+		| RawTypeStatOptions[];
+	const rawOptionsList = Array.isArray(rawOptions) ? rawOptions : [rawOptions];
 
 	const projectPath = path.join(dirPath, "tsconfig.json");
 
-	const compilerOptions = await parseRawCompilerOptions(dirPath, projectPath);
+	const tsConfig = await parseRawCompilerOptions(dirPath, projectPath);
 
 	const output = {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -48,32 +54,38 @@ export const runMutationTest = async (
 		stdout: () => {},
 	};
 
-	const pendingOptions = fillOutRawOptions({
-		argv: { args: [] },
-		compilerOptions,
-		cwd: dirPath,
-		output,
-		projectPath,
-		rawOptions,
-	});
+	const pendingOptionsList: PendingTypeStatOptions[] = [];
 
-	const provider = createTypeStatProvider({
-		...pendingOptions,
-		fileNames: [actualFile],
-	});
+	for (const mutationOption of rawOptionsList) {
+		const pendingOptions = fillOutRawOptions({
+			cwd: dirPath,
+			output,
+			projectPath,
+			rawOptions: mutationOption,
+			tsConfig,
+		});
 
-	await runMutations({
-		mutationsProvider: provider,
-	});
+		pendingOptionsList.push(pendingOptions);
+
+		const provider = createTypeStatProvider({
+			...pendingOptions,
+			fileNames: [actualFile],
+		});
+
+		await runMutations({
+			mutationsProvider: provider,
+		});
+	}
 
 	const actualContent = await readFile(actualFileName);
 	const expectFileName = `expected.ts${fileNameSuffix}`;
 	const expectedFilePath = path.join(dirPath, expectFileName);
 
-	const optionsSnapshot = JSON.stringify(pendingOptions, null, 2).replaceAll(
-		dirPath,
-		"<rootDir>",
-	);
+	const optionsSnapshot = JSON.stringify(
+		pendingOptionsList,
+		null,
+		2,
+	).replaceAll(dirPath, "<rootDir>");
 
 	return { actualContent, expectedFilePath, options: optionsSnapshot };
 };

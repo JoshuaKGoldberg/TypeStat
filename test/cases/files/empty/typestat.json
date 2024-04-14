@@ -1,9 +1,19 @@
-{
-	"files": {
-		"above": "",
-		"below": ""
+[
+	{
+		"files": {
+			"above": "",
+			"below": ""
+		},
+		"fixes": {
+			"incompleteTypes": true
+		}
 	},
-	"fixes": {
-		"incompleteTypes": true
+	{
+		"cleanups": {
+			"suppressTypeErrors": true
+		},
+		"fixes": {
+			"incompleteTypes": true
+		}
 	}
-}
+]

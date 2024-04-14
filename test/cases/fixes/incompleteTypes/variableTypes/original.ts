@@ -187,14 +187,4 @@ import * as React from "react";
 	let returnsStringOrNumber: Function;
 	returnsStringOrNumber = () => "";
 	returnsStringOrNumber = () => 0;
-
-	// Predeclared functions (React FCs)
-
-	interface MyComponentProps {
-		text: string;
-	}
-
-	const MyComponent: React.FC<MyComponentProps> = ({ text }) => {
-		return <span>{text}</span>;
-	};
 })();

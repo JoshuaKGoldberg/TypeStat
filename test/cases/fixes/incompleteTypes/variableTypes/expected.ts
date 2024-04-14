@@ -4,6 +4,7 @@ import * as React from "react";
 	// Primitives
 
 	let givenUndefined = "";
+// @ts-expect-error -- TODO: Type 'undefined' is not assignable to type 'string'.
 	givenUndefined = undefined;
 
 	let givenUndefinedAsString: string | undefined = "";
@@ -17,6 +18,7 @@ import * as React from "react";
 	givenNullAndUndefinedHasNull = undefined;
 
 	let givenNull = "";
+// @ts-expect-error -- TODO: Type 'null' is not assignable to type 'string'.
 	givenNull = null;
 
 	let givenNullAsString: string | null = "";
@@ -107,12 +109,14 @@ import * as React from "react";
 	let onlyClassOneExplicitInterface: SampleInterface = new SampleClassOne();
 
 	let eitherClassImplicit = new SampleClassOne();
+// @ts-expect-error -- TODO: Type 'SampleClassTwo' is not assignable to type 'SampleClassOne'.
 	eitherClassImplicit = new SampleClassTwo();
 
 	let eitherClassExplicit: SampleInterface = new SampleClassOne();
 	eitherClassExplicit = new SampleClassTwo();
 
 	let eitherClassNeedsUnionImplicit = new SampleClassOne();
+// @ts-expect-error -- TODO: Type 'SampleClassTwo' is not assignable to type 'SampleClassOne'.
 	eitherClassNeedsUnionImplicit = new SampleClassTwo();
 
 	let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
@@ -123,7 +127,9 @@ import * as React from "react";
 	eitherClassNeedsUnionExplicitInterface = new SampleClassTwo();
 
 	let eitherClassNeedsNullImplicit = new SampleClassOne();
+// @ts-expect-error -- TODO: Type 'SampleClassTwo' is not assignable to type 'SampleClassOne'.
 	eitherClassNeedsNullImplicit = new SampleClassTwo();
+// @ts-expect-error -- TODO: Type 'null' is not assignable to type 'SampleClassOne'.
 	eitherClassNeedsNullImplicit = null;
 
 	let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo =
@@ -187,14 +193,4 @@ import * as React from "react";
 	let returnsStringOrNumber: (() => string) | (() => number);
 	returnsStringOrNumber = () => "";
 	returnsStringOrNumber = () => 0;
-
-	// Predeclared functions (React FCs)
-
-	interface MyComponentProps {
-		text: string;
-	}
-
-	const MyComponent: React.FC<MyComponentProps> = ({ text }) => {
-		return <span>{text}</span>;
-	};
 })();

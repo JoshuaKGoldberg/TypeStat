@@ -15,6 +15,7 @@ private _withGetterAndSetter: string;
 			this.givenTwiceSame = 1;
 
 			this.givenTwiceDifferent = 1;
+// @ts-expect-error -- TODO: Type 'undefined' is not assignable to type 'number'.
 			this.givenTwiceDifferent = undefined;
 		}
 

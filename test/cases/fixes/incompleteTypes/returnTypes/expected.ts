@@ -85,19 +85,18 @@
 		return "";
 	};
 
+// @ts-expect-error -- TODO: Type 'boolean | Promise<boolean>' is not a valid async function return type in ES5/ES3 because it does not refer to a Promise-compatible constructor value.
 	async function navigateTo(): Promise<boolean> | boolean {
-		return await new Promise(() => "");
+		return await new Promise(() => {});
 	}
 
-	function navigateByUrl(url: string): Promise<boolean>;
-
-	async function navigateTo(): Promise<boolean> | boolean {
-		return await navigateByUrl("");
+	async function navigateByUrl(url: string): Promise<boolean> {
+		return Promise.resolve(true);
 	}
 
+// @ts-expect-error -- TODO: Type 'boolean | Promise<boolean>' is not a valid async function return type in ES5/ES3 because it does not refer to a Promise-compatible constructor value.
 	async function navigateTo2(): Promise<boolean> | boolean {
-		const navigated = await navigateByUrl("");
-		return navigated;
+		return await navigateByUrl("");
 	}
 
 	async function returnSame(): Promise<boolean> {

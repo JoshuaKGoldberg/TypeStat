@@ -1,8 +1,18 @@
-{
-	"files": {
-		"below": "/* Below file */"
+[
+	{
+		"files": {
+			"below": "/* Below file */"
+		},
+		"fixes": {
+			"incompleteTypes": true
+		}
 	},
-	"fixes": {
-		"incompleteTypes": true
+	{
+		"cleanups": {
+			"suppressTypeErrors": true
+		},
+		"fixes": {
+			"incompleteTypes": true
+		}
 	}
-}
+]
