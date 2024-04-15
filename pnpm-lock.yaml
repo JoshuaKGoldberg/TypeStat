@@ -84,7 +84,7 @@ devDependencies:
     version: 48.2.3(eslint@8.57.0)
   eslint-plugin-jsonc:
     specifier: ^2.14.1
-    version: 2.15.0(eslint@8.57.0)
+    version: 2.15.1(eslint@8.57.0)
   eslint-plugin-markdown:
     specifier: ^4.0.1
     version: 4.0.1(eslint@8.57.0)
@@ -2686,8 +2686,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-jsonc@2.15.0(eslint@8.57.0):
-    resolution: {integrity: sha512-wAphMVgTQPAKAYV8d/QEkEYDg8uer9nMQ85N17IUiJcAWLxJs83/Exe59dEH9yKUpvpLf46H+wR7/U7lZ3/NpQ==}
+  /eslint-plugin-jsonc@2.15.1(eslint@8.57.0):
+    resolution: {integrity: sha512-PVFrqIJa8BbM/e828RSn0SwB/Z5ye+2LDuy2XqG6AymNgPsfApRRcznsbxP7VrjdLEU4Nb+g9n/d6opyp0jp9A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
