@@ -39,7 +39,7 @@ dependencies:
 devDependencies:
   '@types/eslint':
     specifier: ^8.56.6
-    version: 8.56.8
+    version: 8.56.9
   '@types/glob':
     specifier: 8.1.0
     version: 8.1.0
@@ -1517,8 +1517,8 @@ packages:
       p-map: 4.0.0
     dev: true
 
-  /@types/eslint@8.56.8:
-    resolution: {integrity: sha512-LdDdQVDzDXf3ijhhMnE27C5vc0QEknD8GiMR/Hi+fVbdZNfAfCy2j69m0LjUd2MAy0+kIgnOtd5ndTmDk/VWCA==}
+  /@types/eslint@8.56.9:
+    resolution: {integrity: sha512-W4W3KcqzjJ0sHg2vAq9vfml6OhsJ53TcUjUqfzzZf/EChUtwspszj/S0pzMxnfRcO55/iGq47dscXw71Fxc4Zg==}
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
