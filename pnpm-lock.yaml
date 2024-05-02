@@ -94,8 +94,8 @@ importers:
         specifier: ^17.0.0
         version: 17.3.1(eslint@8.57.0)
       eslint-plugin-package-json:
-        specifier: ^0.12.0
-        version: 0.12.2(eslint@8.57.0)(jsonc-eslint-parser@2.4.0)
+        specifier: ^0.13.0
+        version: 0.13.1(eslint@8.57.0)(jsonc-eslint-parser@2.4.0)
       eslint-plugin-perfectionist:
         specifier: ^2.7.0
         version: 2.8.0(eslint@8.57.0)(typescript@5.4.5)
@@ -1467,8 +1467,8 @@ packages:
     peerDependencies:
       eslint: '>=8.23.0'
 
-  eslint-plugin-package-json@0.12.2:
-    resolution: {integrity: sha512-saWJz3wcAUg9sHmKycKaut/dmTLtiq56VNh4yQlW6EQd1GhKi1MQ5lCf/aXWCHRCXbWozFhG1Q6FDce7Q5T9bw==}
+  eslint-plugin-package-json@0.13.1:
+    resolution: {integrity: sha512-aZkSvyJZRW4JKFhdoBhuPgc8sM/UAQN993uh956Yb8dSFCAV0Vkwrw09cuPL5onZ6ygF5pCqSs57wZRqGIwDQQ==}
     engines: {node: '>=18'}
     peerDependencies:
       eslint: '>=8.0.0'
@@ -4190,12 +4190,15 @@ snapshots:
       minimatch: 9.0.4
       semver: 7.6.0
 
-  eslint-plugin-package-json@0.12.2(eslint@8.57.0)(jsonc-eslint-parser@2.4.0):
+  eslint-plugin-package-json@0.13.1(eslint@8.57.0)(jsonc-eslint-parser@2.4.0):
     dependencies:
+      detect-indent: 6.1.0
+      detect-newline: 3.1.0
       eslint: 8.57.0
       jsonc-eslint-parser: 2.4.0
       package-json-validator: 0.6.4
       semver: 7.6.0
+      sort-object-keys: 1.1.3
       sort-package-json: 1.57.0
       validate-npm-package-name: 5.0.0
 
