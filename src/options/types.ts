@@ -164,11 +164,11 @@ export interface TypeStatOptions extends BaseTypeStatOptions {
 /**
  * Parsed TypeScript compiler options with relevant fields filled out.
  */
-export type TypeStatCompilerOptions = ts.CompilerOptions & {
+export type TypeStatCompilerOptions = {
 	noImplicitAny: boolean;
 	noImplicitThis: boolean;
 	strictNullChecks: boolean;
-};
+} & ts.CompilerOptions;
 
 /**
  * Directives for file-level changes.

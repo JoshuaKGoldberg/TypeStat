@@ -17,9 +17,9 @@ export type WellKnownTypeName =
 	| "unknown"
 	| "void";
 
-export type TypeWithTypeArguments = ts.Type & {
+export type TypeWithTypeArguments = {
 	typeArguments: ts.Type[];
-};
+} & ts.Type;
 
 export const isTypeArgumentsType = (
 	type: ts.Type,
@@ -27,9 +27,9 @@ export const isTypeArgumentsType = (
 	return "typeArguments" in type && !!type.typeArguments;
 };
 
-export type TypeWithOptionalTypeArguments = ts.Type & {
+export type TypeWithOptionalTypeArguments = {
 	typeArguments?: ts.Type[];
-};
+} & ts.Type;
 
 export const isOptionalTypeArgumentsTypeNode = (
 	type: ts.Type,
@@ -37,9 +37,9 @@ export const isOptionalTypeArgumentsTypeNode = (
 	return "typeArguments" in type;
 };
 
-export type TypeWithIntrinsicName = ts.Type & {
+export type TypeWithIntrinsicName = {
 	intrinsicName: WellKnownTypeName;
-};
+} & ts.Type;
 
 export const isIntrinsicNameType = (
 	type: ts.Type,

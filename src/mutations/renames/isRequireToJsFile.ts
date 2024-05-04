@@ -1,8 +1,8 @@
 import ts from "typescript";
 
-export type LocalImplicitRequireCallExpression = ts.CallExpression & {
+export type LocalImplicitRequireCallExpression = {
 	arguments: [ts.StringLiteral];
-};
+} & ts.CallExpression;
 
 export const isRequireToJsFile = (
 	node: ts.Node,

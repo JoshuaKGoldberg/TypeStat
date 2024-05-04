@@ -40,9 +40,9 @@ export const getBaseClassDeclaration = (
 		const { resolvedBaseConstructorType } = getTypeAtLocationIfNotError(
 			request,
 			extension.parent.parent,
-		) as ts.Type & {
+		) as {
 			resolvedBaseConstructorType: ts.Type | undefined;
-		};
+		} & ts.Type;
 
 		if (resolvedBaseConstructorType !== undefined) {
 			extensionSymbol = resolvedBaseConstructorType.symbol;

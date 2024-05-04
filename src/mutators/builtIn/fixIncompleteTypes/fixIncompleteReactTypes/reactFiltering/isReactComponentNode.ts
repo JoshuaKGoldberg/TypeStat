@@ -6,12 +6,9 @@ export type ReactComponentNode =
 	| ReactClassComponentNode
 	| ReactFunctionalComponentNode;
 
-export type ReactClassComponentNode = (
-	| ts.ClassDeclaration
-	| ts.ClassExpression
-) & {
+export type ReactClassComponentNode = {
 	heritageClauses: ts.NodeArray<ts.HeritageClause>;
-};
+} & (ts.ClassDeclaration | ts.ClassExpression);
 
 export type ReactFunctionalComponentNode =
 	| ts.ArrowFunction

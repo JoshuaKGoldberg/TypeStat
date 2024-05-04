@@ -24,7 +24,7 @@ export const fixIncompleteParameterTypes: FileMutator = (
 
 const isParameterWithType = (
 	node: ts.Node,
-): node is ts.ParameterDeclaration & NodeWithType =>
+): node is NodeWithType & ts.ParameterDeclaration =>
 	ts.isParameter(node) && isNodeWithType(node);
 
 const visitParameterDeclaration = (
