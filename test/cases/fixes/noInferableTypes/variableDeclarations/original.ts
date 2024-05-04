@@ -46,6 +46,9 @@
 	let letInferableNullOrStrings: (null | string)[] = [null, ""];
 	let letInferableNumberOrRegExps: (number | RegExp)[] = [0, /./];
 
+	// Non-inferable const arrays
+	const constNonInferableStringArray: string[] = [];
+
 	// Non-inferable const multi-type arrays
 	const constNonInferableNullOrStrings: (null | string)[] = [null];
 	const constNonInferableNumberOrRegExps: (number | RegExp)[] = [0];
@@ -88,6 +91,18 @@
 	// map
 	type TypeSummariesPerNodeByName = Map<string, number>;
 	const incompleteTypes: TypeSummariesPerNodeByName = new Map();
+	const mapWithoutRightSide: Map<string, string> = new Map();
+	const stringSet: Set<string> = new Set();
+	const stringReadonlySet: ReadonlySet<string> = new Set();
+	const stringSetWithInitialValue: Set<string> = new Set([""]);
+	const stringSetWithInitialValueAndTypes: Set<string> = new Set<string>([""]);
+	const stringOrNumberSet: Set<string | number> = new Set();
+	const stringOrNumberSet2: Set<string | number> = new Set<number>();
+	const copySet: ReadonlySet<Parent> = new Set<Parent>();
+	let letStringMapTyped: Map<string, string | number> = new Map<
+		string,
+		number
+	>();
 	// array
 	interface Mutation {
 		readonly range: number;
@@ -102,4 +117,17 @@
 	const fixIncompleteImplicitClassGenerics: FileMutator = (
 		request: FileMutationsRequest,
 	) => undefined;
+	class MyMap<K, V> {
+		//
+	}
+
+	// should lose their types
+	const incompleteTypes2: TypeSummariesPerNodeByName = new Map<
+		string,
+		number
+	>();
+	const stringMapTyped: Map<string, number> = new Map<string, number>();
+	const anyMap: Map<any, any> = new Map();
+	const anySet: Set<any> = new Set();
+	const anyArray: any[] = [];
 })();
