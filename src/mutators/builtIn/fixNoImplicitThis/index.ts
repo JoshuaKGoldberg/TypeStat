@@ -1,4 +1,4 @@
-import { isThisExpression } from "ts-api-utils";
+import * as tsutils from "ts-api-utils";
 
 import { getNoImplicitThisMutations } from "../../../mutations/codeFixes/noImplicitThis.js";
 import {
@@ -13,7 +13,7 @@ export const fixNoImplicitThis: FileMutator = (
 	request.options.fixes.noImplicitThis
 		? collectMutationsFromNodes(
 				request,
-				isThisExpression,
+				tsutils.isThisExpression,
 				getNoImplicitThisMutations,
 			)
 		: undefined;

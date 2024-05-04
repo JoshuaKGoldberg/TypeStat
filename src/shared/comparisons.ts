@@ -1,9 +1,4 @@
-import {
-	isFalseKeyword,
-	isNullKeyword,
-	isTrueKeyword,
-	isUnionType,
-} from "ts-api-utils";
+import * as tsutils from "ts-api-utils";
 import ts from "typescript";
 
 import { FileMutationsRequest } from "./fileMutator.js";
@@ -22,10 +17,13 @@ export const declaredInitializedTypeNodeIsRedundant = (
 	// Most literals (e.g. `""`) have a corresponding keyword (e.g. `string`)
 	switch (declaration.kind) {
 		case ts.SyntaxKind.BooleanKeyword:
-			return isFalseKeyword(initializer) || isTrueKeyword(initializer);
+			return (
+				tsutils.isFalseKeyword(initializer) ||
+				tsutils.isTrueKeyword(initializer)
+			);
 
 		case ts.SyntaxKind.NullKeyword:
-			return isNullKeyword(initializer);
+			return tsutils.isNullKeyword(initializer);
 
 		case ts.SyntaxKind.NumberKeyword:
 			return ts.isNumericLiteral(initializer);
@@ -96,7 +94,9 @@ const declaredTypeIsEquivalent = (
 		typeChecker.isTypeAssignableTo(declaredType, initializedType) &&
 		typeChecker.isTypeAssignableTo(initializedType, declaredType) &&
 		// ...though, notably, declares union types trigger false positives against non-union initializations
-		!(isUnionType(declaredType) && !isUnionType(initializedType))
+		!(
+			tsutils.isUnionType(declaredType) && !tsutils.isUnionType(initializedType)
+		)
 	) {
 		return true;
 	}

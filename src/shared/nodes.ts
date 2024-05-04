@@ -1,4 +1,4 @@
-import { isBlockLike, isEqualsToken } from "ts-api-utils";
+import * as tsutils from "ts-api-utils";
 import ts from "typescript";
 
 import { FileMutationsRequest } from "./fileMutator.js";
@@ -68,7 +68,7 @@ export const getParentOfKind = <TNode extends ts.Node = ts.Node>(
 export const isNodeAssigningBinaryExpression = (
 	node: ts.Node,
 ): node is ts.BinaryExpression =>
-	ts.isBinaryExpression(node) && isEqualsToken(node.operatorToken);
+	ts.isBinaryExpression(node) && tsutils.isEqualsToken(node.operatorToken);
 
 /**
  * Gets a variable initializer for an expression, if one exists.
@@ -116,7 +116,7 @@ export const getExpressionWithin = (node: ts.Node) =>
 export const getCloseAncestorCallOrNewExpression = (
 	node: ts.Node,
 ): ts.CallExpression | ts.NewExpression | undefined => {
-	if (ts.isSourceFile(node.parent) || isBlockLike(node)) {
+	if (ts.isSourceFile(node.parent) || tsutils.isBlockLike(node)) {
 		return undefined;
 	}
 
