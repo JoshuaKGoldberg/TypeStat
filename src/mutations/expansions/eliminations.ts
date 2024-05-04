@@ -94,6 +94,6 @@ function anySignatureReturnsVoid(type: ts.Type) {
 	return type
 		.getCallSignatures()
 		.some((callSignature) =>
-			tsutils.isTypeFlagSet(callSignature.getReturnType(), ts.TypeFlags.Void),
+			tsutils.isIntrinsicVoidType(callSignature.getReturnType()),
 		);
 }

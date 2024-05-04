@@ -70,7 +70,7 @@ const allTypeArgumentTypesMatch = (
 	// If the implicit type has defaulted to any, ignore it (assume a non-match)
 	if (
 		originalType.typeArguments.some((typeArgument) =>
-			tsutils.isTypeFlagSet(typeArgument, ts.TypeFlags.Any),
+			tsutils.isIntrinsicAnyType(typeArgument),
 		)
 	) {
 		return false;
@@ -79,7 +79,7 @@ const allTypeArgumentTypesMatch = (
 	// If the implicit types are all unknown, assume a non-match for being unknown
 	if (
 		originalType.typeArguments.every((typeArgument) =>
-			tsutils.isTypeFlagSet(typeArgument, ts.TypeFlags.Unknown),
+			tsutils.isIntrinsicUnknownType(typeArgument),
 		)
 	) {
 		return false;

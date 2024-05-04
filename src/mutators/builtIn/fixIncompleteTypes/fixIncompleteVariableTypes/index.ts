@@ -35,17 +35,12 @@ const visitVariableDeclaration = (
 ): Mutation | undefined => {
 	// Collect types later assigned to the variable, and types initially declared by or inferred on the variable
 	const assignedTypes = collectVariableAssignedTypes(node, request);
-	if (
-		assignedTypes.some((type) => tsutils.isTypeFlagSet(type, ts.TypeFlags.Any))
-	) {
+	if (assignedTypes.some((type) => tsutils.isIntrinsicAnyType(type))) {
 		return undefined;
 	}
 
 	const declaredType = getTypeAtLocationIfNotError(request, node);
-	if (
-		declaredType === undefined ||
-		tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Any)
-	) {
+	if (declaredType === undefined || tsutils.isIntrinsicAnyType(declaredType)) {
 		return undefined;
 	}
 

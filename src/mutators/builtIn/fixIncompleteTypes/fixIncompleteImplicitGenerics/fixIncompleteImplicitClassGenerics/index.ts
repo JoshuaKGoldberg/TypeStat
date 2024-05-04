@@ -6,10 +6,8 @@ import {
 	FileMutationsRequest,
 	FileMutator,
 } from "../../../../../shared/fileMutator.js";
-import {
-	getBaseClassDeclaration,
-	getClassExtendsExpression,
-} from "../../../../../shared/nodeExtensions.js";
+import { getBaseClassDeclaration } from "../../../../../shared/nodeExtensions.js";
+import { getClassExtendsType } from "../../../../../shared/nodes.js";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes.js";
 import { addMissingTemplateTypes, addNewTypeNodes } from "../additions.js";
 import { findMissingTemplateTypes } from "../templateCollecting.js";
@@ -24,7 +22,7 @@ const visitClassLike = (
 	request: FileMutationsRequest,
 ): Mutation | undefined => {
 	// We'll want a class node that extends some base class
-	const extension = getClassExtendsExpression(node);
+	const extension = getClassExtendsType(node);
 	if (extension === undefined) {
 		return undefined;
 	}

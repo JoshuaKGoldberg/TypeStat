@@ -1,7 +1,7 @@
+import * as tsutils from "ts-api-utils";
 import ts from "typescript";
 
 import { FileMutationsRequest } from "./fileMutator.js";
-import { isIntrinsicNameType } from "./typeNodes.js";
 
 /**
  * @returns Whether the type has `localTypeParameters`, such as the built-in Map and Array definitions.
@@ -68,7 +68,5 @@ export const getTypeAtLocationIfNotErrorWithChecker = (
 
 	const type = typeChecker.getTypeAtLocation(node);
 
-	return isIntrinsicNameType(type) && type.intrinsicName === "error"
-		? undefined
-		: type;
+	return tsutils.isIntrinsicErrorType(type) ? undefined : type;
 };

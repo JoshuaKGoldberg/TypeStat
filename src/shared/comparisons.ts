@@ -18,18 +18,18 @@ export const declaredInitializedTypeNodeIsRedundant = (
 	switch (declaration.kind) {
 		case ts.SyntaxKind.BooleanKeyword:
 			return (
-				initializer.kind === ts.SyntaxKind.FalseKeyword ||
-				initializer.kind === ts.SyntaxKind.TrueKeyword
+				tsutils.isFalseKeyword(initializer) ||
+				tsutils.isTrueKeyword(initializer)
 			);
 
 		case ts.SyntaxKind.NullKeyword:
-			return initializer.kind === ts.SyntaxKind.NullKeyword;
+			return tsutils.isNullKeyword(initializer);
 
 		case ts.SyntaxKind.NumberKeyword:
-			return initializer.kind === ts.SyntaxKind.NumericLiteral;
+			return ts.isNumericLiteral(initializer);
 
 		case ts.SyntaxKind.StringKeyword:
-			return initializer.kind === ts.SyntaxKind.StringLiteral;
+			return ts.isStringLiteral(initializer);
 
 		// (except for `undefined`, which is an initializer one should never reassign)
 		case ts.SyntaxKind.UndefinedKeyword:

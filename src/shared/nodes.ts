@@ -68,8 +68,7 @@ export const getParentOfKind = <TNode extends ts.Node = ts.Node>(
 export const isNodeAssigningBinaryExpression = (
 	node: ts.Node,
 ): node is ts.BinaryExpression =>
-	ts.isBinaryExpression(node) &&
-	node.operatorToken.kind === ts.SyntaxKind.EqualsToken;
+	ts.isBinaryExpression(node) && tsutils.isEqualsToken(node.operatorToken);
 
 /**
  * Gets a variable initializer for an expression, if one exists.

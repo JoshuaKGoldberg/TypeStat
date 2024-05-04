@@ -38,10 +38,7 @@ const visitFunctionWithBody = (
 ) => {
 	// Collect the type initially declared as returned
 	const declaredType = getTypeAtLocationIfNotError(request, node.type);
-	if (
-		declaredType === undefined ||
-		tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Any)
-	) {
+	if (declaredType === undefined || tsutils.isIntrinsicAnyType(declaredType)) {
 		return undefined;
 	}
 
