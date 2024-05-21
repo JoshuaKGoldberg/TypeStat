@@ -22,7 +22,7 @@ importers:
         version: 5.3.0
       commander:
         specifier: ^12.0.0
-        version: 12.0.0
+        version: 12.1.0
       enquirer:
         specifier: ^2.4.1
         version: 2.4.1
@@ -1234,6 +1234,10 @@ packages:
 
   commander@12.0.0:
     resolution: {integrity: sha512-MwVNWlYjDTtOjX5PiD7o5pK0UrFU/OYgcJfjjK4RaHZETNtjJqrZa9Y9ds88+A+f+d5lv+561eZ+yCKoS3gbAA==}
+    engines: {node: '>=18'}
+
+  commander@12.1.0:
+    resolution: {integrity: sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==}
     engines: {node: '>=18'}
 
   commander@4.1.1:
@@ -3831,6 +3835,8 @@ snapshots:
 
   commander@12.0.0: {}
 
+  commander@12.1.0: {}
+
   commander@4.1.1: {}
 
   comment-json@4.2.3:
@@ -3932,7 +3938,7 @@ snapshots:
       '@cspell/dynamic-import': 8.8.1
       chalk: 5.3.0
       chalk-template: 1.1.0
-      commander: 12.0.0
+      commander: 12.1.0
       cspell-gitignore: 8.8.1
       cspell-glob: 8.8.1
       cspell-io: 8.8.1
