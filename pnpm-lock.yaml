@@ -28,7 +28,7 @@ importers:
         version: 2.4.1
       glob:
         specifier: ^10.3.10
-        version: 10.3.16
+        version: 10.4.0
       minimatch:
         specifier: ^9.0.3
         version: 9.0.4
@@ -1679,6 +1679,11 @@ packages:
 
   glob@10.3.16:
     resolution: {integrity: sha512-JDKXl1DiuuHJ6fVS2FXjownaavciiHNUU4mOvV/B793RLh05vZL1rcPnCSaOgv1hDT6RDlY7AB7ZUvFYAtPgAw==}
+    engines: {node: '>=16 || 14 >=14.18'}
+    hasBin: true
+
+  glob@10.4.0:
+    resolution: {integrity: sha512-+K6CicMIL11UEbC3gH/MVxgGG4gJDMu9tPD+nH+d6W3+y2fYuDSbpa2b+EGyvCGvSN/PT/7daJTH25NknJkcIQ==}
     engines: {node: '>=16 || 14 >=14.18'}
     hasBin: true
 
@@ -4396,6 +4401,14 @@ snapshots:
       minipass: 7.1.2
       path-scurry: 1.11.1
 
+  glob@10.4.0:
+    dependencies:
+      foreground-child: 3.1.1
+      jackspeak: 3.1.2
+      minimatch: 9.0.4
+      minipass: 7.1.2
+      path-scurry: 1.11.1
+
   glob@7.2.3:
     dependencies:
       fs.realpath: 1.0.0
@@ -5228,7 +5241,7 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       commander: 4.1.1
-      glob: 10.3.16
+      glob: 10.4.0
       lines-and-columns: 1.2.4
       mz: 2.7.0
       pirates: 4.0.6
