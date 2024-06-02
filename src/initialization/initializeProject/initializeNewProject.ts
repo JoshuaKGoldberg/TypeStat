@@ -1,7 +1,9 @@
-import { prompt } from "enquirer";
+import enquirer from "enquirer";
 import * as fs from "node:fs/promises";
 
 import { ProjectDescription } from "./shared.js";
+
+const prompt = enquirer.prompt;
 
 const filePath = "./tsconfig.json";
 

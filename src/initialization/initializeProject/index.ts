@@ -1,4 +1,4 @@
-import { prompt } from "enquirer";
+import enquirer from "enquirer";
 import * as fs from "fs";
 import { glob } from "glob";
 
@@ -9,6 +9,8 @@ import {
 	TSConfigLocation,
 	TSConfigLocationSuggestion,
 } from "./shared.js";
+
+const prompt = enquirer.prompt;
 
 export const initializeProject = async (): Promise<ProjectDescription> => {
 	const project = await initializeBuiltInProject();
