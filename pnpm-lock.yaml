@@ -127,14 +127,14 @@ importers:
         specifier: 0.41.0
         version: 0.41.0
       prettier:
-        specifier: 3.3.1
-        version: 3.3.1
+        specifier: 3.3.2
+        version: 3.3.2
       prettier-plugin-curly:
         specifier: ^0.2.1
-        version: 0.2.1(prettier@3.3.1)
+        version: 0.2.1(prettier@3.3.2)
       prettier-plugin-packagejson:
         specifier: ^2.4.12
-        version: 2.5.0(prettier@3.3.1)
+        version: 2.5.0(prettier@3.3.2)
       sentences-per-line:
         specifier: 0.2.1
         version: 0.2.1
@@ -2284,8 +2284,8 @@ packages:
       prettier:
         optional: true
 
-  prettier@3.3.1:
-    resolution: {integrity: sha512-7CAwy5dRsxs8PHXT3twixW9/OEll8MLE0VRPCJyl7CkS6VHGPSlsVaWTiASPTyGyYRyApxlaWTzwUxVNrhcwDg==}
+  prettier@3.3.2:
+    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -4944,23 +4944,23 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-curly@0.2.1(prettier@3.3.1):
+  prettier-plugin-curly@0.2.1(prettier@3.3.2):
     dependencies:
       '@babel/generator': 7.24.1
       '@babel/parser': 7.24.5
       '@babel/traverse': 7.24.1
-      prettier: 3.3.1
+      prettier: 3.3.2
     transitivePeerDependencies:
       - supports-color
 
-  prettier-plugin-packagejson@2.5.0(prettier@3.3.1):
+  prettier-plugin-packagejson@2.5.0(prettier@3.3.2):
     dependencies:
       sort-package-json: 2.10.0
       synckit: 0.9.0
     optionalDependencies:
-      prettier: 3.3.1
+      prettier: 3.3.2
 
-  prettier@3.3.1: {}
+  prettier@3.3.2: {}
 
   pretty-format@29.7.0:
     dependencies:
