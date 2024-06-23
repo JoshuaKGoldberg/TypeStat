@@ -69,7 +69,7 @@
 		"eslint-plugin-package-json": "^0.15.0",
 		"eslint-plugin-perfectionist": "^2.7.0",
 		"eslint-plugin-regexp": "^2.3.0",
-		"eslint-plugin-vitest": "^0.4.0",
+		"eslint-plugin-vitest": "^0.5.0",
 		"eslint-plugin-yml": "^1.13.2",
 		"husky": "9.0.11",
 		"jsonc-eslint-parser": "^2.4.0",
