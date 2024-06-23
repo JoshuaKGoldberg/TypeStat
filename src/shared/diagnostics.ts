@@ -1,8 +1,8 @@
 import ts from "typescript";
 
-export type DiagnosticWithStart = ts.Diagnostic & {
+export type DiagnosticWithStart = {
 	start: number;
-};
+} & ts.Diagnostic;
 
 export const isDiagnosticWithStart = (
 	diagnostic: ts.Diagnostic,

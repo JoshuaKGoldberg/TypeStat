@@ -3,13 +3,13 @@ import ts from "typescript";
 
 import { ReactComponentNode } from "../../reactFiltering/isReactComponentNode.js";
 
-type PropTypesMember = ts.PropertyDeclaration & {
+type PropTypesMember = {
 	initializer: ts.ObjectLiteralExpression;
 	name: {
 		kind: ts.SyntaxKind.Identifier;
 		text: "propTypes";
 	};
-};
+} & ts.PropertyDeclaration;
 
 /**
  * @returns Whether a node is a `propTypes` class member with an object literal value.
