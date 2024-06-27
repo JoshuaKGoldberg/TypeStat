@@ -83,7 +83,7 @@ importers:
         version: 3.2.0(eslint@8.57.0)
       eslint-plugin-jsdoc:
         specifier: ^48.2.1
-        version: 48.3.0(eslint@8.57.0)
+        version: 48.4.0(eslint@8.57.0)
       eslint-plugin-jsonc:
         specifier: ^2.14.1
         version: 2.16.0(eslint@8.57.0)
@@ -1444,8 +1444,8 @@ packages:
     peerDependencies:
       eslint: '>=4.19.1'
 
-  eslint-plugin-jsdoc@48.3.0:
-    resolution: {integrity: sha512-lzQSh2gjPqrqYTL0774sLj/rJywP1UESxD43xBwAlehuI2H6mIKTwj6i4tdvVzmUMflx8yMzHzy4e4XWrKaNZQ==}
+  eslint-plugin-jsdoc@48.4.0:
+    resolution: {integrity: sha512-xBUxuAx03cKoEA7y+MYSUdwyN8AJyZHbAJ257sOFXgVgCScm574S4zEYJpBoARwaCu4chhCbvA+gdm+00whlxA==}
     engines: {node: '>=18'}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
@@ -4103,7 +4103,7 @@ snapshots:
       eslint: 8.57.0
       ignore: 5.3.1
 
-  eslint-plugin-jsdoc@48.3.0(eslint@8.57.0):
+  eslint-plugin-jsdoc@48.4.0(eslint@8.57.0):
     dependencies:
       '@es-joy/jsdoccomment': 0.43.1
       are-docs-informative: 0.0.2
