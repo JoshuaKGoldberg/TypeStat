@@ -1,4 +1,3 @@
-import { TypeStatArgv } from "../index.js";
 import { ProcessOutput } from "../output/types.js";
 import { collectOptionals } from "../shared/arrays.js";
 import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums.js";
@@ -12,7 +11,6 @@ import { collectStrictNullChecks } from "./parsing/collectStrictNullChecks.js";
 import { PendingTypeStatOptions, RawTypeStatOptions } from "./types.js";
 
 export interface OptionsFromRawOptionsSettings {
-	argv: TypeStatArgv;
 	compilerOptions: Readonly<ParsedCompilerOptions>;
 	cwd: string;
 	output: ProcessOutput;

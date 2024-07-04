@@ -1,6 +1,5 @@
 import * as path from "node:path";
 
-import { TypeStatArgv } from "../index.js";
 import { ProcessOutput } from "../output/types.js";
 import { normalizeAndSlashify } from "../shared/paths.js";
 import { fillOutRawOptions } from "./fillOutRawOptions.js";
@@ -11,20 +10,18 @@ import { PendingTypeStatOptions, RawTypeStatOptions } from "./types.js";
 
 /**
  * Reads pre-file-rename TypeStat options using a config path.
- * @param argv   Root arguments passed to TypeStat.
- * @param output   Wraps process and logfile output.
  * @returns Promise for filled-out TypeStat options, or a string complaint from failing to make them.
  */
 export const loadPendingOptions = async (
-	argv: TypeStatArgv,
+	configPath: string | undefined,
 	output: ProcessOutput,
 ): Promise<PendingTypeStatOptions[] | string> => {
-	if (argv.config === undefined) {
+	if (configPath === undefined) {
 		return "-c/--config file must be provided.";
 	}
 
 	const cwd = process.cwd();
-	const foundRawOptions = findRawOptions(cwd, argv.config);
+	const foundRawOptions = findRawOptions(cwd, configPath);
 	if (typeof foundRawOptions === "string") {
 		return foundRawOptions;
 	}
@@ -40,7 +37,6 @@ export const loadPendingOptions = async (
 		const compilerOptions = await parseRawCompilerOptions(cwd, projectPath);
 
 		const filledOutOptions = fillOutRawOptions({
-			argv,
 			compilerOptions,
 			cwd,
 			output,
