@@ -1,4 +1,6 @@
-import { prompt } from "enquirer";
+import enquirer from "enquirer";
+
+const prompt = enquirer.prompt;
 
 export enum InitializationImprovement {
 	MissingProperties = "Add missing property declarations to classes",

@@ -13,7 +13,11 @@
 	},
 	"type": "module",
 	"main": "./lib/index.js",
+	"bin": {
+		"typestat": "bin/typestat.mjs"
+	},
 	"files": [
+		"bin/typestat.mjs",
 		"lib/",
 		"package.json",
 		"LICENSE.md",

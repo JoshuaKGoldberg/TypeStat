@@ -1,4 +1,6 @@
-import { prompt } from "enquirer";
+import enquirer from "enquirer";
+
+const prompt = enquirer.prompt;
 
 const other = "other";
 const none = "(none)";

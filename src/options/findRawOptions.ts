@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import * as path from "node:path";
 
 import { RawTypeStatOptions } from "./types.js";
@@ -31,15 +32,17 @@ export const findRawOptions = (
 
 	let filePath: string;
 	try {
-		filePath = require.resolve(resolutionPath);
+		filePath = path.resolve(resolutionPath);
 	} catch {
 		return configPath === resolutionPath
 			? `Could not find config file at '${configPath}'.`
 			: `Could not find config file at '${configPath}' (resolved to '${resolutionPath}').`;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-var-requires
-	const allRawOptions = extractConfigAsRelative(filePath, require(filePath));
+	const rawOptions = JSON.parse(readFileSync(filePath, "utf-8")) as
+		| RawTypeStatOptions
+		| RawTypeStatOptions[];
+	const allRawOptions = extractConfigAsRelative(filePath, rawOptions);
 
 	return { allRawOptions, filePath };
 };
