@@ -30,8 +30,8 @@ importers:
         specifier: ^11.0.0
         version: 11.0.0
       minimatch:
-        specifier: ^9.0.3
-        version: 9.0.5
+        specifier: ^10.0.0
+        version: 10.0.1
       strip-ansi:
         specifier: ^7.1.0
         version: 7.1.0
