@@ -26,7 +26,7 @@ export const fixIncompletePropertyDeclarationTypes: FileMutator = (
 
 const isPropertyDeclarationWithType = (
 	node: ts.Node,
-): node is ts.PropertyDeclaration & NodeWithType =>
+): node is NodeWithType & ts.PropertyDeclaration =>
 	ts.isPropertyDeclaration(node) && isNodeWithType(node);
 
 const visitPropertyDeclaration = (

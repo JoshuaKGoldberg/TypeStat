@@ -1,9 +1,9 @@
 import ts from "typescript";
 
-export type VariableWithImplicitGeneric = ts.VariableDeclaration & {
+export type VariableWithImplicitGeneric = {
 	initializer: GenericCapableInitializer;
 	type: undefined;
-};
+} & ts.VariableDeclaration;
 
 type GenericCapableInitializer = ts.ArrayLiteralExpression | ts.NewExpression;
 
