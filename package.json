@@ -55,7 +55,7 @@
 		"@types/prop-types": "15.7.12",
 		"@types/react": "18.3.3",
 		"@typescript-eslint/eslint-plugin": "^7.3.1",
-		"@typescript-eslint/parser": "^7.3.1",
+		"@typescript-eslint/parser": "^8.0.0",
 		"@vitest/coverage-v8": "^1.4.0",
 		"console-fail-test": "^0.4.0",
 		"cspell": "^8.6.0",
