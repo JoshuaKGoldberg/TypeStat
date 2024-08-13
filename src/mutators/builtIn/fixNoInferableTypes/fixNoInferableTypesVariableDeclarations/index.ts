@@ -10,11 +10,11 @@ import {
 import { NodeWithType, isNodeWithType } from "../../../../shared/nodeTypes.js";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes.js";
 
-type InferableVariableDeclaration = ts.VariableDeclaration &
-	NodeWithType &
-	Required<Pick<ts.VariableDeclaration, "initializer">> & {
-		parent: ts.VariableDeclarationList;
-	};
+type InferableVariableDeclaration = {
+	parent: ts.VariableDeclarationList;
+} & NodeWithType &
+	Required<Pick<ts.VariableDeclaration, "initializer">> &
+	ts.VariableDeclaration;
 
 export const fixNoInferableTypesVariableDeclarations: FileMutator = (
 	request: FileMutationsRequest,

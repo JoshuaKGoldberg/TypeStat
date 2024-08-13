@@ -23,5 +23,5 @@ export const fixNoImplicitAnyParameters: FileMutator = (
 
 const isNodeNoImplicitAnyFixableParameter = (
 	node: ts.Node,
-): node is ts.ParameterDeclaration & NoImplicitAnyNodeToBeFixed =>
+): node is NoImplicitAnyNodeToBeFixed & ts.ParameterDeclaration =>
 	ts.isParameter(node) && canNodeBeFixedForNoImplicitAny(node);

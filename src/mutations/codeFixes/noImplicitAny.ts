@@ -12,10 +12,10 @@ export type NoImplicitAnyNode =
 	| ts.PropertyDeclaration
 	| ts.VariableDeclaration;
 
-export type NoImplicitAnyNodeToBeFixed = NoImplicitAnyNode & {
+export type NoImplicitAnyNodeToBeFixed = {
 	initializer: undefined;
 	type: undefined;
-};
+} & NoImplicitAnyNode;
 
 /**
  * Error codes for the TypeScript language service to get --noImplicitAny code fixes.

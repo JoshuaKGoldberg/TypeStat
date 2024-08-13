@@ -26,7 +26,7 @@ export const fixIncompleteVariableTypes: FileMutator = (
 
 const isNodeVariableDeclarationWithType = (
 	node: ts.Node,
-): node is ts.VariableDeclaration & NodeWithType =>
+): node is NodeWithType & ts.VariableDeclaration =>
 	ts.isVariableDeclaration(node) && isNodeWithType(node);
 
 const visitVariableDeclaration = (

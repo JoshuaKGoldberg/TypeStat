@@ -31,9 +31,9 @@ export interface GenericClassDetails {
 	typeParameterNames: readonly string[];
 }
 
-export type ParameterTypeNode = ts.TypeNode & {
+export type ParameterTypeNode = {
 	parent: ts.ParameterDeclaration;
-};
+} & ts.TypeNode;
 
 export interface ParameterTypeNodeSummary {
 	parameterName: string;
