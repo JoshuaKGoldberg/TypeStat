@@ -74,7 +74,7 @@
 		"husky": "9.1.4",
 		"jsonc-eslint-parser": "^2.4.0",
 		"knip": "^5.2.2",
-		"lint-staged": "15.2.8",
+		"lint-staged": "15.2.9",
 		"markdownlint": "0.34.0",
 		"markdownlint-cli": "0.41.0",
 		"prettier": "3.3.3",
