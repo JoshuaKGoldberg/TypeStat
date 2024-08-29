@@ -41,7 +41,7 @@ importers:
     devDependencies:
       '@types/eslint':
         specifier: ^8.56.6
-        version: 8.56.11
+        version: 8.56.12
       '@types/glob':
         specifier: 8.1.0
         version: 8.1.0
@@ -876,8 +876,8 @@ packages:
     engines: {node: '>=8.10'}
     hasBin: true
 
-  '@types/eslint@8.56.11':
-    resolution: {integrity: sha512-sVBpJMf7UPo/wGecYOpk2aQya2VUGeHhe38WG7/mN5FufNSubf5VT9Uh9Uyp8/eLJpu1/tuhJ/qTo4mhSB4V4Q==}
+  '@types/eslint@8.56.12':
+    resolution: {integrity: sha512-03ruubjWyOHlmljCVoxSuNDdmfZDzsrrz0P2LeJsOXr+ZwFQ+0yQIwNCwt/GYhV7Z31fgtXJTAEs+FYlEL851g==}
 
   '@types/esquery@1.5.3':
     resolution: {integrity: sha512-c55hQOcoPkWDfuEN9EdP1YyNH4D909U40gUEpY0nB5PWHExWHEPxcx3sx0fJ1Gzf4j1OpWktmIgciIlpgHtfDg==}
@@ -3344,7 +3344,7 @@ snapshots:
       ignore: 5.3.2
       p-map: 4.0.0
 
-  '@types/eslint@8.56.11':
+  '@types/eslint@8.56.12':
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
