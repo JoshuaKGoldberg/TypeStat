@@ -121,8 +121,8 @@ importers:
         specifier: 15.2.9
         version: 15.2.9
       markdownlint:
-        specifier: 0.34.0
-        version: 0.34.0
+        specifier: 0.35.0
+        version: 0.35.0
       markdownlint-cli:
         specifier: 0.41.0
         version: 0.41.0
@@ -2021,6 +2021,10 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  markdownlint-micromark@0.1.10:
+    resolution: {integrity: sha512-no5ZfdqAdWGxftCLlySHSgddEjyW4kui4z7amQcGsSKfYC5v/ou+8mIQVyg9KQMeEZLNtz9OPDTj7nnTnoR4FQ==}
+    engines: {node: '>=18'}
+
   markdownlint-micromark@0.1.9:
     resolution: {integrity: sha512-5hVs/DzAFa8XqYosbEAEg6ok6MF2smDj89ztn9pKkCtdKHVdPQuGMH7frFfYL9mLkvfFe4pTyAMffLbjf3/EyA==}
     engines: {node: '>=18'}
@@ -2031,6 +2035,10 @@ packages:
 
   markdownlint@0.34.0:
     resolution: {integrity: sha512-qwGyuyKwjkEMOJ10XN6OTKNOVYvOIi35RNvDLNxTof5s8UmyGHlCdpngRHoRGNvQVGuxO3BJ7uNSgdeX166WXw==}
+    engines: {node: '>=18'}
+
+  markdownlint@0.35.0:
+    resolution: {integrity: sha512-wgp8yesWjFBL7bycA3hxwHRdsZGJhjhyP1dSxKVKrza0EPFYtn+mHtkVy6dvP1kGSjovyG5B8yNP6Frj0UFUJg==}
     engines: {node: '>=18'}
 
   mdast-util-from-markdown@0.8.5:
@@ -4700,6 +4708,8 @@ snapshots:
       run-con: 1.3.2
       smol-toml: 1.2.2
 
+  markdownlint-micromark@0.1.10: {}
+
   markdownlint-micromark@0.1.9: {}
 
   markdownlint@0.11.0:
@@ -4710,6 +4720,11 @@ snapshots:
     dependencies:
       markdown-it: 14.1.0
       markdownlint-micromark: 0.1.9
+
+  markdownlint@0.35.0:
+    dependencies:
+      markdown-it: 14.1.0
+      markdownlint-micromark: 0.1.10
 
   mdast-util-from-markdown@0.8.5:
     dependencies:
