@@ -95,7 +95,7 @@ importers:
         version: 17.10.2(eslint@8.57.0)
       eslint-plugin-package-json:
         specifier: ^0.15.0
-        version: 0.15.2(eslint@8.57.0)(jsonc-eslint-parser@2.4.0)
+        version: 0.15.3(eslint@8.57.0)(jsonc-eslint-parser@2.4.0)
       eslint-plugin-perfectionist:
         specifier: ^2.7.0
         version: 2.8.0(eslint@8.57.0)(typescript@5.4.5)
@@ -156,6 +156,9 @@ packages:
   '@aashutoshrathi/word-wrap@1.2.6':
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
     engines: {node: '>=0.10.0'}
+
+  '@altano/repository-tools@0.1.1':
+    resolution: {integrity: sha512-5vbUs2A98CC3g1AlOBdkBE0BMukkLjLIsMHAtuxg6Pt9dQXxYWdLKOf66v6c/vIqtNcgTMv0oGtddLdMuH9X6w==}
 
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
@@ -1471,8 +1474,8 @@ packages:
     peerDependencies:
       eslint: '>=8.23.0'
 
-  eslint-plugin-package-json@0.15.2:
-    resolution: {integrity: sha512-mls5O8zT3Sjl/lLmhT8xtNkLpj7b3uP6wwK9rgg9rtmAbPjlzkunCySlHQgEcB6ZUV+Qi3QabLaSub2IWr2VmA==}
+  eslint-plugin-package-json@0.15.3:
+    resolution: {integrity: sha512-NRUh+f5orM2/SynPjZqqNqSahdG3qzG5nf8s2S5nEwkhRbEE78S6sSMVGoSmrrtbhcbvZmLVHguVds4lY3Cwkw==}
     engines: {node: '>=18'}
     peerDependencies:
       eslint: '>=8.0.0'
@@ -2794,6 +2797,8 @@ snapshots:
 
   '@aashutoshrathi/word-wrap@1.2.6': {}
 
+  '@altano/repository-tools@0.1.1': {}
+
   '@ampproject/remapping@2.3.0':
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
@@ -4093,8 +4098,9 @@ snapshots:
       minimatch: 9.0.5
       semver: 7.6.3
 
-  eslint-plugin-package-json@0.15.2(eslint@8.57.0)(jsonc-eslint-parser@2.4.0):
+  eslint-plugin-package-json@0.15.3(eslint@8.57.0)(jsonc-eslint-parser@2.4.0):
     dependencies:
+      '@altano/repository-tools': 0.1.1
       detect-indent: 6.1.0
       detect-newline: 3.1.0
       eslint: 8.57.0
