@@ -52,7 +52,7 @@
 		"@types/glob": "8.1.0",
 		"@types/minimatch": "^5.1.2",
 		"@types/node": "^22.0.0",
-		"@types/prop-types": "15.7.12",
+		"@types/prop-types": "15.7.13",
 		"@types/react": "18.3.6",
 		"@typescript-eslint/eslint-plugin": "^7.3.1",
 		"@typescript-eslint/parser": "^8.0.0",
