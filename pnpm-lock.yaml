@@ -107,7 +107,7 @@ importers:
         version: 0.4.1(@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@8.12.2(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5)(vitest@1.6.0(@types/node@22.8.5))
       eslint-plugin-yml:
         specifier: ^1.13.2
-        version: 1.14.0(eslint@8.57.1)
+        version: 1.15.0(eslint@8.57.1)
       husky:
         specifier: 9.1.6
         version: 9.1.6
@@ -1526,8 +1526,8 @@ packages:
       vitest:
         optional: true
 
-  eslint-plugin-yml@1.14.0:
-    resolution: {integrity: sha512-ESUpgYPOcAYQO9czugcX5OqRvn/ydDVwGCPXY4YjPqc09rHaUVUA6IE6HLQys4rXk/S+qx3EwTd1wHCwam/OWQ==}
+  eslint-plugin-yml@1.15.0:
+    resolution: {integrity: sha512-leC8APYVOsKyWUlvRwVhewytK5wS70BfMqIaUplFstRfzCoVp0YoEroV4cUEvQrBj93tQ3M9LcjO/ewr6D4kjA==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
@@ -4131,7 +4131,7 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-yml@1.14.0(eslint@8.57.1):
+  eslint-plugin-yml@1.15.0(eslint@8.57.1):
     dependencies:
       debug: 4.3.7
       eslint: 8.57.1
