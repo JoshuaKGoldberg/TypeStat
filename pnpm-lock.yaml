@@ -86,7 +86,7 @@ importers:
         version: 50.4.3(eslint@8.57.1)
       eslint-plugin-jsonc:
         specifier: ^2.14.1
-        version: 2.18.0(eslint@8.57.1)
+        version: 2.18.1(eslint@8.57.1)
       eslint-plugin-markdown:
         specifier: ^4.0.1
         version: 4.0.1(eslint@8.57.1)
@@ -1446,8 +1446,8 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
-  eslint-json-compat-utils@0.1.3:
-    resolution: {integrity: sha512-/Vkubo+HWjd9sn5qp8gcNSvr73ZT/LKB4MCjr2GM6MWvN+qLwtpGiYB+KiE5NliMC74UE+6GkUrzV1psdyImCg==}
+  eslint-json-compat-utils@0.2.1:
+    resolution: {integrity: sha512-YzEodbDyW8DX8bImKhAcCeu/L31Dd/70Bidx2Qex9OFUtgzXLqtfWL4Hr5fM/aCCB8QUZLuJur0S9k6UfgFkfg==}
     engines: {node: '>=12'}
     peerDependencies:
       '@eslint/json': '*'
@@ -1481,8 +1481,8 @@ packages:
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
 
-  eslint-plugin-jsonc@2.18.0:
-    resolution: {integrity: sha512-5HoxMECa+GMyxP1/zR8u/Hacbv7hbQ6NKGHKNPIX6rL2Dwktzgyf4+Qa1urgFc8HDg6rgOr5qhRSR40XicBL6w==}
+  eslint-plugin-jsonc@2.18.1:
+    resolution: {integrity: sha512-6qY8zDpxOwPQNcr8eZ+RxwGX6IPHws5/Qef7aBEjER8rB9+UMB6zQWVIVcbP7xzFmEMHAesNFPe/sIlU4c78dg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
@@ -4038,9 +4038,10 @@ snapshots:
       eslint: 8.57.1
       semver: 7.6.3
 
-  eslint-json-compat-utils@0.1.3(eslint@8.57.1)(jsonc-eslint-parser@2.4.0):
+  eslint-json-compat-utils@0.2.1(eslint@8.57.1)(jsonc-eslint-parser@2.4.0):
     dependencies:
       eslint: 8.57.1
+      esquery: 1.6.0
       jsonc-eslint-parser: 2.4.0
 
   eslint-plugin-deprecation@3.0.0(eslint@8.57.1)(typescript@5.4.5):
@@ -4083,12 +4084,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-jsonc@2.18.0(eslint@8.57.1):
+  eslint-plugin-jsonc@2.18.1(eslint@8.57.1):
     dependencies:
       '@eslint-community/eslint-utils': 4.4.1(eslint@8.57.1)
       eslint: 8.57.1
       eslint-compat-utils: 0.6.0(eslint@8.57.1)
-      eslint-json-compat-utils: 0.1.3(eslint@8.57.1)(jsonc-eslint-parser@2.4.0)
+      eslint-json-compat-utils: 0.2.1(eslint@8.57.1)(jsonc-eslint-parser@2.4.0)
       espree: 9.6.1
       graphemer: 1.4.0
       jsonc-eslint-parser: 2.4.0
