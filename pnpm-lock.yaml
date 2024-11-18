@@ -92,7 +92,7 @@ importers:
         version: 4.0.1(eslint@8.57.1)
       eslint-plugin-n:
         specifier: ^17.0.0
-        version: 17.13.1(eslint@8.57.1)
+        version: 17.13.2(eslint@8.57.1)
       eslint-plugin-package-json:
         specifier: ^0.15.0
         version: 0.15.6(eslint@8.57.1)(jsonc-eslint-parser@2.4.0)
@@ -1493,8 +1493,8 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-n@17.13.1:
-    resolution: {integrity: sha512-97qzhk1z3DdSJNCqT45EslwCu5+LB9GDadSyBItgKUfGsXAmN/aa7LRQ0ZxHffUxUzvgbTPJL27/pE9ZQWHy7A==}
+  eslint-plugin-n@17.13.2:
+    resolution: {integrity: sha512-MhBAKkT01h8cOXcTBTlpuR7bxH5OBUNpUXefsvwSVEy46cY4m/Kzr2osUCQvA3zJFD6KuCeNNDv0+HDuWk/OcA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.23.0'
@@ -4105,7 +4105,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-n@17.13.1(eslint@8.57.1):
+  eslint-plugin-n@17.13.2(eslint@8.57.1):
     dependencies:
       '@eslint-community/eslint-utils': 4.4.1(eslint@8.57.1)
       enhanced-resolve: 5.17.1
