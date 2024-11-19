@@ -116,7 +116,7 @@ importers:
         version: 2.4.0
       knip:
         specifier: ^5.2.2
-        version: 5.37.0(@types/node@22.9.0)(typescript@5.4.5)
+        version: 5.37.1(@types/node@22.9.0)(typescript@5.4.5)
       lint-staged:
         specifier: 15.2.10
         version: 15.2.10
@@ -1954,8 +1954,8 @@ packages:
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
-  knip@5.37.0:
-    resolution: {integrity: sha512-ppbIumjNNnFKGr+DGWJtnfc4kXgEzNI+TxHwnyafr0IxT5nfonwGL0Qs53ZgSiIswSWM77m7KRzzP1AEvBEn6Q==}
+  knip@5.37.1:
+    resolution: {integrity: sha512-69gjKj5lLsLXcIPXlHyFfX5AOHgRdh/iXH8gUqvmsHtjqoWhOATeXZDjvvemmgw7KxbWbUzxBNbpjhtJWzgqGA==}
     engines: {node: '>=18.6.0'}
     hasBin: true
     peerDependencies:
@@ -2436,8 +2436,8 @@ packages:
     resolution: {integrity: sha512-bSiSngZ/jWeX93BqeIAbImyTbEihizcwNjFoRUIY/T1wWQsfsm2Vw1agPKylXvQTU7iASGdHhyqRlqQzfz+Htg==}
     engines: {node: '>=18'}
 
-  smol-toml@1.3.0:
-    resolution: {integrity: sha512-tWpi2TsODPScmi48b/OQZGi2lgUmBCHy6SZrhi/FdnnHiU1GwebbCfuQuxsC3nHaLwtYeJGPrDZDIeodDOc4pA==}
+  smol-toml@1.3.1:
+    resolution: {integrity: sha512-tEYNll18pPKHroYSmLLrksq233j021G0giwW7P3D24jC54pQ5W5BXMsQ/Mvw1OJCmEYDgY+lrzT+3nNUtoNfXQ==}
     engines: {node: '>= 18'}
 
   sort-object-keys@1.1.3:
@@ -4579,7 +4579,7 @@ snapshots:
     dependencies:
       json-buffer: 3.0.1
 
-  knip@5.37.0(@types/node@22.9.0)(typescript@5.4.5):
+  knip@5.37.1(@types/node@22.9.0)(typescript@5.4.5):
     dependencies:
       '@nodelib/fs.walk': 1.2.8
       '@snyk/github-codeowners': 1.1.0
@@ -4593,7 +4593,7 @@ snapshots:
       picocolors: 1.1.1
       picomatch: 4.0.2
       pretty-ms: 9.2.0
-      smol-toml: 1.3.0
+      smol-toml: 1.3.1
       strip-json-comments: 5.0.1
       summary: 2.1.0
       typescript: 5.4.5
@@ -4717,7 +4717,7 @@ snapshots:
       markdownlint: 0.35.0
       minimatch: 10.0.1
       run-con: 1.3.2
-      smol-toml: 1.3.0
+      smol-toml: 1.3.1
 
   markdownlint-micromark@0.1.10: {}
 
@@ -5086,7 +5086,7 @@ snapshots:
       ansi-styles: 6.2.1
       is-fullwidth-code-point: 5.0.0
 
-  smol-toml@1.3.0: {}
+  smol-toml@1.3.1: {}
 
   sort-object-keys@1.1.3: {}
 
