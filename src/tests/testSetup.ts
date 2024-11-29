@@ -49,7 +49,6 @@ export const runMutationTest = async (
 	};
 
 	const pendingOptions = fillOutRawOptions({
-		argv: { args: [] },
 		compilerOptions,
 		cwd: dirPath,
 		output,

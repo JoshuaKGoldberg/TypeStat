@@ -44,10 +44,10 @@ export interface SucceededResult {
 }
 
 export const typeStat = async (
-	argv: TypeStatArgv,
+	configPath: string | undefined,
 	output: ProcessOutput,
 ): Promise<TypeStatResult> => {
-	const allPendingOptions = await tryLoadingPendingOptions(argv, output);
+	const allPendingOptions = await tryLoadingPendingOptions(configPath, output);
 	if (
 		allPendingOptions instanceof Error ||
 		typeof allPendingOptions === "string"
@@ -82,7 +82,7 @@ export const typeStat = async (
 			chalk.green(
 				` options ${pluralize(allPendingOptions.length, "object")} specified in `,
 			),
-			chalk.greenBright(argv.config),
+			chalk.greenBright(configPath),
 			chalk.green(` to modify your source code.`),
 		].join(""),
 	);
@@ -91,7 +91,6 @@ export const typeStat = async (
 	for (let i = 0; i < allPendingOptions.length; i += 1) {
 		// Collect all files to be run on this option iteration from the include glob(s)
 		const fileNames = await collectFileNames(
-			argv,
 			process.cwd(),
 			allPendingOptions[i].include,
 		);
@@ -146,11 +145,11 @@ export const typeStat = async (
 };
 
 const tryLoadingPendingOptions = async (
-	argv: TypeStatArgv,
+	configPath: string | undefined,
 	output: ProcessOutput,
 ): Promise<Error | PendingTypeStatOptions[] | string> => {
 	try {
-		return await loadPendingOptions(argv, output);
+		return await loadPendingOptions(configPath, output);
 	} catch (error) {
 		return error instanceof Error ? error : new Error(error as string);
 	}

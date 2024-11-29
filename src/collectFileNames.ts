@@ -1,14 +1,11 @@
 import { glob } from "glob";
 import * as path from "node:path";
 
-import { TypeStatArgv } from "./index.js";
-
 export const collectFileNames = async (
-	argv: TypeStatArgv,
 	cwd: string,
 	include: readonly string[] | undefined,
 ): Promise<readonly string[] | string | undefined> => {
-	const globsAndNames = await collectFileNamesFromGlobs(argv, cwd, include);
+	const globsAndNames = await collectFileNamesFromGlobs(cwd, include);
 	if (!globsAndNames) {
 		return undefined;
 	}
@@ -27,14 +24,9 @@ export const collectFileNames = async (
 };
 
 const collectFileNamesFromGlobs = async (
-	argv: TypeStatArgv,
 	cwd: string,
 	include: readonly string[] | undefined,
 ): Promise<[readonly string[], readonly string[]] | undefined> => {
-	if (argv.args.length) {
-		return [argv.args, await glob(argv.args)];
-	}
-
 	if (include === undefined) {
 		return undefined;
 	}
