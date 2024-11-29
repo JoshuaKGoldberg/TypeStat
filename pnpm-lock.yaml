@@ -138,6 +138,9 @@ importers:
       prettier-plugin-packagejson:
         specifier: ^2.4.12
         version: 2.5.6(prettier@3.4.1)
+      release-it:
+        specifier: ^17.10.0
+        version: 17.10.0(typescript@5.4.5)
       sentences-per-line:
         specifier: 0.2.1
         version: 0.2.1
