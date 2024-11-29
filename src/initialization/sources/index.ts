@@ -1,5 +1,7 @@
-import { prompt } from "enquirer";
+import enquirer from "enquirer";
 import * as fs from "node:fs/promises";
+
+const prompt = enquirer.prompt;
 
 import { ProjectDescription } from "../initializeProject/shared.js";
 

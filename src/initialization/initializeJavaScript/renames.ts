@@ -1,4 +1,6 @@
-import { prompt } from "enquirer";
+import enquirer from "enquirer";
+
+const prompt = enquirer.prompt;
 
 export enum InitializationRenames {
 	Auto = "Rename files containing JSX to .tsx and others to .ts",

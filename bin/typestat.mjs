@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-const { runCli } = require("../src/cli/runCli");
+// eslint-disable-next-line n/no-missing-import
+import { runCli } from "../lib/cli/runCli.js";
 
 runCli(process.argv)
 	.then((resultStatus) => {
