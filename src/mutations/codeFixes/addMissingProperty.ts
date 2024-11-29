@@ -1,4 +1,5 @@
 import { Mutation } from "automutate";
+import * as tsutils from "ts-api-utils";
 import ts from "typescript";
 
 import { FileMutationsRequest } from "../../shared/fileMutator.js";
@@ -31,8 +32,8 @@ export const getMissingPropertyMutations = (
  */
 const nodeIsSettingThisMember = (node: ts.PropertyAccessExpression): boolean =>
 	ts.isBinaryExpression(node.parent) &&
-	node.parent.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
-	node.expression.kind === ts.SyntaxKind.ThisKeyword;
+	tsutils.isEqualsToken(node.parent.operatorToken) &&
+	tsutils.isThisKeyword(node.expression);
 
 /**
  * Uses a requesting language service to get missing property code fixes for a type of node.

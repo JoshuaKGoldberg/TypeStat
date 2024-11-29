@@ -11,15 +11,3 @@ export const convertMapToObject = <TValue>(
 
 	return output;
 };
-
-export const convertObjectToMap = <TValue>(
-	object: Readonly<Dictionary<TValue>>,
-): Map<string, TValue> => {
-	const map = new Map<string, TValue>();
-
-	for (const key of Object.keys(object)) {
-		map.set(key, object[key]);
-	}
-
-	return map;
-};

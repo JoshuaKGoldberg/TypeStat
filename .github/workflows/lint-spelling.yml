@@ -6,7 +6,7 @@ jobs:
       - uses: ./.github/actions/prepare
       - run: pnpm lint:spelling
 
-name: Lint spelling
+name: Lint Spelling
 
 on:
   pull_request: ~

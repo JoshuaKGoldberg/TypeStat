@@ -6,7 +6,7 @@ jobs:
       - uses: ./.github/actions/prepare
       - run: pnpm run test:mutation --coverage --no-file-parallelism
       - name: Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           flags: mutation
 

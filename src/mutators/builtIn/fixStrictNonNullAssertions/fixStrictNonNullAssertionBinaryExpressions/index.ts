@@ -33,10 +33,7 @@ const visitBinaryExpression = (
 	}
 
 	const declaredType = getTypeAtLocationIfNotError(request, node.left);
-	if (
-		declaredType === undefined ||
-		tsutils.isTypeFlagSet(declaredType, ts.TypeFlags.Any)
-	) {
+	if (declaredType === undefined || tsutils.isIntrinsicAnyType(declaredType)) {
 		return undefined;
 	}
 

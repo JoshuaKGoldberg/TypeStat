@@ -1,3 +1,4 @@
+import * as tsutils from "ts-api-utils";
 import ts from "typescript";
 
 export type KnownTypeLiteralNode =
@@ -24,11 +25,11 @@ export const transformLiteralToTypeLiteralNode = (
 		);
 	}
 
-	if (node.kind === ts.SyntaxKind.NullKeyword) {
+	if (tsutils.isNullKeyword(node)) {
 		return ts.factory.createLiteralTypeNode(ts.factory.createNull());
 	}
 
-	if (node.kind === ts.SyntaxKind.UndefinedKeyword) {
+	if (tsutils.isUndefinedKeyword(node)) {
 		return ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword);
 	}
 
