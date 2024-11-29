@@ -1,3 +1,9 @@
+## [0.8.1](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.0...0.8.1) (2024-11-29)
+
+### Bug Fixes
+
+- add bin to package.json ([#1508](https://github.com/JoshuaKGoldberg/TypeStat/issues/1508)) ([84b3991](https://github.com/JoshuaKGoldberg/TypeStat/commit/84b3991dc6ef2805d8d06600003419ba5e588cc8)), closes [#1496](https://github.com/JoshuaKGoldberg/TypeStat/issues/1496)
+
 # 0.8.0 (2024-11-29)
 
 ### Bug Fixes
