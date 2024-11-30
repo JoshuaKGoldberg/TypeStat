@@ -4,7 +4,6 @@ import ts from "typescript";
 import { FileMutationsRequest } from "../shared/fileMutator.js";
 import { isKnownGlobalBaseType } from "../shared/nodeTypes.js";
 import { setSubtract } from "../shared/sets.js";
-import { getApplicableTypeAliases } from "./aliasing/aliases.js";
 import { isTypeFlagSetRecursively } from "./collecting/flags.js";
 
 /**
@@ -65,6 +64,7 @@ export const collectRawTypesFromTypes = (
 			for (const deepSubType of deepSubTypes) {
 				foundTypes.add(deepSubType);
 			}
+
 			continue;
 		}
 
