@@ -58,7 +58,7 @@ There are two kinds of tests:
 - [Unit tests](#unit-tests)
 - [Mutation tests](#mutation-tests)
 
-### Unit TEsts
+### Unit Tests
 
 [Vitest](https://vitest.dev) is used for tests.
 You can run it locally on the command-line:
