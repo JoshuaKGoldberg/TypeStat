@@ -1,3 +1,9 @@
+## [0.8.3](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.2...0.8.3) (2024-11-30)
+
+### Bug Fixes
+
+- reduce work in loop ([#2026](https://github.com/JoshuaKGoldberg/TypeStat/issues/2026)) ([e53514f](https://github.com/JoshuaKGoldberg/TypeStat/commit/e53514f810ef3b194ad52905759fb0389f178d39)), closes [#000](https://github.com/JoshuaKGoldberg/TypeStat/issues/000) [/github.com/JoshuaKGoldberg/TypeStat/pull/2025#discussion_r1864332874](https://github.com//github.com/JoshuaKGoldberg/TypeStat/pull/2025/issues/discussion_r1864332874)
+
 ## [0.8.2](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.1...0.8.2) (2024-11-30)
 
 ### Bug Fixes
