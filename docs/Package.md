@@ -56,6 +56,10 @@ that package will be installed.
 
 For example, if the following code exists in any file within the TypeScript project:
 
+<!-- eslint-disable @typescript-eslint/no-unused-vars -->
+<!-- eslint-disable no-unused-vars -->
+<!-- eslint-disable n/no-missing-import -->
+
 ```javascript
 import { array } from "lodash/array";
 ```
