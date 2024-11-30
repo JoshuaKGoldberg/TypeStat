@@ -137,9 +137,7 @@ const findMissingTypes = (
 		// The 'void' type shouldn't be assigned to anything, so we ignore it
 		if (assignedType.flags === ts.TypeFlags.Void) {
 			remainingMissingTypes.delete(assignedType);
-		}
-
-		if (!isAssignedTypeMissingFromDeclared(assignedType)) {
+		} else if (!isAssignedTypeMissingFromDeclared(assignedType)) {
 			remainingMissingTypes.delete(assignedType);
 		}
 	}
