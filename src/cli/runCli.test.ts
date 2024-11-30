@@ -1,8 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { version } from "../../package.json";
+// Used to be "import { version } ..", but bug in TypeScript 5.7:
+// https://github.com/microsoft/TypeScript/issues/60589#issuecomment-2501614830
+import packageConfig from "../../package.json" with { type: "json" };
 import { ResultStatus } from "../index.js";
 import { runCli } from "./runCli.js";
+
+const version = packageConfig.version;
 
 const createTestArgs = (...argv: string[]) => ({
 	argv: ["node.exe", "typestat", ...argv],
