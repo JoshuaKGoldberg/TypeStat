@@ -121,6 +121,15 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "pjonsson",
+      "name": "Peter A. Jonsson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2082449?v=4",
+      "profile": "http://community.haskell.org/~pj",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
