@@ -2,11 +2,11 @@ jobs:
   post_release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
       - run: echo "npm_version=$(npm pkg get version | tr -d '"')" >> "$GITHUB_ENV"
-      - uses: apexskier/github-release-commenter@v1
+      - uses: apexskier/github-release-commenter@3bd413ad5e1d603bfe2282f9f06f2bdcec079327 # v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           comment-template: |
