@@ -55,7 +55,7 @@ module.exports = {
 		{
 			files: "**/*.md/*.ts",
 			rules: {
-				"n/no-missing-import": ["error", { allowModules: ["TypeStat"] }],
+				"n/no-missing-import": ["error", { allowModules: ["typestat"] }],
 			},
 		},
 		{
