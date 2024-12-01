@@ -88,7 +88,7 @@
 		"release-it": "17.10.0",
 		"sentences-per-line": "0.2.1",
 		"tsup": "8.3.5",
-		"typescript": "5.4.5",
+		"typescript": "^5.7.2",
 		"vitest": "2.1.6",
 		"yaml-eslint-parser": "1.2.3"
 	},
