@@ -24,6 +24,8 @@ export interface PropTypesMembers {
  * Node type that can represent the value for a PropTypes description.
  */
 export type PropTypesAccessNode =
+	// https://github.com/gajus/eslint-plugin-jsdoc/issues/1343
+	// eslint-disable-next-line jsdoc/lines-before-block
 	/**
 	 * Called descriptor, such as `PropTypes.shapeOf({ ... })`.
 	 */
