@@ -14,7 +14,7 @@ export const filterTypedPackageNames = async (
 
 	return processedPackageNames.filter(
 		(packageName) => packageName !== undefined,
-	) as string[];
+	);
 };
 
 const filterTypedPackageName = async (
