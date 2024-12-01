@@ -148,7 +148,7 @@ importers:
         specifier: 8.3.5
         version: 8.3.5(jiti@2.4.1)(postcss@8.4.38)(typescript@5.7.2)(yaml@2.6.1)
       typescript:
-        specifier: ^5.7.2
+        specifier: 5.7.2
         version: 5.7.2
       vitest:
         specifier: 2.1.6
