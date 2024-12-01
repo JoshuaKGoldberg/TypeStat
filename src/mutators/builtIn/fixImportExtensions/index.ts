@@ -10,9 +10,12 @@ import {
 import { getTypeAtLocationIfNotError } from "../../../shared/types.js";
 import { collectMutationsFromNodes } from "../../collectMutationsFromNodes.js";
 
-type ExtensionlessExportOrImport = {
+type ExtensionlessExportOrImport = (
+	| ts.ExportDeclaration
+	| ts.ImportDeclaration
+) & {
 	moduleSpecifier: ts.StringLiteral;
-} & (ts.ExportDeclaration | ts.ImportDeclaration);
+};
 
 export const fixImportExtensions: FileMutator = (
 	request: FileMutationsRequest,
