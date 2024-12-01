@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { WaveTracker, infiniteWaveThreshold } from "./WaveTracker.js";
+import { infiniteWaveThreshold, WaveTracker } from "./WaveTracker.js";
 
 describe("WaveTracker", () => {
 	describe("addAndCheck", () => {

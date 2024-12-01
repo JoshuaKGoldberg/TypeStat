@@ -6,8 +6,8 @@ import { TypeStatOptions } from "../../options/types.js";
 import { pluralize } from "../../output/pluralize.js";
 import { LazyCache } from "../../services/LazyCache.js";
 import { FileInfoCache } from "../../shared/FileInfoCache.js";
-import { NameGenerator } from "../../shared/NameGenerator.js";
 import { convertMapToObject } from "../../shared/maps.js";
+import { NameGenerator } from "../../shared/NameGenerator.js";
 import { collectFilteredNodes } from "../collectFilteredNodes.js";
 import { createFileNamesAndServices } from "../createFileNamesAndServices.js";
 import { findMutationsInFile } from "../findMutationsInFile.js";
@@ -16,7 +16,7 @@ import { WaveTracker } from "./tracking/WaveTracker.js";
 
 /**
  * Creates a mutations provider that runs the core mutations within TypeStat.
- * @param allModifiedFiles   Set to mark names of all files that were modified.
+ * @param allModifiedFiles Set to mark names of all files that were modified.
  * @returns Provider to run the core mutations, if needed.
  */
 export const createCoreMutationsProvider = (

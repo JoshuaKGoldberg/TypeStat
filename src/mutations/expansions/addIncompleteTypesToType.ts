@@ -1,17 +1,17 @@
 import {
+	combineMutations,
 	MultipleMutations,
 	Mutation,
 	TextInsertMutation,
 	TextSwapMutation,
-	combineMutations,
 } from "automutate";
 import ts from "typescript";
 
 import { FileMutationsRequest } from "../../shared/fileMutator.js";
 import {
-	PropertySignatureWithType,
 	isKnownGlobalBaseType,
 	isNeverAndOrUnknownType,
+	PropertySignatureWithType,
 } from "../../shared/nodeTypes.js";
 import { TypeSummary } from "./summarization.js";
 

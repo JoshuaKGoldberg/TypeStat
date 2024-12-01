@@ -5,8 +5,8 @@ import { Provider, ProviderCreator } from "./types.js";
 
 /**
  * Creates a provider that runs through a series of providers.
- * @param options   Parsed runtime options for TypeStat.
- * @param providerCreators   Creators of providers to return changes from, in order.
+ * @param options Parsed runtime options for TypeStat.
+ * @param providerCreators Creators of providers to return changes from, in order.
  * @returns Single provider equivalent to the given providers, in order.
  */
 export const createProviderFromProviders = (

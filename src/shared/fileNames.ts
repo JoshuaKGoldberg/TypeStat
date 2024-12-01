@@ -1,6 +1,6 @@
 /**
  * Converts a full file path to just the non-extension portion of the file name.
- * @param fullFilePath   Full file path, such as `"C:/Code/Project/src/MyFile.ts"`.
+ * @param fullFilePath Full file path, such as `"C:/Code/Project/src/MyFile.ts"`.
  * @returns Non-extension part of the path, such as `"MyFile"`.
  */
 export const getFriendlyFileName = (fullFilePath: string): string => {

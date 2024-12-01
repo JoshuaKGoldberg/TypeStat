@@ -4,7 +4,7 @@ import ts from "typescript";
 
 import { TypeStatOptions } from "../options/types.js";
 import { arrayify, uniquify } from "../shared/arrays.js";
-import { WellKnownTypeName, isIntrinsicNameType } from "../shared/typeNodes.js";
+import { isIntrinsicNameType, WellKnownTypeName } from "../shared/typeNodes.js";
 import { createProgramConfiguration } from "./createProgramConfiguration.js";
 
 export type WellKnownTypes = Readonly<
@@ -97,7 +97,7 @@ export const createLanguageServices = (
 		},
 	};
 
-	let wellKnownTypes: WellKnownTypes | undefined;
+	let wellKnownTypes: undefined | WellKnownTypes;
 
 	return {
 		languageService,

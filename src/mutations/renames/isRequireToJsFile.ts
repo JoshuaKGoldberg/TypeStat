@@ -20,6 +20,6 @@ export const isRequireToJsFile = (
 
 	return (
 		ts.isStringLiteral(firstArgument) &&
-		firstArgument.text.match(/\.(.*)\.jsx?$/i) !== null
+		/\.(.*)\.jsx?$/i.exec(firstArgument.text) !== null
 	);
 };

@@ -5,8 +5,8 @@ import {
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes.js";
 import { getComponentPropsNode } from "../getComponentPropsNode.js";
 import {
-	ReactComponentNode,
 	isReactComponentNode,
+	ReactComponentNode,
 } from "../reactFiltering/isReactComponentNode.js";
 import { collectAllFunctionCallTypes } from "./collectAllFunctionCallTypes.js";
 import { createFunctionCallTypesMutation } from "./createFunctionCallTypesMutation.js";

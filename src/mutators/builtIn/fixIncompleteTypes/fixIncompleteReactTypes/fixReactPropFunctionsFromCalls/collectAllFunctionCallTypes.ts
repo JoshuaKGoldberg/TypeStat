@@ -3,8 +3,8 @@ import ts from "typescript";
 import { getDeclaredTypesOfArgument } from "../../../../../shared/calls.js";
 import { FileMutationsRequest } from "../../../../../shared/fileMutator.js";
 import {
-	PropertySignatureWithStaticName,
 	isPropertySignatureWithStaticName,
+	PropertySignatureWithStaticName,
 } from "../../../../../shared/nodeTypes.js";
 import { getTypeAtLocationIfNotError } from "../../../../../shared/types.js";
 import { ReactComponentPropsNode } from "../getComponentPropsNode.js";

@@ -6,9 +6,9 @@ import {
 	transformLiteralToTypeLiteralNode,
 } from "../../../../../../shared/transforms.js";
 import {
+	getPropTypesMember,
 	PropTypesAccessNode,
 	PropTypesMembers,
-	getPropTypesMember,
 } from "./propTypesExtraction.js";
 import { createPropTypesProperty } from "./propTypesProperties.js";
 
@@ -28,29 +28,29 @@ export const createPropTypesTransform = (
 		case "bool":
 			return ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
 
-		case "func":
-			return ts.factory.createTypeReferenceNode(
-				ts.factory.createIdentifier("Function"),
-				undefined,
-			);
-
 		case "element":
 			return ts.factory.createTypeReferenceNode(
 				ts.factory.createIdentifier("React.ReactElement"),
 				undefined,
 			);
 
+		case "func":
+			return ts.factory.createTypeReferenceNode(
+				ts.factory.createIdentifier("Function"),
+				undefined,
+			);
+
 		case "instanceOf":
 			return createInstanceOfTransform(accessNode);
-
-		case "number":
-			return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
 
 		case "node":
 			return ts.factory.createTypeReferenceNode(
 				ts.factory.createIdentifier("React.ReactNode"),
 				undefined,
 			);
+
+		case "number":
+			return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
 
 		case "object":
 			return ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword);

@@ -10,8 +10,8 @@ import {
 	FileMutationsRequest,
 	FileMutator,
 } from "../../../../shared/fileMutator.js";
-import { NodeWithType, isNodeWithType } from "../../../../shared/nodeTypes.js";
 import { isNodeAssigningBinaryExpression } from "../../../../shared/nodes.js";
+import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes.js";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types.js";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes.js";
 
@@ -26,7 +26,7 @@ export const fixIncompletePropertyDeclarationTypes: FileMutator = (
 
 const isPropertyDeclarationWithType = (
 	node: ts.Node,
-): node is ts.PropertyDeclaration & NodeWithType =>
+): node is NodeWithType & ts.PropertyDeclaration =>
 	ts.isPropertyDeclaration(node) && isNodeWithType(node);
 
 const visitPropertyDeclaration = (
@@ -95,10 +95,10 @@ const collectPropertyAssignedTypes = (
 
 /**
  * Adds missing types for a reference to a property.
- * @param targetClass   Class whose properties are being referenced.
- * @param identifier   Node referencing the property.
- * @param assignedTypes   In-progress collection of types assigned to a property.
- * @param request   Metadata and settings to collect mutations in a file.
+ * @param targetClass Class whose properties are being referenced.
+ * @param identifier Node referencing the property.
+ * @param assignedTypes In-progress collection of types assigned to a property.
+ * @param request Metadata and settings to collect mutations in a file.
  */
 const updateAssignedTypesForReference = (
 	targetClass: ts.ClassLikeDeclaration,

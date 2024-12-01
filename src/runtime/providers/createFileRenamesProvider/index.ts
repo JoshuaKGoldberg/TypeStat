@@ -7,7 +7,7 @@ import { getNewFileName } from "./getNewFileName.js";
 
 /**
  * Creates a mutations provider that renames files from JavaScript to TypeScript.
- * @param allModifiedFiles   Set to mark names of all files that were modified.
+ * @param allModifiedFiles Set to mark names of all files that were modified.
  * @returns Provider to rename files from JavaScript to TypeScript, if needed.
  */
 export const createFileRenamesProvider = (allModifiedFiles: Set<string>) => {

@@ -12,22 +12,11 @@ import { createTypeStatProvider } from "./runtime/createTypeStatProvider.js";
 /**
  * Root arguments to pass to TypeStat.
  */
-export interface TypeStatArgv {
-	args: string[];
-	config?: string;
-	logfile?: string;
-}
-
 export enum ResultStatus {
 	ConfigurationError = 2,
 	Failed = 1,
 	Succeeded = 0,
 }
-
-export type TypeStatResult =
-	| ConfigurationErrorResult
-	| FailedResult
-	| SucceededResult;
 
 export interface ConfigurationErrorResult {
 	readonly error: Error | string;
@@ -42,6 +31,17 @@ export interface FailedResult {
 export interface SucceededResult {
 	readonly status: ResultStatus.Succeeded;
 }
+
+export interface TypeStatArgv {
+	args: string[];
+	config?: string;
+	logfile?: string;
+}
+
+export type TypeStatResult =
+	| ConfigurationErrorResult
+	| FailedResult
+	| SucceededResult;
 
 export const typeStat = async (
 	configPath: string | undefined,

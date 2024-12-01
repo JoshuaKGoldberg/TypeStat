@@ -6,8 +6,8 @@ import { ProvidedMutationsWave, Provider, ProviderCreator } from "./types.js";
 
 /**
  * Creates a provider that will run exactly once.
- * @param message   Message to log before and after running.
- * @param providerCreator   Creates a provider to wrap around.
+ * @param message Message to log before and after running.
+ * @param providerCreator Creates a provider to wrap around.
  * @returns Single-use equivalent of the provider.
  */
 export const createSingleUseProvider = (

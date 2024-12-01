@@ -7,8 +7,8 @@ import { collectGenericUses } from "./collectGenericUses.js";
 import { createExplicitGenericType } from "./createExplicitGenericType.js";
 import { getGenericClassDetails } from "./getGenericClassDetails.js";
 import {
-	VariableWithImplicitGeneric,
 	isVariableWithImplicitGeneric,
+	VariableWithImplicitGeneric,
 } from "./implicitGenericTypes.js";
 
 export const fixIncompleteImplicitVariableGenerics: FileMutator = (

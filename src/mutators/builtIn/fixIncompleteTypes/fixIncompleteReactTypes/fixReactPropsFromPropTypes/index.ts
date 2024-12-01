@@ -1,4 +1,4 @@
-import { Mutation, TextInsertMutation, combineMutations } from "automutate";
+import { combineMutations, Mutation, TextInsertMutation } from "automutate";
 import ts from "typescript";
 
 import { ReactPropTypesHint } from "../../../../../options/enums.js";
@@ -10,8 +10,8 @@ import { getClassExtendsType } from "../../../../../shared/nodes.js";
 import { printNewLine } from "../../../../../shared/printing/newlines.js";
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes.js";
 import {
-	ReactComponentNode,
 	isReactComponentNode,
+	ReactComponentNode,
 } from "../reactFiltering/isReactComponentNode.js";
 import { createInterfaceUsageMutation } from "./annotation/createInterfaceUsageMutation.js";
 import { createInterfaceFromPropTypes } from "./propTypes/createInterfaceFromPropTypes.js";

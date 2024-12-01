@@ -2,16 +2,13 @@ import ts from "typescript";
 
 import { getClassExtendsType } from "../../../../../shared/nodes.js";
 
+export type ReactClassComponentNode = {
+	heritageClauses: ts.NodeArray<ts.HeritageClause>;
+} & (ts.ClassDeclaration | ts.ClassExpression);
+
 export type ReactComponentNode =
 	| ReactClassComponentNode
 	| ReactFunctionalComponentNode;
-
-export type ReactClassComponentNode = (
-	| ts.ClassDeclaration
-	| ts.ClassExpression
-) & {
-	heritageClauses: ts.NodeArray<ts.HeritageClause>;
-};
 
 export type ReactFunctionalComponentNode =
 	| ts.ArrowFunction

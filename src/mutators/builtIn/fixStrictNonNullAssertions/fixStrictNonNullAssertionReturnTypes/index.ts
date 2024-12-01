@@ -1,4 +1,4 @@
-import { Mutation, combineMutations } from "automutate";
+import { combineMutations, Mutation } from "automutate";
 import ts from "typescript";
 
 import { isTypeFlagSetRecursively } from "../../../../mutations/collecting/flags.js";
@@ -7,11 +7,11 @@ import {
 	FileMutationsRequest,
 	FileMutator,
 } from "../../../../shared/fileMutator.js";
+import { getVariableInitializerForExpression } from "../../../../shared/nodes.js";
 import {
 	FunctionLikeDeclarationWithType,
 	isNodeWithType,
 } from "../../../../shared/nodeTypes.js";
-import { getVariableInitializerForExpression } from "../../../../shared/nodes.js";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types.js";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes.js";
 import { collectReturningNodeExpressions } from "./collectReturningNodeExpressions.js";

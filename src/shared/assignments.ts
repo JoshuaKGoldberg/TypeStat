@@ -9,10 +9,10 @@ import { getTypeAtLocationIfNotError } from "./types.js";
  * attempts to find that known type.
  * @example
  * If the node is assigned to a variable, this would return that variable's type.
- * In this case, that would be `Record<string, string>`:
+ * In this case, that would be `Record&lt;string, string>`:
  *
  * ```ts
- * const value: Record<string, string> = {};
+ * const value: Record&lt;string, string> = {};
  *                                    // ^^
  * ```
  * @example
