@@ -9,7 +9,7 @@ import {
 	isKnownGlobalBaseType,
 } from "../shared/nodeTypes.js";
 import { joinIntoType } from "./aliasing/joinIntoType.js";
-import { collectUsageFlagsAndSymbols } from "./collecting.js";
+import { collectUsageSymbols } from "./collecting.js";
 
 /**
  * Creates a mutation to add types to an existing type, if any are new.
@@ -30,20 +30,20 @@ export const createTypeAdditionMutation = (
 		return undefined;
 	}
 
-	// Find any missing flags and symbols (a.k.a. types)
-	const { missingFlags, missingTypes } = collectUsageFlagsAndSymbols(
+	// Find any missing symbols (a.k.a. types)
+	const { missingTypes } = collectUsageSymbols(
 		request,
 		declaredType,
 		allAssignedTypes,
 	);
 
 	// If nothing is missing, rejoice! The type was already fine.
-	if (missingFlags.size === 0 && missingTypes.size === 0) {
+	if (missingTypes.size === 0) {
 		return undefined;
 	}
 
 	// Join the missing types into a type string to declare
-	const newTypeAlias = joinIntoType(missingFlags, missingTypes, request);
+	const newTypeAlias = joinIntoType(missingTypes, request);
 
 	// If the original type was a bottom type or just something like Function or Object, replace it entirely
 	if (
@@ -87,17 +87,20 @@ export const createTypeCreationMutation = (
 	declaredType: ts.Type,
 	allAssignedTypes: readonly ts.Type[],
 ): TextInsertMutation | undefined => {
-	// Find the already assigned flags and symbols, as well as any missing ones
-	const { assignedFlags, assignedTypes, missingFlags, missingTypes } =
-		collectUsageFlagsAndSymbols(request, declaredType, allAssignedTypes);
+	// Find the already assigned symbols, as well as any missing ones
+	const { assignedTypes, missingTypes } = collectUsageSymbols(
+		request,
+		declaredType,
+		allAssignedTypes,
+	);
 
 	// If nothing is missing, rejoice! The type was already fine.
-	if (missingFlags.size === 0 && missingTypes.size === 0) {
+	if (missingTypes.size === 0) {
 		return undefined;
 	}
 
 	// Join the missing types into a type string to declare
-	const newTypeAlias = joinIntoType(assignedFlags, assignedTypes, request);
+	const newTypeAlias = joinIntoType(assignedTypes, request);
 
 	// Create a mutation insertion that adds the assigned types in
 	return {

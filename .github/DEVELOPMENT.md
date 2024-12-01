@@ -25,6 +25,8 @@ Add `--watch` to run the builder in a watch mode that continuously cleans and re
 pnpm build --watch
 ```
 
+Once built, you can run TypeStat locally with `node bin/typestat.mjs`.
+
 ## Formatting
 
 [Prettier](https://prettier.io) is used to format code.
@@ -51,6 +53,8 @@ ESLint can be run with `--fix` to auto-fix some lint rule complaints:
 pnpm run lint --fix
 ```
 
+Note that you'll likely need to run `pnpm build` before `pnpm lint` so that lint rules which check the file system can pick up on any built files.
+
 ## Testing
 
 There are two kinds of tests:
@@ -58,7 +62,7 @@ There are two kinds of tests:
 - [Unit tests](#unit-tests)
 - [Mutation tests](#mutation-tests)
 
-### Unit TEsts
+### Unit Tests
 
 [Vitest](https://vitest.dev) is used for tests.
 You can run it locally on the command-line:

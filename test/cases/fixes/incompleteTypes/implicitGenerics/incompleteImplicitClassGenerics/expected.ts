@@ -5,7 +5,7 @@ import { ComponentLike } from "./react-like";
 
 	class BaseWithoutGenerics {}
 	class BaseWithOneGeneric<T> {
-		constructor(t: T | OneInterface | OneType | string) {}
+		constructor(t: T | string | OneInterface | OneType) {}
 	}
 	class BaseWithTwoGenerics<T, U> {
 		constructor(t: T | number, u: U | boolean) {}
