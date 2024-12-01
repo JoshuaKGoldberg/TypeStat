@@ -94,6 +94,9 @@ export default tseslint.config(
 			"no-useless-rename": "error",
 			"object-shorthand": "error",
 			"operator-assignment": "error",
+
+			// These on-by-default rules don't work well for this repo
+			"jsdoc/text-escaping": "off",
 		},
 		settings: {
 			perfectionist: {

@@ -5,7 +5,7 @@ import { isTypeBuiltIn } from "../shared/types.js";
 import { constructArrayShorthand } from "./arrays.js";
 
 /**
- * Creates a type like "string[]" or "Map&lt;boolean | number>" from a container and type arguments.
+ * Creates a type like `string[]` or `Map&lt;boolean | number>` from a container and type arguments.
  */
 export const joinIntoGenericType = (
 	request: FileMutationsRequest,
