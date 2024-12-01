@@ -1,8 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
 
-import { version } from "../../package.json";
+import packageConfig from "../../package.json" with { type: "json" };
 import { ResultStatus } from "../index.js";
 import { runCli } from "./runCli.js";
+
+const version = packageConfig.version;
 
 const createTestArgs = (...argv: string[]) => ({
 	argv: ["node.exe", "typestat", ...argv],
