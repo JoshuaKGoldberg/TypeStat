@@ -25,6 +25,8 @@ Add `--watch` to run the builder in a watch mode that continuously cleans and re
 pnpm build --watch
 ```
 
+Once built, you can run TypeStat locally with `node bin/typestat.mjs`.
+
 ## Formatting
 
 [Prettier](https://prettier.io) is used to format code.
