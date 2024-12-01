@@ -61,7 +61,7 @@
 		"@types/react": "18.3.12",
 		"@typescript-eslint/eslint-plugin": "^7.3.1",
 		"@typescript-eslint/parser": "^8.0.0",
-		"@vitest/coverage-v8": "^1.4.0",
+		"@vitest/coverage-v8": "^2.0.0",
 		"console-fail-test": "^0.5.0",
 		"cspell": "^8.6.0",
 		"eslint": "8.57.1",
@@ -89,7 +89,7 @@
 		"sentences-per-line": "0.2.1",
 		"tsup": "^8.0.2",
 		"typescript": "^5.4.3",
-		"vitest": "^1.4.0",
+		"vitest": "^2.0.0",
 		"yaml-eslint-parser": "^1.2.2"
 	},
 	"packageManager": "pnpm@9.14.2",
