@@ -11,9 +11,6 @@ importers:
       '@phenomnomnominal/tsquery':
         specifier: 6.1.3
         version: 6.1.3(typescript@5.7.2)
-      '@types/eslint-plugin-markdown':
-        specifier: 2.0.2
-        version: 2.0.2
       automutate:
         specifier: 0.9.0
         version: 0.9.0
@@ -51,6 +48,9 @@ importers:
       '@release-it/conventional-changelog':
         specifier: 9.0.3
         version: 9.0.3(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)(release-it@17.10.0(typescript@5.7.2))
+      '@types/eslint-plugin-markdown':
+        specifier: 2.0.2
+        version: 2.0.2
       '@types/glob':
         specifier: 8.1.0
         version: 8.1.0
