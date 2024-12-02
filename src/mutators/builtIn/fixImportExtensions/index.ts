@@ -10,9 +10,12 @@ import {
 import { getTypeAtLocationIfNotError } from "../../../shared/types.js";
 import { collectMutationsFromNodes } from "../../collectMutationsFromNodes.js";
 
+// https://github.com/azat-io/eslint-plugin-perfectionist/issues/407
+/* eslint-disable perfectionist/sort-intersection-types */
 type ExtensionlessExportOrImport = {
 	moduleSpecifier: ts.StringLiteral;
 } & (ts.ExportDeclaration | ts.ImportDeclaration);
+/* eslint-enable perfectionist/sort-intersection-types */
 
 export const fixImportExtensions: FileMutator = (
 	request: FileMutationsRequest,

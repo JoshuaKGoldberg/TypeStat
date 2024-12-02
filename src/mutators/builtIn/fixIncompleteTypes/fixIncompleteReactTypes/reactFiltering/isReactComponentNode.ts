@@ -2,9 +2,12 @@ import ts from "typescript";
 
 import { getClassExtendsType } from "../../../../../shared/nodes.js";
 
+// https://github.com/azat-io/eslint-plugin-perfectionist/issues/407
+/* eslint-disable perfectionist/sort-intersection-types */
 export type ReactClassComponentNode = {
 	heritageClauses: ts.NodeArray<ts.HeritageClause>;
 } & (ts.ClassDeclaration | ts.ClassExpression);
+/* eslint-enable perfectionist/sort-intersection-types */
 
 export type ReactComponentNode =
 	| ReactClassComponentNode
