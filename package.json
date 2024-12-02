@@ -59,7 +59,7 @@
 		"@types/node": "22.10.1",
 		"@types/prop-types": "15.7.13",
 		"@types/react": "18.3.12",
-		"@typescript-eslint/eslint-plugin": "7.18.0",
+		"@typescript-eslint/eslint-plugin": "8.16.0",
 		"@typescript-eslint/parser": "8.16.0",
 		"@vitest/coverage-v8": "2.1.6",
 		"console-fail-test": "0.5.0",
