@@ -14,13 +14,13 @@ import { initializeTypeScript } from "./initializeTypeScript/index.js";
 
 const fileName = "typestat.json";
 
-export type InitializationResults =
-	| FailedInitialization
-	| RanInitializationResults;
-
 export interface FailedInitialization {
 	status: ResultStatus.ConfigurationError;
 }
+
+export type InitializationResults =
+	| FailedInitialization
+	| RanInitializationResults;
 
 export interface RanInitializationResults {
 	skipped: boolean;

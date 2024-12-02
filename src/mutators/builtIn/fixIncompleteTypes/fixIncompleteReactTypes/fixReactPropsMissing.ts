@@ -10,8 +10,8 @@ import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes.js
 import { getApparentNameOfComponent } from "./getApparentNameOfComponent.js";
 import { getComponentPropsNode } from "./getComponentPropsNode.js";
 import {
-	ReactComponentNode,
 	isReactComponentNode,
+	ReactComponentNode,
 } from "./reactFiltering/isReactComponentNode.js";
 
 /**

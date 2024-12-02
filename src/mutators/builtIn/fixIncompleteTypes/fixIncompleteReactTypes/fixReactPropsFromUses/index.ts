@@ -6,8 +6,8 @@ import {
 import { collectMutationsFromNodes } from "../../../../collectMutationsFromNodes.js";
 import { getComponentPropsNode } from "../getComponentPropsNode.js";
 import {
-	ReactComponentNode,
 	isReactComponentNode,
+	ReactComponentNode,
 } from "../reactFiltering/isReactComponentNode.js";
 import { getPropsUsageTypes } from "./getPropsUsageTypes.js";
 

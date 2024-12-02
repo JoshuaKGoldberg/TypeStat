@@ -1,4 +1,4 @@
-import { Mutation, combineMutations } from "automutate";
+import { combineMutations, Mutation } from "automutate";
 import ts from "typescript";
 
 import { createNonNullAssertion } from "../../../../mutations/typeMutating/createNonNullAssertion.js";

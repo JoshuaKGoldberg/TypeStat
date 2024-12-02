@@ -92,7 +92,7 @@ const parseModuleSpecifier = (node: ts.Expression) => {
 	}
 
 	const { text } = node;
-	if (text[0].match(/[aZ]/) === null) {
+	if (/[aZ]/.exec(text[0]) === null) {
 		return undefined;
 	}
 

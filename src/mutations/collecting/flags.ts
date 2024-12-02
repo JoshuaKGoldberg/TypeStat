@@ -3,8 +3,8 @@ import ts from "typescript";
 
 /**
  * Checks if a type contains a type flag, accounting for deep nested type unions.
- * @param parentType   Parent type to check for the type flag.
- * @param typeFlag   Type flag to check within the parent type.
+ * @param parentType Parent type to check for the type flag.
+ * @param typeFlag Type flag to check within the parent type.
  * @returns Whether the parent type contains the type flag.
  */
 export const isTypeFlagSetRecursively = (

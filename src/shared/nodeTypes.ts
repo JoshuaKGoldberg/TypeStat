@@ -18,18 +18,18 @@ export type NodeWithOptionalType = ts.Node & {
 /**
  * Any node type that contains a type annotation.
  */
-export type NodeWithType = ts.Node & {
-	type: ts.TypeNode;
-};
-
 export type NodeWithIdentifierName = ts.Node & {
 	name: ts.Identifier;
 };
 
-export type ParameterDeclarationWithType = ts.ParameterDeclaration &
-	NodeWithType;
+export type NodeWithType = ts.Node & {
+	type: ts.TypeNode;
+};
 
-export type PropertySignatureWithType = ts.PropertySignature & NodeWithType;
+export type ParameterDeclarationWithType = NodeWithType &
+	ts.ParameterDeclaration;
+
+export type PropertySignatureWithType = NodeWithType & ts.PropertySignature;
 
 /**
  * Node types TypeStat may attempt to create a type declaration on.
@@ -53,8 +53,8 @@ export type NodeWithAddableType = NodeWithType &
 /**
  * Any function-like declaration that has an explicit type.
  */
-export type FunctionLikeDeclarationWithType = ts.FunctionLikeDeclaration &
-	NodeWithType;
+export type FunctionLikeDeclarationWithType = NodeWithType &
+	ts.FunctionLikeDeclaration;
 
 // TODO: make this a more specific type
 // Will have to deal with instantiations (new Container<T>() { ... }) and declarations (class Container<T>() { ... }))
@@ -90,8 +90,8 @@ export const isNodeWithTypeParameters = (
 	return "typeParameters" in node;
 };
 
-export type PropertySignatureWithStaticName = ts.PropertySignature &
-	NodeWithIdentifierName;
+export type PropertySignatureWithStaticName = NodeWithIdentifierName &
+	ts.PropertySignature;
 
 export const isPropertySignatureWithStaticName = (
 	node: ts.Node,

@@ -1,4 +1,4 @@
-import { Mutation, combineMutations } from "automutate";
+import { combineMutations, Mutation } from "automutate";
 import ts from "typescript";
 
 import { InterfaceOrTypeLiteral } from "../../mutators/builtIn/fixIncompleteTypes/fixIncompleteInterfaceOrTypeLiteralGenerics/collectGenericNodeReferences.js";
@@ -6,20 +6,20 @@ import { isNotUndefined } from "../../shared/arrays.js";
 import { FileMutationsRequest } from "../../shared/fileMutator.js";
 import { getStaticNameOfProperty } from "../../shared/names.js";
 import {
-	PropertySignatureWithType,
 	isNodeWithType,
+	PropertySignatureWithType,
 } from "../../shared/nodeTypes.js";
 import { getTypeAtLocationIfNotError } from "../../shared/types.js";
 import { AssignedTypesByName } from "../assignments.js";
 import {
-	TypeSummariesPerNodeByName,
 	addIncompleteTypesToType,
+	TypeSummariesPerNodeByName,
 } from "./addIncompleteTypesToType.js";
 import { addMissingTypesToType } from "./addMissingTypesToType.js";
 import { originalTypeHasIncompleteType } from "./eliminations.js";
 import {
-	TypeSummariesByName,
 	summarizeAllAssignedTypes,
+	TypeSummariesByName,
 } from "./summarization.js";
 
 /**

@@ -9,7 +9,7 @@ import {
 	FileMutationsRequest,
 	FileMutator,
 } from "../../../../shared/fileMutator.js";
-import { NodeWithType, isNodeWithType } from "../../../../shared/nodeTypes.js";
+import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes.js";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types.js";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes.js";
 
@@ -24,7 +24,7 @@ export const fixIncompleteParameterTypes: FileMutator = (
 
 const isParameterWithType = (
 	node: ts.Node,
-): node is ts.ParameterDeclaration & NodeWithType =>
+): node is NodeWithType & ts.ParameterDeclaration =>
 	ts.isParameter(node) && isNodeWithType(node);
 
 const visitParameterDeclaration = (

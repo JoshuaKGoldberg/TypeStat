@@ -8,9 +8,9 @@ import { isTypeFlagSetRecursively } from "./collecting/flags.js";
 
 /**
  * Collects assigned and missing types, recursively accounting for type unions.
- * @param request   Metadata and settings to collect mutations in a file.
- * @param declaredType   Original type declared on a node.
- * @param allAssignedTypes   All types immediately or later assigned to the node.
+ * @param request Metadata and settings to collect mutations in a file.
+ * @param declaredType Original type declared on a node.
+ * @param allAssignedTypes All types immediately or later assigned to the node.
  */
 export const collectUsageSymbols = (
 	request: FileMutationsRequest,
@@ -44,8 +44,8 @@ export const collectUsageSymbols = (
 
 /**
  * Separates raw type node(s) into their contained types.
- * @param request   Metadata and settings to collect mutations in a file.
- * @param allTypes   Any number of raw type nodes.
+ * @param request Metadata and settings to collect mutations in a file.
+ * @param allTypes Any number of raw type nodes.
  * @returns Types found within the raw type nodes.
  */
 export const collectRawTypesFromTypes = (

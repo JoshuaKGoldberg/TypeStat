@@ -3,19 +3,19 @@ import ts from "typescript";
 import { AssignedTypesByName } from "../../../../../mutations/assignments.js";
 import { getDeclaredTypesOfArgument } from "../../../../../shared/calls.js";
 import { FileMutationsRequest } from "../../../../../shared/fileMutator.js";
+import { isNodeWithinNode } from "../../../../../shared/nodes.js";
 import {
-	PropertySignatureWithStaticName,
 	isNodeWithIdentifierName,
 	isPropertySignatureWithStaticName,
+	PropertySignatureWithStaticName,
 } from "../../../../../shared/nodeTypes.js";
-import { isNodeWithinNode } from "../../../../../shared/nodes.js";
 import {
 	getSymbolAtLocationIfNotError,
 	getTypeAtLocationIfNotError,
 } from "../../../../../shared/types.js";
 import {
-	ReactComponentPropsNode,
 	getComponentPropsNode,
+	ReactComponentPropsNode,
 } from "../getComponentPropsNode.js";
 import { getPropNodeFromReference } from "../getPropNodeFromReference.js";
 import { getReactComponentNode } from "../reactFiltering/getReactComponentNode.js";

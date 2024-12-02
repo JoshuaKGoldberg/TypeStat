@@ -10,7 +10,7 @@ import {
 	FileMutationsRequest,
 	FileMutator,
 } from "../../../../shared/fileMutator.js";
-import { NodeWithType, isNodeWithType } from "../../../../shared/nodeTypes.js";
+import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes.js";
 import { isNodeFilteredOut } from "../../../../shared/references.js";
 import { getTypeAtLocationIfNotError } from "../../../../shared/types.js";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes.js";
@@ -26,7 +26,7 @@ export const fixIncompleteVariableTypes: FileMutator = (
 
 const isNodeVariableDeclarationWithType = (
 	node: ts.Node,
-): node is ts.VariableDeclaration & NodeWithType =>
+): node is NodeWithType & ts.VariableDeclaration =>
 	ts.isVariableDeclaration(node) && isNodeWithType(node);
 
 const visitVariableDeclaration = (
@@ -60,8 +60,8 @@ const visitVariableDeclaration = (
 
 /**
  * Finds types later assigned to a variable declaration.
- * @param node   Node to collect types from.
- * @param request   Metadata and settings to collect mutations in a file.
+ * @param node Node to collect types from.
+ * @param request Metadata and settings to collect mutations in a file.
  * @returns Types assigned to the node in the file.
  */
 const collectVariableAssignedTypes = (

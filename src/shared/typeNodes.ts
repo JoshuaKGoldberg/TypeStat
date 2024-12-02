@@ -1,5 +1,9 @@
 import ts from "typescript";
 
+export type TypeWithTypeArguments = ts.Type & {
+	typeArguments: ts.Type[];
+};
+
 export type WellKnownTypeName =
 	| "any"
 	| "bigint"
@@ -16,10 +20,6 @@ export type WellKnownTypeName =
 	| "undefined"
 	| "unknown"
 	| "void";
-
-export type TypeWithTypeArguments = ts.Type & {
-	typeArguments: ts.Type[];
-};
 
 export const isTypeArgumentsType = (
 	type: ts.Type,

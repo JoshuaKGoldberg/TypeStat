@@ -7,12 +7,12 @@ import {
 	FileMutationsRequest,
 	FileMutator,
 } from "../../../../shared/fileMutator.js";
-import { NodeWithType, isNodeWithType } from "../../../../shared/nodeTypes.js";
+import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes.js";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes.js";
 
-type InferablePropertyDeclaration = ts.PropertyDeclaration &
-	NodeWithType &
-	Required<Pick<ts.PropertyDeclaration, "initializer">>;
+type InferablePropertyDeclaration = NodeWithType &
+	Required<Pick<ts.PropertyDeclaration, "initializer">> &
+	ts.PropertyDeclaration;
 
 export const fixNoInferableTypesPropertyDeclarations: FileMutator = (
 	request: FileMutationsRequest,

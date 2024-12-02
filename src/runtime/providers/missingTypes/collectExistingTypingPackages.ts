@@ -25,7 +25,7 @@ export const collectExistingTypingPackages = async (
 
 const tryCollectAllDependencies = async (packagePath: string) => {
 	try {
-		return collectAllDependencies(packagePath);
+		return await collectAllDependencies(packagePath);
 	} catch (error) {
 		return getQuickErrorSummary(error);
 	}

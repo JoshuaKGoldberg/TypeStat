@@ -10,8 +10,8 @@ import {
 import { getTypeAtLocationIfNotError } from "../../../../shared/types.js";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes.js";
 import {
-	InterfaceOrTypeLiteral,
 	collectGenericNodeReferences,
+	InterfaceOrTypeLiteral,
 } from "./collectGenericNodeReferences.js";
 import { expandValuesAssignedToReferenceNodes } from "./expandValuesAssignedToReferenceNodes.js";
 

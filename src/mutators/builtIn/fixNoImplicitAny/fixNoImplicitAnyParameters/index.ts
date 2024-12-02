@@ -2,9 +2,9 @@ import { Mutation } from "automutate";
 import ts from "typescript";
 
 import {
-	NoImplicitAnyNodeToBeFixed,
 	canNodeBeFixedForNoImplicitAny,
 	getNoImplicitAnyMutations,
+	NoImplicitAnyNodeToBeFixed,
 } from "../../../../mutations/codeFixes/noImplicitAny.js";
 import {
 	FileMutationsRequest,
@@ -23,5 +23,5 @@ export const fixNoImplicitAnyParameters: FileMutator = (
 
 const isNodeNoImplicitAnyFixableParameter = (
 	node: ts.Node,
-): node is ts.ParameterDeclaration & NoImplicitAnyNodeToBeFixed =>
+): node is NoImplicitAnyNodeToBeFixed & ts.ParameterDeclaration =>
 	ts.isParameter(node) && canNodeBeFixedForNoImplicitAny(node);

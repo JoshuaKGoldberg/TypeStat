@@ -1,7 +1,7 @@
 import {
+	combineMutations,
 	MultipleMutations,
 	TextInsertMutation,
-	combineMutations,
 } from "automutate";
 import ts from "typescript";
 
@@ -10,17 +10,17 @@ export interface CodeFixCreationPreferences {
 }
 
 const knownBlankTypes = new Set([
-	": {}",
 	": any",
 	": never",
 	": null",
 	": Object",
 	": unknown",
+	": {}",
 ]);
 
 /**
  * Attempts to convert a language service code fix into a usable mutation.
- * @param codeFixes   Code fixes  from a language service.
+ * @param codeFixes Code fixes  from a language service.
  * @returns Equivalent mutation, if possible.
  */
 export const createCodeFixCreationMutation = (
@@ -64,7 +64,7 @@ export const createCodeFixCreationMutation = (
 
 /**
  * Reduces TypeScript-suggested text changes to their simplest form,
- * for the case of two text changes with the same span start
+ * for the case of two text changes with the same span start.
  * @see https://github.com/JoshuaKGoldberg/TypeStat/issues/256
  */
 const simplifyTextChanges = (textChanges: readonly ts.TextChange[]) => {

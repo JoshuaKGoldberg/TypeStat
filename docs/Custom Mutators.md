@@ -24,8 +24,6 @@ It should return an array of Automutate `Mutation` objects.
 
 For example, if you run `typestat --add ./src/mutators/myMutator`, there should exist a `./src/mutators/myMutator.js` file _(or `./src/mutators/myMutator/index.js`)_:
 
-<!-- eslint-disable @typescript-eslint/no-unused-vars -->
-
 ```typescript
 import { Mutation } from "automutate";
 import { FileMutationsRequest } from "typestat";

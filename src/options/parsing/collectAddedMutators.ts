@@ -16,9 +16,9 @@ interface ImportedFileMutator {
 
 /**
  * Finds mutators to use in runtime, as either the built-in mutators or custom mutators specified by the user.
- * @param rawOptions   Options listed as JSON in a typestat configuration file.
- * @param packageDirectory   Base directory to resolve paths from.
- * @param output   Wraps process.stderr and process.stdout.
+ * @param rawOptions Options listed as JSON in a typestat configuration file.
+ * @param packageDirectory Base directory to resolve paths from.
+ * @param output Wraps process.stderr and process.stdout.
  * @returns Mutators to run with their friendly names.
  */
 export const collectAddedMutators = (

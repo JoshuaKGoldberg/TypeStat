@@ -3,7 +3,7 @@ import { runCommand } from "./missingTypes/runCommand.js";
 
 /**
  * Creates a mutations provider to run any post-processing shell scripts.
- * @param allModifiedFilePaths   Unique names of all files that were modified.
+ * @param allModifiedFilePaths Unique names of all files that were modified.
  * @returns Mutations provider to run post-processing shell scripts, if needed.
  */
 export const createPostProcessingProvider = (

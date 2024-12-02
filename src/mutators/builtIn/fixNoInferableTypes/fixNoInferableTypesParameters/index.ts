@@ -8,8 +8,8 @@ import {
 	FileMutator,
 } from "../../../../shared/fileMutator.js";
 import {
-	ParameterDeclarationWithType,
 	isNodeWithType,
+	ParameterDeclarationWithType,
 } from "../../../../shared/nodeTypes.js";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes.js";
 

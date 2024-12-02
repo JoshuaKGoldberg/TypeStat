@@ -2,7 +2,7 @@ import ts from "typescript";
 
 /**
  * Finds any nodes returned by a function-like.
- * @param functionLikeDeclaration   Returning function-like declaration to collect within.
+ * @param functionLikeDeclaration Returning function-like declaration to collect within.
  * @returns Expression nodes returned from the function-like.
  */
 export const collectReturningNodeExpressions = (

@@ -1,8 +1,8 @@
 import ts from "typescript";
 
 import {
-	AssignedTypeValue,
 	AssignedTypesByName,
+	AssignedTypeValue,
 	joinAssignedTypesByName,
 } from "../../../../mutations/assignments.js";
 import { getCallExpressionType } from "../../../../shared/calls.js";

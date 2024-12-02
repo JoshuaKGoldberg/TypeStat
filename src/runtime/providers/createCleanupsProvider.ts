@@ -2,8 +2,8 @@ import { Mutation } from "automutate";
 
 import { suppressRemainingTypeIssues } from "../../cleanups/builtin/suppressTypeErrors/index.js";
 import { FileInfoCache } from "../../shared/FileInfoCache.js";
+import { convertMapToObject, Dictionary } from "../../shared/maps.js";
 import { NameGenerator } from "../../shared/NameGenerator.js";
-import { Dictionary, convertMapToObject } from "../../shared/maps.js";
 import { collectFilteredNodes } from "../collectFilteredNodes.js";
 import { createFileNamesAndServices } from "../createFileNamesAndServices.js";
 import { createSingleUseProvider } from "../createSingleUseProvider.js";
@@ -11,7 +11,7 @@ import { findMutationsInFile } from "../findMutationsInFile.js";
 
 /**
  * Creates a mutations provider that applies post-fix cleanups.
- * @param allModifiedFiles   Set to mark names of all files that were modified.
+ * @param allModifiedFiles Set to mark names of all files that were modified.
  * @returns Provider to apply post-fix cleanups, if needed.
  */
 export const createCleanupsProvider = (allModifiedFiles: Set<string>) => {

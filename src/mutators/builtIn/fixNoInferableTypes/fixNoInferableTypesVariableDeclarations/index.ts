@@ -7,12 +7,12 @@ import {
 	FileMutationsRequest,
 	FileMutator,
 } from "../../../../shared/fileMutator.js";
-import { NodeWithType, isNodeWithType } from "../../../../shared/nodeTypes.js";
+import { isNodeWithType, NodeWithType } from "../../../../shared/nodeTypes.js";
 import { collectMutationsFromNodes } from "../../../collectMutationsFromNodes.js";
 
-type InferableVariableDeclaration = ts.VariableDeclaration &
-	NodeWithType &
-	Required<Pick<ts.VariableDeclaration, "initializer">> & {
+type InferableVariableDeclaration = NodeWithType &
+	Required<Pick<ts.VariableDeclaration, "initializer">> &
+	ts.VariableDeclaration & {
 		parent: ts.VariableDeclarationList;
 	};
 

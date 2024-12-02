@@ -1,5 +1,5 @@
 export const arrayify = <T>(
-	items: T | readonly T[] | undefined,
+	items: readonly T[] | T | undefined,
 ): readonly T[] => {
 	if (items === undefined) {
 		return [];

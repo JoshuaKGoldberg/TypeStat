@@ -2,7 +2,7 @@ import * as tsutils from "ts-api-utils";
 import ts from "typescript";
 
 import { FileMutationsRequest } from "./fileMutator.js";
-import { NodeSelector, getValueDeclarationOfType } from "./nodeTypes.js";
+import { getValueDeclarationOfType, NodeSelector } from "./nodeTypes.js";
 
 /**
  * Finds a node in a source file by its starting position.

@@ -6,9 +6,9 @@ import { EOL } from "os";
 
 import {
 	ResultStatus,
+	typeStat,
 	TypeStatArgv,
 	TypeStatResult,
-	typeStat,
 } from "../index.js";
 import { initialization } from "../initialization/index.js";
 import { createProcessOutput } from "../output/createProcessOutput.js";
@@ -22,8 +22,8 @@ export interface CliRuntime {
 
 /**
  * Parses raw string arguments and, if they're valid, calls to a main method.
- * @param rawArgv   Raw string arguments and any system dependency overrides.
- * @param runtime   Method to run with parsed arguments: generally `typeStat`.
+ * @param rawArgv Raw string arguments and any system dependency overrides.
+ * @param runtime Method to run with parsed arguments: generally `typeStat`.
  * @returns Promise for the result of running TypeStat.
  */
 export const runCli = async (

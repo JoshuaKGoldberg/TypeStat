@@ -20,8 +20,8 @@ export interface FoundRawOptions {
 
 /**
  * Parses raw options from a configuration file.
- * @param cwd   Base directory to resolve paths from.
- * @param configPath   Suggested path to load from, instead of searching.
+ * @param cwd Base directory to resolve paths from.
+ * @param configPath Suggested path to load from, instead of searching.
  * @returns Parsed raw options from a configuration file, or an error string.
  */
 export const findRawOptions = (

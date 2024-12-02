@@ -12,8 +12,8 @@ const commandAliases = new Map([
 
 /**
  * Runs a shell command.
- * @param options   Parsed runtime options for TypeStat.
- * @param fullCommand   Command to spawn, including args.
+ * @param options Parsed runtime options for TypeStat.
+ * @param fullCommand Command to spawn, including args.
  * @returns Promise for the result code of the command.
  */
 export const runCommand = async (

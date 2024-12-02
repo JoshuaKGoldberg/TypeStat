@@ -1,4 +1,4 @@
-import { TextSwapMutation, combineMutations } from "automutate";
+import { combineMutations, TextSwapMutation } from "automutate";
 import ts from "typescript";
 
 import {

@@ -83,6 +83,14 @@ const printRenames = (renames: InitializationRenames) => {
 	}
 };
 
+function renameSourceFilesExtensions(sourceFiles: string, extension: string) {
+	return [
+		sourceFiles
+			.replace(/(\.|\{)js/, `$1${extension}`)
+			.replace(new RegExp(`{${extension},jsx?}`), extension),
+	];
+}
+
 function renameSourceFilesExtensionsAuto(sourceFiles: string) {
 	for (const [original, replacement] of [
 		[/\{js,jsx\}/, "{ts,tsx}"],
@@ -92,12 +100,4 @@ function renameSourceFilesExtensionsAuto(sourceFiles: string) {
 	}
 
 	return renameSourceFilesExtensions(sourceFiles, "ts");
-}
-
-function renameSourceFilesExtensions(sourceFiles: string, extension: string) {
-	return [
-		sourceFiles
-			.replace(/(\.|\{)js/, `$1${extension}`)
-			.replace(new RegExp(`{${extension},jsx?}`), extension),
-	];
 }

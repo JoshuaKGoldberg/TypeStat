@@ -1,13 +1,13 @@
 import { Mutation } from "automutate";
 
 import { findRequireRenameMutationsInFile } from "../../mutations/renames/findRequireRenameMutationsInFile.js";
-import { Dictionary, convertMapToObject } from "../../shared/maps.js";
+import { convertMapToObject, Dictionary } from "../../shared/maps.js";
 import { createFileNamesAndServices } from "../createFileNamesAndServices.js";
 import { createSingleUseProvider } from "../createSingleUseProvider.js";
 
 /**
  * Creates a mutations provider that transforms local require() calls in files.
- * @param allModifiedFiles   Set to mark names of all files that were modified.
+ * @param allModifiedFiles Set to mark names of all files that were modified.
  * @returns Provider to transform local require() calls in files, if needed.
  */
 export const createRequireRenameProvider = (allModifiedFiles: Set<string>) => {
