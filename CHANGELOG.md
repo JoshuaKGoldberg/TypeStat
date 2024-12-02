@@ -1,3 +1,9 @@
+## [0.8.4](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.3...0.8.4) (2024-12-02)
+
+### Bug Fixes
+
+- **deps:** update dependency ts-api-utils to v1.4.3 ([#2042](https://github.com/JoshuaKGoldberg/TypeStat/issues/2042)) ([189c1eb](https://github.com/JoshuaKGoldberg/TypeStat/commit/189c1ebf9c1b69411de407360a5726057fb277f1))
+
 ## [0.8.3](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.2...0.8.3) (2024-11-30)
 
 ### Bug Fixes
