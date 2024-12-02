@@ -53,7 +53,7 @@
 	},
 	"devDependencies": {
 		"@release-it/conventional-changelog": "9.0.3",
-		"@types/eslint": "8.56.12",
+		"@types/eslint": "9.6.1",
 		"@types/glob": "8.1.0",
 		"@types/minimatch": "5.1.2",
 		"@types/node": "22.10.1",
