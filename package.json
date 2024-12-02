@@ -1,6 +1,6 @@
 {
 	"name": "typestat",
-	"version": "0.8.3",
+	"version": "0.8.4",
 	"description": "Converts JavaScript to TypeScript and TypeScript to better TypeScript. 🧫",
 	"repository": {
 		"type": "git",
@@ -61,8 +61,8 @@
 		"@types/node": "22.10.1",
 		"@types/prop-types": "15.7.13",
 		"@types/react": "18.3.12",
-		"@vitest/coverage-v8": "2.1.6",
-		"@vitest/eslint-plugin": "1.1.13",
+		"@vitest/coverage-v8": "2.1.8",
+		"@vitest/eslint-plugin": "1.1.14",
 		"console-fail-test": "0.5.0",
 		"cspell": "8.16.1",
 		"eslint": "9.16.0",
@@ -75,7 +75,7 @@
 		"eslint-plugin-regexp": "2.7.0",
 		"eslint-plugin-yml": "1.16.0",
 		"husky": "9.1.7",
-		"knip": "5.38.3",
+		"knip": "5.38.4",
 		"lint-staged": "15.2.10",
 		"markdownlint": "0.36.1",
 		"markdownlint-cli": "0.43.0",
@@ -87,7 +87,7 @@
 		"tsup": "8.3.5",
 		"typescript": "5.7.2",
 		"typescript-eslint": "8.16.0",
-		"vitest": "2.1.6"
+		"vitest": "2.1.8"
 	},
 	"packageManager": "pnpm@9.14.4",
 	"engines": {
