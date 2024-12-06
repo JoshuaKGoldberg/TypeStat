@@ -1,3 +1,6 @@
 {
+	"cleanups": {
+		"suppressTypeErrors": true
+	},
 	"mutators": ["./mutator1.cjs", "./mutator2.cjs"]
 }

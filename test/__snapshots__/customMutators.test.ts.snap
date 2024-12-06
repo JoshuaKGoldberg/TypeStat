@@ -1,192 +1,198 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Custom mutators > empty array > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.ts"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "files": [
+        "actual.ts"
+      ],
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": false,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": false,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
-    }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {}
+  }
+]"
 `;
 
 exports[`Custom mutators > one mutator > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "include": [
+        "actual.ts"
+      ],
+      "compileOnSave": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": false,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
     "include": [
       "actual.ts"
     ],
-    "compileOnSave": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": false,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
-    }
-  },
-  "include": [
-    "actual.ts"
-  ],
-  "mutators": [
-    [
-      "./sampleMutator.cjs",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+    "mutators": [
+      [
+        "./sampleMutator.cjs",
+        null
+      ]
+    ],
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {}
+  }
+]"
 `;
 
 exports[`Custom mutators > two mutators > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.ts"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "files": [
+        "actual.ts"
+      ],
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": false,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "./mutator1.cjs",
+        null
+      ],
+      [
+        "./mutator2.cjs",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": false,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
-    }
-  },
-  "mutators": [
-    [
-      "./mutator1.cjs",
-      null
-    ],
-    [
-      "./mutator2.cjs",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {}
+  }
+]"
 `;

@@ -1,15 +1,15 @@
 (function () {
-	declare const value: string | undefined;
+	let value: string | undefined;
 
 	value.length;
 	value?.length;
 
-	declare const valueAny: any;
+	let valueAny: any;
 
 	valueAny.length;
 	valueAny?.length;
 
-	declare const valueAnyOrUndefined: any | undefined;
+	let valueAnyOrUndefined: any | undefined;
 
 	valueAnyOrUndefined.length;
 	valueAnyOrUndefined?.length;

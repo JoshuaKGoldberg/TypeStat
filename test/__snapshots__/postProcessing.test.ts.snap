@@ -1,87 +1,89 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Post processing > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": false
+    },
+    "compilerOptions": {
+      "include": [
+        "actual.ts"
+      ],
+      "compileOnSave": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
     "include": [
       "actual.ts"
     ],
-    "compileOnSave": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
-    }
-  },
-  "include": [
-    "actual.ts"
-  ],
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": [
+    "mutators": [
       [
-        "node",
-        "./postProcess.cjs"
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
       ]
-    ]
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+    ],
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": [
+        [
+          "node",
+          "./postProcess.cjs"
+        ]
+      ]
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {}
+  }
+]"
 `;
