@@ -1,4 +1,7 @@
 {
+	"cleanups": {
+		"suppressTypeErrors": true
+	},
 	"filters": [],
 	"fixes": {
 		"incompleteTypes": true,

@@ -5,7 +5,7 @@ import { normalizeAndSlashify } from "../shared/paths.js";
 import { fillOutRawOptions } from "./fillOutRawOptions.js";
 import { findRawOptions } from "./findRawOptions.js";
 import { findComplaintForOptions } from "./optionVerification.js";
-import { parseRawCompilerOptions } from "./parseRawCompilerOptions.js";
+import { parseRawTsConfig } from "./parseRawCompilerOptions.js";
 import { PendingTypeStatOptions, RawTypeStatOptions } from "./types.js";
 
 /**
@@ -34,14 +34,14 @@ export const loadPendingOptions = async (
 	for (let i = 0; i < allRawOptions.length; i += 1) {
 		const rawOptions = allRawOptions[i];
 		const projectPath = getProjectPath(cwd, filePath, rawOptions);
-		const compilerOptions = await parseRawCompilerOptions(cwd, projectPath);
+		const tsConfig = await parseRawTsConfig(cwd, projectPath);
 
 		const filledOutOptions = fillOutRawOptions({
-			compilerOptions,
 			cwd,
 			output,
 			projectPath,
 			rawOptions,
+			tsConfig,
 		});
 		const complaint = findComplaintForOptions(filledOutOptions);
 		if (complaint) {

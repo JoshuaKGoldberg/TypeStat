@@ -2,6 +2,7 @@
 	// Primitives
 
 	let givenUndefined = "";
+// @ts-expect-error -- TODO: Type 'undefined' is not assignable to type 'string'.
 	givenUndefined = undefined;
 
 	let givenUndefinedAsString: string | undefined = "";
@@ -15,6 +16,7 @@
 	givenNullAndUndefinedHasNull = undefined;
 
 	let givenNull = "";
+// @ts-expect-error -- TODO: Type 'null' is not assignable to type 'string'.
 	givenNull = null;
 
 	let givenNullAsString: string | null = "";
@@ -74,9 +76,11 @@
 
 	// Void and undefined
 
+// @ts-expect-error -- TODO: Type 'void' is not assignable to type 'undefined'.
 	let startsUndefinedWithVoid: undefined = ((): void => {})();
 
 	let startsUndefinedGivenVoid: undefined;
+// @ts-expect-error -- TODO: Type 'void' is not assignable to type 'undefined'.
 	startsUndefinedGivenVoid = ((): void => {})();
 
 	let startsVoidWithUndefined: void = undefined;
@@ -122,12 +126,14 @@
 	let onlyClassOneExplicitInterface: SampleInterface = new SampleClassOne();
 
 	let eitherClassImplicit = new SampleClassOne();
+// @ts-expect-error -- TODO: Type 'SampleClassTwo' is not assignable to type 'SampleClassOne'.
 	eitherClassImplicit = new SampleClassTwo();
 
 	let eitherClassExplicit: SampleInterface = new SampleClassOne();
 	eitherClassExplicit = new SampleClassTwo();
 
 	let eitherClassNeedsUnionImplicit = new SampleClassOne();
+// @ts-expect-error -- TODO: Type 'SampleClassTwo' is not assignable to type 'SampleClassOne'.
 	eitherClassNeedsUnionImplicit = new SampleClassTwo();
 
 	let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
@@ -138,7 +144,9 @@
 	eitherClassNeedsUnionExplicitInterface = new SampleClassTwo();
 
 	let eitherClassNeedsNullImplicit = new SampleClassOne();
+// @ts-expect-error -- TODO: Type 'SampleClassTwo' is not assignable to type 'SampleClassOne'.
 	eitherClassNeedsNullImplicit = new SampleClassTwo();
+// @ts-expect-error -- TODO: Type 'null' is not assignable to type 'SampleClassOne'.
 	eitherClassNeedsNullImplicit = null;
 
 	let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo =

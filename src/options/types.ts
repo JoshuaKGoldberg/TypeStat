@@ -87,7 +87,7 @@ export interface BaseTypeStatOptions {
 	/**
 	 * Parsed TypeScript compiler options with relevant fields filled out.
 	 */
-	readonly compilerOptions: Readonly<TypeStatCompilerOptions>;
+	readonly compilerOptions: Readonly<ts.CompilerOptions>;
 
 	/**
 	 * Directives for file-level changes.
@@ -160,15 +160,6 @@ export interface TypeStatOptions extends BaseTypeStatOptions {
 	 */
 	readonly fileNames: readonly string[];
 }
-
-/**
- * Parsed TypeScript compiler options with relevant fields filled out.
- */
-export type TypeStatCompilerOptions = ts.CompilerOptions & {
-	noImplicitAny: boolean;
-	noImplicitThis: boolean;
-	strictNullChecks: boolean;
-};
 
 /**
  * Directives for file-level changes.
