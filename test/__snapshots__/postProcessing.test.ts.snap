@@ -7,10 +7,6 @@ exports[`Post processing > options 1`] = `
       "suppressTypeErrors": false
     },
     "compilerOptions": {
-      "include": [
-        "<rootDir>/actual.ts"
-      ],
-      "compileOnSave": false,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -83,7 +79,9 @@ exports[`Post processing > options 1`] = `
       ]
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;

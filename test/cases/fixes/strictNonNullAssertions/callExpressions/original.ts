@@ -50,6 +50,7 @@
 	takesString("" as string | undefined);
 	takesString("" as string | null | undefined);
 
+	// test adds `!` to value here, but it has no effect
 	let emptyExplicitSibling: undefined = undefined;
 	let emptyImplicitSibling = undefined;
 	let emptyExplicitChild: undefined = undefined;

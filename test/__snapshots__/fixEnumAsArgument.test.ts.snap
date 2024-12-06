@@ -7,9 +7,6 @@ exports[`enum as argument > options 1`] = `
       "suppressTypeErrors": false
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -74,7 +71,9 @@ exports[`enum as argument > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;

@@ -7,9 +7,6 @@ exports[`noImplicitAny > parameters > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": true,
       "noImplicitThis": false,
       "strictNullChecks": true
@@ -88,9 +85,6 @@ exports[`noImplicitAny > property declarations > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": true
@@ -169,9 +163,6 @@ exports[`noImplicitAny > variable declarations > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": true

@@ -7,10 +7,6 @@ exports[`Infinite wave detection > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "include": [
-        "<rootDir>/actual.ts"
-      ],
-      "compileOnSave": false,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -54,7 +50,9 @@ exports[`Infinite wave detection > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;

@@ -7,10 +7,6 @@ exports[`Incomplete types > Implicit generics > incomplete implicit class generi
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts",
-        "react-like.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -75,7 +71,9 @@ exports[`Incomplete types > Implicit generics > incomplete implicit class generi
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -87,9 +85,6 @@ exports[`Incomplete types > Implicit generics > incomplete implicit variable gen
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -154,7 +149,9 @@ exports[`Incomplete types > Implicit generics > incomplete implicit variable gen
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -166,9 +163,6 @@ exports[`Incomplete types > Interface or type literal generics > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -233,7 +227,9 @@ exports[`Incomplete types > Interface or type literal generics > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -245,9 +241,6 @@ exports[`Incomplete types > Non-generic Interface as Type argument > options 1`]
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -312,7 +305,9 @@ exports[`Incomplete types > Non-generic Interface as Type argument > options 1`]
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -324,13 +319,8 @@ exports[`Incomplete types > React types > React props from prop types > Optional
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "esModuleInterop": true,
-        "jsx": "react"
-      },
-      "files": [
-        "actual.tsx"
-      ],
+      "esModuleInterop": true,
+      "jsx": 2,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -395,7 +385,9 @@ exports[`Incomplete types > React types > React props from prop types > Optional
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -407,13 +399,8 @@ exports[`Incomplete types > React types > React props from prop types > Optional
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "esModuleInterop": true,
-        "jsx": "react"
-      },
-      "files": [
-        "actual.tsx"
-      ],
+      "esModuleInterop": true,
+      "jsx": 2,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -478,7 +465,9 @@ exports[`Incomplete types > React types > React props from prop types > Optional
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -490,13 +479,8 @@ exports[`Incomplete types > React types > React props from prop types > Optional
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "esModuleInterop": true,
-        "jsx": "react"
-      },
-      "files": [
-        "actual.tsx"
-      ],
+      "esModuleInterop": true,
+      "jsx": 2,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -561,7 +545,9 @@ exports[`Incomplete types > React types > React props from prop types > Optional
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -573,14 +559,9 @@ exports[`Incomplete types > React types > React props from prop types > all > op
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "esModuleInterop": true,
-        "jsx": "react",
-        "target": "ES2022"
-      },
-      "files": [
-        "actual.tsx"
-      ],
+      "esModuleInterop": true,
+      "jsx": 2,
+      "target": 9,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -645,7 +626,9 @@ exports[`Incomplete types > React types > React props from prop types > all > op
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -657,14 +640,9 @@ exports[`Incomplete types > React types > not react props > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "jsx": "react"
-      },
-      "files": [
-        "actual.tsx"
-      ],
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "jsx": 2,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -729,7 +707,9 @@ exports[`Incomplete types > React types > not react props > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -741,14 +721,9 @@ exports[`Incomplete types > React types > react prop functions from calls > opti
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "jsx": "react"
-      },
-      "files": [
-        "actual.tsx"
-      ],
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "jsx": 2,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -813,7 +788,9 @@ exports[`Incomplete types > React types > react prop functions from calls > opti
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -825,13 +802,8 @@ exports[`Incomplete types > React types > react props from later assignments > o
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "esModuleInterop": true,
-        "jsx": "react"
-      },
-      "files": [
-        "actual.tsx"
-      ],
+      "esModuleInterop": true,
+      "jsx": 2,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -896,7 +868,9 @@ exports[`Incomplete types > React types > react props from later assignments > o
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -908,14 +882,9 @@ exports[`Incomplete types > React types > react props from prop uses > options 1
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "jsx": "react"
-      },
-      "files": [
-        "actual.tsx"
-      ],
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "jsx": 2,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -980,7 +949,9 @@ exports[`Incomplete types > React types > react props from prop uses > options 1
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -992,14 +963,9 @@ exports[`Incomplete types > React types > react props missing > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "jsx": "react"
-      },
-      "files": [
-        "actual.tsx"
-      ],
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "jsx": 2,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -1064,7 +1030,9 @@ exports[`Incomplete types > React types > react props missing > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -1076,9 +1044,6 @@ exports[`Incomplete types > parameter types > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -1143,7 +1108,9 @@ exports[`Incomplete types > parameter types > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -1155,9 +1122,6 @@ exports[`Incomplete types > property declaration types > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -1222,7 +1186,9 @@ exports[`Incomplete types > property declaration types > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -1234,12 +1200,7 @@ exports[`Incomplete types > return types > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "target": "ES2020"
-      },
-      "files": [
-        "actual.ts"
-      ],
+      "target": 7,
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": true
@@ -1318,9 +1279,6 @@ exports[`Incomplete types > variable types > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": true

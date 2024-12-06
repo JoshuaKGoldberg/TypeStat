@@ -7,17 +7,11 @@ exports[`Cleanups > non-TypeErrors > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "esModuleInterop": true,
-        "strictNullChecks": true,
-        "resolveJsonModule": true
-      },
-      "files": [
-        "actual.ts"
-      ],
+      "esModuleInterop": true,
+      "strictNullChecks": true,
+      "resolveJsonModule": true,
       "noImplicitAny": false,
-      "noImplicitThis": false,
-      "strictNullChecks": false
+      "noImplicitThis": false
     },
     "files": {
       "above": "",
@@ -79,7 +73,9 @@ exports[`Cleanups > non-TypeErrors > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": true
+    }
   }
 ]"
 `;
@@ -91,15 +87,9 @@ exports[`Cleanups > suppressTypeErrors > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "compilerOptions": {
-        "strictNullChecks": true
-      },
-      "files": [
-        "actual.ts"
-      ],
+      "strictNullChecks": true,
       "noImplicitAny": false,
-      "noImplicitThis": false,
-      "strictNullChecks": false
+      "noImplicitThis": false
     },
     "files": {
       "above": "",
@@ -161,7 +151,9 @@ exports[`Cleanups > suppressTypeErrors > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": true
+    }
   }
 ]"
 `;

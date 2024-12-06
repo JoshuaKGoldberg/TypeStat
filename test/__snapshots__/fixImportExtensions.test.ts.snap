@@ -7,11 +7,6 @@ exports[`import extensions > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts",
-        "foundDirect.ts",
-        "foundIndirect/index.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -76,7 +71,9 @@ exports[`import extensions > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;

@@ -7,9 +7,6 @@ exports[`files > addition above > options 1`] = `
       "suppressTypeErrors": false
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -74,7 +71,9 @@ exports[`files > addition above > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -86,9 +85,6 @@ exports[`files > addition below > options 1`] = `
       "suppressTypeErrors": false
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -153,7 +149,9 @@ exports[`files > addition below > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -165,9 +163,6 @@ exports[`files > both > options 1`] = `
       "suppressTypeErrors": false
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -232,7 +227,9 @@ exports[`files > both > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;
@@ -244,9 +241,6 @@ exports[`files > empty addition > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": false,
       "strictNullChecks": false
@@ -311,7 +305,9 @@ exports[`files > empty addition > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": false
+    }
   }
 ]"
 `;

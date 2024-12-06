@@ -7,9 +7,6 @@ exports[`noImplicitThis > noImplicitThis > options 1`] = `
       "suppressTypeErrors": true
     },
     "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
       "noImplicitAny": false,
       "noImplicitThis": true,
       "strictNullChecks": true

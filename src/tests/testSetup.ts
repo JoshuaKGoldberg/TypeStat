@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 import { fillOutRawOptions } from "../options/fillOutRawOptions.js";
-import { parseRawCompilerOptions } from "../options/parseRawCompilerOptions.js";
+import { parseRawTsConfig } from "../options/parseRawCompilerOptions.js";
 import {
 	PendingTypeStatOptions,
 	RawTypeStatOptions,
@@ -44,7 +44,7 @@ export const runMutationTest = async (
 
 	const projectPath = path.join(dirPath, "tsconfig.json");
 
-	const compilerOptions = await parseRawCompilerOptions(dirPath, projectPath);
+	const tsConfig = await parseRawTsConfig(dirPath, projectPath);
 
 	const output = {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -58,11 +58,11 @@ export const runMutationTest = async (
 
 	for (const mutationOption of rawOptionsList) {
 		const pendingOptions = fillOutRawOptions({
-			compilerOptions,
 			cwd: dirPath,
 			output,
 			projectPath,
 			rawOptions: mutationOption,
+			tsConfig,
 		});
 
 		pendingOptionsList.push(pendingOptions);
