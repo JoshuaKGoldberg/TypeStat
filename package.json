@@ -71,7 +71,7 @@
 		"eslint-plugin-markdown": "5.1.0",
 		"eslint-plugin-n": "17.14.0",
 		"eslint-plugin-package-json": "0.17.0",
-		"eslint-plugin-perfectionist": "4.1.2",
+		"eslint-plugin-perfectionist": "4.2.0",
 		"eslint-plugin-regexp": "2.7.0",
 		"eslint-plugin-yml": "1.16.0",
 		"husky": "9.1.7",
