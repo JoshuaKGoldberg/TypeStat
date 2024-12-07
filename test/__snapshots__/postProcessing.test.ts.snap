@@ -8,7 +8,7 @@ exports[`Post processing > options 1`] = `
     },
     "compilerOptions": {
       "include": [
-        "actual.ts"
+        "<rootDir>/actual.ts"
       ],
       "compileOnSave": false,
       "noImplicitAny": false,
@@ -37,7 +37,7 @@ exports[`Post processing > options 1`] = `
       }
     },
     "include": [
-      "actual.ts"
+      "<rootDir>/actual.ts"
     ],
     "mutators": [
       [
