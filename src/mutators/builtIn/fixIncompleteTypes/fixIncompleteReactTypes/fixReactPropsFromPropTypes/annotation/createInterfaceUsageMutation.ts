@@ -42,10 +42,7 @@ const createFunctionLikeInterfaceUsageMutation = (
 	const propsArgument = node.parameters[0];
 
 	// If the interface is already present, do not add it again
-	if (
-		ts.isParameter(propsArgument) &&
-		propsArgument.type?.getText() === interfaceName
-	) {
+	if (propsArgument.getChildCount() > 1) {
 		return undefined;
 	}
 
