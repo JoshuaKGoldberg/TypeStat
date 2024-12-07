@@ -103,4 +103,15 @@ import PropTypes from "prop-types";
 	Heading.defaultProps = {
 		text: "Hello, world!",
 	};
+
+	const LegendImage = function (props: any) {
+		return (
+			<img
+				{...props}
+				style={{ display: "none", marginTop: "4px" }}
+				onLoad={(e) => (e.currentTarget.style.display = "block")}
+				onError={(e) => (e.currentTarget.style.display = "none")}
+			/>
+		);
+	};
 })();
