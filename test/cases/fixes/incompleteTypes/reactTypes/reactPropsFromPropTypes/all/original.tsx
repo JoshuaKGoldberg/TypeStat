@@ -75,4 +75,32 @@ import PropTypes from "prop-types";
 		string: PropTypes.string,
 		stringRequired: PropTypes.string.isRequired,
 	};
+
+	class Greeting extends React.Component {
+		render() {
+			return <h1>Hello, {this.props.name}</h1>;
+		}
+	}
+
+	Greeting.propTypes = {
+		name: PropTypes.string,
+	};
+
+	function HelloWorldComponent({ name }) {
+		return <div>Hello, {name}</div>;
+	}
+
+	HelloWorldComponent.propTypes = {
+		name: PropTypes.string,
+	};
+
+	function Heading({ text }) {
+		return <h1>{text}</h1>;
+	}
+	Heading.propTypes = {
+		text: PropTypes.string,
+	};
+	Heading.defaultProps = {
+		text: "Hello, world!",
+	};
 })();

@@ -38,8 +38,16 @@ const createClassInterfaceUsageMutation = (
 const createFunctionLikeInterfaceUsageMutation = (
 	node: ReactFunctionalComponentNode,
 	interfaceName: string,
-): TextInsertMutation => {
+): TextInsertMutation | undefined => {
 	const propsArgument = node.parameters[0];
+
+	// If the interface is already present, do not add it again
+	if (
+		ts.isParameter(propsArgument) &&
+		propsArgument.type?.getText() === interfaceName
+	) {
+		return undefined;
+	}
 
 	return {
 		insertion: `: ${interfaceName}`,

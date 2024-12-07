@@ -64,10 +64,17 @@ const visitReactComponentNode = (
 		propTypes,
 	);
 
+	const mutations: Mutation[] = [];
+
 	// That interface will be injected with blank lines around it just before the component
-	const mutations: Mutation[] = [
-		createInterfaceCreationMutation(request, node, interfaceNode),
-	];
+	const interfaceMutation = createInterfaceCreationMutation(
+		request,
+		node,
+		interfaceNode,
+	);
+	if (interfaceMutation !== undefined) {
+		mutations.push(interfaceMutation);
+	}
 
 	// We'll also annotate the component with a type declaration to use the new prop type
 	const usage = createInterfaceUsageMutation(node, interfaceName);
@@ -75,16 +82,20 @@ const visitReactComponentNode = (
 		mutations.push(usage);
 	}
 
-	return combineMutations(...mutations);
+	return mutations.length ? combineMutations(...mutations) : undefined;
 };
 
 const createInterfaceCreationMutation = (
 	request: FileMutationsRequest,
 	node: ReactComponentNode,
 	interfaceNode: ts.InterfaceDeclaration,
-): TextInsertMutation => {
+): TextInsertMutation | undefined => {
 	const endline = printNewLine(request.options.compilerOptions);
 	const interfaceNodeText = request.services.printers.node(interfaceNode);
+
+	if (node.getSourceFile().getFullText().includes(interfaceNodeText)) {
+		return undefined;
+	}
 
 	return {
 		insertion: [endline, endline, interfaceNodeText, endline].join(""),
