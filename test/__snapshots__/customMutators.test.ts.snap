@@ -84,7 +84,7 @@ exports[`Custom mutators > one mutator > options 1`] = `
   },
   "compilerOptions": {
     "include": [
-      "actual.ts"
+      "<rootDir>/actual.ts"
     ],
     "compileOnSave": false,
     "noImplicitAny": false,
@@ -113,7 +113,7 @@ exports[`Custom mutators > one mutator > options 1`] = `
     }
   },
   "include": [
-    "actual.ts"
+    "<rootDir>/actual.ts"
   ],
   "mutators": [
     [
