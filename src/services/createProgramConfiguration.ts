@@ -1,10 +1,10 @@
-import * as fs from "node:fs";
 import * as path from "node:path";
 import ts from "typescript";
 
 import { TypeStatOptions } from "../options/types.js";
 import { collectOptionals, uniquify } from "../shared/arrays.js";
 import { normalizeAndSlashify } from "../shared/paths.js";
+import { createParseConfigHost } from "./createParseConfigHost.js";
 
 export const createProgramConfiguration = (options: TypeStatOptions) => {
 	// Create a TypeScript configuration using the raw options
@@ -13,13 +13,7 @@ export const createProgramConfiguration = (options: TypeStatOptions) => {
 			...options.compilerOptions,
 			skipLibCheck: true,
 		},
-		{
-			fileExists: fs.existsSync,
-			// eslint-disable-next-line @typescript-eslint/unbound-method
-			readDirectory: ts.sys.readDirectory,
-			readFile: (file) => fs.readFileSync(file, "utf8"),
-			useCaseSensitiveFileNames: true,
-		},
+		createParseConfigHost(),
 		path.resolve(path.dirname(options.projectPath)),
 		{ noEmit: true },
 	);

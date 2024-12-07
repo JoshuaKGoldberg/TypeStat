@@ -1,4 +1,7 @@
 {
+	"cleanups": {
+		"suppressTypeErrors": true
+	},
 	"fixes": {
 		"noImplicitAny": true
 	},

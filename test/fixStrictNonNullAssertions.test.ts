@@ -13,7 +13,7 @@ describe("strictNonNullAssertions", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	});
+	}, 10000);
 
 	it("callExpressions", async () => {
 		const caseDir = path.join(

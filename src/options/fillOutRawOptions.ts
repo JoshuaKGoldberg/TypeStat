@@ -1,7 +1,7 @@
 import { ProcessOutput } from "../output/types.js";
 import { collectOptionals } from "../shared/arrays.js";
 import { ReactPropTypesHint, ReactPropTypesOptionality } from "./enums.js";
-import { ParsedCompilerOptions } from "./parseRawCompilerOptions.js";
+import { ParsedTsConfig } from "./parseRawCompilerOptions.js";
 import { collectAddedMutators } from "./parsing/collectAddedMutators.js";
 import { collectFileOptions } from "./parsing/collectFileOptions.js";
 import { collectNoImplicitAny } from "./parsing/collectNoImplicitAny.js";
@@ -11,11 +11,11 @@ import { collectStrictNullChecks } from "./parsing/collectStrictNullChecks.js";
 import { PendingTypeStatOptions, RawTypeStatOptions } from "./types.js";
 
 export interface OptionsFromRawOptionsSettings {
-	compilerOptions: Readonly<ParsedCompilerOptions>;
 	cwd: string;
 	output: ProcessOutput;
 	projectPath: string;
 	rawOptions: RawTypeStatOptions;
+	tsConfig: Readonly<ParsedTsConfig>;
 }
 
 /**
@@ -23,17 +23,20 @@ export interface OptionsFromRawOptionsSettings {
  * @returns Parsed TypeStat options, or a string for an error complaint.
  */
 export const fillOutRawOptions = ({
-	compilerOptions,
 	cwd,
 	output,
 	projectPath,
 	rawOptions,
+	tsConfig,
 }: OptionsFromRawOptionsSettings): PendingTypeStatOptions => {
 	const rawOptionTypes = rawOptions.types ?? {};
+	const compilerOptions = tsConfig.compilerOptions;
 	const noImplicitAny = collectNoImplicitAny(compilerOptions, rawOptions);
 	const noImplicitThis = collectNoImplicitThis(compilerOptions, rawOptions);
-	const { compilerStrictNullChecks, typeStrictNullChecks } =
-		collectStrictNullChecks(compilerOptions, rawOptionTypes);
+	const strictNullChecks = collectStrictNullChecks(
+		compilerOptions,
+		rawOptionTypes,
+	);
 
 	const packageOptions = collectPackageOptions(cwd, rawOptions);
 
@@ -51,7 +54,7 @@ export const fillOutRawOptions = ({
 			...compilerOptions,
 			noImplicitAny,
 			noImplicitThis,
-			strictNullChecks: compilerStrictNullChecks,
+			strictNullChecks,
 		},
 		files: collectFileOptions(rawOptions),
 		filters: collectOptionals(rawOptions.filters),
@@ -74,7 +77,7 @@ export const fillOutRawOptions = ({
 					ReactPropTypesOptionality.AsWritten,
 			},
 		},
-		include: rawOptions.include ?? compilerOptions.include,
+		include: rawOptions.include ?? tsConfig.include,
 		mutators: collectAddedMutators(
 			rawOptions,
 			packageOptions.directory,
@@ -85,7 +88,7 @@ export const fillOutRawOptions = ({
 		postProcess: { shell },
 		projectPath,
 		types: {
-			strictNullChecks: typeStrictNullChecks,
+			strictNullChecks,
 		},
 	};
 };

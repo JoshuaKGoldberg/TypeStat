@@ -4,7 +4,7 @@ import {
 	DiagnosticWithStart,
 	getLineForDiagnostic,
 	isDiagnosticWithStart,
-	stringifyDiagnosticMessageText,
+	userFriendlyDiagnosticMessageText,
 } from "../../../shared/diagnostics.js";
 import { FileMutator } from "../../../shared/fileMutator.js";
 
@@ -33,8 +33,14 @@ export const suppressRemainingTypeIssues: FileMutator = (request) => {
 		}
 	}
 
+	const currentDir = request.services.program.getCurrentDirectory();
+
 	return Array.from(diagnosticsPerLine).map(([line, diagnostics]) => {
-		const messages = diagnostics.map(stringifyDiagnosticMessageText).join(" ");
+		const messages = diagnostics
+			.map((diagnostic) =>
+				userFriendlyDiagnosticMessageText(diagnostic, currentDir),
+			)
+			.join(" ");
 		return {
 			insertion: `// @ts-expect-error -- TODO: ${messages}\n`,
 			range: {

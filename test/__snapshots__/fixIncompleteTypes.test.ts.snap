@@ -1,1335 +1,1351 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Incomplete types > Implicit generics > incomplete implicit class generics > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.ts",
-      "react-like.ts"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > Implicit generics > incomplete implicit variable generics > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.ts"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > Interface or type literal generics > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.ts"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > Non-generic Interface as Type argument > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.ts"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > React types > React props from prop types > Optionality > always optional > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.tsx"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "jsx": 2,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "alwaysOptional"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "alwaysOptional"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > React types > React props from prop types > Optionality > always required > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.tsx"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "jsx": 2,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "alwaysRequired"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "alwaysRequired"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > React types > React props from prop types > Optionality > as written > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.tsx"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "jsx": 2,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > React types > React props from prop types > all > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.tsx"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "jsx": 2,
+      "target": 9,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > React types > not react props > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
     "compilerOptions": {
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,
-      "jsx": "react"
+      "jsx": 2,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
     },
-    "files": [
-      "actual.tsx"
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > React types > react prop functions from calls > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
     "compilerOptions": {
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,
-      "jsx": "react"
+      "jsx": 2,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
     },
-    "files": [
-      "actual.tsx"
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > React types > react props from later assignments > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.tsx"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "esModuleInterop": true,
+      "jsx": 2,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > React types > react props from prop uses > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
     "compilerOptions": {
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,
-      "jsx": "react"
+      "jsx": 2,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
     },
-    "files": [
-      "actual.tsx"
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > React types > react props missing > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
     "compilerOptions": {
       "allowSyntheticDefaultImports": true,
       "esModuleInterop": true,
-      "jsx": "react"
+      "jsx": 2,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
     },
-    "files": [
-      "actual.tsx"
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > parameter types > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.ts"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > property declaration types > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.ts"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": false
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+  }
+]"
 `;
 
 exports[`Incomplete types > return types > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.ts"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "target": 7,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": true
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": true
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": true
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {
-    "strictNullChecks": true
   }
-}"
+]"
 `;
 
 exports[`Incomplete types > variable types > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.tsx"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": true
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": true,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": true
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": false,
-    "incompleteTypes": true,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {
+      "strictNullChecks": true
     }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {
-    "strictNullChecks": true
   }
-}"
+]"
 `;

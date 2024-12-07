@@ -29,9 +29,6 @@ importers:
       glob:
         specifier: 11.0.0
         version: 11.0.0
-      minimatch:
-        specifier: 10.0.1
-        version: 10.0.1
       strip-ansi:
         specifier: 7.1.0
         version: 7.1.0
@@ -54,9 +51,6 @@ importers:
       '@types/glob':
         specifier: 8.1.0
         version: 8.1.0
-      '@types/minimatch':
-        specifier: 5.1.2
-        version: 5.1.2
       '@types/node':
         specifier: 22.10.1
         version: 22.10.1

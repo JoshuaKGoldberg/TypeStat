@@ -1,15 +1,15 @@
 (function () {
-	declare const value: string | undefined;
+	let value: string | undefined;
 
 	value!.length;
 	value?.length;
 
-	declare const valueAny: any;
+	let valueAny: any;
 
 	valueAny.length;
 	valueAny?.length;
 
-	declare const valueAnyOrUndefined: any | undefined;
+	let valueAnyOrUndefined: any | undefined;
 
 	valueAnyOrUndefined.length;
 	valueAnyOrUndefined?.length;
@@ -58,12 +58,16 @@
 
 		givenStringHasUndefined: string | undefined = "";
 
+// @ts-expect-error -- TODO: Type 'undefined' is not assignable to type 'string'.
 		setToUndefined: string = undefined;
 
+// @ts-expect-error -- TODO: Type 'undefined' is not assignable to type 'string | null'.
 		setToUndefinedHasNull: string | null = undefined;
 
+// @ts-expect-error -- TODO: Type 'null' is not assignable to type 'string'.
 		setToNull: string = null;
 
+// @ts-expect-error -- TODO: Type 'null' is not assignable to type 'string | undefined'.
 		setToNullHasUndefined: string | undefined = null;
 
 		setToString: string = "";

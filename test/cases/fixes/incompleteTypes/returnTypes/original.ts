@@ -91,7 +91,7 @@
 
 	function navigateByUrl(url: string): Promise<boolean>;
 
-	async function navigateTo(): Promise<boolean> {
+	async function navigateTo3(): Promise<boolean> {
 		return await navigateByUrl("");
 	}
 

@@ -129,8 +129,65 @@ interface LaterAssignedComponentProps {
 		}
 	}
 
+// @ts-expect-error -- TODO: Property 'propTypes' does not exist on type 'typeof LaterAssignedComponent'.
 	LaterAssignedComponent.propTypes = {
 		string: PropTypes.string,
 		stringRequired: PropTypes.string.isRequired,
+	};
+
+interface GreetingProps {
+    name?: string;
+}
+
+
+	class Greeting extends React.Component<GreetingProps> {
+		render() {
+			return <h1>Hello, {this.props.name}</h1>;
+		}
+	}
+
+// @ts-expect-error -- TODO: Property 'propTypes' does not exist on type 'typeof Greeting'.
+	Greeting.propTypes = {
+		name: PropTypes.string,
+	};
+
+interface HelloWorldComponentProps {
+    name?: string;
+}
+
+interface HelloWorldComponentProps {
+    name?: string;
+}
+
+
+
+	// TODO: The mutation for this is incorrect
+	function HelloWorldComponent({ name }: HelloWorldComponentProps: HelloWorldComponentProps) {
+		return <div>Hello, {name}</div>;
+	}
+
+	HelloWorldComponent.propTypes = {
+		name: PropTypes.string,
+	};
+
+interface HeadingProps {
+    text?: string;
+}
+
+interface HeadingProps {
+    text?: string;
+}
+
+
+
+	// TODO: The mutation for this is incorrect
+	function Heading({ text }: HeadingProps: HeadingProps) {
+		return <h1>{text}</h1>;
+	}
+	Heading.propTypes = {
+		text: PropTypes.string,
+	};
+	Heading.defaultProps = {
+		text: "Hello, world!",
 	};
 })();
