@@ -53,14 +53,11 @@ export const initializeSources = async (
 };
 
 const initializeBuiltInSources = async (completion: string) => {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const choices: string[] = [
+	const choices = [
 		{
 			message: "everything in my tsconfig.json",
 			name: everything,
-			// https://github.com/enquirer/enquirer/issues/202
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} as any,
+		},
 		`lib${completion}`,
 		`src${completion}`,
 		other,
