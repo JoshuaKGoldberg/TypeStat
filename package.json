@@ -58,7 +58,7 @@
 		"@types/glob": "8.1.0",
 		"@types/node": "22.10.1",
 		"@types/prop-types": "15.7.13",
-		"@types/react": "18.3.12",
+		"@types/react": "18.3.13",
 		"@vitest/coverage-v8": "2.1.8",
 		"@vitest/eslint-plugin": "1.1.14",
 		"console-fail-test": "0.5.0",
