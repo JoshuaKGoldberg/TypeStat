@@ -63,11 +63,6 @@ const visitReactComponentNode = (
 		return undefined;
 	}
 
-	if (!ts.isClassLike(node) && node.parameters[0].getChildCount() > 1) {
-		// if function already has type annotation, skip it
-		return undefined;
-	}
-
 	// Since we did find the propTypes object, we can generate an interface from its members
 	const { interfaceName, interfaceNode } = createInterfaceFromPropTypes(
 		request,
@@ -75,17 +70,10 @@ const visitReactComponentNode = (
 		propTypes,
 	);
 
-	const mutations: Mutation[] = [];
-
 	// That interface will be injected with blank lines around it just before the component
-	const interfaceMutation = createInterfaceCreationMutation(
-		request,
-		node,
-		interfaceNode,
-	);
-	if (interfaceMutation !== undefined) {
-		mutations.push(interfaceMutation);
-	}
+	const mutations: Mutation[] = [
+		createInterfaceCreationMutation(request, node, interfaceNode),
+	];
 
 	// We'll also annotate the component with a type declaration to use the new prop type
 	const usage = createInterfaceUsageMutation(node, interfaceName);
@@ -93,20 +81,16 @@ const visitReactComponentNode = (
 		mutations.push(usage);
 	}
 
-	return mutations.length ? combineMutations(...mutations) : undefined;
+	return combineMutations(...mutations);
 };
 
 const createInterfaceCreationMutation = (
 	request: FileMutationsRequest,
 	node: ReactComponentNode,
 	interfaceNode: ts.InterfaceDeclaration,
-): TextInsertMutation | undefined => {
+): TextInsertMutation => {
 	const endline = printNewLine(request.options.compilerOptions);
 	const interfaceNodeText = request.services.printers.node(interfaceNode);
-
-	if (node.getSourceFile().getFullText().includes(interfaceNodeText)) {
-		return undefined;
-	}
 
 	return {
 		insertion: [endline, endline, interfaceNodeText, endline].join(""),

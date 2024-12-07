@@ -1,4 +1,4 @@
-import { combineMutations, Mutation } from "automutate";
+import { combineMutations } from "automutate";
 import ts from "typescript";
 
 import {
@@ -56,26 +56,17 @@ const visitReactComponentNode = (
 	// Generate a name for a new props interface to use on the node
 	const interfaceName = `${getApparentNameOfComponent(request, node)}Props`;
 
-	const mutations: Mutation[] = [];
-
-	// That interface will be injected with blank lines around it just before the component
-	const typeMutation = createPropsTypeCreationMutation(
-		request,
-		node,
-		interfaceName,
-		attributeTypesAndRequirements,
+	return combineMutations(
+		// That interface will be injected with blank lines around it just before the component
+		createPropsTypeCreationMutation(
+			request,
+			node,
+			interfaceName,
+			attributeTypesAndRequirements,
+		),
+		// We'll also annotate the component with a type declaration to use the new prop type
+		createPropsTypeUsageMutation(node, interfaceName),
 	);
-	if (typeMutation) {
-		mutations.push(typeMutation);
-	}
-
-	// We'll also annotate the component with a type declaration to use the new prop type
-	const usage = createPropsTypeUsageMutation(node, interfaceName);
-	if (usage) {
-		mutations.push(usage);
-	}
-
-	return mutations.length ? combineMutations(...mutations) : undefined;
 };
 
 const collectComponentAttributeTypes = (
@@ -226,24 +217,19 @@ const createPropsTypeUsageMutation = (
 	node: ReactComponentNode,
 	interfaceName: string,
 ) => {
-	if (ts.isFunctionLike(node)) {
-		if (node.parameters[0].getChildCount() > 1) {
-			return undefined;
-		}
-		return {
-			insertion: `: ${interfaceName}`,
-			range: {
-				begin: node.parameters[0].end,
-			},
-			type: "text-insert",
-		};
-	}
-
-	return {
-		insertion: `<${interfaceName}>`,
-		range: {
-			begin: node.heritageClauses[0].end,
-		},
-		type: "text-insert",
-	};
+	return ts.isFunctionLike(node)
+		? {
+				insertion: `: ${interfaceName}`,
+				range: {
+					begin: node.parameters[0].end,
+				},
+				type: "text-insert",
+			}
+		: {
+				insertion: `<${interfaceName}>`,
+				range: {
+					begin: node.heritageClauses[0].end,
+				},
+				type: "text-insert",
+			};
 };
