@@ -133,4 +133,58 @@ interface LaterAssignedComponentProps {
 		string: PropTypes.string,
 		stringRequired: PropTypes.string.isRequired,
 	};
+
+interface GreetingProps {
+    name?: string;
+}
+
+
+	class Greeting extends React.Component<GreetingProps> {
+		render() {
+			return <h1>Hello, {this.props.name}</h1>;
+		}
+	}
+
+	Greeting.propTypes = {
+		name: PropTypes.string,
+	};
+
+interface HelloWorldComponentProps {
+    name?: string;
+}
+
+
+	function HelloWorldComponent({ name }: HelloWorldComponentProps) {
+		return <div>Hello, {name}</div>;
+	}
+
+	HelloWorldComponent.propTypes = {
+		name: PropTypes.string,
+	};
+
+interface HeadingProps {
+    text?: string;
+}
+
+
+	function Heading({ text }: HeadingProps) {
+		return <h1>{text}</h1>;
+	}
+	Heading.propTypes = {
+		text: PropTypes.string,
+	};
+	Heading.defaultProps = {
+		text: "Hello, world!",
+	};
+
+	const LegendImage = function (props: any) {
+		return (
+			<img
+				{...props}
+				style={{ display: "none", marginTop: "4px" }}
+				onLoad={(e) => (e.currentTarget.style.display = "block")}
+				onError={(e) => (e.currentTarget.style.display = "none")}
+			/>
+		);
+	};
 })();

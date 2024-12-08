@@ -39,7 +39,7 @@ const visitReactComponentNode = (
 	request: FileMutationsRequest,
 ): Mutation | undefined => {
 	// If the node is a class declaration, don't bother with prop types if it already declares a React.Component template
-	if (ts.isClassDeclaration(node)) {
+	if (ts.isClassLike(node)) {
 		const extendsType = getClassExtendsType(node);
 
 		if (
@@ -48,6 +48,12 @@ const visitReactComponentNode = (
 		) {
 			return undefined;
 		}
+	} else if (
+		node.parameters.at(0)?.getChildCount() &&
+		node.parameters[0].getChildCount() > 1
+	) {
+		// if function already has type annotation, skip it
+		return undefined;
 	}
 
 	// Try to find a static `propTypes` member to indicate the interface
