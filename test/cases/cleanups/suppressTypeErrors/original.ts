@@ -1,3 +1,6 @@
+import ts from "typescript";
+import config from "./typestat.json";
+
 (function () {
 	let incorrectSingle: string = 0;
 

@@ -30,11 +30,13 @@ import * as React from "react";
 			useTakesString(takesStringCall);
 
 			const withReturnsString = (
+// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
 				<WithReturnsString
 					takeTakesNumberReturnsString={takesNumberReturnsStringJsx}
 				/>
 			);
 
+// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
 			return <span />;
 		}
 	}

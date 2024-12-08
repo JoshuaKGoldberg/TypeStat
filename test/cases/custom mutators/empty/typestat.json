@@ -1,3 +1,6 @@
 {
+	"cleanups": {
+		"suppressTypeErrors": true
+	},
 	"mutators": []
 }
