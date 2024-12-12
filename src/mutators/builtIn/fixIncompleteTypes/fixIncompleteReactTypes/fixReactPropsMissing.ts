@@ -29,6 +29,15 @@ const visitReactComponentNode = (
 	node: ReactComponentNode,
 	request: FileMutationsRequest,
 ) => {
+	if (
+		!ts.isClassLike(node) &&
+		node.parameters.at(0)?.getChildCount() &&
+		node.parameters[0].getChildCount() > 1
+	) {
+		// if function already has type annotation, skip it
+		return undefined;
+	}
+
 	// Make sure a node doesn't yet exist to declare the node's props type
 	const propsNode = getComponentPropsNode(request, node);
 	if (propsNode !== undefined) {
