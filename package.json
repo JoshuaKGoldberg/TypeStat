@@ -52,7 +52,7 @@
 	},
 	"devDependencies": {
 		"@eslint-community/eslint-plugin-eslint-comments": "4.4.1",
-		"@eslint/js": "9.16.0",
+		"@eslint/js": "9.17.0",
 		"@release-it/conventional-changelog": "9.0.3",
 		"@types/eslint-plugin-markdown": "2.0.2",
 		"@types/glob": "8.1.0",
@@ -63,7 +63,7 @@
 		"@vitest/eslint-plugin": "1.1.16",
 		"console-fail-test": "0.5.0",
 		"cspell": "8.16.1",
-		"eslint": "9.16.0",
+		"eslint": "9.17.0",
 		"eslint-plugin-jsdoc": "50.6.1",
 		"eslint-plugin-jsonc": "2.18.2",
 		"eslint-plugin-markdown": "5.1.0",
