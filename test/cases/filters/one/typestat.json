@@ -1,4 +1,7 @@
 {
+	"cleanups": {
+		"suppressTypeErrors": true
+	},
 	"filters": ["FunctionDeclaration[name.text=one]"],
 	"fixes": {
 		"incompleteTypes": true,

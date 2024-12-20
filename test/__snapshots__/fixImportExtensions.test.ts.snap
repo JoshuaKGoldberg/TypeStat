@@ -1,80 +1,82 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`import extensions > options 1`] = `
-"{
-  "cleanups": {
-    "suppressTypeErrors": false
-  },
-  "compilerOptions": {
-    "files": [
-      "actual.ts",
-      "foundDirect.ts",
-      "foundIndirect/index.ts"
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "compilerOptions": {
+      "files": [
+        "actual.ts",
+        "foundDirect.ts",
+        "foundIndirect/index.ts"
+      ],
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "strictNullChecks": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": true,
+      "incompleteTypes": false,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
     ],
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "strictNullChecks": false
-  },
-  "files": {
-    "above": "",
-    "below": "",
-    "renameExtensions": false
-  },
-  "filters": [],
-  "fixes": {
-    "importExtensions": true,
-    "incompleteTypes": false,
-    "missingProperties": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noInferableTypes": false,
-    "strictNonNullAssertions": false
-  },
-  "hints": {
-    "react": {
-      "propTypes": "whenRequired",
-      "propTypesOptionality": "asWritten"
-    }
-  },
-  "mutators": [
-    [
-      "fixImportExtensions",
-      null
-    ],
-    [
-      "fixIncompleteTypes",
-      null
-    ],
-    [
-      "fixMissingProperties",
-      null
-    ],
-    [
-      "fixNoImplicitAny",
-      null
-    ],
-    [
-      "fixNoImplicitThis",
-      null
-    ],
-    [
-      "fixNoInferableTypes",
-      null
-    ],
-    [
-      "fixStrictNonNullAssertions",
-      null
-    ]
-  ],
-  "output": {},
-  "package": {
-    "directory": "<rootDir>",
-    "file": "<rootDir>/package.json"
-  },
-  "postProcess": {
-    "shell": []
-  },
-  "projectPath": "<rootDir>/tsconfig.json",
-  "types": {}
-}"
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {}
+  }
+]"
 `;

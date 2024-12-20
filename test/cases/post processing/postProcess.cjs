@@ -1,5 +1,5 @@
 const fs = require("node:fs/promises");
-const { EOL } = require("os");
+const { EOL } = require("node:os");
 
 const writeToFiles = async () => {
 	for (const filePath of process.argv.slice(2)) {
