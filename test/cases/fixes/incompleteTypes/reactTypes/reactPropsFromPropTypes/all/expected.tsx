@@ -1,4 +1,6 @@
+// @ts-expect-error -- TODO: This module can only be default-imported using the 'esModuleInterop' flag
 import React from "react";
+// @ts-expect-error -- TODO: This module can only be default-imported using the 'esModuleInterop' flag
 import PropTypes from "prop-types";
 
 (function () {
@@ -129,8 +131,68 @@ interface LaterAssignedComponentProps {
 		}
 	}
 
+// @ts-expect-error -- TODO: Property 'propTypes' does not exist on type 'typeof LaterAssignedComponent'.
 	LaterAssignedComponent.propTypes = {
 		string: PropTypes.string,
 		stringRequired: PropTypes.string.isRequired,
+	};
+
+interface GreetingProps {
+    name?: string;
+}
+
+
+	class Greeting extends React.Component<GreetingProps> {
+		render() {
+// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided. Property 'props' does not exist on type 'Greeting'.
+			return <h1>Hello, {this.props.name}</h1>;
+		}
+	}
+
+// @ts-expect-error -- TODO: Property 'propTypes' does not exist on type 'typeof Greeting'.
+	Greeting.propTypes = {
+		name: PropTypes.string,
+	};
+
+interface HelloWorldComponentProps {
+    name?: string;
+}
+
+interface HelloWorldComponentProps {
+    name?: string;
+}
+
+
+
+	// TODO: The mutation for this is incorrect
+	function HelloWorldComponent({ name }: HelloWorldComponentProps: HelloWorldComponentProps) {
+// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
+		return <div>Hello, {name}</div>;
+	}
+
+	HelloWorldComponent.propTypes = {
+		name: PropTypes.string,
+	};
+
+interface HeadingProps {
+    text?: string;
+}
+
+interface HeadingProps {
+    text?: string;
+}
+
+
+
+	// TODO: The mutation for this is incorrect
+	function Heading({ text }: HeadingProps: HeadingProps) {
+// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
+		return <h1>{text}</h1>;
+	}
+	Heading.propTypes = {
+		text: PropTypes.string,
+	};
+	Heading.defaultProps = {
+		text: "Hello, world!",
 	};
 })();

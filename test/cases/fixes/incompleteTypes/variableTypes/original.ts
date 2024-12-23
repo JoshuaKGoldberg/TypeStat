@@ -1,31 +1,29 @@
-import * as React from "react";
-
 (function () {
 	// Primitives
 
 	let givenUndefined = "";
 	givenUndefined = undefined;
 
-	let givenUndefinedAsString: string | undefined = "";
+	let givenUndefinedAsString: string = "";
 	givenUndefinedAsString = undefined;
 
-	let givenUndefinedHasNull: string | null | undefined = "";
+	let givenUndefinedHasNull: string | null = "";
 	givenUndefinedHasNull = undefined;
 
-	let givenNullAndUndefinedHasNull: string | null | undefined = "";
+	let givenNullAndUndefinedHasNull: string | null = "";
 	givenNullAndUndefinedHasNull = null;
 	givenNullAndUndefinedHasNull = undefined;
 
 	let givenNull = "";
 	givenNull = null;
 
-	let givenNullAsString: string | null = "";
+	let givenNullAsString: string = "";
 	givenNullAsString = null;
 
-	let givenNullHasUndefined: string | undefined | null = "";
+	let givenNullHasUndefined: string | undefined = "";
 	givenNullHasUndefined = null;
 
-	let givenNullAndUndefinedHasUndefined: string | undefined | null = "";
+	let givenNullAndUndefinedHasUndefined: string | undefined = "";
 	givenNullAndUndefinedHasUndefined = null;
 	givenNullHasUndefined = undefined;
 
@@ -41,15 +39,15 @@ import * as React from "react";
 	let givenStringHasUndefined: string | undefined = "";
 	givenStringHasNull = "";
 
-	let setToUndefined: string | undefined = undefined;
+	let setToUndefined: string = undefined;
 
-	let setToUndefinedHasNull: string | null | undefined = undefined;
+	let setToUndefinedHasNull: string | null = undefined;
 
-	let setToNull: string | null = null;
+	let setToNull: string = null;
 
 	let setToNullAsNull = null;
 
-	let setToNullHasUndefined: string | undefined | null = null;
+	let setToNullHasUndefined: string | undefined = null;
 
 	let setToString = "";
 
@@ -77,9 +75,9 @@ import * as React from "react";
 	// Async
 
 	async function _() {
-		let stringFromNullImmediate: string | null = await Promise.resolve<null>(null);
+		let stringFromNullImmediate: string = await Promise.resolve<null>(null);
 
-		let stringFromUndefinedLater: string | undefined;
+		let stringFromUndefinedLater: string;
 		stringFromUndefinedLater = await Promise.resolve<undefined>(undefined);
 	}
 
@@ -115,7 +113,7 @@ import * as React from "react";
 	let eitherClassNeedsUnionImplicit = new SampleClassOne();
 	eitherClassNeedsUnionImplicit = new SampleClassTwo();
 
-	let eitherClassNeedsUnionExplicit: SampleClassOne | SampleClassTwo = new SampleClassOne();
+	let eitherClassNeedsUnionExplicit: SampleClassOne = new SampleClassOne();
 	eitherClassNeedsUnionExplicit = new SampleClassTwo();
 
 	let eitherClassNeedsUnionExplicitInterface: SampleInterface =
@@ -126,21 +124,21 @@ import * as React from "react";
 	eitherClassNeedsNullImplicit = new SampleClassTwo();
 	eitherClassNeedsNullImplicit = null;
 
-	let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null | SampleClassTwo =
+	let eitherClassNeedsNullAndClassExplicit: SampleClassOne | null =
 		new SampleClassOne();
 	eitherClassNeedsNullAndClassExplicit = new SampleClassTwo();
 	eitherClassNeedsNullAndClassExplicit = null;
 
-	let eitherClassNeedsUndefinedExplicit: SampleClassOne | SampleClassTwo | undefined = new SampleClassOne();
+	let eitherClassNeedsUndefinedExplicit: SampleClassOne = new SampleClassOne();
 	eitherClassNeedsUndefinedExplicit = new SampleClassTwo();
 	eitherClassNeedsUndefinedExplicit = undefined;
 
-	let eitherClassNeedsUndefinedExplicitInterface: SampleInterface | undefined =
+	let eitherClassNeedsUndefinedExplicitInterface: SampleInterface =
 		new SampleClassOne();
 	eitherClassNeedsUndefinedExplicitInterface = new SampleClassTwo();
 	eitherClassNeedsUndefinedExplicitInterface = undefined;
 
-	let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined | SampleClassTwo =
+	let eitherClassNeedsUndefinedAndClassExplicit: SampleClassOne | undefined =
 		new SampleClassOne();
 	eitherClassNeedsUndefinedAndClassExplicit = new SampleClassTwo();
 	eitherClassNeedsUndefinedAndClassExplicit = undefined;
@@ -181,20 +179,10 @@ import * as React from "react";
 
 	// Functions
 
-	let returnsString: (() => string);
+	let returnsString: Function;
 	returnsString = () => "";
 
-	let returnsStringOrNumber: (() => string) | (() => number);
+	let returnsStringOrNumber: Function;
 	returnsStringOrNumber = () => "";
 	returnsStringOrNumber = () => 0;
-
-	// Predeclared functions (React FCs)
-
-	interface MyComponentProps {
-		text: string;
-	}
-
-	const MyComponent: React.FC<MyComponentProps> = ({ text }) => {
-		return <span>{text}</span>;
-	};
 })();

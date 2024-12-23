@@ -2,7 +2,5 @@
 	"cleanups": {
 		"suppressTypeErrors": true
 	},
-	"fixes": {
-		"importExtensions": true
-	}
+	"projectPath": "./tsconfig.json"
 }

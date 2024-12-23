@@ -1,0 +1,8 @@
+{
+	"compilerOptions": {
+		"esModuleInterop": true,
+		"strictNullChecks": true,
+		"resolveJsonModule": true
+	},
+	"files": ["actual.ts"]
+}
