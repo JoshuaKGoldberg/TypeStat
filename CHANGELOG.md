@@ -1,3 +1,9 @@
+## [0.8.6](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.5...0.8.6) (2024-12-24)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to v5.4.1 ([#2095](https://github.com/JoshuaKGoldberg/TypeStat/issues/2095)) ([8b75a6d](https://github.com/JoshuaKGoldberg/TypeStat/commit/8b75a6dd186e48f52ad24a67e48e959ab3bf7525))
+
 ## [0.8.5](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.4...0.8.5) (2024-12-21)
 
 ### Bug Fixes
