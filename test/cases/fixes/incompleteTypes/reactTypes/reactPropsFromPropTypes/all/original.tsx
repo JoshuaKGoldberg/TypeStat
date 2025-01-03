@@ -86,7 +86,6 @@ import PropTypes from "prop-types";
 		name: PropTypes.string,
 	};
 
-	// TODO: The mutation for this is incorrect
 	function HelloWorldComponent({ name }) {
 		return <div>Hello, {name}</div>;
 	}
@@ -95,7 +94,6 @@ import PropTypes from "prop-types";
 		name: PropTypes.string,
 	};
 
-	// TODO: The mutation for this is incorrect
 	function Heading({ text }) {
 		return <h1>{text}</h1>;
 	}
@@ -104,5 +102,16 @@ import PropTypes from "prop-types";
 	};
 	Heading.defaultProps = {
 		text: "Hello, world!",
+	};
+
+	const LegendImage = function (props: any) {
+		return (
+			<img
+				{...props}
+				style={{ display: "none", marginTop: "4px" }}
+				onLoad={(e) => (e.currentTarget.style.display = "block")}
+				onError={(e) => (e.currentTarget.style.display = "none")}
+			/>
+		);
 	};
 })();

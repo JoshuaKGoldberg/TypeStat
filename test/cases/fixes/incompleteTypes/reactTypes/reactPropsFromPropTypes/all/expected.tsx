@@ -158,14 +158,8 @@ interface HelloWorldComponentProps {
     name?: string;
 }
 
-interface HelloWorldComponentProps {
-    name?: string;
-}
 
-
-
-	// TODO: The mutation for this is incorrect
-	function HelloWorldComponent({ name }: HelloWorldComponentProps: HelloWorldComponentProps) {
+	function HelloWorldComponent({ name }: HelloWorldComponentProps) {
 // @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
 		return <div>Hello, {name}</div>;
 	}
@@ -178,14 +172,8 @@ interface HeadingProps {
     text?: string;
 }
 
-interface HeadingProps {
-    text?: string;
-}
 
-
-
-	// TODO: The mutation for this is incorrect
-	function Heading({ text }: HeadingProps: HeadingProps) {
+	function Heading({ text }: HeadingProps) {
 // @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
 		return <h1>{text}</h1>;
 	}
@@ -194,5 +182,17 @@ interface HeadingProps {
 	};
 	Heading.defaultProps = {
 		text: "Hello, world!",
+	};
+
+	const LegendImage = function (props: any) {
+		return (
+// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
+			<img
+				{...props}
+				style={{ display: "none", marginTop: "4px" }}
+				onLoad={(e) => (e.currentTarget.style.display = "block")}
+				onError={(e) => (e.currentTarget.style.display = "none")}
+			/>
+		);
 	};
 })();

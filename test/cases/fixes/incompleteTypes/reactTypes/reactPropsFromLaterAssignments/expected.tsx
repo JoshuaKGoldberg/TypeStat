@@ -14,7 +14,7 @@ text?: string;
 		}
 	}
 
-// @ts-expect-error -- TODO: JSX element class does not support attributes because it does not have a 'props' property. Cannot use JSX unless the '--jsx' flag is provided. 'ClassComponent' cannot be used as a JSX component.
+// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
 	const renderClassComponent = (text: string) => <ClassComponent text={text} />;
 
 	type FunctionComponentProps = {
@@ -30,7 +30,7 @@ texts?: string[];
 	}
 
 	const renderFunctionComponent = (texts: string[]) => (
-// @ts-expect-error -- TODO: JSX element class does not support attributes because it does not have a 'props' property. Cannot use JSX unless the '--jsx' flag is provided. 'FunctionComponent' cannot be used as a JSX component.
+// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
 		<FunctionComponent texts={texts} />
 	);
 
@@ -42,7 +42,7 @@ texts?: string[];
 	class WithFunctions extends React.Component<WithFunctionsProps> {}
 
 	const withFunctions = (
-// @ts-expect-error -- TODO: JSX element class does not support attributes because it does not have a 'props' property. Cannot use JSX unless the '--jsx' flag is provided. 'WithFunctions' cannot be used as a JSX component.
+// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
 		<WithFunctions
 			returnsBoolean={() => false}
 			returnsStringOrNumber={() => 0}

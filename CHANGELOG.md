@@ -1,3 +1,29 @@
+# Changelog
+
+## [0.8.8](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.7...0.8.8) (2025-01-03)
+
+### Bug Fixes
+
+- duplicate react props added ([#2057](https://github.com/JoshuaKGoldberg/TypeStat/issues/2057)) ([dc9f408](https://github.com/JoshuaKGoldberg/TypeStat/commit/dc9f408a470d14d3ed0e0eded9a1a53b9c8a8efc)), closes [#2019](https://github.com/JoshuaKGoldberg/TypeStat/issues/2019)
+
+## [0.8.7](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.6...0.8.7) (2025-01-02)
+
+### Bug Fixes
+
+- **deps:** update dependency commander to v13 ([#2102](https://github.com/JoshuaKGoldberg/TypeStat/issues/2102)) ([0dc034c](https://github.com/JoshuaKGoldberg/TypeStat/commit/0dc034c0c176fe5cb75f98071806d0c9aebc45b7))
+
+## [0.8.6](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.5...0.8.6) (2024-12-24)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to v5.4.1 ([#2095](https://github.com/JoshuaKGoldberg/TypeStat/issues/2095)) ([8b75a6d](https://github.com/JoshuaKGoldberg/TypeStat/commit/8b75a6dd186e48f52ad24a67e48e959ab3bf7525))
+
+## [0.8.5](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.4...0.8.5) (2024-12-21)
+
+### Bug Fixes
+
+- **deps:** update dependency chalk to v5.4.0 ([#2088](https://github.com/JoshuaKGoldberg/TypeStat/issues/2088)) ([c252bcc](https://github.com/JoshuaKGoldberg/TypeStat/commit/c252bcc33cb3847e7623663224570f3a0d91471d))
+
 ## [0.8.4](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.3...0.8.4) (2024-12-02)
 
 ### Bug Fixes
