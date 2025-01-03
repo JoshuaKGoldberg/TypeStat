@@ -1,5 +1,3 @@
-import builtinModules from "builtin-modules";
-
 import { setSubtract } from "../../shared/sets.js";
 import { createFileNamesAndServices } from "../createFileNamesAndServices.js";
 import { createSingleUseProvider } from "../createSingleUseProvider.js";
@@ -7,8 +5,6 @@ import { collectExistingTypingPackages } from "./missingTypes/collectExistingTyp
 import { collectPackageManagerRunner } from "./missingTypes/collectPackageManagerRunner.js";
 import { collectReferencedPackageNames } from "./missingTypes/collectReferencedPackageNames.js";
 import { filterTypedPackageNames } from "./missingTypes/filterTypedPackageNames.js";
-
-const uniqueBuiltinModules = new Set(builtinModules);
 
 /**
  * Creates a mutations provider that installs missing types modules.
@@ -43,7 +39,6 @@ export const createInstallMissingTypesProvider = () => {
 					const missingPackageNames = setSubtract(
 						referencedPackageNames,
 						new Set(existingPackageNames),
-						uniqueBuiltinModules,
 					);
 					const missingTypedPackageNames = await filterTypedPackageNames(
 						Array.from(missingPackageNames),

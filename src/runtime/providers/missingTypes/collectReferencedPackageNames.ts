@@ -1,3 +1,4 @@
+import { isBuiltin } from "node:module";
 import ts from "typescript";
 
 import { LanguageServices } from "../../../services/language.js";
@@ -7,7 +8,9 @@ export const collectReferencedPackageNames = (services: LanguageServices) => {
 
 	for (const sourceFile of services.program.getSourceFiles()) {
 		for (const packageName of collectFileReferencedPackageNames(sourceFile)) {
-			packageNames.add(packageName);
+			if (!isBuiltin(packageName)) {
+				packageNames.add(packageName);
+			}
 		}
 	}
 
