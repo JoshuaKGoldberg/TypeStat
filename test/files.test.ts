@@ -10,7 +10,7 @@ describe("files", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	}, 50000);
+	}, 7000);
 
 	it("addition below", async () => {
 		const caseDir = path.join(import.meta.dirname, "cases/files/below");
@@ -18,7 +18,7 @@ describe("files", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	}, 50000);
+	}, 7000);
 
 	it("both", async () => {
 		const caseDir = path.join(import.meta.dirname, "cases/files/both");
@@ -26,7 +26,7 @@ describe("files", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	});
+	}, 7000);
 
 	it("empty addition", async () => {
 		const caseDir = path.join(import.meta.dirname, "cases/files/empty");
@@ -34,5 +34,5 @@ describe("files", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	});
+	}, 7000);
 });

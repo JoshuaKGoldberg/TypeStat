@@ -14,4 +14,15 @@ describe("Cleanups", () => {
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
 	});
+
+	it("non-TypeErrors", async () => {
+		const caseDir = path.join(
+			import.meta.dirname,
+			"cases/cleanups/nonTypeErrors",
+		);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
+		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
+	}, 6000);
 });
