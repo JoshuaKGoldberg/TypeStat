@@ -109,8 +109,8 @@ importers:
         specifier: 15.3.0
         version: 15.3.0
       markdownlint:
-        specifier: 0.37.2
-        version: 0.37.2
+        specifier: 0.37.3
+        version: 0.37.3
       markdownlint-cli:
         specifier: 0.43.0
         version: 0.43.0
@@ -2535,8 +2535,8 @@ packages:
     resolution: {integrity: sha512-s73fU2CQN7WCgjhaQUQ8wYESQNzGRNOKDd+3xgVqu8kuTEhmwepd/mxOv1LR2oV046ONrTLBFsM7IoKWNvmy5g==}
     engines: {node: '>=18'}
 
-  markdownlint@0.37.2:
-    resolution: {integrity: sha512-m8QhYnRA1ptbhIjhVVBUkKQcUelVxuyO/yXyLewnc1+xs4eXhST/+hIy29goO+EYVLmWtknH4SmYQ4s0caoKqw==}
+  markdownlint@0.37.3:
+    resolution: {integrity: sha512-eoQqH0291YCCjd+Pe1PUQ9AmWthlVmS0XWgcionkZ8q34ceZyRI+pYvsWksXJJL8OBkWCPwp1h/pnXxrPFC4oA==}
     engines: {node: '>=18'}
 
   mdast-util-from-markdown@0.8.5:
@@ -5996,10 +5996,11 @@ snapshots:
       markdown-it: 14.1.0
       markdownlint-micromark: 0.1.12
 
-  markdownlint@0.37.2:
+  markdownlint@0.37.3:
     dependencies:
       markdown-it: 14.1.0
       micromark: 4.0.1
+      micromark-core-commonmark: 2.0.2
       micromark-extension-directive: 3.0.2
       micromark-extension-gfm-autolink-literal: 2.1.0
       micromark-extension-gfm-footnote: 2.1.0

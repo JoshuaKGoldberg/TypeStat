@@ -75,7 +75,7 @@
 		"husky": "9.1.7",
 		"knip": "5.41.1",
 		"lint-staged": "15.3.0",
-		"markdownlint": "0.37.2",
+		"markdownlint": "0.37.3",
 		"markdownlint-cli": "0.43.0",
 		"prettier": "3.4.2",
 		"prettier-plugin-curly": "0.3.1",
