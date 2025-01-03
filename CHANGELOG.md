@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.8](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.7...0.8.8) (2025-01-03)
+
+### Bug Fixes
+
+- duplicate react props added ([#2057](https://github.com/JoshuaKGoldberg/TypeStat/issues/2057)) ([dc9f408](https://github.com/JoshuaKGoldberg/TypeStat/commit/dc9f408a470d14d3ed0e0eded9a1a53b9c8a8efc)), closes [#2019](https://github.com/JoshuaKGoldberg/TypeStat/issues/2019)
+
 ## [0.8.7](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.6...0.8.7) (2025-01-02)
 
 ### Bug Fixes
