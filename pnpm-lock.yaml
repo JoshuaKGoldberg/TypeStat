@@ -44,7 +44,7 @@ importers:
         version: 9.17.0
       '@release-it/conventional-changelog':
         specifier: 10.0.0
-        version: 10.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)(release-it@18.0.0(@types/node@22.10.5)(typescript@5.7.3))
+        version: 10.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)(release-it@18.1.1(@types/node@22.10.5)(typescript@5.7.3))
       '@types/eslint-plugin-markdown':
         specifier: 2.0.2
         version: 2.0.2
@@ -124,8 +124,8 @@ importers:
         specifier: 2.5.6
         version: 2.5.6(prettier@3.4.2)
       release-it:
-        specifier: 18.0.0
-        version: 18.0.0(@types/node@22.10.5)(typescript@5.7.3)
+        specifier: 18.1.1
+        version: 18.1.1(@types/node@22.10.5)(typescript@5.7.3)
       sentences-per-line:
         specifier: 0.3.0
         version: 0.3.0
@@ -3095,8 +3095,8 @@ packages:
     resolution: {integrity: sha512-+crtS5QjFRqFCoQmvGduwYWEBng99ZvmFvF+cUJkGYF1L1BfU8C6Zp9T7f5vPAwyLkUExpvK+ANVZmGU49qi4Q==}
     engines: {node: '>=12'}
 
-  release-it@18.0.0:
-    resolution: {integrity: sha512-aO7sGBwv+0m8FXVNT+RyL1yky9Nhg0IxkqJIdofTma0Dz4w9z0+u5DddzesOoYQL2fawib3Kwn30DaLxqiz5ng==}
+  release-it@18.1.1:
+    resolution: {integrity: sha512-rC/iVKri7U/Kp/Myujmsf7HG2gPq8My/LBVB72TbZZYKD14fmgDZC4Eyn8DD7Yh2h/G/YCCsRe1QQPrjXj9Mzg==}
     engines: {node: ^20.9.0 || >=22.0.0}
     hasBin: true
 
@@ -4425,13 +4425,13 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@release-it/conventional-changelog@10.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)(release-it@18.0.0(@types/node@22.10.5)(typescript@5.7.3))':
+  '@release-it/conventional-changelog@10.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)(release-it@18.1.1(@types/node@22.10.5)(typescript@5.7.3))':
     dependencies:
       concat-stream: 2.0.0
       conventional-changelog: 6.0.0(conventional-commits-filter@5.0.0)
       conventional-recommended-bump: 10.0.0
       git-semver-tags: 8.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)
-      release-it: 18.0.0(@types/node@22.10.5)(typescript@5.7.3)
+      release-it: 18.1.1(@types/node@22.10.5)(typescript@5.7.3)
       semver: 7.6.3
     transitivePeerDependencies:
       - conventional-commits-filter
@@ -6798,7 +6798,7 @@ snapshots:
     dependencies:
       rc: 1.2.8
 
-  release-it@18.0.0(@types/node@22.10.5)(typescript@5.7.3):
+  release-it@18.1.1(@types/node@22.10.5)(typescript@5.7.3):
     dependencies:
       '@iarna/toml': 2.2.5
       '@octokit/rest': 21.0.2
