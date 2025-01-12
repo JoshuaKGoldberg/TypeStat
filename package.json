@@ -83,7 +83,7 @@
 		"release-it": "18.0.0",
 		"sentences-per-line": "0.3.0",
 		"tsup": "8.3.5",
-		"typescript": "5.7.2",
+		"typescript": "5.7.3",
 		"typescript-eslint": "8.18.1",
 		"vitest": "2.1.8"
 	},
