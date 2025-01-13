@@ -16,7 +16,12 @@ describe("writeMultiTypeScriptConfig", () => {
 				incompleteTypes: true,
 				noImplicitAny: true,
 			},
+			include: undefined,
 			projectPath: "./tsconfig.json",
 		});
+
+		expect(JSON.stringify(config)).toBe(
+			'{"fixes":{"incompleteTypes":true,"noImplicitAny":true},"projectPath":"./tsconfig.json"}',
+		);
 	});
 });

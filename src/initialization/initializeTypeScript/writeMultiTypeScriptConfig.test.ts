@@ -34,13 +34,13 @@ describe("writeMultiTypeScriptConfig", () => {
 				},
 			},
 			{
-				exclude: ["test/**/*.{ts,tsx}"],
 				fixes: {
 					incompleteTypes: true,
 					noImplicitAny: true,
 					noImplicitThis: true,
 					noInferableTypes: true,
 				},
+				include: undefined,
 				projectPath: "./tsconfig.json",
 			},
 			{

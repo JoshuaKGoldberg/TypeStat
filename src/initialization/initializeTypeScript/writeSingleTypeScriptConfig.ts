@@ -25,13 +25,9 @@ export const generateSingleTypeScriptConfig = ({
 }: SingleTypeScriptConfigSettings) => {
 	const config: Partial<RawTypeStatOptions> = {
 		fixes: printImprovements(improvements),
+		include: sourceFiles ? [sourceFiles] : undefined,
 		projectPath: project.filePath,
 	};
-
-	if (sourceFiles) {
-		// @ts-expect-error Cannot assign to 'include' because it is a read-only property.
-		config.include = [sourceFiles];
-	}
 	return config;
 };
 

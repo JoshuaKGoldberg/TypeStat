@@ -1,6 +1,7 @@
 import * as fs from "node:fs/promises";
 
 import { Fixes, RawTypeStatOptions } from "../../options/types.js";
+import { isNotUndefined } from "../../shared/arrays.js";
 import { ProjectDescription } from "../initializeProject/shared.js";
 import { InitializationImprovement } from "./improvements.js";
 
@@ -32,6 +33,7 @@ export const generateMultiTypeScriptConfig = ({
 			...fixes,
 			strictNonNullAssertions: true,
 		},
+		include: testFiles ? [testFiles] : undefined,
 		projectPath: project.filePath,
 		types: {
 			strictNullChecks: true,
@@ -40,30 +42,17 @@ export const generateMultiTypeScriptConfig = ({
 
 	const stage2: Partial<RawTypeStatOptions> = {
 		fixes,
+		include: sourceFiles ? [sourceFiles] : undefined,
 		projectPath: project.filePath,
 	};
+
+	const stage3Include = [testFiles, sourceFiles].filter(isNotUndefined);
 
 	const stage3: Partial<RawTypeStatOptions> = {
 		fixes,
+		include: stage3Include.length ? stage3Include : undefined,
 		projectPath: project.filePath,
 	};
-
-	if (testFiles) {
-		// @ts-expect-error Cannot assign to 'include' because it is a read-only property.
-		stage1.include = [testFiles];
-		// @ts-expect-error Property 'exclude' does not exist on type 'Partial<PendingTypeStatOptions>'.
-		stage2.exclude = [testFiles];
-		// @ts-expect-error Cannot assign to 'include' because it is a read-only property.
-		stage3.include = [testFiles, sourceFiles].filter(Boolean);
-	} else {
-		// @ts-expect-error Cannot assign to 'include' because it is a read-only property.
-		stage3.include = [sourceFiles].filter(Boolean);
-	}
-
-	if (sourceFiles) {
-		// @ts-expect-error Cannot assign to 'include' because it is a read-only property.
-		stage2.include = [sourceFiles];
-	}
 
 	return [stage1, stage2, stage3];
 };
