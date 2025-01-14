@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.9](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.8...0.8.9) (2025-01-14)
+
+### Bug Fixes
+
+- **deps:** update dependency glob to v11.0.1 ([#2125](https://github.com/JoshuaKGoldberg/TypeStat/issues/2125)) ([6131819](https://github.com/JoshuaKGoldberg/TypeStat/commit/6131819889a9e1b161f9a34e54842faa00ef0187))
+
 ## [0.8.8](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.7...0.8.8) (2025-01-03)
 
 ### Bug Fixes
