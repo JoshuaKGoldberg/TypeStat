@@ -1,5 +1,6 @@
 import * as fs from "node:fs/promises";
 
+import { Fixes, RawTypeStatOptions } from "../../options/types.js";
 import { ProjectDescription } from "../initializeProject/shared.js";
 import { InitializationImprovement } from "./improvements.js";
 
@@ -10,36 +11,35 @@ export interface SingleTypeScriptConfigSettings {
 	sourceFiles?: string;
 }
 
-export const writeSingleTypeScriptConfig = async ({
-	fileName,
+export const writeSingleTypeScriptConfig = async (
+	settings: SingleTypeScriptConfigSettings,
+) => {
+	const config = generateSingleTypeScriptConfig(settings);
+	await fs.writeFile(settings.fileName, JSON.stringify(config, undefined, 4));
+};
+
+export const generateSingleTypeScriptConfig = ({
 	improvements,
 	project,
 	sourceFiles,
 }: SingleTypeScriptConfigSettings) => {
-	await fs.writeFile(
-		fileName,
-		JSON.stringify(
-			{
-				fixes: printImprovements(improvements),
-				...(sourceFiles && { include: [sourceFiles] }),
-				projectPath: project.filePath,
-			},
-			undefined,
-			4,
-		),
-	);
+	const config: Partial<RawTypeStatOptions> = {
+		fixes: printImprovements(improvements),
+		include: sourceFiles ? [sourceFiles] : undefined,
+		projectPath: project.filePath,
+	};
+	return config;
 };
 
 const printImprovements = (
 	improvements: ReadonlySet<InitializationImprovement>,
-) => {
-	return {
-		incompleteTypes: true,
-		...(improvements.has(InitializationImprovement.NoImplicitAny) && {
-			noImplicitAny: true,
-		}),
-		...(improvements.has(InitializationImprovement.NoImplicitThis) && {
-			noImplicitThis: true,
-		}),
-	};
+): Partial<Fixes> => {
+	const fixes: Partial<Fixes> = { incompleteTypes: true };
+	if (improvements.has(InitializationImprovement.NoImplicitAny)) {
+		fixes.noImplicitAny = true;
+	}
+	if (improvements.has(InitializationImprovement.NoImplicitThis)) {
+		fixes.noImplicitThis = true;
+	}
+	return fixes;
 };
