@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.10](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.9...0.8.10) (2025-01-17)
+
+### Bug Fixes
+
+- writing TypeScript config file ([#2114](https://github.com/JoshuaKGoldberg/TypeStat/issues/2114)) ([90ef5e5](https://github.com/JoshuaKGoldberg/TypeStat/commit/90ef5e5d31eb5a4763ab54b2261231f7f883265f)), closes [#2113](https://github.com/JoshuaKGoldberg/TypeStat/issues/2113)
+
 ## [0.8.9](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.8...0.8.9) (2025-01-14)
 
 ### Bug Fixes
