@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.11](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.10...0.8.11) (2025-01-24)
+
+### Bug Fixes
+
+- **deps:** update dependency commander to v13.1.0 ([#2149](https://github.com/JoshuaKGoldberg/TypeStat/issues/2149)) ([298991c](https://github.com/JoshuaKGoldberg/TypeStat/commit/298991c26840cf49dbb2c45a72992616b602f06a))
+
 ## [0.8.10](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.9...0.8.10) (2025-01-17)
 
 ### Bug Fixes
