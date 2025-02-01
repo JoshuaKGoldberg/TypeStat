@@ -1,4 +1,3 @@
-import { setSubtract } from "../../shared/sets.js";
 import { createFileNamesAndServices } from "../createFileNamesAndServices.js";
 import { createSingleUseProvider } from "../createSingleUseProvider.js";
 import { collectExistingTypingPackages } from "./missingTypes/collectExistingTypingPackages.js";
@@ -32,12 +31,9 @@ export const createInstallMissingTypesProvider = () => {
 
 					// Collect every package name referenced by every file in the project
 					const { services } = createFileNamesAndServices(options);
-					const referencedPackageNames =
-						collectReferencedPackageNames(services);
-
 					// Ignore package names already referenced in package.json or that don't exist in DefinitelyTyped
-					const missingPackageNames = setSubtract(
-						referencedPackageNames,
+					const missingPackageNames = collectReferencedPackageNames(
+						services,
 						new Set(existingPackageNames),
 					);
 					const missingTypedPackageNames = await filterTypedPackageNames(
