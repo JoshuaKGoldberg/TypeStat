@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import { EOL } from "os";
-import stripAnsi from "strip-ansi";
+import { stripVTControlCharacters } from "util";
 
 import { ProcessOutput } from "./types.js";
 
@@ -11,7 +11,7 @@ export const createProcessOutput = (logFile?: string): ProcessOutput => {
 		return (line: string) => {
 			stream.write(line + EOL);
 			log?.(
-				stripAnsi(
+				stripVTControlCharacters(
 					`[${prefix}] ${line.replace(/^\r\n|\r|\n/g, "").replace(/\r\n|\r|\n$/g, "")}`,
 				),
 			);
