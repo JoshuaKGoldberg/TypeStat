@@ -48,7 +48,7 @@
 		"enquirer": "2.4.1",
 		"glob": "11.0.1",
 		"strip-ansi": "7.1.0",
-		"ts-api-utils": "2.0.0"
+		"ts-api-utils": "2.0.1"
 	},
 	"devDependencies": {
 		"@eslint-community/eslint-plugin-eslint-comments": "4.4.1",
