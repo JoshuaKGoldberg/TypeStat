@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.12](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.11...0.8.12) (2025-02-04)
+
+### Bug Fixes
+
+- **deps:** update dependency ts-api-utils to v2.0.1 ([#2187](https://github.com/JoshuaKGoldberg/TypeStat/issues/2187)) ([ec320ac](https://github.com/JoshuaKGoldberg/TypeStat/commit/ec320ac0d143f2fdbd90b93fa7c6a97e1350d05e))
+
 ## [0.8.11](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.10...0.8.11) (2025-01-24)
 
 ### Bug Fixes
