@@ -8,7 +8,7 @@ import { createLanguageServices } from "../../../services/language.js";
 import { collectReferencedPackageNames } from "./collectReferencedPackageNames.js";
 
 describe("collectReferencedPackageNames", () => {
-	it.skip("should return package names", () => {
+	it("should return package names", () => {
 		const options: Partial<TypeStatOptions> = {
 			compilerOptions: {} as Readonly<TypeStatCompilerOptions>,
 			package: {
