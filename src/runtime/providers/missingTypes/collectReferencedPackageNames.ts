@@ -5,7 +5,7 @@ import { LanguageServices } from "../../../services/language.js";
 
 export const collectReferencedPackageNames = (
 	services: LanguageServices,
-	ignoredPackages: Set<string>,
+	ignoredPackages: ReadonlySet<string>,
 ) => {
 	const packageNames = new Set<string>();
 
@@ -24,7 +24,7 @@ export const collectReferencedPackageNames = (
 
 const collectFileReferencedPackageNames = (
 	sourceFile: ts.SourceFile,
-	ignoredPackages: Set<string>,
+	ignoredPackages: ReadonlySet<string>,
 ) => {
 	const packageNames = new Set<string>();
 
