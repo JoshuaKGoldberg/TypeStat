@@ -26,9 +26,6 @@ importers:
       glob:
         specifier: 11.0.1
         version: 11.0.1
-      strip-ansi:
-        specifier: 7.1.0
-        version: 7.1.0
       ts-api-utils:
         specifier: 2.0.1
         version: 2.0.1(typescript@5.7.3)
