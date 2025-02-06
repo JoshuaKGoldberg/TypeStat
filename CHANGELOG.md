@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.15](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.14...0.8.15) (2025-02-06)
+
+### Bug Fixes
+
+- replace `strip-ansi` with `stripVTControlCharacters` ([#2181](https://github.com/JoshuaKGoldberg/TypeStat/issues/2181)) ([dae6659](https://github.com/JoshuaKGoldberg/TypeStat/commit/dae665982a53914df174a6d7b124d56ddefe6508)), closes [#2177](https://github.com/JoshuaKGoldberg/TypeStat/issues/2177) [#2177](https://github.com/JoshuaKGoldberg/TypeStat/issues/2177)
+
 ## [0.8.14](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.13...0.8.14) (2025-02-06)
 
 ### Bug Fixes
