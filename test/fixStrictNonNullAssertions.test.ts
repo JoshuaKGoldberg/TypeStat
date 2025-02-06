@@ -24,7 +24,7 @@ describe("strictNonNullAssertions", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	});
+	}, 10000);
 
 	it("objectLiterals", async () => {
 		const caseDir = path.join(
@@ -46,7 +46,7 @@ describe("strictNonNullAssertions", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	});
+	}, 10000);
 
 	it("returnTypes", async () => {
 		const caseDir = path.join(

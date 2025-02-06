@@ -1,4 +1,4 @@
-import { createFileNamesAndServices } from "../createFileNamesAndServices.js";
+import { createLanguageServices } from "../../services/language.js";
 import { createSingleUseProvider } from "../createSingleUseProvider.js";
 import { collectExistingTypingPackages } from "./missingTypes/collectExistingTypingPackages.js";
 import { collectPackageManagerRunner } from "./missingTypes/collectPackageManagerRunner.js";
@@ -30,7 +30,7 @@ export const createInstallMissingTypesProvider = () => {
 					}
 
 					// Collect every package name referenced by every file in the project
-					const { services } = createFileNamesAndServices(options);
+					const services = createLanguageServices(options);
 					// Ignore package names already referenced in package.json or that don't exist in DefinitelyTyped
 					const missingPackageNames = collectReferencedPackageNames(
 						services,

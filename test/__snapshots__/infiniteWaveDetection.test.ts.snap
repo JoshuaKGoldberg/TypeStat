@@ -6,15 +6,6 @@ exports[`Infinite wave detection > options 1`] = `
     "cleanups": {
       "suppressTypeErrors": true
     },
-    "compilerOptions": {
-      "include": [
-        "<rootDir>/actual.ts"
-      ],
-      "compileOnSave": false,
-      "noImplicitAny": false,
-      "noImplicitThis": false,
-      "strictNullChecks": false
-    },
     "files": {
       "above": "",
       "below": "",
@@ -49,6 +40,31 @@ exports[`Infinite wave detection > options 1`] = `
     "package": {
       "directory": "<rootDir>",
       "file": "<rootDir>/package.json"
+    },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": false
+      },
+      "fileNames": [
+        "<rootDir>/actual.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "include": [
+          "actual.ts"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {},
+      "compileOnSave": false
     },
     "postProcess": {
       "shell": []

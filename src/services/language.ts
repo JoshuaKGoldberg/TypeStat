@@ -1,23 +1,20 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import * as fs from "node:fs";
 import ts from "typescript";
 
 import { TypeStatOptions } from "../options/types.js";
 import { arrayify, uniquify } from "../shared/arrays.js";
-import { createProgramConfiguration } from "./createProgramConfiguration.js";
 
 /**
  * Language service and type information with their backing TypeScript configuration.
  */
 export interface LanguageServices {
 	readonly languageService: ts.LanguageService;
-	readonly parsedConfiguration: ts.ParsedCommandLine;
 	readonly printers: Printers;
 	readonly program: ts.Program;
 }
 
 export interface Printers {
-	readonly node: (node: ts.Node) => string;
+	readonly node: (node: ts.Node, sourceFile: ts.SourceFile) => string;
 	readonly type: (
 		types: readonly (string | ts.Type)[] | string | ts.Type,
 		enclosingDeclaration?: ts.Node,
@@ -31,47 +28,38 @@ export interface Printers {
 export const createLanguageServices = (
 	options: TypeStatOptions,
 ): LanguageServices => {
-	// Collect file names and parse raw options into a TypeScript program with its configuration settings
-	const { fileNames, parsedConfiguration, program } =
-		createProgramConfiguration(options);
-
-	// Create a TypeScript language service using the compiler host
-	const servicesHost: ts.LanguageServiceHost = {
+	// Create a TypeScript language service
+	const languageServiceHost: ts.LanguageServiceHost = {
+		directoryExists: ts.sys.directoryExists,
 		fileExists: ts.sys.fileExists,
-		getCompilationSettings: () => options.compilerOptions,
+		getCompilationSettings: () => options.parsedTsConfig.options,
 		getCurrentDirectory: () => options.package.directory,
 		getDefaultLibFileName: ts.getDefaultLibFilePath,
-		getScriptFileNames: () => fileNames,
+		getDirectories: ts.sys.getDirectories,
+		getProjectReferences: () => options.parsedTsConfig.projectReferences,
+		getScriptFileNames: () => options.parsedTsConfig.fileNames,
 		getScriptSnapshot: (fileName) =>
-			fs.existsSync(fileName)
-				? ts.ScriptSnapshot.fromString(fs.readFileSync(fileName).toString())
+			ts.sys.fileExists(fileName)
+				? ts.ScriptSnapshot.fromString(ts.sys.readFile(fileName) ?? "")
 				: undefined,
 		getScriptVersion: () => "0",
 		readDirectory: ts.sys.readDirectory,
 		readFile: ts.sys.readFile,
 	};
-	const languageService = ts.createLanguageService(
-		servicesHost,
-		ts.createDocumentRegistry(),
-	);
+	const languageService = ts.createLanguageService(languageServiceHost);
+
+	const program = languageService.getProgram();
+	if (!program) {
+		throw new Error("Error creating Program");
+	}
 
 	// This printer will later come in handy for emitting raw ASTs to text
 	const printer = ts.createPrinter({
-		newLine: options.compilerOptions.newLine,
+		newLine: options.parsedTsConfig.options.newLine,
 	});
 	const printers: Printers = {
-		node(node) {
-			return printer.printNode(
-				ts.EmitHint.Unspecified,
-				node,
-				ts.createSourceFile(
-					"temp.ts",
-					"",
-					ts.ScriptTarget.Latest,
-					false,
-					ts.ScriptKind.TSX,
-				),
-			);
+		node(node, sourceFile) {
+			return printer.printNode(ts.EmitHint.Unspecified, node, sourceFile);
 		},
 		type(types, enclosingDeclaration, typeFormatFlags) {
 			const typeChecker = program.getTypeChecker();
@@ -93,7 +81,6 @@ export const createLanguageServices = (
 
 	return {
 		languageService,
-		parsedConfiguration,
 		printers,
 		program,
 	};

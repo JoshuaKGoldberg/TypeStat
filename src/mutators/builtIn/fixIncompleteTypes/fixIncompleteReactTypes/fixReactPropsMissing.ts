@@ -190,7 +190,7 @@ const createPropsTypeCreationMutation = (
 	interfaceName: string,
 	{ attributeTypes, requiredAttributeNames }: AttributeTypesAndRequirements,
 ) => {
-	const endline = printNewLine(request.options.compilerOptions);
+	const endline = printNewLine(request.options.parsedTsConfig.options);
 
 	return {
 		insertion: [

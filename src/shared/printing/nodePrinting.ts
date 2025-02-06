@@ -35,6 +35,6 @@ export const printNamedTypeSummary = (
 		summary.alwaysProvided ? "?: " : ": ",
 		request.services.printers.type(summary.types, enclosingDeclaration),
 		";",
-		printNewLine(request.options.compilerOptions),
+		printNewLine(request.options.parsedTsConfig.options),
 	].join("");
 };

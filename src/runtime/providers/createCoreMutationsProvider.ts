@@ -4,12 +4,12 @@ import { EOL } from "os";
 
 import { TypeStatOptions } from "../../options/types.js";
 import { pluralize } from "../../output/pluralize.js";
+import { createLanguageServices } from "../../services/language.js";
 import { LazyCache } from "../../services/LazyCache.js";
 import { FileInfoCache } from "../../shared/FileInfoCache.js";
 import { convertMapToObject } from "../../shared/maps.js";
 import { NameGenerator } from "../../shared/NameGenerator.js";
 import { collectFilteredNodes } from "../collectFilteredNodes.js";
-import { createFileNamesAndServices } from "../createFileNamesAndServices.js";
 import { findMutationsInFile } from "../findMutationsInFile.js";
 import { Provider, ProviderCreator } from "../types.js";
 import { WaveTracker } from "./tracking/WaveTracker.js";
@@ -180,11 +180,11 @@ const createFileNamesAndServicesCache = (options: TypeStatOptions) => {
 	return new LazyCache(() => {
 		options.output.log?.("Preparing language services to visit files...");
 
-		const { fileNames, services } = createFileNamesAndServices(options);
+		const services = createLanguageServices(options);
 		options.output.log?.(
-			`Prepared language services for ${fileNames.length} files...`,
+			`Prepared language services for ${options.fileNames.length} files...`,
 		);
 
-		return { fileNames, services };
+		return { fileNames: options.fileNames, services };
 	});
 };

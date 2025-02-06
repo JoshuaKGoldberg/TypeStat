@@ -89,8 +89,11 @@ const createInterfaceCreationMutation = (
 	node: ReactComponentNode,
 	interfaceNode: ts.InterfaceDeclaration,
 ): TextInsertMutation => {
-	const endline = printNewLine(request.options.compilerOptions);
-	const interfaceNodeText = request.services.printers.node(interfaceNode);
+	const endline = printNewLine(request.options.parsedTsConfig.options);
+	const interfaceNodeText = request.services.printers.node(
+		interfaceNode,
+		request.sourceFile,
+	);
 
 	return {
 		insertion: [endline, endline, interfaceNodeText, endline].join(""),

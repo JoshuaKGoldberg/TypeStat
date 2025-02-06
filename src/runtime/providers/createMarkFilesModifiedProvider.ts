@@ -46,7 +46,7 @@ const createFileMutations = async (
 	const mutations: TextInsertMutation[] = [];
 	const fileContents = (await fs.readFile(fileName)).toString();
 	const fileContentsTrimmed = fileContents.trim();
-	const newLine = printNewLine(options.compilerOptions);
+	const newLine = printNewLine(options.parsedTsConfig.options);
 
 	if (
 		options.files.above !== "" &&

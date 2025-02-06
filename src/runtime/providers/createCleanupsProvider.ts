@@ -1,11 +1,11 @@
 import { Mutation } from "automutate";
 
 import { suppressRemainingTypeIssues } from "../../cleanups/builtin/suppressTypeErrors/index.js";
+import { createLanguageServices } from "../../services/language.js";
 import { FileInfoCache } from "../../shared/FileInfoCache.js";
 import { convertMapToObject, Dictionary } from "../../shared/maps.js";
 import { NameGenerator } from "../../shared/NameGenerator.js";
 import { collectFilteredNodes } from "../collectFilteredNodes.js";
-import { createFileNamesAndServices } from "../createFileNamesAndServices.js";
 import { createSingleUseProvider } from "../createSingleUseProvider.js";
 import { findMutationsInFile } from "../findMutationsInFile.js";
 
@@ -22,9 +22,9 @@ export const createCleanupsProvider = (allModifiedFiles: Set<string>) => {
 
 		return () => {
 			const fileMutations = new Map<string, readonly Mutation[]>();
-			const { fileNames, services } = createFileNamesAndServices(options);
+			const services = createLanguageServices(options);
 
-			for (const fileName of fileNames) {
+			for (const fileName of options.fileNames) {
 				const sourceFile = services.program.getSourceFile(fileName);
 				if (sourceFile === undefined) {
 					options.output.stderr(

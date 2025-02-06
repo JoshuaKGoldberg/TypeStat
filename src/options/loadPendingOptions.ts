@@ -12,15 +12,15 @@ import { PendingTypeStatOptions, RawTypeStatOptions } from "./types.js";
  * Reads pre-file-rename TypeStat options using a config path.
  * @returns Promise for filled-out TypeStat options, or a string complaint from failing to make them.
  */
-export const loadPendingOptions = async (
+export const loadPendingOptions = (
 	configPath: string | undefined,
+	cwd: string,
 	output: ProcessOutput,
-): Promise<PendingTypeStatOptions[] | string> => {
+): PendingTypeStatOptions[] | string => {
 	if (configPath === undefined) {
 		return "-c/--config file must be provided.";
 	}
 
-	const cwd = process.cwd();
 	const foundRawOptions = findRawOptions(cwd, configPath);
 	if (typeof foundRawOptions === "string") {
 		return foundRawOptions;
@@ -34,12 +34,12 @@ export const loadPendingOptions = async (
 	for (let i = 0; i < allRawOptions.length; i += 1) {
 		const rawOptions = allRawOptions[i];
 		const projectPath = getProjectPath(cwd, filePath, rawOptions);
-		const compilerOptions = await parseRawCompilerOptions(cwd, projectPath);
+		const parsedTsConfig = parseRawCompilerOptions(cwd, projectPath);
 
 		const filledOutOptions = fillOutRawOptions({
-			compilerOptions,
 			cwd,
 			output,
+			parsedTsConfig,
 			projectPath,
 			rawOptions,
 		});

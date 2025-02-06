@@ -2,12 +2,7 @@ import { runMutations } from "automutate";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { fillOutRawOptions } from "../options/fillOutRawOptions.js";
-import { parseRawCompilerOptions } from "../options/parseRawCompilerOptions.js";
-import {
-	PendingTypeStatOptions,
-	RawTypeStatOptions,
-} from "../options/types.js";
+import { loadPendingOptions } from "../options/loadPendingOptions.js";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider.js";
 
 export interface MutationTestResult {
@@ -36,16 +31,6 @@ export const runMutationTest = async (
 	// file needs to exists before creating compiler options
 	await fs.copyFile(originalFile, actualFile);
 
-	const rawTypeStatOptions = await readFile("typestat.json");
-	const rawOptions = JSON.parse(rawTypeStatOptions) as
-		| RawTypeStatOptions
-		| RawTypeStatOptions[];
-	const rawOptionsList = Array.isArray(rawOptions) ? rawOptions : [rawOptions];
-
-	const projectPath = path.join(dirPath, "tsconfig.json");
-
-	const compilerOptions = await parseRawCompilerOptions(dirPath, projectPath);
-
 	const output = {
 		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		log: () => {},
@@ -54,26 +39,22 @@ export const runMutationTest = async (
 		stdout: () => {},
 	};
 
-	const pendingOptionsList: PendingTypeStatOptions[] = [];
+	const pendingOptionsList = loadPendingOptions(
+		"typestat.json",
+		dirPath,
+		output,
+	);
 
-	for (const mutationOption of rawOptionsList) {
-		const pendingOptions = fillOutRawOptions({
-			compilerOptions,
-			cwd: dirPath,
-			output,
-			projectPath,
-			rawOptions: mutationOption,
-		});
+	if (typeof pendingOptionsList === "string") {
+		throw new Error("setting file missing");
+	}
 
-		pendingOptionsList.push(pendingOptions);
-
-		const provider = createTypeStatProvider({
-			...pendingOptions,
-			fileNames: [actualFile],
-		});
-
+	for (const pendingOptions of pendingOptionsList) {
 		await runMutations({
-			mutationsProvider: provider,
+			mutationsProvider: createTypeStatProvider({
+				...pendingOptions,
+				fileNames: [actualFile],
+			}),
 		});
 	}
 
