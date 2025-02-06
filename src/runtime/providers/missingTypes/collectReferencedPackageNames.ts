@@ -1,12 +1,20 @@
+import { isBuiltin } from "node:module";
 import ts from "typescript";
 
 import { LanguageServices } from "../../../services/language.js";
 
-export const collectReferencedPackageNames = (services: LanguageServices) => {
+export const collectReferencedPackageNames = (
+	services: LanguageServices,
+	ignoredPackages: ReadonlySet<string>,
+) => {
 	const packageNames = new Set<string>();
 
 	for (const sourceFile of services.program.getSourceFiles()) {
-		for (const packageName of collectFileReferencedPackageNames(sourceFile)) {
+		const collected = collectFileReferencedPackageNames(
+			sourceFile,
+			ignoredPackages,
+		);
+		for (const packageName of collected) {
 			packageNames.add(packageName);
 		}
 	}
@@ -14,13 +22,20 @@ export const collectReferencedPackageNames = (services: LanguageServices) => {
 	return packageNames;
 };
 
-const collectFileReferencedPackageNames = (sourceFile: ts.SourceFile) => {
+const collectFileReferencedPackageNames = (
+	sourceFile: ts.SourceFile,
+	ignoredPackages: ReadonlySet<string>,
+) => {
 	const packageNames = new Set<string>();
 
 	const visitNode = (node: ts.Node) => {
 		const packageName = parsePackageNameFromNode(node);
 
-		if (packageName !== undefined) {
+		if (
+			packageName !== undefined &&
+			!isBuiltin(packageName) &&
+			!ignoredPackages.has(packageName)
+		) {
 			packageNames.add(packageName);
 		}
 
