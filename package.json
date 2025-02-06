@@ -1,6 +1,6 @@
 {
 	"name": "typestat",
-	"version": "0.8.13",
+	"version": "0.8.14",
 	"description": "Converts JavaScript to TypeScript and TypeScript to better TypeScript. 🧫",
 	"repository": {
 		"type": "git",

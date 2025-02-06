@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.14](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.13...0.8.14) (2025-02-06)
+
+### Bug Fixes
+
+- createJavaScriptConfig should print projectPath instead of project ([#2184](https://github.com/JoshuaKGoldberg/TypeStat/issues/2184)) ([8a5792b](https://github.com/JoshuaKGoldberg/TypeStat/commit/8a5792b897c091168d6977af66ca679ba44bcf0f)), closes [#2178](https://github.com/JoshuaKGoldberg/TypeStat/issues/2178)
+
 ## [0.8.13](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.12...0.8.13) (2025-02-06)
 
 ### Bug Fixes
