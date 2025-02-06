@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.13](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.12...0.8.13) (2025-02-06)
+
+### Bug Fixes
+
+- replace builtin-modules package with node's isBuiltin check ([#2176](https://github.com/JoshuaKGoldberg/TypeStat/issues/2176)) ([8d40464](https://github.com/JoshuaKGoldberg/TypeStat/commit/8d404647cb29e43416b169e6149fef604fcb3f40)), closes [#2175](https://github.com/JoshuaKGoldberg/TypeStat/issues/2175)
+
 ## [0.8.12](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.11...0.8.12) (2025-02-04)
 
 ### Bug Fixes
