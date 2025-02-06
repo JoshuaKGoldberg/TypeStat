@@ -4,12 +4,7 @@ import ts from "typescript";
 
 import { TypeStatOptions } from "../options/types.js";
 import { arrayify, uniquify } from "../shared/arrays.js";
-import { isIntrinsicNameType, WellKnownTypeName } from "../shared/typeNodes.js";
 import { createProgramConfiguration } from "./createProgramConfiguration.js";
-
-export type WellKnownTypes = Readonly<
-	Record<WellKnownTypeName, Readonly<ts.Type>>
->;
 
 /**
  * Language service and type information with their backing TypeScript configuration.
@@ -19,7 +14,6 @@ export interface LanguageServices {
 	readonly parsedConfiguration: ts.ParsedCommandLine;
 	readonly printers: Printers;
 	readonly program: ts.Program;
-	readonly wellKnownTypes: WellKnownTypes;
 }
 
 export interface Printers {
@@ -97,24 +91,11 @@ export const createLanguageServices = (
 		},
 	};
 
-	let wellKnownTypes: undefined | WellKnownTypes;
-
 	return {
 		languageService,
 		parsedConfiguration,
 		printers,
 		program,
-		get wellKnownTypes(): WellKnownTypes {
-			return (wellKnownTypes ??= program
-				.getTypeCatalog()
-				.reduce<Record<WellKnownTypeName, ts.Type>>((acc, type) => {
-					if (isIntrinsicNameType(type)) {
-						acc[type.intrinsicName] = type;
-					}
-
-					return acc;
-				}, {} as WellKnownTypes));
-		},
 	};
 };
 /* eslint-enable @typescript-eslint/unbound-method */
