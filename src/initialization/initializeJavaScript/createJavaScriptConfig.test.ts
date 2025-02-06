@@ -1,12 +1,22 @@
 import { describe, expect, it } from "vitest";
 
+import { RawTypeStatOptions } from "../../options/types.js";
 import { InitializationCleanups } from "./cleanups.js";
-import { createJavaScriptConfig } from "./createJavaScriptConfig.js";
+import {
+	createJavaScriptConfig,
+	JavaScriptConfigSettings,
+} from "./createJavaScriptConfig.js";
 import { InitializationImports } from "./imports.js";
 import { InitializationRenames } from "./renames.js";
 
+interface TestArguments {
+	expected: RawTypeStatOptions | RawTypeStatOptions[];
+	name: string;
+	settings: JavaScriptConfigSettings;
+}
+
 describe("createJavaScriptConfig", () => {
-	it.each([
+	it.each<TestArguments>([
 		{
 			expected: {
 				files: { renameExtensions: "ts" },
@@ -15,7 +25,7 @@ describe("createJavaScriptConfig", () => {
 					missingProperties: true,
 					noImplicitAny: true,
 				},
-				project: "tsconfig.json",
+				projectPath: "tsconfig.json",
 			},
 			name: "Basic",
 			settings: {
@@ -36,7 +46,7 @@ describe("createJavaScriptConfig", () => {
 					missingProperties: true,
 					noImplicitAny: true,
 				},
-				project: "tsconfig.json",
+				projectPath: "tsconfig.json",
 			},
 			name: "Basic with Suppressions",
 			settings: {
@@ -54,7 +64,7 @@ describe("createJavaScriptConfig", () => {
 					files: { renameExtensions: "ts" },
 					fixes: { importExtensions: true },
 					include: ["src/**/*.{js,jsx}"],
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 				{
 					fixes: {
@@ -63,7 +73,7 @@ describe("createJavaScriptConfig", () => {
 						noImplicitAny: true,
 					},
 					include: ["src/**/*.ts"],
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 			],
 			name: "TS Renames (multiple sourceFiles extensions)",
@@ -83,7 +93,7 @@ describe("createJavaScriptConfig", () => {
 					files: { renameExtensions: "tsx" },
 					fixes: { importExtensions: true },
 					include: ["src/**/*.{js,jsx}"],
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 				{
 					fixes: {
@@ -92,7 +102,7 @@ describe("createJavaScriptConfig", () => {
 						noImplicitAny: true,
 					},
 					include: ["src/**/*.tsx"],
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 			],
 			name: "TSX Renames (multiple sourceFiles extensions)",
@@ -111,7 +121,7 @@ describe("createJavaScriptConfig", () => {
 				{
 					files: { renameExtensions: true },
 					fixes: { importExtensions: true },
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 				{
 					fixes: {
@@ -119,7 +129,7 @@ describe("createJavaScriptConfig", () => {
 						missingProperties: true,
 						noImplicitAny: true,
 					},
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 			],
 			name: "Auto Renames (no sourceFiles)",
@@ -138,7 +148,7 @@ describe("createJavaScriptConfig", () => {
 					files: { renameExtensions: true },
 					fixes: { importExtensions: true },
 					include: ["src/**/*.js"],
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 				{
 					fixes: {
@@ -147,7 +157,7 @@ describe("createJavaScriptConfig", () => {
 						noImplicitAny: true,
 					},
 					include: ["src/**/*.{ts,tsx}"],
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 			],
 			name: "Auto Renames (single sourceFiles extension)",
@@ -167,7 +177,7 @@ describe("createJavaScriptConfig", () => {
 					files: { renameExtensions: true },
 					fixes: { importExtensions: true },
 					include: ["src/**/*.{js,jsx}"],
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 				{
 					fixes: {
@@ -176,7 +186,7 @@ describe("createJavaScriptConfig", () => {
 						noImplicitAny: true,
 					},
 					include: ["src/**/*.{ts,tsx}"],
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 			],
 			name: "Auto Renames (multiple sourceFiles extensions)",
@@ -196,7 +206,7 @@ describe("createJavaScriptConfig", () => {
 					files: { renameExtensions: true },
 					fixes: { importExtensions: true },
 					include: ["src/**/*.js(x)"],
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 				{
 					fixes: {
@@ -205,7 +215,7 @@ describe("createJavaScriptConfig", () => {
 						noImplicitAny: true,
 					},
 					include: ["src/**/*.ts(x)"],
-					project: "tsconfig.json",
+					projectPath: "tsconfig.json",
 				},
 			],
 			name: "Auto Renames (parenthesized sourceFiles extensions)",
