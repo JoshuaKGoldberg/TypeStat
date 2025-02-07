@@ -30,7 +30,6 @@ export const fillOutRawOptions = ({
 	projectPath,
 	rawOptions,
 }: OptionsFromRawOptionsSettings): PendingTypeStatOptions => {
-	const rawOptionTypes = rawOptions.types ?? {};
 	const noImplicitAny = collectNoImplicitAny(
 		parsedTsConfig.options,
 		rawOptions,
@@ -39,8 +38,10 @@ export const fillOutRawOptions = ({
 		parsedTsConfig.options,
 		rawOptions,
 	);
-	const { compilerStrictNullChecks, typeStrictNullChecks } =
-		collectStrictNullChecks(parsedTsConfig.options, rawOptionTypes);
+	const strictNullChecks = collectStrictNullChecks(
+		parsedTsConfig.options,
+		rawOptions,
+	);
 
 	const packageOptions = collectPackageOptions(cwd, rawOptions);
 
@@ -92,13 +93,13 @@ export const fillOutRawOptions = ({
 				noEmit: true,
 				noImplicitAny,
 				noImplicitThis,
-				strictNullChecks: compilerStrictNullChecks,
+				strictNullChecks,
 			},
 		},
 		postProcess: { shell },
 		projectPath,
 		types: {
-			strictNullChecks: typeStrictNullChecks,
+			strictNullChecks: strictNullChecks || undefined,
 		},
 	};
 };
