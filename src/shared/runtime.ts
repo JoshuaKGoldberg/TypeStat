@@ -17,7 +17,13 @@ export const findFirstMutations = (
 			}
 
 			if (result !== undefined && result.length !== 0) {
-				logOutput(request, mutatorName, "found mutations", result);
+				const stats = mutationStats(result);
+				logOutput(
+					request,
+					mutatorName,
+					`found ${result.length} mutations${stats}`,
+					result,
+				);
 				return result;
 			}
 		} catch (error) {
@@ -36,12 +42,32 @@ const logOutput = (
 	data: unknown,
 ) => {
 	request.options.output.log?.(
-		[
-			mutatorName,
-			` ${action} in `,
-			request.sourceFile.fileName,
-			": ",
-			JSON.stringify(data, null, 4),
-		].join(""),
+		`${mutatorName} ${action} in ${request.sourceFile.fileName}: ${JSON.stringify(data, null, 4)}`,
 	);
+};
+
+const mutationStats = (mutations: readonly Mutation[]) => {
+	let deletions = 0;
+	let insertions = 0;
+	let swaps = 0;
+
+	for (const mutation of mutations) {
+		if (mutation.type === "text-delete") {
+			deletions++;
+		} else if (mutation.type === "text-insert") {
+			insertions++;
+		} else if (mutation.type === "text-swap") {
+			swaps++;
+		}
+		// there is also "multiple" mutation type
+	}
+
+	const stats = [
+		insertions ? `${insertions} insertions` : undefined,
+		deletions ? `${deletions} deletions` : undefined,
+		swaps ? `${swaps} swaps` : undefined,
+	]
+		.filter((x) => !!x)
+		.join(", ");
+	return stats ? ` (${stats})` : "";
 };

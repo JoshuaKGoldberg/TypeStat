@@ -106,6 +106,21 @@ exports[`Cleanups > non-TypeErrors > options 1`] = `
 ]"
 `;
 
+exports[`Cleanups > non-TypeErrors > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fixes will be applied:
+[stdout] Starting wave 1...
+[stdout] Completed wave 1. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`Cleanups > suppressTypeErrors > options 1`] = `
 "[
   {
@@ -206,4 +221,20 @@ exports[`Cleanups > suppressTypeErrors > options 1`] = `
     "types": {}
   }
 ]"
+`;
+
+exports[`Cleanups > suppressTypeErrors > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fixes will be applied:
+[stdout] Starting wave 1...
+[stdout] Completed wave 1. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[log] suppressTypeIssues found 4 mutations (4 insertions) in <rootDir>/actual.ts: [mutations]
+[stdout] Done.
+"
 `;

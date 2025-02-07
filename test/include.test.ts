@@ -1,33 +1,22 @@
-import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { runMutationTest } from "../src/tests/testSetup.js";
+import { checkTestResult } from "../src/tests/testSetup.js";
+
+const cwd = import.meta.dirname;
 
 describe("include", () => {
 	it("asterisk", async () => {
-		const caseDir = path.join(import.meta.dirname, "cases/include/asterisk");
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "include/asterisk");
 	});
 
 	it("directory", async () => {
-		const caseDir = path.join(import.meta.dirname, "cases/include/directory");
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "include/directory");
 	});
 
 	it("sub-directory", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/include/sub-directory",
-		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "include/sub-directory");
 	});
 });

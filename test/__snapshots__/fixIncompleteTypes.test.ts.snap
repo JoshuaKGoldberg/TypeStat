@@ -102,6 +102,36 @@ exports[`Incomplete types > Implicit generics > incomplete implicit class generi
 ]"
 `;
 
+exports[`Incomplete types > Implicit generics > incomplete implicit class generics > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixIncompleteImplicitClassGenerics found 8 mutations in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteImplicitGenerics found 8 mutations in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteTypes found 8 mutations in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[log] fixIncompleteParameterTypes found 3 mutations (3 insertions) in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteTypes found 3 mutations (3 insertions) in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 2. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 3...
+[stdout] Completed wave 3. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`Incomplete types > Implicit generics > incomplete implicit variable generics > options 1`] = `
 "[
   {
@@ -199,6 +229,30 @@ exports[`Incomplete types > Implicit generics > incomplete implicit variable gen
     "types": {}
   }
 ]"
+`;
+
+exports[`Incomplete types > Implicit generics > incomplete implicit variable generics > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixIncompleteImplicitVariableGenerics found 7 mutations (7 insertions) in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteImplicitGenerics found 7 mutations (7 insertions) in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteTypes found 7 mutations (7 insertions) in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
 `;
 
 exports[`Incomplete types > Interface or type literal generics > options 1`] = `
@@ -300,6 +354,29 @@ exports[`Incomplete types > Interface or type literal generics > options 1`] = `
 ]"
 `;
 
+exports[`Incomplete types > Interface or type literal generics > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixIncompleteInterfaceOrTypeLiteralGenerics found 1 mutations in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteTypes found 1 mutations in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`Incomplete types > Non-generic Interface as Type argument > options 1`] = `
 "[
   {
@@ -397,6 +474,23 @@ exports[`Incomplete types > Non-generic Interface as Type argument > options 1`]
     "types": {}
   }
 ]"
+`;
+
+exports[`Incomplete types > Non-generic Interface as Type argument > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[stdout] Completed wave 1. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
 `;
 
 exports[`Incomplete types > React types > React props from prop types > Optionality > always optional > options 1`] = `
@@ -504,6 +598,30 @@ exports[`Incomplete types > React types > React props from prop types > Optional
 ]"
 `;
 
+exports[`Incomplete types > React types > React props from prop types > Optionality > always optional > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixReactPropsFromPropTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteReactTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`Incomplete types > React types > React props from prop types > Optionality > always required > options 1`] = `
 "[
   {
@@ -609,6 +727,30 @@ exports[`Incomplete types > React types > React props from prop types > Optional
 ]"
 `;
 
+exports[`Incomplete types > React types > React props from prop types > Optionality > always required > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixReactPropsFromPropTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteReactTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`Incomplete types > React types > React props from prop types > Optionality > as written > options 1`] = `
 "[
   {
@@ -712,6 +854,30 @@ exports[`Incomplete types > React types > React props from prop types > Optional
     "types": {}
   }
 ]"
+`;
+
+exports[`Incomplete types > React types > React props from prop types > Optionality > as written > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixReactPropsFromPropTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteReactTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
 `;
 
 exports[`Incomplete types > React types > React props from prop types > all > options 1`] = `
@@ -821,6 +987,37 @@ exports[`Incomplete types > React types > React props from prop types > all > op
 ]"
 `;
 
+exports[`Incomplete types > React types > React props from prop types > all > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixReactPropsFromPropTypes found 5 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteReactTypes found 5 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteTypes found 5 mutations in <rootDir>/actual.tsx: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[log] fixReactPropFunctionsFromCalls found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteReactTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[stdout] Completed wave 2. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 3...
+[stdout] Completed wave 3. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`Incomplete types > React types > not react props > options 1`] = `
 "[
   {
@@ -926,6 +1123,23 @@ exports[`Incomplete types > React types > not react props > options 1`] = `
     "types": {}
   }
 ]"
+`;
+
+exports[`Incomplete types > React types > not react props > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[stdout] Completed wave 1. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
 `;
 
 exports[`Incomplete types > React types > react prop functions from calls > options 1`] = `
@@ -1035,6 +1249,30 @@ exports[`Incomplete types > React types > react prop functions from calls > opti
 ]"
 `;
 
+exports[`Incomplete types > React types > react prop functions from calls > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixReactPropFunctionsFromCalls found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteReactTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`Incomplete types > React types > react props from later assignments > options 1`] = `
 "[
   {
@@ -1138,6 +1376,30 @@ exports[`Incomplete types > React types > react props from later assignments > o
     "types": {}
   }
 ]"
+`;
+
+exports[`Incomplete types > React types > react props from later assignments > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixReactPropsFromLaterAssignments found 3 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteReactTypes found 3 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteTypes found 3 mutations in <rootDir>/actual.tsx: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
 `;
 
 exports[`Incomplete types > React types > react props from prop uses > options 1`] = `
@@ -1247,6 +1509,30 @@ exports[`Incomplete types > React types > react props from prop uses > options 1
 ]"
 `;
 
+exports[`Incomplete types > React types > react props from prop uses > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixReactPropsFromUses found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteReactTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteTypes found 1 mutations in <rootDir>/actual.tsx: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`Incomplete types > React types > react props missing > options 1`] = `
 "[
   {
@@ -1354,6 +1640,30 @@ exports[`Incomplete types > React types > react props missing > options 1`] = `
 ]"
 `;
 
+exports[`Incomplete types > React types > react props missing > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixReactPropsMissing found 6 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteReactTypes found 6 mutations in <rootDir>/actual.tsx: [mutations]
+[log] fixIncompleteTypes found 6 mutations in <rootDir>/actual.tsx: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`Incomplete types > parameter types > options 1`] = `
 "[
   {
@@ -1453,6 +1763,23 @@ exports[`Incomplete types > parameter types > options 1`] = `
 ]"
 `;
 
+exports[`Incomplete types > parameter types > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[stdout] Completed wave 1. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`Incomplete types > property declaration types > options 1`] = `
 "[
   {
@@ -1550,6 +1877,29 @@ exports[`Incomplete types > property declaration types > options 1`] = `
     "types": {}
   }
 ]"
+`;
+
+exports[`Incomplete types > property declaration types > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixIncompletePropertyDeclarationTypes found 5 mutations (3 insertions, 2 swaps) in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteTypes found 5 mutations (3 insertions, 2 swaps) in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
 `;
 
 exports[`Incomplete types > return types > options 1`] = `
@@ -1657,6 +2007,30 @@ exports[`Incomplete types > return types > options 1`] = `
 ]"
 `;
 
+exports[`Incomplete types > return types > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixIncompleteReturnTypes found 19 mutations (19 insertions) in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteTypes found 19 mutations (19 insertions) in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[log] suppressTypeIssues found 3 mutations (3 insertions) in <rootDir>/actual.ts: [mutations]
+[stdout] Done.
+"
+`;
+
 exports[`Incomplete types > variable types > options 1`] = `
 "[
   {
@@ -1756,4 +2130,28 @@ exports[`Incomplete types > variable types > options 1`] = `
     }
   }
 ]"
+`;
+
+exports[`Incomplete types > variable types > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixIncompleteVariableTypes found 19 mutations (17 insertions, 2 swaps) in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteTypes found 19 mutations (17 insertions, 2 swaps) in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[log] suppressTypeIssues found 6 mutations (6 insertions) in <rootDir>/actual.ts: [mutations]
+[stdout] Done.
+"
 `;
