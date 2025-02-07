@@ -101,7 +101,9 @@ exports[`Cleanups > non-TypeErrors > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": true
+    }
   }
 ]"
 `;
@@ -203,7 +205,9 @@ exports[`Cleanups > suppressTypeErrors > options 1`] = `
       "shell": []
     },
     "projectPath": "<rootDir>/tsconfig.json",
-    "types": {}
+    "types": {
+      "strictNullChecks": true
+    }
   }
 ]"
 `;
