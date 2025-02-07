@@ -1,21 +1,21 @@
 import { describe, expect, it } from "vitest";
 
-import {
-	TypeStatCompilerOptions,
-	TypeStatOptions,
-} from "../../../options/types.js";
+import { parseRawCompilerOptions } from "../../../options/parseRawCompilerOptions.js";
+import { TypeStatOptions } from "../../../options/types.js";
 import { createLanguageServices } from "../../../services/language.js";
 import { collectReferencedPackageNames } from "./collectReferencedPackageNames.js";
 
 describe("collectReferencedPackageNames", () => {
 	it("should return package names", () => {
+		const cwd = process.cwd();
+		const parsedTsConfig = parseRawCompilerOptions(cwd, "tsconfig.json");
 		const options: Partial<TypeStatOptions> = {
-			compilerOptions: {} as Readonly<TypeStatCompilerOptions>,
 			package: {
 				directory: process.cwd(),
 				file: "package.json",
 				missingTypes: true,
 			},
+			parsedTsConfig,
 			projectPath: "tsconfig.json",
 		};
 		const services = createLanguageServices(options as TypeStatOptions);
@@ -29,13 +29,15 @@ describe("collectReferencedPackageNames", () => {
 	});
 
 	it("should ignore defined package names", () => {
+		const cwd = process.cwd();
+		const parsedTsConfig = parseRawCompilerOptions(cwd, "tsconfig.json");
 		const options: Partial<TypeStatOptions> = {
-			compilerOptions: {} as Readonly<TypeStatCompilerOptions>,
 			package: {
 				directory: process.cwd(),
 				file: "package.json",
 				missingTypes: true,
 			},
+			parsedTsConfig,
 			projectPath: "tsconfig.json",
 		};
 		const services = createLanguageServices(options as TypeStatOptions);

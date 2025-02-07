@@ -85,19 +85,19 @@
 		return "";
 	};
 
-// @ts-expect-error -- TODO: Type 'boolean | Promise<boolean>' is not a valid async function return type in ES5 because it does not refer to a Promise-compatible constructor value.
+// @ts-expect-error -- TODO: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<boolean>'?
 	async function navigateTo(): Promise<boolean> | boolean {
 		return await new Promise(() => "");
 	}
 
 	function navigateByUrl(url: string): Promise<boolean>;
 
-// @ts-expect-error -- TODO: Function implementation name must be 'navigateByUrl'. Type 'boolean | Promise<boolean>' is not a valid async function return type in ES5 because it does not refer to a Promise-compatible constructor value.
+// @ts-expect-error -- TODO: Function implementation name must be 'navigateByUrl'. The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<boolean>'?
 	async function navigateTo3(): Promise<boolean> | boolean {
 		return await navigateByUrl("");
 	}
 
-// @ts-expect-error -- TODO: Type 'boolean | Promise<boolean>' is not a valid async function return type in ES5 because it does not refer to a Promise-compatible constructor value.
+// @ts-expect-error -- TODO: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<boolean>'?
 	async function navigateTo2(): Promise<boolean> | boolean {
 		const navigated = await navigateByUrl("");
 		return navigated;
@@ -116,7 +116,6 @@
 	};
 
 	const returnsBigintOrNumber = (): number | bigint => {
-// @ts-expect-error -- TODO: BigInt literals are not available when targeting lower than ES2020.
 		return 123n;
 	};
 

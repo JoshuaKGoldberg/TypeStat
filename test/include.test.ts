@@ -19,4 +19,15 @@ describe("include", () => {
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
 	});
+
+	it("sub-directory", async () => {
+		const caseDir = path.join(
+			import.meta.dirname,
+			"cases/include/sub-directory",
+		);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
+		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
+	});
 });

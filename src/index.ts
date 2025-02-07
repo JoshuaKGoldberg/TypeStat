@@ -45,9 +45,10 @@ export type TypeStatResult =
 
 export const typeStat = async (
 	configPath: string | undefined,
+	cwd: string,
 	output: ProcessOutput,
 ): Promise<TypeStatResult> => {
-	const allPendingOptions = await tryLoadingPendingOptions(configPath, output);
+	const allPendingOptions = tryLoadingPendingOptions(configPath, cwd, output);
 	if (
 		allPendingOptions instanceof Error ||
 		typeof allPendingOptions === "string"
@@ -90,10 +91,7 @@ export const typeStat = async (
 
 	for (let i = 0; i < allPendingOptions.length; i += 1) {
 		// Collect all files to be run on this option iteration from the include glob(s)
-		const fileNames = await collectFileNames(
-			process.cwd(),
-			allPendingOptions[i].include,
-		);
+		const fileNames = await collectFileNames(cwd, allPendingOptions[i].include);
 		if (typeof fileNames !== "object") {
 			return {
 				error: new Error(
@@ -144,12 +142,13 @@ export const typeStat = async (
 	};
 };
 
-const tryLoadingPendingOptions = async (
+const tryLoadingPendingOptions = (
 	configPath: string | undefined,
+	cwd: string,
 	output: ProcessOutput,
-): Promise<Error | PendingTypeStatOptions[] | string> => {
+): Error | PendingTypeStatOptions[] | string => {
 	try {
-		return await loadPendingOptions(configPath, output);
+		return loadPendingOptions(configPath, cwd, output);
 	} catch (error) {
 		return error instanceof Error ? error : new Error(error as string);
 	}

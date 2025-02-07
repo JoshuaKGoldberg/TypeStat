@@ -1,0 +1,10 @@
+[
+	{
+		"mutators": ["./sampleMutator.cjs"]
+	},
+	{
+		"cleanups": {
+			"suppressTypeErrors": true
+		}
+	}
+]

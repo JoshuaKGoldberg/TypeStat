@@ -1,33 +1,28 @@
-import * as fsp from "node:fs/promises";
+import path from "node:path";
 import ts from "typescript";
 
 import { createParseConfigHost } from "../services/createParseConfigHost.js";
 import { stringifyDiagnosticMessageText } from "../shared/diagnostics.js";
 
-export interface ParsedCompilerOptions extends ts.CompilerOptions {
-	include?: string[];
-}
-
-export const parseRawCompilerOptions = async (
+export const parseRawCompilerOptions = (
 	cwd: string,
 	projectPath: string,
-): Promise<ts.CompilerOptions> => {
-	const configRaw = (await fsp.readFile(projectPath)).toString();
-	const compilerOptions = ts.parseConfigFileTextToJson(projectPath, configRaw);
-	if (compilerOptions.error !== undefined) {
+): ts.ParsedCommandLine => {
+	const configFile = ts.getParsedCommandLineOfConfigFile(
+		path.resolve(cwd, projectPath),
+		undefined,
+		createParseConfigHost(cwd),
+	);
+
+	if (!configFile) {
+		throw new Error("tsConfig file not found.");
+	}
+
+	if (configFile.errors.length) {
 		throw new Error(
-			`Could not parse compiler options from '${projectPath}': ${stringifyDiagnosticMessageText(compilerOptions.error)}`,
+			`Could not parse compiler options from '${projectPath}': ${stringifyDiagnosticMessageText(configFile.errors[0])}`,
 		);
 	}
 
-	const config = compilerOptions.config as ParsedCompilerOptions;
-
-	// TSConfig includes often come in a glob form like ["src"]
-	config.include &&= ts.parseJsonConfigFileContent(
-		compilerOptions.config,
-		createParseConfigHost(),
-		cwd,
-	).fileNames;
-
-	return config;
+	return configFile;
 };

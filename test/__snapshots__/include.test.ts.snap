@@ -6,17 +6,6 @@ exports[`include > asterisk > options 1`] = `
     "cleanups": {
       "suppressTypeErrors": true
     },
-    "compilerOptions": {
-      "include": [
-        "<rootDir>/actual.ts",
-        "<rootDir>/expected.ts",
-        "<rootDir>/original.ts"
-      ],
-      "compileOnSave": false,
-      "noImplicitAny": false,
-      "noImplicitThis": false,
-      "strictNullChecks": false
-    },
     "files": {
       "above": "",
       "below": "",
@@ -53,6 +42,35 @@ exports[`include > asterisk > options 1`] = `
     "package": {
       "directory": "<rootDir>",
       "file": "<rootDir>/package.json"
+    },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": false
+      },
+      "fileNames": [
+        "<rootDir>/actual.ts",
+        "<rootDir>/expected.ts",
+        "<rootDir>/original.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "include": [
+          "*"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {
+        "<rootDir>": 0
+      },
+      "compileOnSave": false
     },
     "postProcess": {
       "shell": []
@@ -69,17 +87,6 @@ exports[`include > directory > options 1`] = `
     "cleanups": {
       "suppressTypeErrors": true
     },
-    "compilerOptions": {
-      "include": [
-        "<rootDir>/actual.ts",
-        "<rootDir>/expected.ts",
-        "<rootDir>/original.ts"
-      ],
-      "compileOnSave": false,
-      "noImplicitAny": false,
-      "noImplicitThis": false,
-      "strictNullChecks": false
-    },
     "files": {
       "above": "",
       "below": "",
@@ -116,6 +123,220 @@ exports[`include > directory > options 1`] = `
     "package": {
       "directory": "<rootDir>",
       "file": "<rootDir>/package.json"
+    },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": false
+      },
+      "fileNames": [
+        "<rootDir>/actual.ts",
+        "<rootDir>/expected.ts",
+        "<rootDir>/original.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "include": [
+          "."
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {
+        "<rootDir>": 1
+      },
+      "compileOnSave": false
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {}
+  }
+]"
+`;
+
+exports[`include > sub-directory > options 1`] = `
+"[
+  {
+    "cleanups": {
+      "suppressTypeErrors": false
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": false,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "include": [
+      "<rootDir>/code/import.ts",
+      "<rootDir>/actual.ts",
+      "<rootDir>/original.ts"
+    ],
+    "mutators": [
+      [
+        "./sampleMutator.cjs",
+        null
+      ]
+    ],
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": false
+      },
+      "fileNames": [
+        "<rootDir>/code/import.ts",
+        "<rootDir>/actual.ts",
+        "<rootDir>/original.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "include": [
+          "code",
+          "actual.ts",
+          "original.ts"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {
+        "<rootDir>/code": 1
+      },
+      "compileOnSave": false
+    },
+    "postProcess": {
+      "shell": []
+    },
+    "projectPath": "<rootDir>/tsconfig.json",
+    "types": {}
+  },
+  {
+    "cleanups": {
+      "suppressTypeErrors": true
+    },
+    "files": {
+      "above": "",
+      "below": "",
+      "renameExtensions": false
+    },
+    "filters": [],
+    "fixes": {
+      "importExtensions": false,
+      "incompleteTypes": false,
+      "missingProperties": false,
+      "noImplicitAny": false,
+      "noImplicitThis": false,
+      "noInferableTypes": false,
+      "strictNonNullAssertions": false
+    },
+    "hints": {
+      "react": {
+        "propTypes": "whenRequired",
+        "propTypesOptionality": "asWritten"
+      }
+    },
+    "include": [
+      "<rootDir>/code/import.ts",
+      "<rootDir>/actual.ts",
+      "<rootDir>/original.ts"
+    ],
+    "mutators": [
+      [
+        "fixImportExtensions",
+        null
+      ],
+      [
+        "fixIncompleteTypes",
+        null
+      ],
+      [
+        "fixMissingProperties",
+        null
+      ],
+      [
+        "fixNoImplicitAny",
+        null
+      ],
+      [
+        "fixNoImplicitThis",
+        null
+      ],
+      [
+        "fixNoInferableTypes",
+        null
+      ],
+      [
+        "fixStrictNonNullAssertions",
+        null
+      ]
+    ],
+    "output": {},
+    "package": {
+      "directory": "<rootDir>",
+      "file": "<rootDir>/package.json"
+    },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": false
+      },
+      "fileNames": [
+        "<rootDir>/code/import.ts",
+        "<rootDir>/actual.ts",
+        "<rootDir>/original.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "include": [
+          "code",
+          "actual.ts",
+          "original.ts"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {
+        "<rootDir>/code": 1
+      },
+      "compileOnSave": false
     },
     "postProcess": {
       "shell": []

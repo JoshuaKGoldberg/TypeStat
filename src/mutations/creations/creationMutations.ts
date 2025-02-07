@@ -16,7 +16,7 @@ export const createDeclarationForTypeSummaries = (
 		enclosingDeclaration,
 		typeSummaries,
 	);
-	const newLine = printNewLine(request.options.compilerOptions);
+	const newLine = printNewLine(request.options.parsedTsConfig.options);
 
 	return [`type ${name} = {`, newLine, printedSummaries, `};`].join("");
 };

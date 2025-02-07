@@ -8,7 +8,7 @@ export const addNewTypeNodes = (
 	node: ts.ClassLikeDeclaration,
 	createdTypes: string[],
 ) => {
-	const endline = printNewLine(request.options.compilerOptions);
+	const endline = printNewLine(request.options.parsedTsConfig.options);
 
 	return {
 		insertion: `${endline}${createdTypes.join(endline)}`,

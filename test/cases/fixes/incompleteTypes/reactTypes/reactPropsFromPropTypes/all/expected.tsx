@@ -1,6 +1,4 @@
-// @ts-expect-error -- TODO: This module can only be default-imported using the 'esModuleInterop' flag
 import React from "react";
-// @ts-expect-error -- TODO: This module can only be default-imported using the 'esModuleInterop' flag
 import PropTypes from "prop-types";
 
 (function () {
@@ -131,7 +129,6 @@ interface LaterAssignedComponentProps {
 		}
 	}
 
-// @ts-expect-error -- TODO: Property 'propTypes' does not exist on type 'typeof LaterAssignedComponent'.
 	LaterAssignedComponent.propTypes = {
 		string: PropTypes.string,
 		stringRequired: PropTypes.string.isRequired,
@@ -144,12 +141,10 @@ interface GreetingProps {
 
 	class Greeting extends React.Component<GreetingProps> {
 		render() {
-// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided. Property 'props' does not exist on type 'Greeting'.
 			return <h1>Hello, {this.props.name}</h1>;
 		}
 	}
 
-// @ts-expect-error -- TODO: Property 'propTypes' does not exist on type 'typeof Greeting'.
 	Greeting.propTypes = {
 		name: PropTypes.string,
 	};
@@ -160,7 +155,6 @@ interface HelloWorldComponentProps {
 
 
 	function HelloWorldComponent({ name }: HelloWorldComponentProps) {
-// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
 		return <div>Hello, {name}</div>;
 	}
 
@@ -174,7 +168,6 @@ interface HeadingProps {
 
 
 	function Heading({ text }: HeadingProps) {
-// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
 		return <h1>{text}</h1>;
 	}
 	Heading.propTypes = {
@@ -186,7 +179,6 @@ interface HeadingProps {
 
 	const LegendImage = function (props: any) {
 		return (
-// @ts-expect-error -- TODO: Cannot use JSX unless the '--jsx' flag is provided.
 			<img
 				{...props}
 				style={{ display: "none", marginTop: "4px" }}

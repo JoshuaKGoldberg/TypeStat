@@ -6,14 +6,6 @@ exports[`No inferable types > parameters > options 1`] = `
     "cleanups": {
       "suppressTypeErrors": true
     },
-    "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
-      "noImplicitAny": false,
-      "noImplicitThis": false,
-      "strictNullChecks": true
-    },
     "files": {
       "above": "",
       "below": "",
@@ -35,6 +27,9 @@ exports[`No inferable types > parameters > options 1`] = `
         "propTypesOptionality": "asWritten"
       }
     },
+    "include": [
+      "<rootDir>/actual.ts"
+    ],
     "mutators": [
       [
         "fixImportExtensions",
@@ -69,6 +64,31 @@ exports[`No inferable types > parameters > options 1`] = `
     "package": {
       "directory": "<rootDir>",
       "file": "<rootDir>/package.json"
+    },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": true
+      },
+      "fileNames": [
+        "<rootDir>/actual.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "files": [
+          "actual.ts"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {},
+      "compileOnSave": false
     },
     "postProcess": {
       "shell": []
@@ -87,14 +107,6 @@ exports[`No inferable types > property declarations > options 1`] = `
     "cleanups": {
       "suppressTypeErrors": true
     },
-    "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
-      "noImplicitAny": false,
-      "noImplicitThis": false,
-      "strictNullChecks": true
-    },
     "files": {
       "above": "",
       "below": "",
@@ -116,6 +128,9 @@ exports[`No inferable types > property declarations > options 1`] = `
         "propTypesOptionality": "asWritten"
       }
     },
+    "include": [
+      "<rootDir>/actual.ts"
+    ],
     "mutators": [
       [
         "fixImportExtensions",
@@ -150,6 +165,31 @@ exports[`No inferable types > property declarations > options 1`] = `
     "package": {
       "directory": "<rootDir>",
       "file": "<rootDir>/package.json"
+    },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": true
+      },
+      "fileNames": [
+        "<rootDir>/actual.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "files": [
+          "actual.ts"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {},
+      "compileOnSave": false
     },
     "postProcess": {
       "shell": []
@@ -168,14 +208,6 @@ exports[`No inferable types > variable declarations > options 1`] = `
     "cleanups": {
       "suppressTypeErrors": true
     },
-    "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
-      "noImplicitAny": false,
-      "noImplicitThis": false,
-      "strictNullChecks": true
-    },
     "files": {
       "above": "",
       "below": "",
@@ -197,6 +229,9 @@ exports[`No inferable types > variable declarations > options 1`] = `
         "propTypesOptionality": "asWritten"
       }
     },
+    "include": [
+      "<rootDir>/actual.ts"
+    ],
     "mutators": [
       [
         "fixImportExtensions",
@@ -231,6 +266,31 @@ exports[`No inferable types > variable declarations > options 1`] = `
     "package": {
       "directory": "<rootDir>",
       "file": "<rootDir>/package.json"
+    },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": true
+      },
+      "fileNames": [
+        "<rootDir>/actual.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "files": [
+          "actual.ts"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {},
+      "compileOnSave": false
     },
     "postProcess": {
       "shell": []

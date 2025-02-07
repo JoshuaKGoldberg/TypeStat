@@ -6,14 +6,6 @@ exports[`filters > empty > options 1`] = `
     "cleanups": {
       "suppressTypeErrors": true
     },
-    "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
-      "noImplicitAny": true,
-      "noImplicitThis": false,
-      "strictNullChecks": true
-    },
     "files": {
       "above": "",
       "below": "",
@@ -35,6 +27,9 @@ exports[`filters > empty > options 1`] = `
         "propTypesOptionality": "asWritten"
       }
     },
+    "include": [
+      "<rootDir>/actual.ts"
+    ],
     "mutators": [
       [
         "fixImportExtensions",
@@ -70,6 +65,31 @@ exports[`filters > empty > options 1`] = `
       "directory": "<rootDir>",
       "file": "<rootDir>/package.json"
     },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": true,
+        "noImplicitThis": false,
+        "strictNullChecks": true
+      },
+      "fileNames": [
+        "<rootDir>/actual.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "files": [
+          "actual.ts"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {},
+      "compileOnSave": false
+    },
     "postProcess": {
       "shell": []
     },
@@ -86,14 +106,6 @@ exports[`filters > one > options 1`] = `
   {
     "cleanups": {
       "suppressTypeErrors": true
-    },
-    "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
-      "noImplicitAny": true,
-      "noImplicitThis": false,
-      "strictNullChecks": true
     },
     "files": {
       "above": "",
@@ -118,6 +130,9 @@ exports[`filters > one > options 1`] = `
         "propTypesOptionality": "asWritten"
       }
     },
+    "include": [
+      "<rootDir>/actual.ts"
+    ],
     "mutators": [
       [
         "fixImportExtensions",
@@ -153,6 +168,31 @@ exports[`filters > one > options 1`] = `
       "directory": "<rootDir>",
       "file": "<rootDir>/package.json"
     },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": true,
+        "noImplicitThis": false,
+        "strictNullChecks": true
+      },
+      "fileNames": [
+        "<rootDir>/actual.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "files": [
+          "actual.ts"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {},
+      "compileOnSave": false
+    },
     "postProcess": {
       "shell": []
     },
@@ -169,14 +209,6 @@ exports[`filters > two > options 1`] = `
   {
     "cleanups": {
       "suppressTypeErrors": true
-    },
-    "compilerOptions": {
-      "files": [
-        "actual.ts"
-      ],
-      "noImplicitAny": true,
-      "noImplicitThis": false,
-      "strictNullChecks": true
     },
     "files": {
       "above": "",
@@ -202,6 +234,9 @@ exports[`filters > two > options 1`] = `
         "propTypesOptionality": "asWritten"
       }
     },
+    "include": [
+      "<rootDir>/actual.ts"
+    ],
     "mutators": [
       [
         "fixImportExtensions",
@@ -236,6 +271,31 @@ exports[`filters > two > options 1`] = `
     "package": {
       "directory": "<rootDir>",
       "file": "<rootDir>/package.json"
+    },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": true,
+        "noImplicitThis": false,
+        "strictNullChecks": true
+      },
+      "fileNames": [
+        "<rootDir>/actual.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "files": [
+          "actual.ts"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {},
+      "compileOnSave": false
     },
     "postProcess": {
       "shell": []

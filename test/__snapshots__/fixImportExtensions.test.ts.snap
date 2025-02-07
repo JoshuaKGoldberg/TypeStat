@@ -6,16 +6,6 @@ exports[`import extensions > options 1`] = `
     "cleanups": {
       "suppressTypeErrors": true
     },
-    "compilerOptions": {
-      "files": [
-        "actual.ts",
-        "foundDirect.ts",
-        "foundIndirect/index.ts"
-      ],
-      "noImplicitAny": false,
-      "noImplicitThis": false,
-      "strictNullChecks": false
-    },
     "files": {
       "above": "",
       "below": "",
@@ -37,6 +27,11 @@ exports[`import extensions > options 1`] = `
         "propTypesOptionality": "asWritten"
       }
     },
+    "include": [
+      "<rootDir>/actual.ts",
+      "<rootDir>/foundDirect.ts",
+      "<rootDir>/foundIndirect/index.ts"
+    ],
     "mutators": [
       [
         "fixImportExtensions",
@@ -71,6 +66,35 @@ exports[`import extensions > options 1`] = `
     "package": {
       "directory": "<rootDir>",
       "file": "<rootDir>/package.json"
+    },
+    "parsedTsConfig": {
+      "options": {
+        "configFilePath": "<rootDir>/tsconfig.json",
+        "noEmit": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "strictNullChecks": false
+      },
+      "fileNames": [
+        "<rootDir>/actual.ts",
+        "<rootDir>/foundDirect.ts",
+        "<rootDir>/foundIndirect/index.ts"
+      ],
+      "typeAcquisition": {
+        "enable": false,
+        "include": [],
+        "exclude": []
+      },
+      "raw": {
+        "files": [
+          "actual.ts",
+          "foundDirect.ts",
+          "foundIndirect/index.ts"
+        ]
+      },
+      "errors": [],
+      "wildcardDirectories": {},
+      "compileOnSave": false
     },
     "postProcess": {
       "shell": []

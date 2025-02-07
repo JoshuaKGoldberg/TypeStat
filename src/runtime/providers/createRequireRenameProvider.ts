@@ -1,8 +1,8 @@
 import { Mutation } from "automutate";
 
 import { findRequireRenameMutationsInFile } from "../../mutations/renames/findRequireRenameMutationsInFile.js";
+import { createLanguageServices } from "../../services/language.js";
 import { convertMapToObject, Dictionary } from "../../shared/maps.js";
-import { createFileNamesAndServices } from "../createFileNamesAndServices.js";
 import { createSingleUseProvider } from "../createSingleUseProvider.js";
 
 /**
@@ -20,10 +20,10 @@ export const createRequireRenameProvider = (allModifiedFiles: Set<string>) => {
 
 			return () => {
 				const fileMutations = new Map<string, readonly Mutation[]>();
-				const { fileNames, services } = createFileNamesAndServices(options);
-				const allFileNames = new Set(fileNames);
+				const services = createLanguageServices(options);
+				const allFileNames = new Set(options.fileNames);
 
-				for (const fileName of fileNames) {
+				for (const fileName of options.fileNames) {
 					const sourceFile = services.program.getSourceFile(fileName);
 					if (sourceFile === undefined) {
 						options.output.stderr(
