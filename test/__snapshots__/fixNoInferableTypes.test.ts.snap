@@ -101,6 +101,29 @@ exports[`No inferable types > parameters > options 1`] = `
 ]"
 `;
 
+exports[`No inferable types > parameters > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* noInferableTypes
+
+[stdout] Starting wave 1...
+[log] fixNoInferableTypesParameters found 16 mutations (16 deletions) in <rootDir>/actual.ts: [mutations]
+[log] fixNoInferableTypes found 16 mutations (16 deletions) in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`No inferable types > property declarations > options 1`] = `
 "[
   {
@@ -202,6 +225,29 @@ exports[`No inferable types > property declarations > options 1`] = `
 ]"
 `;
 
+exports[`No inferable types > property declarations > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* noInferableTypes
+
+[stdout] Starting wave 1...
+[log] fixNoInferableTypesPropertyDeclarations found 16 mutations (16 deletions) in <rootDir>/actual.ts: [mutations]
+[log] fixNoInferableTypes found 16 mutations (16 deletions) in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`No inferable types > variable declarations > options 1`] = `
 "[
   {
@@ -301,4 +347,27 @@ exports[`No inferable types > variable declarations > options 1`] = `
     }
   }
 ]"
+`;
+
+exports[`No inferable types > variable declarations > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* noInferableTypes
+
+[stdout] Starting wave 1...
+[log] fixNoInferableTypesVariableDeclarations found 35 mutations (35 deletions) in <rootDir>/actual.ts: [mutations]
+[log] fixNoInferableTypes found 35 mutations (35 deletions) in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
 `;

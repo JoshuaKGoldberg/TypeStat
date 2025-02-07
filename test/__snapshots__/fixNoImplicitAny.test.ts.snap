@@ -101,6 +101,30 @@ exports[`noImplicitAny > parameters > options 1`] = `
 ]"
 `;
 
+exports[`noImplicitAny > parameters > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* noImplicitAny
+
+[stdout] Starting wave 1...
+[log] fixNoImplicitAnyParameters found 5 mutations in <rootDir>/actual.ts: [mutations]
+[log] fixNoImplicitAny found 5 mutations in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[log] suppressTypeIssues found 6 mutations (6 insertions) in <rootDir>/actual.ts: [mutations]
+[stdout] Done.
+"
+`;
+
 exports[`noImplicitAny > property declarations > options 1`] = `
 "[
   {
@@ -202,6 +226,29 @@ exports[`noImplicitAny > property declarations > options 1`] = `
 ]"
 `;
 
+exports[`noImplicitAny > property declarations > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixIncompletePropertyDeclarationTypes found 8 mutations (8 insertions) in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteTypes found 8 mutations (8 insertions) in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[stdout] Done.
+"
+`;
+
 exports[`noImplicitAny > variable declarations > options 1`] = `
 "[
   {
@@ -301,4 +348,28 @@ exports[`noImplicitAny > variable declarations > options 1`] = `
     }
   }
 ]"
+`;
+
+exports[`noImplicitAny > variable declarations > output 1`] = `
+"[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting the core mutation engine. This terminal will log whenever a "wave" of mutations are written to files.
+[stdout] Core mutations will complete when two waves pass with no mutations.
+[stdout] The following fix will be applied:
+[stdout] 	* incompleteTypes
+
+[stdout] Starting wave 1...
+[log] fixIncompleteVariableTypes found 17 mutations (17 insertions) in <rootDir>/actual.ts: [mutations]
+[log] fixIncompleteTypes found 17 mutations (17 insertions) in <rootDir>/actual.ts: [mutations]
+[stdout] Completed wave 1. Wrote mutations to 1 file.
+[log] Preparing language services to visit files...
+[log] Prepared language services for 1 files...
+[stdout] Starting wave 2...
+[stdout] Completed wave 2. Wrote mutations to 0 files.
+[stdout] Done.
+
+[stdout] Applying post-fix cleanups...
+[log] suppressTypeIssues found 8 mutations (8 insertions) in <rootDir>/actual.ts: [mutations]
+[stdout] Done.
+"
 `;

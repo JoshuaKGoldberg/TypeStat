@@ -1,39 +1,22 @@
-import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { runMutationTest } from "../src/tests/testSetup.js";
+import { checkTestResult } from "../src/tests/testSetup.js";
+
+const cwd = import.meta.dirname;
 
 describe("No inferable types", () => {
 	it("parameters", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/fixes/noInferableTypes/parameters",
-		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "fixes/noInferableTypes/parameters");
 	});
 
 	it("property declarations", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/fixes/noInferableTypes/propertyDeclarations",
-		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "fixes/noInferableTypes/propertyDeclarations");
 	});
 
 	it("variable declarations", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/fixes/noInferableTypes/variableDeclarations",
-		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "fixes/noInferableTypes/variableDeclarations");
 	});
 });
