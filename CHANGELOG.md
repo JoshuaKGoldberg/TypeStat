@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.16](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.15...0.8.16) (2025-02-07)
+
+### Bug Fixes
+
+- improve reading tsconfig ([#2192](https://github.com/JoshuaKGoldberg/TypeStat/issues/2192)) ([3e1e69b](https://github.com/JoshuaKGoldberg/TypeStat/commit/3e1e69bd393f3e21d840534670a5714980d0300a)), closes [#1532](https://github.com/JoshuaKGoldberg/TypeStat/issues/1532)
+
 ## [0.8.15](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.14...0.8.15) (2025-02-06)
 
 ### Bug Fixes
