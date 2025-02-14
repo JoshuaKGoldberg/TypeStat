@@ -114,6 +114,15 @@
 		return Promise.resolve(false);
 	}
 
+	function resolveDifferentType2(url: string): Promise<string> | Promise<number | undefined> | undefined {
+		const something: Promise<number | undefined> | undefined = undefined;
+		return something;
+	}
+
+	function resolveDifferentType3(url: string): Promise<string> | string | Promise<boolean> {
+		return Promise.resolve(false);
+	}
+
 	const returnsBigInt = (): string | bigint => {
 		return BigInt("123");
 	};

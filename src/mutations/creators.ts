@@ -57,19 +57,18 @@ export const createTypeAdditionMutation = (
 		return textSwap(` ${newTypeAlias}`, node.type.pos, node.type.end);
 	}
 
-	const typeChecker = request.services.languageService
-		.getProgram()
-		?.getTypeChecker();
+	const isAsyncFunction =
+		ts.isFunctionDeclaration(node) &&
+		node.modifiers?.some((modifier) => tsutils.isAsyncKeyword(modifier));
 
-	const declaredTypeAsString = typeChecker?.typeToString(declaredType);
-
-	// There must be better way to check if the type is Promise or includes Promise,
-	// but it's hard to find right flags for it.
-	// So we are just checking if the string includes mention of Promise
-	if (!declaredTypeAsString?.includes("Promise")) {
+	if (!isAsyncFunction) {
 		// Create a mutation insertion that adds the missing types in
 		return textInsert(` | ${newTypeAlias}`, node.type.end);
 	}
+
+	const typeChecker = request.services.languageService
+		.getProgram()
+		?.getTypeChecker();
 
 	const typesAsPromises = new Set(
 		[...missingTypes].map((type) => {
@@ -82,9 +81,13 @@ export const createTypeAdditionMutation = (
 		}),
 	);
 
-	const combined = [...typesAsPromises].join(" | ");
+	const combined = [...typesAsPromises]
+		.sort((a, b) => a.localeCompare(b))
+		.join(" | ");
 
-	// After adding Promise wrappers, it may be that the type is same as in original
+	const declaredTypeAsString = typeChecker?.typeToString(declaredType);
+
+	// After adding Promise wrappers, it may be that the type is same as the original
 	if (combined === declaredTypeAsString) {
 		return undefined;
 	}
