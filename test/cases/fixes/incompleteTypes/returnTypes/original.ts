@@ -89,7 +89,9 @@
 		return await new Promise(() => "");
 	}
 
-	function navigateByUrl(url: string): Promise<boolean>;
+	function navigateByUrl(url: string): Promise<boolean> {
+		return Promise.resolve(false);
+	}
 
 	async function navigateTo3(): Promise<boolean> {
 		return await navigateByUrl("");
