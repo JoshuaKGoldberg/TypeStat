@@ -10,6 +10,7 @@ import {
 } from "../shared/nodeTypes.js";
 import { joinIntoType } from "./aliasing/joinIntoType.js";
 import { collectUsageSymbols } from "./collecting.js";
+import { textInsert, textSwap } from "./text-mutations.js";
 
 /**
  * Creates a mutation to add types to an existing type, if any are new.
@@ -53,24 +54,41 @@ export const createTypeAdditionMutation = (
 		) ||
 		isKnownGlobalBaseType(declaredType)
 	) {
-		return {
-			insertion: ` ${newTypeAlias}`,
-			range: {
-				begin: node.type.pos,
-				end: node.type.end,
-			},
-			type: "text-swap",
-		};
+		return textSwap(` ${newTypeAlias}`, node.type.pos, node.type.end);
+	}
+
+	const typeChecker = request.services.languageService
+		.getProgram()
+		?.getTypeChecker();
+
+	const declaredTypeAsString = typeChecker?.typeToString(declaredType);
+
+	// There must be better way to check if the type is Promise or includes Promise,
+	// but it's hard to find right flags for it.
+	// So we are just checking if the string includes mention of Promise
+	if (!declaredTypeAsString?.includes("Promise")) {
+		// Create a mutation insertion that adds the missing types in
+		return textInsert(` | ${newTypeAlias}`, node.type.end);
+	}
+
+	const typesAsPromises = new Set(
+		[...missingTypes].map((type) => {
+			const stringified = typeChecker?.typeToString(
+				typeChecker.getBaseTypeOfLiteralType(type),
+			);
+			return `Promise<${stringified}>`;
+		}),
+	);
+
+	const combined = [...typesAsPromises].join(" | ");
+
+	// After adding Promise wrappers, it may be that the type is same as in original
+	if (combined === declaredTypeAsString) {
+		return undefined;
 	}
 
 	// Create a mutation insertion that adds the missing types in
-	return {
-		insertion: ` | ${newTypeAlias}`,
-		range: {
-			begin: node.type.end,
-		},
-		type: "text-insert",
-	};
+	return textInsert(` | ${combined}`, node.type.end);
 };
 
 /**
@@ -103,11 +121,5 @@ export const createTypeCreationMutation = (
 	const newTypeAlias = joinIntoType(assignedTypes, request);
 
 	// Create a mutation insertion that adds the assigned types in
-	return {
-		insertion: `: ${newTypeAlias}`,
-		range: {
-			begin: node.name.end,
-		},
-		type: "text-insert",
-	};
+	return textInsert(`: ${newTypeAlias}`, node.name.end);
 };

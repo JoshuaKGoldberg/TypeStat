@@ -85,20 +85,18 @@
 		return "";
 	};
 
-// @ts-expect-error -- TODO: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<boolean>'?
-	async function navigateTo(): Promise<boolean> | boolean {
+	async function navigateTo(): Promise<boolean> {
 		return await new Promise(() => "");
 	}
 
 	function navigateByUrl(url: string): Promise<boolean>;
 
-// @ts-expect-error -- TODO: Function implementation name must be 'navigateByUrl'. The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<boolean>'?
-	async function navigateTo3(): Promise<boolean> | boolean {
+// @ts-expect-error -- TODO: Function implementation name must be 'navigateByUrl'.
+	async function navigateTo3(): Promise<boolean> {
 		return await navigateByUrl("");
 	}
 
-// @ts-expect-error -- TODO: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<boolean>'?
-	async function navigateTo2(): Promise<boolean> | boolean {
+	async function navigateTo2(): Promise<boolean> {
 		const navigated = await navigateByUrl("");
 		return navigated;
 	}
