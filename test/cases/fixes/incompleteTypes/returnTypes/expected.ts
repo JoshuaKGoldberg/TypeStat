@@ -110,6 +110,10 @@
 		return Promise.resolve("");
 	}
 
+	function resolveDifferentType(url: string): Promise<string> | Promise<boolean> {
+		return Promise.resolve(false);
+	}
+
 	const returnsBigInt = (): string | bigint => {
 		return BigInt("123");
 	};

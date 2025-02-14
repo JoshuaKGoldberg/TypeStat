@@ -76,7 +76,9 @@ export const createTypeAdditionMutation = (
 			const stringified = typeChecker?.typeToString(
 				typeChecker.getBaseTypeOfLiteralType(type),
 			);
-			return `Promise<${stringified}>`;
+			return stringified?.startsWith("Promise<")
+				? stringified
+				: `Promise<${stringified}>`;
 		}),
 	);
 
