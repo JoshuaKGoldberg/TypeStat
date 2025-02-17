@@ -1,61 +1,38 @@
-import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { runMutationTest } from "../src/tests/testSetup.js";
+import { checkTestResult } from "../src/tests/testSetup.js";
+
+const cwd = import.meta.dirname;
 
 describe("strictNonNullAssertions", () => {
 	it("binaryExpressions", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/fixes/strictNonNullAssertions/binaryExpressions",
+		expect.assertions(3);
+		await checkTestResult(
+			cwd,
+			"fixes/strictNonNullAssertions/binaryExpressions",
 		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
 	}, 10000);
 
 	it("callExpressions", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/fixes/strictNonNullAssertions/callExpressions",
-		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "fixes/strictNonNullAssertions/callExpressions");
 	}, 10000);
 
 	it("objectLiterals", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/fixes/strictNonNullAssertions/objectLiterals",
-		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "fixes/strictNonNullAssertions/objectLiterals");
 	});
 
 	it("propertyAccesses", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/fixes/strictNonNullAssertions/propertyAccesses",
+		expect.assertions(3);
+		await checkTestResult(
+			cwd,
+			"fixes/strictNonNullAssertions/propertyAccesses",
 		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
 	}, 10000);
 
 	it("returnTypes", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/fixes/strictNonNullAssertions/returnTypes",
-		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "fixes/strictNonNullAssertions/returnTypes");
 	});
 });

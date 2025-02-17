@@ -1,28 +1,17 @@
-import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-import { runMutationTest } from "../src/tests/testSetup.js";
+import { checkTestResult } from "../src/tests/testSetup.js";
+
+const cwd = import.meta.dirname;
 
 describe("Cleanups", () => {
 	it("suppressTypeErrors", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/cleanups/suppressTypeErrors",
-		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "cleanups/suppressTypeErrors");
 	});
 
 	it("non-TypeErrors", async () => {
-		const caseDir = path.join(
-			import.meta.dirname,
-			"cases/cleanups/nonTypeErrors",
-		);
-		const { actualContent, expectedFilePath, options } =
-			await runMutationTest(caseDir);
-		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
-		expect(options).toMatchSnapshot("options");
+		expect.assertions(3);
+		await checkTestResult(cwd, "cleanups/nonTypeErrors");
 	}, 6000);
 });
