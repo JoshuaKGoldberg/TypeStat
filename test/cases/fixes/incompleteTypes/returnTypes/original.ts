@@ -89,7 +89,9 @@
 		return await new Promise(() => "");
 	}
 
-	function navigateByUrl(url: string): Promise<boolean>;
+	function navigateByUrl(url: string): Promise<boolean> {
+		return Promise.resolve(false);
+	}
 
 	async function navigateTo3(): Promise<boolean> {
 		return await navigateByUrl("");
@@ -106,6 +108,19 @@
 
 	async function returnPromise(): Promise<string> {
 		return Promise.resolve("");
+	}
+
+	function resolveDifferentType(url: string): Promise<string> {
+		return Promise.resolve(false);
+	}
+
+	function resolveDifferentType2(url: string): Promise<string> {
+		const something: Promise<number | undefined> = undefined;
+		return something;
+	}
+
+	function resolveDifferentType3(url: string): Promise<string> | string {
+		return Promise.resolve(false);
 	}
 
 	const returnsBigInt = (): string => {

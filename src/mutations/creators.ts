@@ -10,6 +10,7 @@ import {
 } from "../shared/nodeTypes.js";
 import { joinIntoType } from "./aliasing/joinIntoType.js";
 import { collectUsageSymbols } from "./collecting.js";
+import { textInsert, textSwap } from "./text-mutations.js";
 
 /**
  * Creates a mutation to add types to an existing type, if any are new.
@@ -53,24 +54,46 @@ export const createTypeAdditionMutation = (
 		) ||
 		isKnownGlobalBaseType(declaredType)
 	) {
-		return {
-			insertion: ` ${newTypeAlias}`,
-			range: {
-				begin: node.type.pos,
-				end: node.type.end,
-			},
-			type: "text-swap",
-		};
+		return textSwap(` ${newTypeAlias}`, node.type.pos, node.type.end);
+	}
+
+	const isAsyncFunction =
+		ts.isFunctionDeclaration(node) &&
+		node.modifiers?.some((modifier) => tsutils.isAsyncKeyword(modifier));
+
+	if (!isAsyncFunction) {
+		// Create a mutation insertion that adds the missing types in
+		return textInsert(` | ${newTypeAlias}`, node.type.end);
+	}
+
+	const typeChecker = request.services.languageService
+		.getProgram()
+		?.getTypeChecker();
+
+	const typesAsPromises = new Set(
+		[...missingTypes].map((type) => {
+			const stringified = typeChecker?.typeToString(
+				typeChecker.getBaseTypeOfLiteralType(type),
+			);
+			return stringified?.startsWith("Promise<")
+				? stringified
+				: `Promise<${stringified}>`;
+		}),
+	);
+
+	const combined = [...typesAsPromises]
+		.sort((a, b) => a.localeCompare(b))
+		.join(" | ");
+
+	const declaredTypeAsString = typeChecker?.typeToString(declaredType);
+
+	// After adding Promise wrappers, it may be that the type is same as the original
+	if (combined === declaredTypeAsString) {
+		return undefined;
 	}
 
 	// Create a mutation insertion that adds the missing types in
-	return {
-		insertion: ` | ${newTypeAlias}`,
-		range: {
-			begin: node.type.end,
-		},
-		type: "text-insert",
-	};
+	return textInsert(` | ${combined}`, node.type.end);
 };
 
 /**
@@ -103,11 +126,5 @@ export const createTypeCreationMutation = (
 	const newTypeAlias = joinIntoType(assignedTypes, request);
 
 	// Create a mutation insertion that adds the assigned types in
-	return {
-		insertion: `: ${newTypeAlias}`,
-		range: {
-			begin: node.name.end,
-		},
-		type: "text-insert",
-	};
+	return textInsert(`: ${newTypeAlias}`, node.name.end);
 };
