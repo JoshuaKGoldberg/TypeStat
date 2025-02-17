@@ -54,7 +54,7 @@
 		"@release-it/conventional-changelog": "10.0.0",
 		"@types/eslint-plugin-markdown": "2.0.2",
 		"@types/glob": "8.1.0",
-		"@types/node": "22.13.2",
+		"@types/node": "22.13.4",
 		"@types/prop-types": "15.7.14",
 		"@types/react": "19.0.8",
 		"@vitest/coverage-v8": "3.0.5",
