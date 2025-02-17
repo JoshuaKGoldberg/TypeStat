@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.17](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.16...0.8.17) (2025-02-17)
+
+### Bug Fixes
+
+- simplify collecting strict TS options ([#2196](https://github.com/JoshuaKGoldberg/TypeStat/issues/2196)) ([7e96af9](https://github.com/JoshuaKGoldberg/TypeStat/commit/7e96af905c51c440d6fa4d48ee3b637d236db4f2)), closes [#000](https://github.com/JoshuaKGoldberg/TypeStat/issues/000) [#2192](https://github.com/JoshuaKGoldberg/TypeStat/issues/2192)
+
 ## [0.8.16](https://github.com/JoshuaKGoldberg/TypeStat/compare/0.8.15...0.8.16) (2025-02-07)
 
 ### Bug Fixes
