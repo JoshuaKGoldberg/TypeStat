@@ -57,7 +57,7 @@
 		"@types/node": "22.13.4",
 		"@types/prop-types": "15.7.14",
 		"@types/react": "19.0.10",
-		"@vitest/coverage-v8": "3.0.5",
+		"@vitest/coverage-v8": "3.0.6",
 		"@vitest/eslint-plugin": "1.1.31",
 		"console-fail-test": "0.5.0",
 		"cspell": "8.17.3",
@@ -83,7 +83,7 @@
 		"tsup": "8.3.6",
 		"typescript": "5.7.3",
 		"typescript-eslint": "8.24.1",
-		"vitest": "3.0.5"
+		"vitest": "3.0.6"
 	},
 	"packageManager": "pnpm@10.4.1",
 	"engines": {
