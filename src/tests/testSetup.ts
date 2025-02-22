@@ -1,14 +1,17 @@
 import { runMutations } from "automutate";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { expect } from "vitest";
 
 import { loadPendingOptions } from "../options/loadPendingOptions.js";
+import { ProcessOutput } from "../output/types.js";
 import { createTypeStatProvider } from "../runtime/createTypeStatProvider.js";
 
 export interface MutationTestResult {
 	actualContent: string;
 	expectedFilePath: string;
 	options: string;
+	output: string;
 }
 
 export const runMutationTest = async (
@@ -31,12 +34,27 @@ export const runMutationTest = async (
 	// file needs to exists before creating compiler options
 	await fs.copyFile(originalFile, actualFile);
 
-	const output = {
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		log: () => {},
+	const replaceFilePath = (value: string) =>
+		value.replaceAll(dirPath, "<rootDir>");
+
+	const cliOutput: string[] = [];
+
+	const output: ProcessOutput = {
+		log: (line: string) => {
+			if (
+				line.includes("text-insert") ||
+				line.includes("text-delete") ||
+				line.includes("text-swap")
+			) {
+				const index = line.indexOf("[");
+				line = line.slice(0, index) + "[mutations]";
+			}
+			cliOutput.push("[log] " + replaceFilePath(line));
+		},
 		stderr: console.error.bind(console),
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		stdout: () => {},
+		stdout: (line: string) => {
+			cliOutput.push("[stdout] " + replaceFilePath(line));
+		},
 	};
 
 	const pendingOptionsList = loadPendingOptions(
@@ -61,12 +79,21 @@ export const runMutationTest = async (
 	const actualContent = await readFile(actualFileName);
 	const expectFileName = `expected.ts${fileNameSuffix}`;
 	const expectedFilePath = path.join(dirPath, expectFileName);
+	const optionsSnapshot = JSON.stringify(pendingOptionsList, null, 2);
 
-	const optionsSnapshot = JSON.stringify(
-		pendingOptionsList,
-		null,
-		2,
-	).replaceAll(dirPath, "<rootDir>");
+	return {
+		actualContent,
+		expectedFilePath,
+		options: replaceFilePath(optionsSnapshot),
+		output: cliOutput.join("\n"),
+	};
+};
 
-	return { actualContent, expectedFilePath, options: optionsSnapshot };
+export const checkTestResult = async (cwd: string, caseDir: string) => {
+	const fullPath = path.join(cwd, "cases", caseDir);
+	const { actualContent, expectedFilePath, options, output } =
+		await runMutationTest(fullPath);
+	await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+	expect(options).toMatchSnapshot("options");
+	expect(output).toMatchSnapshot("output");
 };
