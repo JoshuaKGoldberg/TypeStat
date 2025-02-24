@@ -110,6 +110,23 @@
 		return Promise.resolve("");
 	}
 
+	async function resolveDifferentTypeAsync(url: string): Promise<string> {
+		return Promise.resolve(false);
+	}
+
+	async function resolveDifferentTypeAsync2(url: string): Promise<string> {
+		const something: Promise<number | undefined> = undefined;
+		return something;
+	}
+
+	async function resolveDifferentComplexType(url: string): Promise<string> {
+		const something: Promise<{ value: string; key: number }> = Promise.resolve({
+			value: "ABC",
+			key: 123,
+		});
+		return something;
+	}
+
 	function resolveDifferentType(url: string): Promise<string> {
 		return Promise.resolve(false);
 	}

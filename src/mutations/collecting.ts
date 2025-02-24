@@ -6,6 +6,11 @@ import { isKnownGlobalBaseType } from "../shared/nodeTypes.js";
 import { setSubtract } from "../shared/sets.js";
 import { isTypeFlagSetRecursively } from "./collecting/flags.js";
 
+interface MissingTypesResult {
+	assignedTypes: Set<ts.Type>;
+	missingTypes: ReadonlySet<ts.Type>;
+}
+
 /**
  * Collects assigned and missing types, recursively accounting for type unions.
  * @param request Metadata and settings to collect mutations in a file.
@@ -16,7 +21,7 @@ export const collectUsageSymbols = (
 	request: FileMutationsRequest,
 	declaredType: ts.Type,
 	allAssignedTypes: readonly ts.Type[],
-) => {
+): MissingTypesResult => {
 	// Collect which types are later assigned to the type
 	const assignedTypes = collectRawTypesFromTypes(request, allAssignedTypes);
 
@@ -89,7 +94,7 @@ export const recursivelyCollectSubTypes = (type: ts.UnionType): ts.Type[] => {
 	return subTypes;
 };
 
-const findMissingTypes = (
+export const findMissingTypes = (
 	request: FileMutationsRequest,
 	assignedTypes: ReadonlySet<ts.Type>,
 	declaredTypes: ReadonlySet<ts.Type>,

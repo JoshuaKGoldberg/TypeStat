@@ -57,43 +57,8 @@ export const createTypeAdditionMutation = (
 		return textSwap(` ${newTypeAlias}`, node.type.pos, node.type.end);
 	}
 
-	const isAsyncFunction =
-		ts.isFunctionDeclaration(node) &&
-		node.modifiers?.some((modifier) => tsutils.isAsyncKeyword(modifier));
-
-	if (!isAsyncFunction) {
-		// Create a mutation insertion that adds the missing types in
-		return textInsert(` | ${newTypeAlias}`, node.type.end);
-	}
-
-	const typeChecker = request.services.languageService
-		.getProgram()
-		?.getTypeChecker();
-
-	const typesAsPromises = new Set(
-		[...missingTypes].map((type) => {
-			const stringified = typeChecker?.typeToString(
-				typeChecker.getBaseTypeOfLiteralType(type),
-			);
-			return stringified?.startsWith("Promise<")
-				? stringified
-				: `Promise<${stringified}>`;
-		}),
-	);
-
-	const combined = [...typesAsPromises]
-		.sort((a, b) => a.localeCompare(b))
-		.join(" | ");
-
-	const declaredTypeAsString = typeChecker?.typeToString(declaredType);
-
-	// After adding Promise wrappers, it may be that the type is same as the original
-	if (combined === declaredTypeAsString) {
-		return undefined;
-	}
-
 	// Create a mutation insertion that adds the missing types in
-	return textInsert(` | ${combined}`, node.type.end);
+	return textInsert(` | ${newTypeAlias}`, node.type.end);
 };
 
 /**
