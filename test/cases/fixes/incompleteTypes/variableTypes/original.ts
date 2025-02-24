@@ -185,4 +185,12 @@
 	let returnsStringOrNumber: Function;
 	returnsStringOrNumber = () => "";
 	returnsStringOrNumber = () => 0;
+
+	// Sets
+
+	function collector(collection: ReadonlySet<{ value: string }>) {
+		const collection2: Set<number> = new Set(collection);
+		const collection3: ReadonlySet<number> = new Set(collection);
+		const collection4: Set<any> = new Set(collection);
+	}
 })();
