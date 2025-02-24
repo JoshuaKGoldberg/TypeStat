@@ -110,6 +110,10 @@
 		return Promise.resolve("");
 	}
 
+	async function returnPromiseWithAny(): Promise<any> {
+		return Promise.resolve("");
+	}
+
 	async function resolveDifferentTypeAsync(url: string): Promise<string> {
 		return Promise.resolve(false);
 	}
