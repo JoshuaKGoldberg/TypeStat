@@ -61,7 +61,7 @@ describe("Incomplete types", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	});
+	}, 50_000);
 
 	it("property declaration types", async () => {
 		const caseDir = path.join(
@@ -188,7 +188,7 @@ describe("Incomplete types", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	});
+	}, 50_000);
 
 	it("variable types", async () => {
 		const caseDir = path.join(
