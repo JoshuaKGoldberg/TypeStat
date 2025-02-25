@@ -1,9 +1,24 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"automerge": true,
-	"extends": ["config:best-practices", "replacements:all"],
+	"extends": ["config:best-practices"],
 	"internalChecksFilter": "strict",
 	"labels": ["dependencies"],
+	"lockFileMaintenance": {
+		"enabled": true,
+		"schedule": ["* 0-3 1 * *"]
+	},
 	"minimumReleaseAge": "3 days",
+	"packageRules": [
+		{
+			"description": "Update patch versions monthly",
+			"enabled": true,
+			"extends": ["schedule:monthly"],
+			"matchUpdateTypes": ["patch"]
+		}
+	],
+	"patch": {
+		"enabled": false
+	},
 	"postUpdateOptions": ["pnpmDedupe"]
 }
