@@ -85,20 +85,19 @@
 		return "";
 	};
 
-// @ts-expect-error -- TODO: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<boolean>'?
-	async function navigateTo(): Promise<boolean> | boolean {
+	async function navigateTo(): Promise<boolean> {
 		return await new Promise(() => "");
 	}
 
-	function navigateByUrl(url: string): Promise<boolean>;
+	function navigateByUrl(url: string): Promise<boolean> {
+		return Promise.resolve(false);
+	}
 
-// @ts-expect-error -- TODO: Function implementation name must be 'navigateByUrl'. The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<boolean>'?
-	async function navigateTo3(): Promise<boolean> | boolean {
+	async function navigateTo3(): Promise<boolean> {
 		return await navigateByUrl("");
 	}
 
-// @ts-expect-error -- TODO: The return type of an async function or method must be the global Promise<T> type. Did you mean to write 'Promise<boolean>'?
-	async function navigateTo2(): Promise<boolean> | boolean {
+	async function navigateTo2(): Promise<boolean> {
 		const navigated = await navigateByUrl("");
 		return navigated;
 	}
@@ -109,6 +108,40 @@
 
 	async function returnPromise(): Promise<string> {
 		return Promise.resolve("");
+	}
+
+	async function returnPromiseWithAny(): Promise<any> {
+		return Promise.resolve("");
+	}
+
+	async function resolveDifferentTypeAsync(url: string): Promise<string | boolean> {
+		return Promise.resolve(false);
+	}
+
+	async function resolveDifferentTypeAsync2(url: string): Promise<string | undefined | number> {
+		const something: Promise<number | undefined> | undefined = undefined;
+		return something;
+	}
+
+	async function resolveDifferentComplexType(url: string): Promise<string | { value: string; key: number; }> {
+		const something: Promise<{ value: string; key: number }> = Promise.resolve({
+			value: "ABC",
+			key: 123,
+		});
+		return something;
+	}
+
+	function resolveDifferentType(url: string): Promise<string> | Promise<boolean> {
+		return Promise.resolve(false);
+	}
+
+	function resolveDifferentType2(url: string): Promise<string> | Promise<number | undefined> | undefined {
+		const something: Promise<number | undefined> | undefined = undefined;
+		return something;
+	}
+
+	function resolveDifferentType3(url: string): Promise<string> | string | Promise<boolean> {
+		return Promise.resolve(false);
 	}
 
 	const returnsBigInt = (): string | bigint => {

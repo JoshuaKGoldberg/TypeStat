@@ -10,6 +10,7 @@ import {
 } from "../shared/nodeTypes.js";
 import { joinIntoType } from "./aliasing/joinIntoType.js";
 import { collectUsageSymbols } from "./collecting.js";
+import { textInsert, textSwap } from "./text-mutations.js";
 
 /**
  * Creates a mutation to add types to an existing type, if any are new.
@@ -53,24 +54,11 @@ export const createTypeAdditionMutation = (
 		) ||
 		isKnownGlobalBaseType(declaredType)
 	) {
-		return {
-			insertion: ` ${newTypeAlias}`,
-			range: {
-				begin: node.type.pos,
-				end: node.type.end,
-			},
-			type: "text-swap",
-		};
+		return textSwap(` ${newTypeAlias}`, node.type.pos, node.type.end);
 	}
 
 	// Create a mutation insertion that adds the missing types in
-	return {
-		insertion: ` | ${newTypeAlias}`,
-		range: {
-			begin: node.type.end,
-		},
-		type: "text-insert",
-	};
+	return textInsert(` | ${newTypeAlias}`, node.type.end);
 };
 
 /**
@@ -103,11 +91,5 @@ export const createTypeCreationMutation = (
 	const newTypeAlias = joinIntoType(assignedTypes, request);
 
 	// Create a mutation insertion that adds the assigned types in
-	return {
-		insertion: `: ${newTypeAlias}`,
-		range: {
-			begin: node.name.end,
-		},
-		type: "text-insert",
-	};
+	return textInsert(`: ${newTypeAlias}`, node.name.end);
 };
