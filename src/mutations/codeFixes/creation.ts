@@ -67,7 +67,7 @@ export const createCodeFixCreationMutation = (
  * for the case of two text changes with the same span start.
  * @see https://github.com/JoshuaKGoldberg/TypeStat/issues/256
  */
-const simplifyTextChanges = (textChanges: readonly ts.TextChange[]) => {
+export const simplifyTextChanges = (textChanges: readonly ts.TextChange[]) => {
 	if (textChanges.length === 0 || isOnlyParenthesis(textChanges)) {
 		return undefined;
 	}
