@@ -59,9 +59,19 @@
 		console.log(char, index);
 	});
 
-	const needsWrapping = (count) => `${count}lbs`;
+	// prettier adds parenthesis here, but we want codefix to add those
+	// prettier-ignore
+	const needsWrapping = count => `${count}lbs`;
 	needsWrapping(1.234567);
 
 	const needsNoWrapping = (count) => `${count}lbs`;
 	needsNoWrapping(1.234567);
+
+	// prettier adds parenthesis here, but we want codefix to add those
+	// prettier-ignore
+	const addSpan = el => {
+		el.appendChild(document.createElement("span"));
+	};
+
+	addSpan(document.createElement("div"));
 })();
