@@ -71,7 +71,7 @@
 		"eslint-plugin-yml": "1.18.0",
 		"husky": "9.1.7",
 		"knip": "5.55.0",
-		"lint-staged": "15.5.0",
+		"lint-staged": "16.0.0",
 		"markdownlint": "0.38.0",
 		"markdownlint-cli": "0.44.0",
 		"prettier": "3.5.2",
