@@ -55,8 +55,8 @@ importers:
         specifier: 3.1.1
         version: 3.1.1(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.13.14)(jiti@2.4.2)(yaml@2.7.1))
       '@vitest/eslint-plugin':
-        specifier: 1.1.36
-        version: 1.1.36(@typescript-eslint/utils@8.32.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.2)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.13.14)(jiti@2.4.2)(yaml@2.7.1))
+        specifier: 1.2.0
+        version: 1.2.0(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.2)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.13.14)(jiti@2.4.2)(yaml@2.7.1))
       console-fail-test:
         specifier: 0.5.0
         version: 0.5.0
@@ -1183,10 +1183,9 @@ packages:
       '@vitest/browser':
         optional: true
 
-  '@vitest/eslint-plugin@1.1.36':
-    resolution: {integrity: sha512-IjBV/fcL9NJRxGw221ieaDsqKqj8qUo7rvSupDxMjTXyhsCusHC6M+jFUNqBp4PCkYFcf5bjrKxeZoCEWoPxig==}
+  '@vitest/eslint-plugin@1.2.0':
+    resolution: {integrity: sha512-6vn3QDy+ysqHGkbH9fU9uyWptqNc638dgPy0uAlh/XpniTBp+0WeVlXGW74zqggex/CwYOhK8t5GVo/FH3NMPw==}
     peerDependencies:
-      '@typescript-eslint/utils': ^8.24.0
       eslint: '>= 8.57.0'
       typescript: '>= 5.0.0'
       vitest: '*'
@@ -4718,13 +4717,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/eslint-plugin@1.1.36(@typescript-eslint/utils@8.32.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.2)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.13.14)(jiti@2.4.2)(yaml@2.7.1))':
+  '@vitest/eslint-plugin@1.2.0(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.2)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.13.14)(jiti@2.4.2)(yaml@2.7.1))':
     dependencies:
       '@typescript-eslint/utils': 8.32.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.2)
       eslint: 9.26.0(jiti@2.4.2)
     optionalDependencies:
       typescript: 5.8.2
       vitest: 3.1.1(@types/debug@4.1.12)(@types/node@22.13.14)(jiti@2.4.2)(yaml@2.7.1)
+    transitivePeerDependencies:
+      - supports-color
 
   '@vitest/expect@3.1.1':
     dependencies:
