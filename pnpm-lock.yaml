@@ -67,8 +67,8 @@ importers:
         specifier: 9.29.0
         version: 9.29.0(jiti@2.4.2)
       eslint-plugin-jsdoc:
-        specifier: 51.1.1
-        version: 51.1.1(eslint@9.29.0(jiti@2.4.2))
+        specifier: 51.2.1
+        version: 51.2.1(eslint@9.29.0(jiti@2.4.2))
       eslint-plugin-jsonc:
         specifier: 2.20.0
         version: 2.20.0(eslint@9.29.0(jiti@2.4.2))
@@ -419,9 +419,9 @@ packages:
   '@emnapi/wasi-threads@1.0.2':
     resolution: {integrity: sha512-5n3nTJblwRi8LlXkJ9eBzu+kZR8Yxcc7ubakyQTFzPMtIhFpUBRbsnc2Dv88IZDIbCDlBiWrknhB4Lsz7mg6BA==}
 
-  '@es-joy/jsdoccomment@0.51.1':
-    resolution: {integrity: sha512-fPn7AW/unCg3JRLt8Wg44HLRVkAEfkFIXiGRJbeOIrd7Hgl4iOFwVHpvVR8I5hJYpn5mNFWwIXR6A16ZRA/M9w==}
-    engines: {node: '>=18'}
+  '@es-joy/jsdoccomment@0.52.0':
+    resolution: {integrity: sha512-BXuN7BII+8AyNtn57euU2Yxo9yA/KUDNzrpXyi3pfqKmBhhysR6ZWOebFh3vyPoqA3/j1SOvGgucElMGwlXing==}
+    engines: {node: '>=20.11.0'}
 
   '@esbuild/aix-ppc64@0.25.0':
     resolution: {integrity: sha512-O7vun9Sf8DFjH2UtqK8Ku3LkquL9SZL8OLY1T5NZkA34+wG3OQF7cl4Ql8vdNzM6fzBbYfLaiRLIOZ+2FOCgBQ==}
@@ -1796,8 +1796,8 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-jsdoc@51.1.1:
-    resolution: {integrity: sha512-MU+7rYK2r4frl6Rb/5ebchjBN/jk6iXRMMOd/n3RyAHfaRL+jDfrvXi7b776p5qGaW7dAo8Fxc/s3pwNab9SEw==}
+  eslint-plugin-jsdoc@51.2.1:
+    resolution: {integrity: sha512-iE2qpG/kaA9xXfEcTNSsxNvH5O8+o38VBGLwl2oZisQaM1JRGftTLJAGQrj7YZjSkp3n9VCrNTjOpo3ONhTApQ==}
     engines: {node: '>=20.11.0'}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
@@ -3780,7 +3780,7 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@es-joy/jsdoccomment@0.51.1':
+  '@es-joy/jsdoccomment@0.52.0':
     dependencies:
       '@types/estree': 1.0.8
       '@typescript-eslint/types': 8.34.1
@@ -5107,9 +5107,9 @@ snapshots:
       eslint: 9.29.0(jiti@2.4.2)
       eslint-compat-utils: 0.5.1(eslint@9.29.0(jiti@2.4.2))
 
-  eslint-plugin-jsdoc@51.1.1(eslint@9.29.0(jiti@2.4.2)):
+  eslint-plugin-jsdoc@51.2.1(eslint@9.29.0(jiti@2.4.2)):
     dependencies:
-      '@es-joy/jsdoccomment': 0.51.1
+      '@es-joy/jsdoccomment': 0.52.0
       are-docs-informative: 0.0.2
       comment-parser: 1.4.1
       debug: 4.4.1
