@@ -70,8 +70,8 @@ importers:
         specifier: 52.0.0
         version: 52.0.0(eslint@9.32.0(jiti@2.4.2))
       eslint-plugin-jsonc:
-        specifier: 2.20.0
-        version: 2.20.0(eslint@9.32.0(jiti@2.4.2))
+        specifier: 2.20.1
+        version: 2.20.1(eslint@9.32.0(jiti@2.4.2))
       eslint-plugin-markdown:
         specifier: 5.1.0
         version: 5.1.0(eslint@9.32.0(jiti@2.4.2))
@@ -1802,8 +1802,8 @@ packages:
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
 
-  eslint-plugin-jsonc@2.20.0:
-    resolution: {integrity: sha512-FRgCn9Hzk5eKboCbVMrr9QrhM0eO4G+WKH8IFXoaeqhM/2kuWzbStJn4kkr0VWL8J5H8RYZF+Aoam1vlBaZVkw==}
+  eslint-plugin-jsonc@2.20.1:
+    resolution: {integrity: sha512-gUzIwQHXx7ZPypUoadcyRi4WbHW2TPixDr0kqQ4miuJBU0emJmyGTlnaT3Og9X2a8R1CDayN9BFSq5weGWbTng==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
@@ -5121,7 +5121,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-jsonc@2.20.0(eslint@9.32.0(jiti@2.4.2)):
+  eslint-plugin-jsonc@2.20.1(eslint@9.32.0(jiti@2.4.2)):
     dependencies:
       '@eslint-community/eslint-utils': 4.7.0(eslint@9.32.0(jiti@2.4.2))
       eslint: 9.32.0(jiti@2.4.2)
