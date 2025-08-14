@@ -5,7 +5,7 @@
 <p align="center">
 	<!-- prettier-ignore-start -->
 	<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-	<a href="#contributors" target="_blank"><img alt="👪 All Contributors: 14" src="https://img.shields.io/badge/%F0%9F%91%AA_all_contributors-14-21bb42.svg" /></a>
+	<a href="#contributors" target="_blank"><img alt="👪 All Contributors: 15" src="https://img.shields.io/badge/%F0%9F%91%AA_all_contributors-15-21bb42.svg" /></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 	<!-- prettier-ignore-end -->
 	<a href="https://github.com/JoshuaKGoldberg/TypeStat/blob/main/.github/CODE_OF_CONDUCT.md" target="_blank"><img alt="🤝 Code of Conduct: Kept" src="https://img.shields.io/badge/%F0%9F%A4%9D_code_of_conduct-kept-21bb42" /></a>
@@ -82,7 +82,10 @@ Thanks! 💖
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/markjm-1/"><img src="https://avatars.githubusercontent.com/u/16494982?v=4?s=100" width="100px;" alt="Mark Molinaro"/><br /><sub><b>Mark Molinaro</b></sub></a><br /><a href="https://github.com/JoshuaKGoldberg/TypeStat/issues?q=author%3Amarkjm" title="Bug reports">🐛</a> <a href="https://github.com/JoshuaKGoldberg/TypeStat/commits?author=markjm" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://cress.soc.surrey.ac.uk/web/people/ngilbert"><img src="https://avatars.githubusercontent.com/u/1449986?v=4?s=100" width="100px;" alt="Nigel Gilbert"/><br /><sub><b>Nigel Gilbert</b></sub></a><br /><a href="https://github.com/JoshuaKGoldberg/TypeStat/issues?q=author%3Amicrology" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://community.haskell.org/~pj"><img src="https://avatars.githubusercontent.com/u/2082449?v=4?s=100" width="100px;" alt="Peter A. Jonsson"/><br /><sub><b>Peter A. Jonsson</b></sub></a><br /><a href="https://github.com/JoshuaKGoldberg/TypeStat/issues?q=author%3Apjonsson" title="Bug reports">🐛</a> <a href="https://github.com/JoshuaKGoldberg/TypeStat/commits?author=pjonsson" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/AjiTae"><img src="https://avatars.githubusercontent.com/u/2207245?v=4?s=100" width="100px;" alt="ajitae"/><br /><sub><b>ajitae</b></sub></a><br /><a href="https://github.com/JoshuaKGoldberg/TypeStat/issues?q=author%3Aajitae" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://orionna.me/"><img src="https://avatars.githubusercontent.com/u/85230052?v=4?s=100" width="100px;" alt="orionna319"/><br /><sub><b>orionna319</b></sub></a><br /><a href="https://github.com/JoshuaKGoldberg/TypeStat/issues?q=author%3Aorionna319" title="Bug reports">🐛</a></td>
+    </tr>
+    <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/rubiesonthesky"><img src="https://avatars.githubusercontent.com/u/2591240?v=4?s=100" width="100px;" alt="rubiesonthesky"/><br /><sub><b>rubiesonthesky</b></sub></a><br /><a href="https://github.com/JoshuaKGoldberg/TypeStat/issues?q=author%3Arubiesonthesky" title="Bug reports">🐛</a> <a href="#maintenance-rubiesonthesky" title="Maintenance">🚧</a> <a href="#tool-rubiesonthesky" title="Tools">🔧</a> <a href="https://github.com/JoshuaKGoldberg/TypeStat/commits?author=rubiesonthesky" title="Code">💻</a> <a href="https://github.com/JoshuaKGoldberg/TypeStat/commits?author=rubiesonthesky" title="Tests">⚠️</a></td>
     </tr>
   </tbody>
