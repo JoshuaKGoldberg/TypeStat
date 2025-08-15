@@ -140,6 +140,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ajitae",
+      "name": "ajitae",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2207245?v=4",
+      "profile": "https://github.com/AjiTae",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
