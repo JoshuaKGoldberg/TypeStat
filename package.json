@@ -68,7 +68,7 @@
 		"eslint-plugin-package-json": "0.26.0",
 		"eslint-plugin-perfectionist": "4.15.0",
 		"eslint-plugin-regexp": "2.10.0",
-		"eslint-plugin-yml": "1.18.0",
+		"eslint-plugin-yml": "1.19.0",
 		"husky": "9.1.7",
 		"knip": "5.64.0",
 		"lint-staged": "16.2.0",
