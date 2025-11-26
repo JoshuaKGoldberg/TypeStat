@@ -45,7 +45,7 @@
 		"chalk": "5.6.0",
 		"commander": "14.0.0",
 		"enquirer": "2.4.1",
-		"glob": "11.1.0",
+		"glob": "13.0.0",
 		"ts-api-utils": "2.1.0"
 	},
 	"devDependencies": {
