@@ -106,14 +106,14 @@ importers:
         specifier: 0.46.0
         version: 0.46.0
       prettier:
-        specifier: 3.6.0
-        version: 3.6.0
+        specifier: 3.7.1
+        version: 3.7.1
       prettier-plugin-curly:
         specifier: 0.4.0
-        version: 0.4.0(prettier@3.6.0)
+        version: 0.4.0(prettier@3.7.1)
       prettier-plugin-packagejson:
         specifier: 2.5.8
-        version: 2.5.8(prettier@3.6.0)
+        version: 2.5.8(prettier@3.7.1)
       release-it:
         specifier: 19.0.1
         version: 19.0.1(@types/node@22.18.12)(magicast@0.3.5)
@@ -2886,8 +2886,8 @@ packages:
       prettier:
         optional: true
 
-  prettier@3.6.0:
-    resolution: {integrity: sha512-ujSB9uXHJKzM/2GBuE0hBOUgC77CN3Bnpqa+g80bkv3T3A93wL/xlzDATHhnhkzifz/UE2SNOvmbTz5hSkDlHw==}
+  prettier@3.7.1:
+    resolution: {integrity: sha512-RWKXE4qB3u5Z6yz7omJkjWwmTfLdcbv44jUVHC5NpfXwFGzvpQM798FGv/6WNK879tc+Cn0AAyherCl1KjbyZQ==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -6381,18 +6381,18 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-curly@0.4.0(prettier@3.6.0):
+  prettier-plugin-curly@0.4.0(prettier@3.7.1):
     dependencies:
-      prettier: 3.6.0
+      prettier: 3.7.1
 
-  prettier-plugin-packagejson@2.5.8(prettier@3.6.0):
+  prettier-plugin-packagejson@2.5.8(prettier@3.7.1):
     dependencies:
       sort-package-json: 2.14.0
       synckit: 0.9.2
     optionalDependencies:
-      prettier: 3.6.0
+      prettier: 3.7.1
 
-  prettier@3.6.0: {}
+  prettier@3.7.1: {}
 
   protocols@2.0.2: {}
 
