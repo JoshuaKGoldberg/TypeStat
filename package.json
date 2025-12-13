@@ -65,7 +65,7 @@
 		"eslint-plugin-jsonc": "2.21.0",
 		"eslint-plugin-markdown": "5.1.0",
 		"eslint-plugin-n": "17.16.1",
-		"eslint-plugin-package-json": "0.26.0",
+		"eslint-plugin-package-json": "0.85.0",
 		"eslint-plugin-perfectionist": "4.15.0",
 		"eslint-plugin-regexp": "2.10.0",
 		"eslint-plugin-yml": "1.19.0",
