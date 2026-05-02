@@ -46,7 +46,7 @@
 		"commander": "14.0.0",
 		"enquirer": "2.4.1",
 		"glob": "13.0.6",
-		"ts-api-utils": "2.1.0"
+		"ts-api-utils": "2.5.0"
 	},
 	"devDependencies": {
 		"@eslint-community/eslint-plugin-eslint-comments": "4.7.1",

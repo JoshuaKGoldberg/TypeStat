@@ -27,8 +27,8 @@ importers:
         specifier: 13.0.6
         version: 13.0.6
       ts-api-utils:
-        specifier: 2.1.0
-        version: 2.1.0(typescript@5.9.2)
+        specifier: 2.5.0
+        version: 2.5.0(typescript@5.9.2)
     devDependencies:
       '@eslint-community/eslint-plugin-eslint-comments':
         specifier: 4.7.1
@@ -3140,12 +3140,6 @@ packages:
   tree-kill@1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
-
-  ts-api-utils@2.1.0:
-    resolution: {integrity: sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==}
-    engines: {node: '>=18.12'}
-    peerDependencies:
-      typescript: '>=4.8.4'
 
   ts-api-utils@2.5.0:
     resolution: {integrity: sha512-OJ/ibxhPlqrMM0UiNHJ/0CKQkoKF243/AEmplt3qpRgkW8VG7IfOS41h7V8TjITqdByHzrjcS/2si+y4lIh8NA==}
@@ -6554,10 +6548,6 @@ snapshots:
       punycode: 2.3.1
 
   tree-kill@1.2.2: {}
-
-  ts-api-utils@2.1.0(typescript@5.9.2):
-    dependencies:
-      typescript: 5.9.2
 
   ts-api-utils@2.5.0(typescript@5.9.2):
     dependencies:
