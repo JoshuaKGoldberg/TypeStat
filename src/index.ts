@@ -13,9 +13,9 @@ import { createTypeStatProvider } from "./runtime/createTypeStatProvider.js";
  * Root arguments to pass to TypeStat.
  */
 export enum ResultStatus {
-	ConfigurationError = 2,
-	Failed = 1,
 	Succeeded = 0,
+	Failed = 1,
+	ConfigurationError = 2,
 }
 
 export interface ConfigurationErrorResult {
