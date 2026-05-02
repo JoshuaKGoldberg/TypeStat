@@ -21,8 +21,8 @@ export type NoImplicitAnyNodeToBeFixed = NoImplicitAnyNode & {
  * Error codes for the TypeScript language service to get --noImplicitAny code fixes.
  */
 enum NoImplicitAnyErrorCode {
-	Parameter = 7006,
 	PropertyOrVariable = 7005,
+	Parameter = 7006,
 }
 
 export const canNodeBeFixedForNoImplicitAny = (
