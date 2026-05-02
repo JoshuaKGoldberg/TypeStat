@@ -40,9 +40,7 @@ export class FileInfoCache {
 	}
 
 	public getVariableUsage(): ReadonlyMap<ts.Identifier, tsutils.VariableInfo> {
-		if (this.variableUsage === undefined) {
-			this.variableUsage = tsutils.collectVariableUsage(this.sourceFile);
-		}
+		this.variableUsage ??= tsutils.collectVariableUsage(this.sourceFile);
 
 		return this.variableUsage;
 	}

@@ -15,7 +15,7 @@ export const getNewFileName = async (
 		return `${beforeExtension}.${renameExtensions}`;
 	}
 
-	const fileContents = (await readFile(oldFileName)).toString();
+	const fileContents = await readFile(oldFileName);
 	const fileContentsJoined = fileContents.replace(/ /g, "").replace(/"/g, "'");
 
 	// eslint-disable-next-line regexp/no-obscure-range

@@ -3,7 +3,7 @@ import { Mutation } from "automutate";
 import { suppressRemainingTypeIssues } from "../../cleanups/builtin/suppressTypeErrors/index.js";
 import { createLanguageServices } from "../../services/language.js";
 import { FileInfoCache } from "../../shared/FileInfoCache.js";
-import { convertMapToObject, Dictionary } from "../../shared/maps.js";
+import { convertMapToObject } from "../../shared/maps.js";
 import { NameGenerator } from "../../shared/NameGenerator.js";
 import { collectFilteredNodes } from "../collectFilteredNodes.js";
 import { createSingleUseProvider } from "../createSingleUseProvider.js";
@@ -62,7 +62,7 @@ export const createCleanupsProvider = (allModifiedFiles: Set<string>) => {
 					fileMutations:
 						fileMutations.size === 0
 							? undefined
-							: (convertMapToObject(fileMutations) as Dictionary<Mutation[]>),
+							: convertMapToObject(fileMutations),
 				},
 			};
 		};
