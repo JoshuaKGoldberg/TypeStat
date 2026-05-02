@@ -78,7 +78,7 @@
 		"prettier-plugin-curly": "0.4.1",
 		"prettier-plugin-packagejson": "2.5.22",
 		"release-it": "19.1.0",
-		"sentences-per-line": "0.3.0",
+		"sentences-per-line": "0.5.2",
 		"tsup": "8.5.0",
 		"typescript": "5.9.2",
 		"typescript-eslint": "8.59.1",
