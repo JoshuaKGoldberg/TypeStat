@@ -2,7 +2,7 @@ import { Mutation } from "automutate";
 
 import { findRequireRenameMutationsInFile } from "../../mutations/renames/findRequireRenameMutationsInFile.js";
 import { createLanguageServices } from "../../services/language.js";
-import { convertMapToObject, Dictionary } from "../../shared/maps.js";
+import { convertMapToObject } from "../../shared/maps.js";
 import { createSingleUseProvider } from "../createSingleUseProvider.js";
 
 /**
@@ -49,7 +49,7 @@ export const createRequireRenameProvider = (allModifiedFiles: Set<string>) => {
 						fileMutations:
 							fileMutations.size === 0
 								? undefined
-								: (convertMapToObject(fileMutations) as Dictionary<Mutation[]>),
+								: convertMapToObject(fileMutations),
 					},
 				};
 			};

@@ -39,7 +39,7 @@ export const runCli = async (
 		)
 		.option("-V --version", "output the package version");
 
-	const rawOptions = command.parse(rawArgv as string[]) as TypeStatArgv;
+	const rawOptions = command.parse(rawArgv) as TypeStatArgv;
 	runtime ??= {
 		initializationRunner: initialization,
 		mainRunner: typeStat,
