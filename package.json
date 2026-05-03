@@ -55,7 +55,7 @@
 		"@types/eslint-plugin-markdown": "2.0.2",
 		"@types/node": "22.19.17",
 		"@types/prop-types": "15.7.15",
-		"@types/react": "19.2.7",
+		"@types/react": "19.2.14",
 		"@vitest/coverage-v8": "4.1.5",
 		"@vitest/eslint-plugin": "1.6.16",
 		"console-fail-test": "0.6.1",
