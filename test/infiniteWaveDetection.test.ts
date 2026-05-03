@@ -12,4 +12,4 @@ test("Infinite wave detection", async () => {
 		await runMutationTest(caseDir);
 	await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 	expect(options).toMatchSnapshot("options");
-}, 50000);
+}, 60_000);

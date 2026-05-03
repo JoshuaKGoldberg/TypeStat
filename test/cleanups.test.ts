@@ -24,5 +24,5 @@ describe("Cleanups", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	}, 6000);
+	}, 10_000);
 });

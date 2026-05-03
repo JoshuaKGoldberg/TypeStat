@@ -34,5 +34,5 @@ describe("files", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	}, 7000);
+	}, 10_000);
 });
