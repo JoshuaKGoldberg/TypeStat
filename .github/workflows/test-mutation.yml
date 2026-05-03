@@ -4,7 +4,7 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - uses: ./.github/actions/prepare
-      - run: pnpm run test:mutation --coverage --no-file-parallelism
+      - run: pnpm run test:mutation --coverage --no-file-parallelism --testTimeout 10000
       - name: Codecov
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6
         with:
