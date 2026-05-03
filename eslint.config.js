@@ -10,10 +10,10 @@ If you're interested in learning more, see the 'getting started' docs on:
 
 import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
 import eslint from "@eslint/js";
+import markdown from "@eslint/markdown";
 import vitest from "@vitest/eslint-plugin";
 import jsdoc from "eslint-plugin-jsdoc";
 import jsonc from "eslint-plugin-jsonc";
-import markdown from "eslint-plugin-markdown";
 import n from "eslint-plugin-n";
 import packageJson from "eslint-plugin-package-json/configs/recommended";
 import perfectionist from "eslint-plugin-perfectionist";
@@ -40,7 +40,6 @@ export default defineConfig(
 	},
 	eslint.configs.recommended,
 	...jsonc.configs["flat/recommended-with-json"],
-	...markdown.configs.recommended,
 	...yml.configs["flat/recommended"],
 	...yml.configs["flat/prettier"],
 	comments.recommended,
@@ -107,11 +106,19 @@ export default defineConfig(
 		},
 	},
 	{
+		extends: ["markdown/processor"],
+		files: ["**/*.md"],
+		plugins: {
+			markdown,
+		},
+	},
+	{
 		extends: [tseslint.configs.disableTypeChecked],
 		files: ["**/*.md/*.*s"],
 		rules: {
 			"@typescript-eslint/no-unused-vars": "off",
 			"n/no-missing-import": "off",
+			"no-undef": "off",
 		},
 	},
 	{
