@@ -20,4 +20,10 @@ describe("collectFileNames", () => {
 			`At least one path including node_modules was included implicitly: '${cwd}/node_modules'. Either adjust TypeStat's included files to not include node_modules (recommended) or explicitly include node_modules/ (not recommended).`,
 		);
 	});
+
+	it("should NOT return error if node_modules are explicitly included", async () => {
+		const cwd = path.resolve(import.meta.dirname, "..");
+		const fileNames = await collectFileNames(cwd, ["node_modules"]);
+		expect(fileNames?.length).toBeGreaterThan(0);
+	});
 });

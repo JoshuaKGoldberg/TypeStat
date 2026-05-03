@@ -1,18 +1,17 @@
-import { glob } from "glob";
-import * as path from "node:path";
+import { glob } from "node:fs/promises";
+import path from "node:path";
 
 export const collectFileNames = async (
 	cwd: string,
 	include: readonly string[] | undefined,
 ): Promise<readonly string[] | string | undefined> => {
-	const globsAndNames = await collectFileNamesFromGlobs(cwd, include);
-	if (!globsAndNames) {
+	if (include === undefined) {
 		return undefined;
 	}
 
-	const [fileGlobs, fileNames] = globsAndNames;
+	const fileNames = await collectFileNamesFromGlobs(cwd, include);
 	const implicitNodeModulesInclude = implicitNodeModulesIncluded(
-		fileGlobs,
+		include,
 		fileNames,
 	);
 
@@ -25,24 +24,21 @@ export const collectFileNames = async (
 
 const collectFileNamesFromGlobs = async (
 	cwd: string,
-	include: readonly string[] | undefined,
-): Promise<[readonly string[], readonly string[]] | undefined> => {
-	if (include === undefined) {
-		return undefined;
+	include: readonly string[],
+): Promise<readonly string[]> => {
+	const fileNames: string[] = [];
+	for await (const entry of glob(include, { cwd, withFileTypes: true })) {
+		fileNames.push(path.join(entry.parentPath, entry.name));
 	}
-
-	return [
-		include,
-		await glob(include.map((subInclude) => path.join(cwd, subInclude))),
-	];
+	return fileNames;
 };
 
 const implicitNodeModulesIncluded = (
 	fileGlobs: readonly string[],
-	fileNames: readonly string[] | undefined,
-) => {
+	fileNames: readonly string[],
+): boolean => {
 	return (
 		!fileGlobs.some((glob) => glob.includes("node_modules")) &&
-		fileNames?.find((fileName) => fileName.includes("node_modules"))
+		fileNames.some((fileName) => fileName.includes("node_modules"))
 	);
 };

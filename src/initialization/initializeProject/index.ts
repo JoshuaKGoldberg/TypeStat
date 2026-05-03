@@ -1,6 +1,7 @@
 import enquirer from "enquirer";
-import * as fs from "fs";
-import { glob } from "glob";
+import { existsSync } from "node:fs";
+import { glob } from "node:fs/promises";
+import path from "node:path";
 
 import { uniquify } from "../../shared/arrays.js";
 import { initializeNewProject } from "./initializeNewProject.js";
@@ -32,7 +33,7 @@ const initializeBuiltInProject = async () => {
 		...uniquify(
 			TSConfigLocation.Root,
 			TSConfigLocation.UnderSrc,
-			...(await glob(["./tsconfig*json", "./*/tsconfig*json"])),
+			...(await getTsConfigPaths()),
 		),
 		TSConfigLocationSuggestion.Custom,
 		TSConfigLocationSuggestion.DoesNotExist,
@@ -47,7 +48,7 @@ const initializeBuiltInProject = async () => {
 			initial: Math.max(
 				0,
 				[TSConfigLocation.Root, TSConfigLocation.UnderSrc].findIndex((choice) =>
-					fs.existsSync(choice),
+					existsSync(choice),
 				),
 			),
 			type: "select",
@@ -55,6 +56,15 @@ const initializeBuiltInProject = async () => {
 	]);
 
 	return project;
+};
+
+export const getTsConfigPaths = async (): Promise<string[]> => {
+	const cwd = process.cwd();
+	const fileNames: string[] = [];
+	for await (const entry of glob(["./tsconfig*json", "./*/tsconfig*json"])) {
+		fileNames.push(path.join(cwd, entry));
+	}
+	return fileNames;
 };
 
 const initializeCustomProject = async (): Promise<ProjectDescription> => {
