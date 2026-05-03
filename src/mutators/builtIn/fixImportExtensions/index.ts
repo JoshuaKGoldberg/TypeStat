@@ -1,6 +1,6 @@
 import { TextInsertMutation } from "automutate";
-import { glob } from "glob";
 import * as path from "node:path";
+import { globSync } from "tinyglobby";
 import ts from "typescript";
 
 import {
@@ -58,7 +58,7 @@ const visitExportOrImportDeclaration = (
 
 	for (const filePath of [basePath, path.join(basePath, "index")]) {
 		// If no files exist under that path, ignore this possibility
-		const possibilities = glob.sync(filePath + ".*");
+		const possibilities = globSync(filePath + ".*");
 		if (possibilities.length === 0) {
 			continue;
 		}

@@ -1,5 +1,5 @@
-import { glob } from "glob";
 import * as path from "node:path";
+import { glob } from "tinyglobby";
 
 export const collectFileNames = async (
 	cwd: string,
@@ -33,7 +33,10 @@ const collectFileNamesFromGlobs = async (
 
 	return [
 		include,
-		await glob(include.map((subInclude) => path.join(cwd, subInclude))),
+		await glob(
+			include.map((subInclude) => path.join(cwd, subInclude)),
+			{ debug: false, globstar: true, absolute: true, onlyFiles: false },
+		),
 	];
 };
 

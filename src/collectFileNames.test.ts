@@ -17,7 +17,7 @@ describe("collectFileNames", () => {
 		const cwd = path.resolve(import.meta.dirname, "..");
 		const fileNames = await collectFileNames(cwd, ["*"]);
 		expect(fileNames).toEqual(
-			`At least one path including node_modules was included implicitly: '${cwd}/node_modules'. Either adjust TypeStat's included files to not include node_modules (recommended) or explicitly include node_modules/ (not recommended).`,
+			`At least one path including node_modules was included implicitly: '${cwd}/node_modules/'. Either adjust TypeStat's included files to not include node_modules (recommended) or explicitly include node_modules/ (not recommended).`,
 		);
 	});
 });

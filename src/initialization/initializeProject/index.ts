@@ -1,6 +1,6 @@
 import enquirer from "enquirer";
 import * as fs from "fs";
-import { glob } from "glob";
+import { glob } from "tinyglobby";
 
 import { uniquify } from "../../shared/arrays.js";
 import { initializeNewProject } from "./initializeNewProject.js";
