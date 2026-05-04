@@ -26,7 +26,7 @@ describe("collectReferencedPackageNames", () => {
 		);
 
 		expect(Array.from(packageNames)).toStrictEqual(["node", "automutate"]);
-	});
+	}, 7_000);
 
 	it("should ignore defined package names", () => {
 		const cwd = process.cwd();

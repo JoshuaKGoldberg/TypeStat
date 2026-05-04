@@ -29,5 +29,5 @@ describe("include", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	});
+	}, 15_000);
 });

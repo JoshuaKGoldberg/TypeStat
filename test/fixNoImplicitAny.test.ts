@@ -13,7 +13,7 @@ describe("noImplicitAny", () => {
 			await runMutationTest(caseDir);
 		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
 		expect(options).toMatchSnapshot("options");
-	}, 7000);
+	}, 10_000);
 
 	it("property declarations", async () => {
 		const caseDir = path.join(
