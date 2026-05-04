@@ -6,7 +6,9 @@
 		"coverage",
 		"lib",
 		"node_modules",
-		"pnpm-lock.yaml"
+		"pnpm-lock.yaml",
+		"test/cases/fixes/**/actual.js",
+		"test/cases/fixes/**/actual.tsx?"
 	],
 	"words": [
 		"arrayify",
