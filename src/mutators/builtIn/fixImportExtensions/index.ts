@@ -50,11 +50,20 @@ const visitExportOrImportDeclaration = (
 		return undefined;
 	}
 
-	// Try each path that the import could resolve to
-	const basePath = path.join(
-		path.dirname(request.sourceFile.fileName),
+	return getFixImportExtensionsMutations(
+		request.sourceFile.fileName,
 		node.moduleSpecifier.text,
+		node.moduleSpecifier.end,
 	);
+};
+
+export const getFixImportExtensionsMutations = (
+	sourceFileName: string,
+	moduleSpecifier: string,
+	end: number,
+): TextInsertMutation | undefined => {
+	// Try each path that the import could resolve to
+	const basePath = path.join(path.dirname(sourceFileName), moduleSpecifier);
 
 	for (const filePath of [basePath, path.join(basePath, "index")]) {
 		// If no files exist under that path, ignore this possibility
@@ -75,7 +84,7 @@ const visitExportOrImportDeclaration = (
 		return {
 			insertion: "." + path.basename(mostLikely).split(".").slice(1).join("."),
 			range: {
-				begin: node.moduleSpecifier.end - 1,
+				begin: end - 1,
 			},
 			type: "text-insert",
 		};

@@ -91,11 +91,14 @@ export const typeStat = async (
 
 	for (let i = 0; i < allPendingOptions.length; i += 1) {
 		// Collect all files to be run on this option iteration from the include glob(s)
-		const fileNames = await collectFileNames(cwd, allPendingOptions[i].include);
-		if (typeof fileNames !== "object") {
+		const fileNamesRes = await collectFileNames(
+			cwd,
+			allPendingOptions[i].include,
+		);
+		if (!fileNamesRes || fileNamesRes.error) {
 			return {
 				error: new Error(
-					`Could not run options object ${i + 1}: ${fileNames ?? `No files included by the 'include' setting were found.`}`,
+					`Could not run options object ${i + 1}: ${fileNamesRes?.error ?? `No files included by the 'include' setting were found.`}`,
 				),
 				status: ResultStatus.Failed,
 			};
@@ -116,7 +119,7 @@ export const typeStat = async (
 			await runMutations({
 				mutationsProvider: createTypeStatProvider({
 					...allPendingOptions[i],
-					fileNames,
+					fileNames: fileNamesRes.fileNames,
 				}),
 			});
 		} catch (error) {

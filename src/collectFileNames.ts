@@ -1,11 +1,16 @@
 import { glob } from "node:fs/promises";
 import path from "node:path";
 
+export interface CollectFileNamesResult {
+	error?: string;
+	fileNames: readonly string[];
+}
+
 export const collectFileNames = async (
 	cwd: string,
 	include: readonly string[] | undefined,
-): Promise<readonly string[] | string | undefined> => {
-	if (include === undefined) {
+): Promise<CollectFileNamesResult | undefined> => {
+	if (!include?.length) {
 		return undefined;
 	}
 
@@ -16,10 +21,13 @@ export const collectFileNames = async (
 	);
 
 	if (implicitNodeModulesInclude) {
-		return `At least one path including node_modules was included implicitly: '${implicitNodeModulesInclude}'. Either adjust TypeStat's included files to not include node_modules (recommended) or explicitly include node_modules/ (not recommended).`;
+		return {
+			error: `At least one path including node_modules was included implicitly: '${implicitNodeModulesInclude}'. Either adjust TypeStat's included files to not include node_modules (recommended) or explicitly include node_modules/ (not recommended).`,
+			fileNames: [],
+		};
 	}
 
-	return fileNames;
+	return { fileNames };
 };
 
 const collectFileNamesFromGlobs = async (
@@ -36,9 +44,9 @@ const collectFileNamesFromGlobs = async (
 const implicitNodeModulesIncluded = (
 	fileGlobs: readonly string[],
 	fileNames: readonly string[],
-): boolean => {
-	return (
-		!fileGlobs.some((glob) => glob.includes("node_modules")) &&
-		fileNames.some((fileName) => fileName.includes("node_modules"))
-	);
+): string | undefined => {
+	if (fileGlobs.some((glob) => glob.includes("node_modules"))) {
+		return undefined;
+	}
+	return fileNames.find((fileName) => fileName.includes("node_modules"));
 };
