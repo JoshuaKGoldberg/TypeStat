@@ -1,8 +1,14 @@
 {
 	"$schema": "https://unpkg.com/knip@latest/schema.json",
-	"entry": ["src/index.ts!", "test/**/*.ts!", "test/**/*.tsx!"],
+	"entry": [
+		"src/index.ts!",
+		"test/**/*.ts!",
+		"test/**/*.tsx!",
+		"src/tests/*.ts!"
+	],
 	"ignore": ["test/cases/fixes/importExtensions/*"],
 	"ignoreBinaries": ["typestat"],
+	"ignoreDependencies": ["react", "prop-types"],
 	"ignoreExportsUsedInFile": {
 		"interface": true,
 		"type": true
