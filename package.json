@@ -68,7 +68,7 @@
 		"eslint-plugin-regexp": "3.1.0",
 		"eslint-plugin-yml": "3.3.2",
 		"husky": "9.1.7",
-		"knip": "6.11.0",
+		"knip": "6.12.0",
 		"lint-staged": "17.0.2",
 		"markdownlint": "0.40.0",
 		"markdownlint-cli": "0.48.0",
