@@ -1,12 +1,14 @@
 jobs:
   accessibility_alt_text_bot:
     if: ${{ !endsWith(github.actor, '[bot]') }}
+    name: Check alt text is set on issue or pull requests
     permissions:
       issues: write
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: github/accessibility-alt-text-bot@7e895d46677f15841def9acef1239ea7c12593a5 # v1.7.3
+      - name: Get action 'github/accessibility-alt-text-bot'
+        uses: github/accessibility-alt-text-bot@7e895d46677f15841def9acef1239ea7c12593a5 # v1.7.3
 
 name: Accessibility Alt Text Bot
 
