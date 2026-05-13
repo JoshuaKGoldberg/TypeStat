@@ -4,6 +4,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: github/accessibility-alt-text-bot@7e895d46677f15841def9acef1239ea7c12593a5 # v1.7.3
+    permissions:
+      issues: write
+      pull-requests: write
 
 name: Accessibility Alt Text Bot
 
@@ -21,6 +24,4 @@ on:
       - edited
       - opened
 
-permissions:
-  issues: write
-  pull-requests: write
+permissions: {}

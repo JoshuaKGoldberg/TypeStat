@@ -11,6 +11,8 @@ jobs:
             renovate
             renovate[bot]
           ignore-team-members: false
+    permissions:
+      pull-requests: write
 
 name: Compliance
 
@@ -24,5 +26,4 @@ on:
       - reopened
       - synchronize
 
-permissions:
-  pull-requests: write
+permissions: {}

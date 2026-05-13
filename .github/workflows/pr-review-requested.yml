@@ -9,6 +9,8 @@ jobs:
         run: |
           echo "Don't worry if the previous step failed."
           echo "See https://github.com/actions-ecosystem/action-remove-labels/issues/221."
+    permissions:
+      pull-requests: write
 
 name: PR Review Requested
 
@@ -17,5 +19,4 @@ on:
     types:
       - review_requested
 
-permissions:
-  pull-requests: write
+permissions: {}
