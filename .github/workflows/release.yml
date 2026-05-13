@@ -3,27 +3,27 @@ concurrency:
 
 jobs:
   release:
+    permissions:
+      contents: read
+      id-token: write # Required for OIDC
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
-          ref: main
           persist-credentials: false
+          ref: main
       - uses: pnpm/action-setup@8912a9102ac27614460f54aedde9e1e7f9aec20d # v6
       - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
           node-version: 22
-          registry-url: "https://registry.npmjs.org"
           package-manager-cache: false # never use caching in release builds
+          registry-url: "https://registry.npmjs.org"
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         uses: JoshuaKGoldberg/release-it-action@8ee87d0d30f97b452ef5d8aa9f4d0490eed439aa # v0.4.0
-    permissions:
-      contents: read
-      id-token: write # Required for OIDC
 
 name: Release
 

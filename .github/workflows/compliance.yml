@@ -1,5 +1,7 @@
 jobs:
   compliance:
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: mtfoley/pr-compliance-action@11b664f0fcf2c4ce954f05ccfcaab6e52b529f86 # main
@@ -11,8 +13,6 @@ jobs:
             renovate
             renovate[bot]
           ignore-team-members: false
-    permissions:
-      pull-requests: write
 
 name: Compliance
 
