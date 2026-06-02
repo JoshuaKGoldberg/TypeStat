@@ -75,7 +75,7 @@
 		"prettier": "3.8.3",
 		"prettier-plugin-curly": "0.4.1",
 		"prettier-plugin-packagejson": "3.0.2",
-		"release-it": "20.0.1",
+		"release-it": "20.2.0",
 		"sentences-per-line": "0.3.0",
 		"tsup": "8.5.1",
 		"typescript": "5.9.3",
