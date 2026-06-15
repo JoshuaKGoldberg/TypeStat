@@ -59,7 +59,7 @@
 		"@vitest/eslint-plugin": "1.6.16",
 		"console-fail-test": "0.6.1",
 		"cspell": "10.0.0",
-		"eslint": "10.4.0",
+		"eslint": "10.5.0",
 		"eslint-plugin-jsdoc": "63.0.0",
 		"eslint-plugin-jsonc": "3.2.0",
 		"eslint-plugin-n": "18.1.0",
