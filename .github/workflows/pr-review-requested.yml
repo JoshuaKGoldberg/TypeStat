@@ -1,21 +1,17 @@
 jobs:
   pr_review_requested:
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions-ecosystem/action-remove-labels@2ce5d41b4b6aa8503e285553f75ed56e0a40bae0 # v1
-        with:
-          labels: "status: waiting for author"
-      - if: failure()
-        run: |
-          echo "Don't worry if the previous step failed."
-          echo "See https://github.com/actions-ecosystem/action-remove-labels/issues/221."
+      - run: |
+          gh pr edit --remove-label "status: waiting for author"
 
 name: PR Review Requested
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - review_requested
 
-permissions:
-  pull-requests: write
+permissions: {}
