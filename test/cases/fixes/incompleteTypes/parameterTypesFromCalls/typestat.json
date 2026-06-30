@@ -1,0 +1,8 @@
+{
+	"cleanups": {
+		"suppressTypeErrors": true
+	},
+	"fixes": {
+		"incompleteTypes": true
+	}
+}

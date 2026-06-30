@@ -63,6 +63,17 @@ describe("Incomplete types", () => {
 		expect(options).toMatchSnapshot("options");
 	}, 50_000);
 
+	it("parameter types from calls", async () => {
+		const caseDir = path.join(
+			dirname,
+			"cases/fixes/incompleteTypes/parameterTypesFromCalls",
+		);
+		const { actualContent, expectedFilePath, options } =
+			await runMutationTest(caseDir);
+		await expect(actualContent).toMatchFileSnapshot(expectedFilePath);
+		expect(options).toMatchSnapshot("options");
+	}, 50_000);
+
 	it("property declaration types", async () => {
 		const caseDir = path.join(
 			dirname,
