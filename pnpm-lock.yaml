@@ -37,8 +37,8 @@ importers:
         specifier: 8.0.2
         version: 8.0.2
       '@release-it/conventional-changelog':
-        specifier: 11.0.0
-        version: 11.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.4.0)(release-it@20.2.0(@types/node@22.20.0)(magicast@0.5.2))
+        specifier: 11.0.1
+        version: 11.0.1(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.4.0)(release-it@20.2.0(@types/node@22.20.0)(magicast@0.5.2))
       '@types/node':
         specifier: 22.20.0
         version: 22.20.0
@@ -1114,8 +1114,8 @@ packages:
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@release-it/conventional-changelog@11.0.0':
-    resolution: {integrity: sha512-3/WyzObY+y+EejBt+J2vcojFPLUiGu14liRiaPWc0bNVluhRIsADeJ785Iq5ynnhdd1zcjMNh5lBmM/J6/KXig==}
+  '@release-it/conventional-changelog@11.0.1':
+    resolution: {integrity: sha512-SHAnHfOFhazpDeYuQSqH8Qm8RJa2oREn2ILSod+9s8dqiA18mBgpPyYlpvRaqISCVerSmLzEZghQBKphkrf4IQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
     peerDependencies:
       release-it: ^18.0.0 || ^19.0.0 || ^20.0.0
@@ -4432,7 +4432,7 @@ snapshots:
 
   '@pkgr/core@0.2.9': {}
 
-  '@release-it/conventional-changelog@11.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.4.0)(release-it@20.2.0(@types/node@22.20.0)(magicast@0.5.2))':
+  '@release-it/conventional-changelog@11.0.1(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.4.0)(release-it@20.2.0(@types/node@22.20.0)(magicast@0.5.2))':
     dependencies:
       '@conventional-changelog/git-client': 2.7.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.4.0)
       concat-stream: 2.0.0
