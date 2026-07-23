@@ -112,8 +112,8 @@ importers:
         specifier: 20.2.0
         version: 20.2.0(@types/node@22.20.0)(magicast@0.5.2)(supports-color@7.2.0)
       sentences-per-line:
-        specifier: 0.3.0
-        version: 0.3.0
+        specifier: 0.5.3
+        version: 0.5.3
       tsup:
         specifier: 8.5.1
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.13)(supports-color@7.2.0)(typescript@5.9.3)(yaml@2.9.0)
@@ -2636,10 +2636,6 @@ packages:
     engines: {node: '>=22'}
     hasBin: true
 
-  markdownlint-rule-helpers@0.28.0:
-    resolution: {integrity: sha512-qBOQWESmc/yTNe6nVu3D7AU7pFg2e7T5svbQI+S7rocw4g4xZ3GHerKPl0Rw0cx4fnAViEdzoAcbrxeuXUCEAA==}
-    engines: {node: '>=18'}
-
   markdownlint@0.41.0:
     resolution: {integrity: sha512-xMUI3ChBuRuxuLF4ENvCZyS8z/+Jly1coUcZwErKLIB3sDj7ojpaTBa1e9YVPhSN4jGEIjYGQCldbTJS/hqS+A==}
     engines: {node: '>=22'}
@@ -3123,9 +3119,9 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  sentences-per-line@0.3.0:
-    resolution: {integrity: sha512-/cSQgaLDEmed+AIC2KAd1A5k4sy8bbWy3ObBDUE2+JmiwolTBuc87TlwlTSnBJVPa7+zfGv28J63xzznFRv5tQ==}
-    engines: {node: '>=18'}
+  sentences-per-line@0.5.3:
+    resolution: {integrity: sha512-pXuRJ4bKjxEaRVi7ZbwJBF2THPShuLHvWjw9yCtyn5qNqgAfZ/sqPHJu9HS72TffLQwIFX+aSP61HuGGz+7Aww==}
+    engines: {node: '>=22.14.0'}
 
   shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
@@ -5862,8 +5858,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  markdownlint-rule-helpers@0.28.0: {}
-
   markdownlint@0.41.0(supports-color@7.2.0):
     dependencies:
       micromark: 4.0.2(supports-color@7.2.0)
@@ -6658,9 +6652,7 @@ snapshots:
 
   semver@7.8.5: {}
 
-  sentences-per-line@0.3.0:
-    dependencies:
-      markdownlint-rule-helpers: 0.28.0
+  sentences-per-line@0.5.3: {}
 
   shebang-command@2.0.0:
     dependencies:
