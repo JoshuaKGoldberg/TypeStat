@@ -14,6 +14,6 @@ export const installWithYarn = async (
 				(packageName) => `@types/${packageName}`,
 			),
 			"-D",
-		].join(" "),
+		]
 	);
 };
