@@ -14,6 +14,6 @@ export const installWithNpm = async (
 				(packageName) => `@types/${packageName}`,
 			),
 			"-D",
-		].join(" "),
+		]
 	);
 };
