@@ -42,7 +42,7 @@
 	"dependencies": {
 		"@phenomnomnominal/tsquery": "6.2.0",
 		"automutate": "0.9.0",
-		"chalk": "5.6.2",
+		"chalk": "6.0.0",
 		"commander": "15.0.0",
 		"enquirer": "2.4.1",
 		"ts-api-utils": "2.5.0"
