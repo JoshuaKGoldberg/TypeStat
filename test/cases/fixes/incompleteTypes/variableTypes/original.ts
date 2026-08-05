@@ -186,6 +186,10 @@
 	returnsStringOrNumber = () => "";
 	returnsStringOrNumber = () => 0;
 
+	let returnsEither: () => string;
+	returnsEither = () => "";
+	returnsEither = () => 7;
+
 	// Sets
 
 	function collector(collection: ReadonlySet<{ value: string }>) {
