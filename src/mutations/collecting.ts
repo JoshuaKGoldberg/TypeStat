@@ -106,18 +106,9 @@ export const findMissingTypes = (
 		}
 	}
 
-	const declaredTypesContainFunction =
-		Array.from(declaredTypes).some(typeContainsFunction);
 	const remainingMissingTypes = new Set(assignedTypes);
 
 	const isAssignedTypeMissingFromDeclared = (assignedType: ts.Type) => {
-		// We ignore assigned function types when the declared type(s) include function(s).
-		// These non-assigned function types are more likely what users would consider bugs.
-		// For example, covariant functions might not be assignable, but should be fixed manually.
-		if (declaredTypesContainFunction && typeContainsFunction(assignedType)) {
-			return false;
-		}
-
 		// For each potential missing type:
 		for (const potentialParentType of declaredTypes) {
 			// If the potential parent type is unknown, then ignore it
@@ -149,6 +140,3 @@ export const findMissingTypes = (
 
 	return setSubtract(remainingMissingTypes, declaredTypes);
 };
-
-const typeContainsFunction = (type: ts.Type) =>
-	type.getCallSignatures().length !== 0;
