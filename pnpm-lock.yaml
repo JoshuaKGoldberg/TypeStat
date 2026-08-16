@@ -79,8 +79,8 @@ importers:
         specifier: 5.10.0
         version: 5.10.0(eslint@10.8.0(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
       eslint-plugin-regexp:
-        specifier: 3.1.0
-        version: 3.1.0(eslint@10.8.0(jiti@2.7.0)(supports-color@7.2.0))
+        specifier: 3.2.0
+        version: 3.2.0(eslint@10.8.0(jiti@2.7.0)(supports-color@7.2.0))
       eslint-plugin-yml:
         specifier: 3.8.1
         version: 3.8.1(eslint@10.8.0(jiti@2.7.0)(supports-color@7.2.0))
@@ -2053,8 +2053,8 @@ packages:
     peerDependencies:
       eslint: ^8.45.0 || ^9.0.0 || ^10.0.0
 
-  eslint-plugin-regexp@3.1.0:
-    resolution: {integrity: sha512-qGXIC3DIKZHcK1H9A9+Byz9gmndY6TTSRkSMTZpNXdyCw2ObSehRgccJv35n9AdUakEjQp5VFNLas6BMXizCZg==}
+  eslint-plugin-regexp@3.2.0:
+    resolution: {integrity: sha512-4yq47CnLxyfHFKJEo5kvNaiJ0aDtBxSJWk4M2LiamplUXdWxdlzDYqImb/ZVCp+2BqkQjBAmw4Xc07Q8SXVDZg==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: '>=9.38.0'
@@ -2417,10 +2417,6 @@ packages:
   js-yaml@4.2.0:
     resolution: {integrity: sha512-ePWsvanv0DWuDRsW8dnt+R4jQ31SCRCQ7hhNcPXZPsoBZiemuZNYGf7adZdqX2D86j6rvKp3RpCxVTSb8WQlOw==}
     hasBin: true
-
-  jsdoc-type-pratt-parser@7.3.0:
-    resolution: {integrity: sha512-DoyJXo7x/n48M3NsGOs9QnEws0ft0tV3YsSgvWMNxz2hZtz+Q6fpqUD96lVYX4a+jcEkzHeFNDJOn68TzXfbdA==}
-    engines: {node: '>=20.0.0'}
 
   jsdoc-type-pratt-parser@9.1.1:
     resolution: {integrity: sha512-kojSbQb9iQM2bk2PmHiKa3reG0U4v2gN9U8D8+eCQq+4KM5ZXBUyBVeF8KmR0RiwqyrW4+uVWYWTOLnpsavnkw==}
@@ -5243,13 +5239,13 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-regexp@3.1.0(eslint@10.8.0(jiti@2.7.0)(supports-color@7.2.0)):
+  eslint-plugin-regexp@3.2.0(eslint@10.8.0(jiti@2.7.0)(supports-color@7.2.0)):
     dependencies:
       '@eslint-community/eslint-utils': 4.9.1(eslint@10.8.0(jiti@2.7.0)(supports-color@7.2.0))
       '@eslint-community/regexpp': 4.12.2
       comment-parser: 1.4.8
       eslint: 10.8.0(jiti@2.7.0)(supports-color@7.2.0)
-      jsdoc-type-pratt-parser: 7.3.0
+      jsdoc-type-pratt-parser: 9.1.1
       refa: 0.12.1
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
@@ -5586,8 +5582,6 @@ snapshots:
   js-yaml@4.2.0:
     dependencies:
       argparse: 2.0.1
-
-  jsdoc-type-pratt-parser@7.3.0: {}
 
   jsdoc-type-pratt-parser@9.1.1:
     dependencies:
