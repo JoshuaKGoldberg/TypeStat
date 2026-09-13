@@ -57,6 +57,14 @@ export const createTypeAdditionMutation = (
 		return textSwap(` ${newTypeAlias}`, node.type.pos, node.type.end);
 	}
 
+	if (ts.isFunctionTypeNode(node.type)) {
+		return textSwap(
+			` (${node.type.getText(request.sourceFile)}) | ${newTypeAlias}`,
+			node.type.pos,
+			node.type.end,
+		);
+	}
+
 	// Create a mutation insertion that adds the missing types in
 	return textInsert(` | ${newTypeAlias}`, node.type.end);
 };
