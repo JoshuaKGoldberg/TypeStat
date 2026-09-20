@@ -8,7 +8,7 @@ runs:
     - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
       with:
         cache: pnpm
-        node-version: "22"
+        node-version: 24.21.0
     - run: pnpm install --frozen-lockfile
       shell: bash
   using: composite
