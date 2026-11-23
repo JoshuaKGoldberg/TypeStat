@@ -1,0 +1,11 @@
+{
+	"cleanups": {
+		"suppressTypeErrors": true
+	},
+	"fixes": {
+		"strictNonNullAssertions": true
+	},
+	"types": {
+		"strictNullChecks": true
+	}
+}

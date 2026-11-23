@@ -82,3 +82,14 @@ When a function is declared as returning `number` but can return `null`:
     return Math.random() > 0.5 ? 0 : null;
 }
 ```
+
+### strictNonNullAssertion VariableDeclarations
+
+If a variable has an explicit type that rejects its nullable initializer, this adds a `!` assertion when removing `null` and `undefined` makes the initializer assignable.
+
+```diff
+function initialize(value: string | null) {
+-   const name: string = value;
++   const name: string = value!;
+}
+```

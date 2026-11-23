@@ -5,6 +5,7 @@ import { fixStrictNonNullAssertionCallExpressions } from "./fixStrictNonNullAsse
 import { fixStrictNonNullAssertionObjectLiterals } from "./fixStrictNonNullAssertionObjectLiterals/index.js";
 import { fixStrictNonNullAssertionPropertyAccesses } from "./fixStrictNonNullAssertionPropertyAccesses/index.js";
 import { fixStrictNonNullAssertionReturnTypes } from "./fixStrictNonNullAssertionReturnTypes/index.js";
+import { fixStrictNonNullAssertionVariableDeclarations } from "./fixStrictNonNullAssertionVariableDeclarations/index.js";
 
 export const fixStrictNonNullAssertions = (request: FileMutationsRequest) =>
 	request.options.fixes.strictNonNullAssertions
@@ -28,6 +29,10 @@ export const fixStrictNonNullAssertions = (request: FileMutationsRequest) =>
 				[
 					"fixStrictNonNullAssertionReturnTypes",
 					fixStrictNonNullAssertionReturnTypes,
+				],
+				[
+					"fixStrictNonNullAssertionVariableDeclarations",
+					fixStrictNonNullAssertionVariableDeclarations,
 				],
 			])
 		: undefined;
